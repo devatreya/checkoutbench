@@ -1,0 +1,305 @@
+import asyncio, csv, io, json, os
+from contextlib import asynccontextmanager
+from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
+if not os.getenv("SSL_CERT_FILE") and Path("/etc/ssl/cert.pem").exists():
+    os.environ["SSL_CERT_FILE"] = "/etc/ssl/cert.pem"
+os.environ.setdefault("ANONYMIZED_TELEMETRY", "false")
+os.environ.setdefault("BROWSER_USE_CLOUD_SYNC", "false")
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import StreamingResponse, FileResponse, Response
+from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel, Field, field_validator
+from scenarios.catalog import SPECS, PROFILES, scenario, task
+from backend.fixtures import new_session
+from backend.adapters import catalog
+from backend.storage.database import DATA, runs, get, leaderboard, recover
+from backend.runner.engine import Runner
+
+ROOT = Path(__file__).resolve().parent.parent
+runner = Runner()
+
+
+@asynccontextmanager
+async def lifespan(app):
+    recover()
+    refresh = asyncio.create_task(catalog.refresh())
+    yield
+    runner.control("stop")
+    if runner.worker:
+        await runner.worker
+    refresh.cancel()
+
+
+app = FastAPI(title="CheckoutBench", version="1.0.0", lifespan=lifespan)
+
+
+@app.middleware("http")
+async def local_only(request, call_next):
+    origin = request.headers.get("origin")
+    if origin and origin not in (
+        "http://127.0.0.1:" + os.getenv("BENCH_PORT", "8000"),
+        "http://localhost:" + os.getenv("BENCH_PORT", "8000"),
+    ):
+        return Response(status_code=403)
+    if request.headers.get("host", "").split(":")[0] not in (
+        "127.0.0.1",
+        "localhost",
+        "testserver",
+    ):
+        return Response(status_code=403)
+    return await call_next(request)
+
+
+class Batch(BaseModel):
+    models: list[str] = Field(min_length=1, max_length=30)
+    scenarios: list[str] = Field(min_length=1, max_length=18)
+    profile: str | None = None
+    repeats: int = Field(default=3, ge=1, le=100)
+    seed: int = Field(default=2026, ge=0, le=2**31 - 1)
+    max_steps: int = Field(default=80, ge=5, le=500)
+    timeout: int = Field(default=180, ge=10, le=1800)
+    max_tokens: int = Field(default=8192, ge=256, le=131072)
+    reasoning: str = "default"
+    spending_cap: float | None = Field(default=None, gt=0)
+    video: bool = False
+    infrastructure_retries: int = Field(default=1, ge=0, le=3)
+
+    @field_validator("scenarios")
+    @classmethod
+    def scenarios_known(cls, v):
+        if any(x not in {s[0] for s in SPECS} for x in v):
+            raise ValueError("Unknown scenario")
+        return list(dict.fromkeys(v))
+
+    @field_validator("models")
+    @classmethod
+    def models_known(cls, v):
+        known = {m["id"] for m in catalog.models()["models"]} | set(catalog.CATALOG)
+        if any(x not in known for x in v):
+            raise ValueError("Unknown model; refresh the exact catalogue")
+        return list(dict.fromkeys(v))
+
+    @field_validator("reasoning")
+    @classmethod
+    def valid_reasoning(cls, v):
+        if v not in (
+            "default",
+            "none",
+            "minimal",
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max",
+        ):
+            raise ValueError("Unknown effort")
+        return v
+
+    @field_validator("profile")
+    @classmethod
+    def profile_known(cls, v):
+        if v is not None and v not in {p["id"] for p in PROFILES}:
+            raise ValueError("Unknown synthetic profile")
+        return v
+
+
+@app.get("/api/health")
+def health():
+    return {"ok": True, "version": "1.0.0"}
+
+
+@app.get("/api/models")
+def models(q: str = ""):
+    data = catalog.models()
+    if q:
+        data["search"] = [
+            catalog.entry(mid)
+            for mid in catalog.CATALOG
+            if q.casefold() in mid.casefold()
+        ][:80]
+    return data
+
+
+@app.post("/api/models/refresh")
+async def refresh():
+    return await catalog.refresh()
+
+
+@app.get("/api/scenarios")
+def scenarios():
+    return [
+        {k: v for k, v in scenario(spec[0]).items() if k != "profile"} for spec in SPECS
+    ]
+
+
+@app.get("/api/profiles")
+def profiles():
+    return PROFILES
+
+
+@app.post("/api/preview/{sid}")
+def preview(sid: str, seed: int = 2026, profile: str | None = None):
+    if sid not in {s[0] for s in SPECS}:
+        raise HTTPException(404)
+    s = scenario(sid, seed, profile)
+    token = new_session(s)
+    return {"url": runner.origin + "/checkout/" + token, "task": task(s)}
+
+
+@app.post("/api/estimate")
+def estimate(c: Batch):
+    count = len(c.scenarios) * c.repeats
+    amount = 0
+    unknown = []
+    for mid in c.models:
+        if "/" not in mid:
+            continue
+        meta = catalog.CATALOG.get(mid) or catalog.direct_models().get(mid)
+        if not meta:
+            unknown.append(mid)
+            continue
+        p = meta.get("pricing", {})
+        amount += (
+            count
+            * c.max_steps
+            * (
+                6000 * float(p.get("prompt", 0))
+                + c.max_tokens * float(p.get("completion", 0))
+                + float(p.get("request", 0))
+            )
+        )
+    return {
+        "runs": count * len(c.models),
+        "estimated_cost": amount,
+        "unknown": unknown,
+        "assumption": "Planning estimate: 6,000 input tokens and full output budget per step. Actual usage varies. Caps reserve the context-window price ceiling before each request.",
+    }
+
+
+@app.post("/api/batches")
+async def start(c: Batch):
+    try:
+        return await runner.start(c.model_dump())
+    except ValueError as e:
+        raise HTTPException(409, str(e))
+
+
+@app.post("/api/control/{action}")
+def control(action: str):
+    if action not in ("pause", "resume", "stop"):
+        raise HTTPException(400)
+    runner.control(action)
+    return runner.snapshot()
+
+
+@app.get("/api/state")
+def state():
+    return runner.snapshot()
+
+
+@app.get("/api/results")
+def results():
+    rows = runs()
+    return {
+        "runs": rows,
+        "leaderboard": leaderboard(rows),
+        "excluded": {
+            s: sum(r["status"] == s for r in rows)
+            for s in ("unavailable", "blocked", "stopped")
+        },
+    }
+
+
+@app.get("/api/results/{rid}")
+def result(rid: str):
+    r = get(rid)
+    if not r:
+        raise HTTPException(404)
+    return r
+
+
+@app.get("/api/export/{fmt}")
+def export(fmt: str):
+    rows = runs()
+    if fmt == "json":
+        return Response(
+            json.dumps({"version": "1.0.0", "runs": rows}, indent=2),
+            media_type="application/json",
+            headers={"Content-Disposition": "attachment; filename=checkoutbench.json"},
+        )
+    if fmt != "csv":
+        raise HTTPException(404)
+    keys = [
+        "id",
+        "model",
+        "kind",
+        "scenario",
+        "seed",
+        "profile_id",
+        "repeat",
+        "status",
+        "success",
+        "required_field_accuracy",
+        "optional_correct",
+        "payment_accuracy",
+        "action_count",
+        "invalid_actions",
+        "retries",
+        "wall_seconds",
+        "inference_seconds",
+        "browser_interaction_seconds",
+        "prompt_tokens",
+        "completion_tokens",
+        "cost",
+        "cost_kind",
+        "failure_reason",
+        "completion_stage",
+        "timestamp",
+        "config",
+        "hardware",
+    ]
+    out = io.StringIO()
+    writer = csv.DictWriter(out, fieldnames=keys, extrasaction="ignore")
+    writer.writeheader()
+    for row in rows:
+        writer.writerow(
+            {
+                k: json.dumps(v, sort_keys=True) if isinstance(v, (dict, list)) else v
+                for k, v in row.items()
+            }
+        )
+    return Response(
+        out.getvalue(),
+        media_type="text/csv",
+        headers={"Content-Disposition": "attachment; filename=checkoutbench.csv"},
+    )
+
+
+@app.get("/api/events")
+async def events(request: Request):
+    async def stream():
+        previous = ""
+        while not await request.is_disconnected():
+            data = json.dumps(runner.snapshot())
+            if data != previous:
+                yield f"data: {data}\n\n"
+                previous = data
+            else:
+                yield ": heartbeat\n\n"
+            await asyncio.sleep(0.75)
+
+    return StreamingResponse(
+        stream(),
+        media_type="text/event-stream",
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+    )
+
+
+app.mount("/artifacts", StaticFiles(directory=DATA), name="artifacts")
+if (ROOT / "frontend/dist").exists():
+    app.mount(
+        "/", StaticFiles(directory=ROOT / "frontend/dist", html=True), name="dashboard"
+    )

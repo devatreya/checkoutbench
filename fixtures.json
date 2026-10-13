@@ -1,0 +1,26 @@
+{
+  "benchmark_name": "CheckoutBench v0.1 (local synthetic prototype)",
+  "dummy_profile": {
+    "full_name": "Aditi Rao",
+    "email": "aditi.rao@example.test",
+    "phone": "9000000001",
+    "address_line_1": "14B Maple Residency",
+    "address_line_2": "Indiranagar",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "postal_code": "560038"
+  },
+  "dummy_card": {
+    "name": "Aditi Rao",
+    "number": "4111 1111 1111 1111",
+    "expiry": "12/30",
+    "cvv": "123"
+  },
+  "legacy_upi_vpa": "success@razorpay",
+  "scenarios": [
+    {"path": "/?scenario=basic", "goal": "Complete shipping and select UPI app PhonePe; stop at authorisation-ready state"},
+    {"path": "/?scenario=aliases", "goal": "Complete shipping and select simulated credit card; stop at authorisation-ready state"},
+    {"path": "/?scenario=challenging", "goal": "Complete shipping and select UPI QR; stop at authorisation-ready state"},
+    {"path": "/?scenario=aliases", "goal": "Complete shipping and select legacy UPI ID; stop at authorisation-ready state"}
+  ]
+}

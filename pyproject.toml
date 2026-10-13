@@ -1,0 +1,13 @@
+[project]
+name = "checkoutbench"
+version = "1.0.0"
+description = "Local simulated checkout automation benchmark"
+requires-python = ">=3.12"
+dependencies = ["fastapi>=0.115,<1", "uvicorn>=0.34,<1", "httpx>=0.28,<1", "playwright>=1.51,<2", "pydantic>=2.10,<3", "python-dotenv>=1,<2", "pillow>=11,<13"]
+[project.optional-dependencies]
+agent = ["browser-use==0.11.13", "pydantic-settings>=2.8,<3"]
+specialists = ["torch>=2.6", "transformers>=4.51,<5", "accelerate>=1", "huggingface-hub>=0.30", "safetensors>=0.5", "einops", "timm"]
+test = ["pytest>=8", "pytest-asyncio>=0.25"]
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]

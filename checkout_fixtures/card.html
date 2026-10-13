@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="/assets/checkout.css" />
+  </head>
+  <body style="background: white; --accent: #6855d9">
+    <div class="fields">
+      <div class="field wide">
+        <label for="cardName">Name on card</label
+        ><input id="cardName" autocomplete="off" required />
+      </div>
+      <div class="field wide">
+        <label for="cardNumber">Test card number</label
+        ><input
+          id="cardNumber"
+          inputmode="numeric"
+          placeholder="4242 4242 4242 4242"
+          required
+        />
+      </div>
+      <div class="field">
+        <label for="expiry">Expiry (MM/YY)</label
+        ><input id="expiry" placeholder="12/30" required />
+      </div>
+      <div class="field">
+        <label for="cvv">Test CVV</label
+        ><input id="cvv" placeholder="123" maxlength="3" required />
+      </div>
+    </div>
+    <script src="/assets/card.js"></script>
+  </body>
+</html>
