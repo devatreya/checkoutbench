@@ -1,0 +1,69 @@
+{
+  "recorded_at": "2026-10-14T14:08:34.833433+00:00",
+  "full_suite": {
+    "command": ".venv/bin/pytest -q --tb=short",
+    "passed": 70,
+    "failed": 0,
+    "seconds": 652.0,
+    "single_complete_run": true,
+    "coverage": "All v1/v2/v2.1 reference suites, negative controls, model contracts, data isolation, dashboard setup/filter behavior and legacy navigation recovery"
+  },
+  "earlier_attempt": {
+    "passed": 51,
+    "failed": 1,
+    "interrupted": true,
+    "seconds": 485.55,
+    "failure": "Preserved v2 reference authentication return reported invalid_browser_action at gateway_return. Run interrupted to investigate and fix navigation-interruption handling."
+  },
+  "navigation_regression": {
+    "before_fix": {
+      "passed": 1,
+      "failed": 2
+    },
+    "after_fix": {
+      "passed": 3,
+      "failed": 0
+    },
+    "note": "Forced detached-frame/destroyed-context observations recover; permanent strict-selector errors still propagate. Separate diagnostic batch: 24/24 S06/L08 reference trials passed before the fix, showing intermittency."
+  },
+  "build": {
+    "command": "npm --prefix frontend run build",
+    "status": "passed"
+  },
+  "static_checks": {
+    "git_diff_check": "passed",
+    "ruff_syntax_and_undefined_names": "passed"
+  },
+  "visual_check": {
+    "command": ".venv/bin/python -m scripts.visual_dashboard",
+    "captures": 12,
+    "document_overflows": 0,
+    "javascript_errors": 0,
+    "viewports": [
+      [
+        1440,
+        1000
+      ],
+      [
+        390,
+        844
+      ]
+    ],
+    "evidence": "screenshots/inspection.json"
+  },
+  "preservation": {
+    "original_historical_rows_verified_unchanged": 163,
+    "test_database": "Temporary directory on separate test server ports 8765/8766",
+    "credentials_and_original_data_ignored_by_git": true
+  },
+  "inference": {
+    "paid_calls": 0,
+    "actual_specialist_weights_evaluated": false,
+    "interpretation": "Software validation only; no new model capability claim"
+  },
+  "secret_scan": {
+    "configured_values_checked": 1,
+    "configured_value_matches": 0,
+    "common_credential_pattern_matches": 0
+  }
+}

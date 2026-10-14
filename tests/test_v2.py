@@ -392,3 +392,44 @@ def test_version_and_difficulty_aggregation():
     assert dims["semantic"]["unfamiliar"]["success_rate"] == 0
     assert dims["visual"]["responsive"] == {"runs": 2, "success_rate": 0.5}
     assert dims["interaction"] == {}
+
+
+@pytest.mark.parametrize(
+    "message,recover",
+    [
+        ("Locator.inner_text: Frame was detached", True),
+        ("Execution context was destroyed, most likely because of a navigation", True),
+        ("Locator.click: strict mode violation", False),
+    ],
+)
+async def test_reference_navigation_interrupts_do_not_hide_action_errors(
+    monkeypatch, message, recover
+):
+    """Force a read interrupted by navigation; permanent action errors must still escape."""
+    from types import SimpleNamespace
+    from playwright.async_api import Error as BrowserError
+    import backend.browser.v2 as controller
+
+    observed = 0
+
+    async def terminal(_page):
+        nonlocal observed
+        observed += 1
+        if observed == 1:
+            raise BrowserError(message)
+        return True
+
+    async def check():
+        pass
+
+    page = SimpleNamespace(is_closed=lambda: False)
+    page.context = SimpleNamespace(pages=[page])
+    ctl = SimpleNamespace(check=check, max_steps=2)
+    monkeypatch.setattr(controller, "terminal", terminal)
+    if recover:
+        await controller.reference_v2(page, {"preferences": {}}, ctl)
+        assert observed == 2
+    else:
+        with pytest.raises(BrowserError, match="strict mode"):
+            await controller.reference_v2(page, {"preferences": {}}, ctl)
+        assert observed == 1

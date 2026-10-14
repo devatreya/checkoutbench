@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import "./style.css";
 import Coverage from "./Coverage";
+import Guide, { sectionHelp, WorkspaceHelp } from "./Guide";
 type Model = {
   status?: string;
   id: string;
@@ -51,6 +52,7 @@ type Scenario = {
   features: string[];
   method: string;
   app?: string;
+  expected_outcome?: string;
   seed: number;
 };
 type Event = {
@@ -278,17 +280,57 @@ function App() {
     models.find((m) => m.id === id)?.name || id;
   const scenario = scenarios.find((s) => s.id === focus),
     completed = runs.filter((r) => ["completed", "failed"].includes(r.status)),
-    successes = completed.filter((r) => r.success),
     live = state.current;
   const [filter, setFilter] = useState("all");
+  const [resultKind, setResultKind] = useState("all");
+  const matchesResult = (r: { model: string; benchmark_version?: string }) =>
+    (boardVersion === "all" ||
+      (r.benchmark_version || "1.0") === boardVersion) &&
+    (resultKind === "all" ||
+      (resultKind === "reference"
+        ? r.model === "reference"
+        : r.model !== "reference"));
+  const visibleBoard = board.filter(matchesResult);
+  const resultScenarios = scenarios.filter(
+    (s) => boardVersion === "all" || s.benchmark_version === boardVersion,
+  );
+  const referenceRuns = completed.filter((r) => r.model === "reference");
+  const modelRuns = completed.filter((r) => r.model !== "reference");
+  const setupReference = (full = false) => {
+    setSelected(["reference"]);
+    setChosen(
+      full
+        ? scenarios
+            .filter((s) => s.benchmark_version === "2.1")
+            .map((s) => s.id)
+        : ["V21-S01"],
+    );
+    setFocus("V21-S01");
+    setSuite("2.1");
+    setEnvironment("all");
+    setAgentMode("standard");
+    setProfile("");
+    setRepeats(1);
+    setSeed(2026);
+    setSteps(100);
+    setTimeoutValue(180);
+    setTokens(8192);
+    setReasoning("default");
+    setCap("");
+    setVideo(false);
+    setEstimate(null);
+    setError("");
+    setTab("Scenarios");
+  };
   const visibleRuns = runs.filter(
     (r) =>
-      filter === "all" ||
-      (filter === "success"
-        ? r.success
-        : filter === "blocked"
-          ? ["unavailable", "blocked"].includes(r.status)
-          : !r.success && ["completed", "failed"].includes(r.status)),
+      matchesResult(r) &&
+      (filter === "all" ||
+        (filter === "success"
+          ? r.success
+          : filter === "blocked"
+            ? ["unavailable", "blocked"].includes(r.status)
+            : !r.success && ["completed", "failed"].includes(r.status))),
   );
   return (
     <div className="app">
@@ -318,6 +360,8 @@ function App() {
           ].map(([label, Icon]) => (
             <button
               key={String(label)}
+              aria-current={tab === label ? "page" : undefined}
+              title={sectionHelp[String(label)].purpose}
               className={tab === label ? "active" : ""}
               onClick={() => setTab(String(label))}
             >
@@ -362,17 +406,7 @@ function App() {
             <div className="title-row">
               <div>
                 <h1>{tab === "Overview" ? "Benchmark lab" : tab}</h1>
-                <p>
-                  {tab === "Overview"
-                    ? "Find the most reliable path from checkout to payment-ready."
-                    : tab === "Models"
-                      ? "Compare architectures, with capability and reliability first."
-                      : tab === "Scenarios"
-                        ? "Nine environment families. Versioned scenarios and explicit outcomes."
-                        : tab === "Live session"
-                          ? "Follow every browser action as the run unfolds."
-                          : "Objective outcomes, recorded actions, and reproducible exports."}
-                </p>
+                <p>{sectionHelp[tab].purpose}</p>
               </div>
               <div className="actions">
                 <a className="button secondary" href="/api/export/json">
@@ -391,6 +425,14 @@ function App() {
               </div>
             </div>
           </div>
+          <p className="section-help">{sectionHelp[tab].next}</p>
+          {tab === "Overview" && (
+            <Guide
+              navigate={setTab}
+              setup={setupReference}
+              ready={scenarios.length > 0}
+            />
+          )}
           {error && (
             <div className="alert">
               <b>Unable to complete request</b> {error}
@@ -399,7 +441,7 @@ function App() {
               </button>
             </div>
           )}
-          {(tab === "Overview" || tab === "Models" || tab === "Scenarios") && (
+          {(tab === "Models" || tab === "Scenarios") && (
             <div className="arm-control">
               <label>
                 Experimental arm{" "}
@@ -430,19 +472,19 @@ function App() {
           {(tab === "Overview" || tab === "Results") && (
             <div className="stats">
               <Stat
-                label="Completed evaluations"
-                value={String(completed.length)}
-                note={`${runs.filter((r) => ["blocked", "unavailable"].includes(r.status)).length} unavailable / blocked`}
+                label="Reference checks passed"
+                value={`${referenceRuns.filter((r) => r.success).length} / ${referenceRuns.length}`}
+                note="Software validation · all saved versions"
                 icon={<FlaskConical />}
               />
               <Stat
-                label="Outcome success · all versions"
-                value={
-                  completed.length
-                    ? percent(successes.length / completed.length)
-                    : "—"
+                label="AI evaluations completed"
+                value={String(modelRuns.length)}
+                note={
+                  modelRuns.length
+                    ? `${modelRuns.filter((r) => r.success).length} successful · compare matched cohorts in Results`
+                    : "No completed model evaluations yet"
                 }
-                note="Ready, handoff, simulated success or safe abort"
                 icon={<Check />}
               />
               <Stat
@@ -459,471 +501,576 @@ function App() {
               />
             </div>
           )}
-          {(tab === "Overview" || tab === "Models" || tab === "Scenarios") && (
-            <div className="configuration-grid">
+          {(tab === "Models" || tab === "Scenarios") && (
+            <div
+              className={
+                "configuration-grid " + (tab === "Models" ? "models-only" : "")
+              }
+            >
               <section className="card configuration">
                 <div className="cardhead">
                   <div>
-                    <span className="section-number">01</span>
-                    <h2>Configure an experiment</h2>
+                    <span className="section-number">
+                      {tab === "Models" ? "01" : "02"}
+                    </span>
+                    <h2>
+                      {tab === "Models"
+                        ? "Choose systems"
+                        : "Choose tasks and run settings"}
+                    </h2>
                   </div>
                   <span className="tag">Sequential execution</span>
                 </div>
                 <div className="cardbody">
-                  <div className="labelrow">
-                    <label>Models & architectures</label>
-                    <button
-                      className="textbutton"
-                      onClick={() =>
-                        setSelected(
-                          models
-                            .filter((m) => m.kind === "openrouter")
-                            .map((m) => m.id),
-                        )
-                      }
-                    >
-                      Select frontier shortlist
-                    </button>
-                  </div>
-                  <div className="model-list">
-                    {models.map((m) => (
-                      <label
-                        className={
-                          "model-option " +
-                          (selected.includes(m.id) ? "selected" : "")
-                        }
-                        key={m.id}
+                  {tab === "Scenarios" && (
+                    <div className="selection-summary">
+                      <b>
+                        Selected systems:{" "}
+                        {selected.map(displayName).join(", ") || "None"}
+                      </b>
+                      <button
+                        className="textbutton"
+                        onClick={() => setTab("Models")}
                       >
-                        <input
-                          type="checkbox"
-                          checked={selected.includes(m.id)}
-                          onChange={() => toggle(m.id, selected, setSelected)}
-                        />
-                        <span className={"model-symbol " + m.kind}>
-                          {m.kind === "reference" ? (
-                            <Terminal size={17} />
-                          ) : m.kind === "specialist" ? (
-                            <Cpu size={17} />
-                          ) : m.id.startsWith("openai") ? (
-                            "◎"
-                          ) : (
-                            "✳"
-                          )}
-                        </span>
-                        <div>
-                          <b>{m.name}</b>
-                          <small>
-                            {m.backend}
-                            {m.parameters || m.parameter_count
-                              ? ` · ${((m.parameters || m.parameter_count)! / 1e6).toFixed(2)}M params`
-                              : ""}
-                          </small>
-                          {tab === "Models" && (
-                            <small>
-                              {m.id} ·{" "}
-                              {m.pricing
-                                ? `${money(Number(m.pricing.prompt) * 1e6)}/M input · ${money(Number(m.pricing.completion) * 1e6)}/M output`
-                                : "Pricing: local / unavailable"}{" "}
-                              {m.vision ? "· Vision" : ""}{" "}
-                              {m.reasoning ? "· Reasoning" : ""}
-                            </small>
-                          )}
-                        </div>
-                        <span
-                          title={m.reason}
-                          className={
-                            "availability " + (m.available ? "yes" : "")
-                          }
-                        >
-                          {m.available
-                            ? m.status === "configured_unverified"
-                              ? "Configured"
-                              : "Ready"
-                            : "Unavailable"}
-                        </span>
-                      </label>
-                    ))}
-                  </div>
-                  <p className="fieldnote">
-                    {catalogNote}. Unavailable selections are recorded
-                    separately, never substituted.
-                  </p>
-                  <div className="searchrow">
-                    <input
-                      aria-label="Search exact model catalogue"
-                      placeholder="Find another exact model ID…"
-                      value={search}
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
-                    <button
-                      className="button secondary"
-                      onClick={async () => {
-                        try {
-                          const d = await api(
-                            "/models?q=" + encodeURIComponent(search),
-                          );
-                          setSearchModels(d.search || []);
-                        } catch (e) {
-                          setError((e as Error).message);
-                        }
-                      }}
-                    >
-                      Search
-                    </button>
-                    <button
-                      title="Refresh live catalogue"
-                      className="iconbutton"
-                      onClick={async () => {
-                        setLoading(true);
-                        try {
-                          await api("/models/refresh", {});
-                          await loadModels();
-                        } finally {
-                          setLoading(false);
-                        }
-                      }}
-                    >
-                      <RefreshCw size={16} />
-                    </button>
-                  </div>
-                  {searchModels.length > 0 && (
-                    <div className="searchresults">
-                      {searchModels.map((m) => (
-                        <button
-                          key={m.id}
-                          onClick={() => {
-                            setModels((old) =>
-                              old.some((x) => x.id === m.id)
-                                ? old
-                                : [...old, m],
-                            );
-                            setSelected((old) =>
-                              old.includes(m.id) ? old : [...old, m.id],
-                            );
-                            setSearchModels([]);
-                          }}
-                        >
-                          <Plus size={14} />
-                          {m.id}
-                        </button>
-                      ))}
+                        Change systems
+                      </button>
+                      <p>
+                        {selected.length === 1 && selected[0] === "reference"
+                          ? "Software validation only · no model inference calls"
+                          : "Model decisions and deterministic assistance are attributed separately."}
+                      </p>
                     </div>
                   )}
-                  <div className="form-divider" />
-                  <div className="labelrow">
-                    <label>Checkout scenarios</label>
-                    <div>
+                  <div hidden={tab !== "Models"}>
+                    <p className="fieldnote">
+                      The deterministic reference is a programmed software
+                      check. CUA selects field values; TinyClick locates clicks;
+                      the hybrid calls both. MAI-UI and UI-Venus propose visual
+                      actions; API agents plan browser actions.
+                    </p>
+                    <div className="labelrow">
+                      <label>Models & architectures</label>
                       <button
                         className="textbutton"
                         onClick={() =>
-                          setChosen(
-                            visibleScenarios
-                              .filter((s) => !s.features.includes("holdout"))
-                              .map((s) => s.id),
+                          setSelected(
+                            models
+                              .filter(
+                                (m) => m.kind === "openrouter" && m.available,
+                              )
+                              .map((m) => m.id),
                           )
                         }
                       >
-                        All core
-                      </button>
-                      <button
-                        className="textbutton"
-                        onClick={() =>
-                          setChosen(visibleScenarios.map((s) => s.id))
-                        }
-                      >
-                        Include holdouts
+                        Select available frontier models
                       </button>
                     </div>
-                  </div>
-                  <div className="formrow">
-                    <label>
-                      Benchmark suite
-                      <select
-                        value={suite}
-                        onChange={(e) => setSuite(e.target.value)}
-                      >
-                        <option value="1.0">v1.0 · preserved suite</option>
-                        <option value="2.1">
-                          v2.1 · isolated customer intent
-                        </option>
-                        <option value="2.0">
-                          v2.0 · historical, non-comparable
-                        </option>
-                        <option value="all">All · version labelled</option>
-                      </select>
-                    </label>
-                    <label>
-                      Environment
-                      <select
-                        value={environment}
-                        onChange={(e) => setEnvironment(e.target.value)}
-                      >
-                        <option value="all">All environments</option>
-                        {[...new Set(scenarios.map((s) => s.family))].map(
-                          (f) => (
-                            <option key={f}>{f}</option>
-                          ),
-                        )}
-                      </select>
-                    </label>
-                  </div>
-                  <div className="scenario-chips">
-                    {visibleScenarios.map((s) => (
+                    <p className="fieldnote">
+                      Scroll the list to see all API models and specialist
+                      systems.
+                    </p>
+                    <div
+                      className="model-list"
+                      role="group"
+                      aria-label="Available systems"
+                      tabIndex={0}
+                    >
+                      {models.map((m) => (
+                        <label
+                          className={
+                            "model-option " +
+                            (selected.includes(m.id) ? "selected" : "")
+                          }
+                          key={m.id}
+                        >
+                          <input
+                            type="checkbox"
+                            checked={selected.includes(m.id)}
+                            onChange={() => toggle(m.id, selected, setSelected)}
+                          />
+                          <span className={"model-symbol " + m.kind}>
+                            {m.kind === "reference" ? (
+                              <Terminal size={17} />
+                            ) : m.kind === "specialist" ? (
+                              <Cpu size={17} />
+                            ) : m.id.startsWith("openai") ? (
+                              "◎"
+                            ) : (
+                              "✳"
+                            )}
+                          </span>
+                          <div>
+                            <b>{m.name}</b>
+                            {m.kind === "reference" && (
+                              <small>
+                                Programmed rules · software validation · no AI
+                                inference
+                              </small>
+                            )}
+                            {!m.available && m.reason && (
+                              <small className="availability-reason">
+                                {m.reason}
+                              </small>
+                            )}
+                            <small>
+                              {m.backend}
+                              {m.parameters || m.parameter_count
+                                ? ` · ${((m.parameters || m.parameter_count)! / 1e6).toFixed(2)}M params`
+                                : ""}
+                            </small>
+                            {tab === "Models" && (
+                              <small>
+                                {m.id} ·{" "}
+                                {m.pricing
+                                  ? `${money(Number(m.pricing.prompt) * 1e6)}/M input · ${money(Number(m.pricing.completion) * 1e6)}/M output`
+                                  : "Pricing: local / unavailable"}{" "}
+                                {m.vision ? "· Vision" : ""}{" "}
+                                {m.reasoning ? "· Reasoning" : ""}
+                              </small>
+                            )}
+                          </div>
+                          <span
+                            title={m.reason}
+                            className={
+                              "availability " + (m.available ? "yes" : "")
+                            }
+                          >
+                            {m.available
+                              ? m.status === "configured_unverified"
+                                ? "Configured"
+                                : "Ready"
+                              : "Unavailable"}
+                          </span>
+                        </label>
+                      ))}
+                    </div>
+                    <p className="fieldnote">
+                      {catalogNote}. Unavailable selections are recorded
+                      separately, never substituted.
+                    </p>
+                    <div className="searchrow">
+                      <input
+                        aria-label="Search exact model catalogue"
+                        placeholder="Find another exact model ID…"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
                       <button
-                        title={`v${s.benchmark_version} · ${s.family} · ${s.title}`}
-                        key={s.id}
-                        className={
-                          (chosen.includes(s.id) ? "selected " : "") +
-                          (s.features.includes("holdout") ? "holdout" : "")
-                        }
-                        onClick={() => {
-                          toggle(s.id, chosen, setChosen);
-                          setFocus(s.id);
+                        className="button secondary"
+                        onClick={async () => {
+                          try {
+                            const d = await api(
+                              "/models?q=" + encodeURIComponent(search),
+                            );
+                            setSearchModels(d.search || []);
+                          } catch (e) {
+                            setError((e as Error).message);
+                          }
                         }}
                       >
-                        {s.id}
-                        {chosen.includes(s.id) && <Check size={11} />}
+                        Search
                       </button>
-                    ))}
-                  </div>
-                  <div className="formrow">
-                    <label>
-                      Synthetic customer
-                      <select
-                        value={profile}
-                        onChange={(e) => setProfile(e.target.value)}
+                      <button
+                        title="Refresh live catalogue"
+                        className="iconbutton"
+                        onClick={async () => {
+                          setLoading(true);
+                          try {
+                            await api("/models/refresh", {});
+                            await loadModels();
+                          } finally {
+                            setLoading(false);
+                          }
+                        }}
                       >
-                        <option value="">Scenario default profile</option>
-                        {profiles.map((p) => (
-                          <option key={p.id} value={p.id}>
-                            {p.name}
-                          </option>
+                        <RefreshCw size={16} />
+                      </button>
+                    </div>
+                    {searchModels.length > 0 && (
+                      <div className="searchresults">
+                        {searchModels.map((m) => (
+                          <button
+                            key={m.id}
+                            onClick={() => {
+                              setModels((old) =>
+                                old.some((x) => x.id === m.id)
+                                  ? old
+                                  : [...old, m],
+                              );
+                              setSelected((old) =>
+                                old.includes(m.id) ? old : [...old, m.id],
+                              );
+                              setSearchModels([]);
+                            }}
+                          >
+                            <Plus size={14} />
+                            {m.id}
+                          </button>
                         ))}
-                      </select>
-                    </label>
-                    <label>
-                      Trials per scenario
-                      <input
-                        aria-label="Trials per scenario"
-                        type="number"
-                        min="1"
-                        max="100"
-                        value={repeats}
-                        onChange={(e) => setRepeats(+e.target.value)}
-                      />
-                    </label>
+                      </div>
+                    )}
+                    <button
+                      className="button primary"
+                      disabled={!selected.length}
+                      onClick={() => setTab("Scenarios")}
+                    >
+                      Next: choose scenarios →
+                    </button>
                   </div>
-                  <details>
-                    <summary>
-                      Advanced experiment settings <Plus size={14} />
-                    </summary>
+                  <div hidden={tab !== "Scenarios"}>
+                    <div className="labelrow">
+                      <label>Checkout scenarios</label>
+                      <div>
+                        <button
+                          className="textbutton"
+                          onClick={() =>
+                            setChosen(
+                              visibleScenarios
+                                .filter((s) => !s.features.includes("holdout"))
+                                .map((s) => s.id),
+                            )
+                          }
+                        >
+                          All core
+                        </button>
+                        <button
+                          className="textbutton"
+                          onClick={() =>
+                            setChosen(visibleScenarios.map((s) => s.id))
+                          }
+                        >
+                          Select all shown
+                        </button>
+                        <button
+                          className="textbutton"
+                          onClick={() => setChosen([])}
+                        >
+                          Clear selection
+                        </button>
+                      </div>
+                    </div>
                     <div className="formrow">
                       <label>
-                        Scenario seed
-                        <input
-                          type="number"
-                          value={seed}
-                          onChange={(e) => setSeed(+e.target.value)}
-                        />
-                      </label>
-                      <label>
-                        Maximum actions
-                        <input
-                          type="number"
-                          value={steps}
-                          onChange={(e) => setSteps(+e.target.value)}
-                        />
-                      </label>
-                      <label>
-                        Timeout / seconds
-                        <input
-                          type="number"
-                          value={timeout}
-                          onChange={(e) => setTimeoutValue(+e.target.value)}
-                        />
-                      </label>
-                      <label>
-                        Output token budget
-                        <input
-                          type="number"
-                          value={tokens}
-                          onChange={(e) => setTokens(+e.target.value)}
-                        />
-                      </label>
-                      <label>
-                        Reasoning effort
+                        Benchmark suite
                         <select
-                          value={reasoning}
-                          onChange={(e) => setReasoning(e.target.value)}
+                          value={suite}
+                          onChange={(e) => setSuite(e.target.value)}
                         >
-                          {[
-                            "default",
-                            "none",
-                            "minimal",
-                            "low",
-                            "medium",
-                            "high",
-                            "xhigh",
-                            "max",
-                          ].map((r) => (
-                            <option key={r}>{r}</option>
+                          <option value="1.0">v1.0 · preserved suite</option>
+                          <option value="2.1">
+                            v2.1 · isolated customer intent
+                          </option>
+                          <option value="2.0">
+                            v2.0 · historical, non-comparable
+                          </option>
+                          <option value="all">All · version labelled</option>
+                        </select>
+                      </label>
+                      <label>
+                        Environment
+                        <select
+                          value={environment}
+                          onChange={(e) => setEnvironment(e.target.value)}
+                        >
+                          <option value="all">All environments</option>
+                          {[...new Set(scenarios.map((s) => s.family))].map(
+                            (f) => (
+                              <option key={f}>{f}</option>
+                            ),
+                          )}
+                        </select>
+                      </label>
+                    </div>
+                    <div
+                      className="scenario-chips"
+                      role="group"
+                      aria-label="Scenario selection"
+                      tabIndex={0}
+                    >
+                      {visibleScenarios.map((s) => (
+                        <button
+                          title={`v${s.benchmark_version} · ${s.family} · ${s.title}`}
+                          key={s.id}
+                          className={
+                            (chosen.includes(s.id) ? "selected " : "") +
+                            (s.features.includes("holdout") ? "holdout" : "")
+                          }
+                          onClick={() => {
+                            toggle(s.id, chosen, setChosen);
+                            setFocus(s.id);
+                          }}
+                        >
+                          <span>
+                            <b>{s.id}</b> · {s.title}
+                          </span>
+                          {chosen.includes(s.id) && <Check size={11} />}
+                        </button>
+                      ))}
+                    </div>
+                    <p className="fieldnote">
+                      Scroll to browse all tasks. {chosen.length} selected ·{" "}
+                      {
+                        chosen.filter(
+                          (id) => !visibleScenarios.some((s) => s.id === id),
+                        ).length
+                      }{" "}
+                      outside the current filters. Filters do not change your
+                      selection. Each trial starts with a fresh browser.
+                    </p>
+                    <div className="formrow">
+                      <label>
+                        Synthetic customer
+                        <select
+                          value={profile}
+                          onChange={(e) => setProfile(e.target.value)}
+                        >
+                          <option value="">Scenario default profile</option>
+                          {profiles.map((p) => (
+                            <option key={p.id} value={p.id}>
+                              {p.name}
+                            </option>
                           ))}
                         </select>
                       </label>
                       <label>
-                        Batch spending cap / USD
+                        Trials per scenario
                         <input
-                          placeholder="No cap"
-                          value={cap}
-                          onChange={(e) => setCap(e.target.value)}
+                          aria-label="Trials per scenario"
                           type="number"
-                          step="0.01"
-                          min="0.01"
+                          min="1"
+                          max="100"
+                          value={repeats}
+                          onChange={(e) => setRepeats(+e.target.value)}
                         />
                       </label>
                     </div>
-                    <p className="fieldnote">
-                      Reasoning is passed only when advertised.
-                      Provider-rejected effort levels are reported; they are
-                      never silently lowered.
-                    </p>
-                    <label className="checkboxline">
-                      <input
-                        type="checkbox"
-                        checked={video}
-                        onChange={(e) => setVideo(e.target.checked)}
-                      />
-                      Record browser video
-                    </label>
-                  </details>
-                  <div className="launchrow">
+                    <details>
+                      <summary>
+                        Advanced experiment settings <Plus size={14} />
+                      </summary>
+                      <div className="formrow">
+                        <label>
+                          Scenario seed
+                          <input
+                            type="number"
+                            value={seed}
+                            onChange={(e) => setSeed(+e.target.value)}
+                          />
+                        </label>
+                        <label>
+                          Maximum actions
+                          <input
+                            type="number"
+                            value={steps}
+                            onChange={(e) => setSteps(+e.target.value)}
+                          />
+                        </label>
+                        <label>
+                          Timeout / seconds
+                          <input
+                            type="number"
+                            value={timeout}
+                            onChange={(e) => setTimeoutValue(+e.target.value)}
+                          />
+                        </label>
+                        <label>
+                          Output token budget
+                          <input
+                            type="number"
+                            value={tokens}
+                            onChange={(e) => setTokens(+e.target.value)}
+                          />
+                        </label>
+                        <label>
+                          Reasoning effort
+                          <select
+                            value={reasoning}
+                            onChange={(e) => setReasoning(e.target.value)}
+                          >
+                            {[
+                              "default",
+                              "none",
+                              "minimal",
+                              "low",
+                              "medium",
+                              "high",
+                              "xhigh",
+                              "max",
+                            ].map((r) => (
+                              <option key={r}>{r}</option>
+                            ))}
+                          </select>
+                        </label>
+                        <label>
+                          Batch spending cap / USD
+                          <input
+                            placeholder="No cap"
+                            value={cap}
+                            onChange={(e) => setCap(e.target.value)}
+                            type="number"
+                            step="0.01"
+                            min="0.01"
+                          />
+                        </label>
+                      </div>
+                      <p className="fieldnote">
+                        Reasoning is passed only when advertised.
+                        Provider-rejected effort levels are reported; they are
+                        never silently lowered.
+                      </p>
+                      <label className="checkboxline">
+                        <input
+                          type="checkbox"
+                          checked={video}
+                          onChange={(e) => setVideo(e.target.checked)}
+                        />
+                        Record browser video
+                      </label>
+                    </details>
+                    <button
+                      className="textbutton"
+                      onClick={() => setupReference(false)}
+                    >
+                      Reset setup to one software check
+                    </button>
+                    <div className="launchrow">
+                      <div>
+                        <b>
+                          {(agentMode === "paired_link"
+                            ? 1 + 2 * selected.length
+                            : selected.length) *
+                            chosen.length *
+                            repeats}{" "}
+                          evaluations
+                        </b>
+                        <small>
+                          {selected.length} models · {chosen.length} scenarios ·{" "}
+                          {repeats} trials
+                        </small>
+                      </div>
+                      <button
+                        className="button primary"
+                        disabled={
+                          loading ||
+                          state.running ||
+                          !selected.length ||
+                          !chosen.length
+                        }
+                        onClick={prepare}
+                      >
+                        {loading ? (
+                          <LoaderCircle className="spin" size={16} />
+                        ) : (
+                          <Play size={15} />
+                        )}
+                        Review & run
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              {tab === "Scenarios" && (
+                <section className="card previewcard">
+                  <div className="cardhead">
                     <div>
-                      <b>
-                        {selected.length * chosen.length * repeats} evaluations
-                      </b>
-                      <small>
-                        {selected.length} models · {chosen.length} scenarios ·{" "}
-                        {repeats} trials
-                      </small>
+                      <span className="section-number">02</span>
+                      <h2>Scenario preview</h2>
                     </div>
                     <button
-                      className="button primary"
-                      disabled={
-                        loading ||
-                        state.running ||
-                        !selected.length ||
-                        !chosen.length
+                      className="iconbutton"
+                      title="Reset scenario preview"
+                      onClick={() =>
+                        api(
+                          `/preview/${focus}?seed=${seed}${profile ? "&profile=" + profile : ""}`,
+                          {},
+                        ).then((d) => {
+                          setPreview(d.url);
+                          setPreviewTask(JSON.stringify(d.task, null, 2));
+                        })
                       }
-                      onClick={prepare}
                     >
-                      {loading ? (
-                        <LoaderCircle className="spin" size={16} />
-                      ) : (
-                        <Play size={15} />
-                      )}
-                      Review & run
+                      <RefreshCw size={15} />
                     </button>
                   </div>
-                </div>
-              </section>
-              <section className="card previewcard">
-                <div className="cardhead">
-                  <div>
-                    <span className="section-number">02</span>
-                    <h2>Scenario preview</h2>
+                  <div className="preview-intro">
+                    <select
+                      aria-label="Preview scenario"
+                      value={focus}
+                      onChange={(e) => setFocus(e.target.value)}
+                    >
+                      {resultScenarios.map((s) => (
+                        <option value={s.id} key={s.id}>
+                          v{s.benchmark_version} · {s.id} — {s.title}
+                        </option>
+                      ))}
+                    </select>
+                    <div className="tags">
+                      <span className={"tag theme-" + scenario?.theme}>
+                        {scenario?.theme === "razor"
+                          ? "Razorpay"
+                          : scenario?.theme === "cashfree"
+                            ? "Cashfree"
+                            : scenario?.theme === "stripe"
+                              ? "Stripe"
+                              : "Indian commerce"}{" "}
+                        inspired
+                      </span>
+                      <span className="tag">{scenario?.difficulty}</span>
+                      <span className="tag">Seed {seed}</span>
+                    </div>
                   </div>
-                  <button
-                    className="iconbutton"
-                    title="Reset scenario preview"
-                    onClick={() =>
-                      api(
-                        `/preview/${focus}?seed=${seed}${profile ? "&profile=" + profile : ""}`,
-                        {},
-                      ).then((d) => {
-                        setPreview(d.url);
-                        setPreviewTask(JSON.stringify(d.task, null, 2));
-                      })
-                    }
-                  >
-                    <RefreshCw size={15} />
-                  </button>
-                </div>
-                <div className="preview-intro">
-                  <select
-                    aria-label="Preview scenario"
-                    value={focus}
-                    onChange={(e) => setFocus(e.target.value)}
-                  >
-                    {scenarios.map((s) => (
-                      <option value={s.id} key={s.id}>
-                        v{s.benchmark_version} · {s.id} — {s.title}
-                      </option>
-                    ))}
-                  </select>
-                  <div className="tags">
-                    <span className={"tag theme-" + scenario?.theme}>
-                      {scenario?.theme === "razor"
-                        ? "Razorpay"
-                        : scenario?.theme === "cashfree"
-                          ? "Cashfree"
-                          : scenario?.theme === "stripe"
-                            ? "Stripe"
-                            : "Indian commerce"}{" "}
-                      inspired
-                    </span>
-                    <span className="tag">{scenario?.difficulty}</span>
-                    <span className="tag">Seed {seed}</span>
+                  <div className="browserchrome">
+                    <span />
+                    <span />
+                    <span />
+                    <small>localhost · isolated checkout</small>
+                    <ShieldCheck size={12} />
                   </div>
-                </div>
-                <div className="browserchrome">
-                  <span />
-                  <span />
-                  <span />
-                  <small>localhost · isolated checkout</small>
-                  <ShieldCheck size={12} />
-                </div>
-                <div className="preview-window">
-                  {preview ? (
-                    <iframe
-                      title="Interactive checkout preview"
-                      src={preview}
-                    />
-                  ) : (
-                    <div className="empty">Loading preview…</div>
-                  )}
-                </div>
-                <div className="previewfooter">
-                  <div>
-                    <span className="dot" />
-                    Fully local, interactive preview
+                  <div className="preview-window">
+                    {preview ? (
+                      <iframe
+                        title="Interactive checkout preview"
+                        src={preview}
+                      />
+                    ) : (
+                      <div className="empty">Loading preview…</div>
+                    )}
                   </div>
-                  <a href={preview} target="_blank">
-                    Open checkout <ArrowRight size={13} />
-                  </a>
-                </div>
-                <div className="objective">
-                  <h3>Task objective</h3>
-                  <p>
-                    Complete the synthetic delivery details and prepare{" "}
-                    {scenario?.app || scenario?.method.replace("upi_", "UPI ")}.
-                    Stop at the simulated authorisation stage.
-                  </p>
-                  <details>
-                    <summary>View the synthetic agent task</summary>
-                    <pre>{previewTask}</pre>
-                  </details>
-                </div>
-                <div className="fairness">
-                  <ShieldCheck size={18} />
-                  <p>
-                    <b>Same conditions. Fair comparisons.</b> Every trial starts
-                    with a fresh browser and the scenario’s fixed viewport,
-                    profile, and seed.
-                  </p>
-                </div>
-              </section>
+                  <div className="previewfooter">
+                    <div>
+                      <span className="dot" />
+                      Fully local, interactive preview
+                    </div>
+                    <a href={preview} target="_blank">
+                      Open checkout <ArrowRight size={13} />
+                    </a>
+                  </div>
+                  <div className="objective">
+                    <h3>Task objective</h3>
+                    <p>
+                      {scenario?.title}. Expected endpoint:{" "}
+                      {scenario?.expected_outcome ||
+                        "authorisation preparation"}
+                      . This practice preview is separate from scored runs.
+                    </p>
+                    <details>
+                      <summary>View the synthetic agent task</summary>
+                      <pre>{previewTask}</pre>
+                    </details>
+                  </div>
+                  <div className="fairness">
+                    <ShieldCheck size={18} />
+                    <p>
+                      <b>Same conditions. Fair comparisons.</b> Every trial
+                      starts with a fresh browser and the scenario’s fixed
+                      viewport, profile, and seed.
+                    </p>
+                  </div>
+                </section>
+              )}
             </div>
           )}
+          {tab === "Scenarios" && <WorkspaceHelp />}
           {tab === "Coverage" && <Coverage />}
           {(tab === "Live session" ||
             (tab === "Overview" && state.running)) && (
@@ -1024,12 +1171,12 @@ function App() {
               </div>
             </section>
           )}
-          {(tab === "Overview" || tab === "Results") && (
+          {tab === "Results" && (
             <section className="card leaderboard">
               <div className="cardhead">
                 <div>
                   <BarChart3 size={18} />
-                  <h2>Performance leaderboard</h2>
+                  <h2>Saved results by system</h2>
                 </div>
                 <div className="leaderboard-controls">
                   <label>
@@ -1047,13 +1194,25 @@ function App() {
                       <option value="2.0">v2.0</option>
                     </select>
                   </label>
-                  <span className="tag">Reliability first</span>
+                  <label>
+                    Result type{" "}
+                    <select
+                      aria-label="Result type"
+                      value={resultKind}
+                      onChange={(e) => setResultKind(e.target.value)}
+                    >
+                      <option value="all">All systems, labelled</option>
+                      <option value="reference">Reference checks only</option>
+                      <option value="models">AI systems only</option>
+                    </select>
+                  </label>
                 </div>
               </div>
               <p className="table-caption">
-                Ranked by checkout-ready success, confidence, successful-run
-                latency, then actions and cost. Compare rows on matching
-                scenarios and settings.
+                These filters apply to the system table, scenario matrix and run
+                history below. Saved runs aggregate by matching configuration;
+                compare the same scenarios and budgets. Reference results
+                validate fixtures and are not AI capability scores.
               </p>
               <div className="tablewrap">
                 <table>
@@ -1068,60 +1227,53 @@ function App() {
                     </tr>
                   </thead>
                   <tbody>
-                    {board
-                      .filter(
-                        (r) =>
-                          boardVersion === "all" ||
-                          (r.benchmark_version || "1.0") === boardVersion,
-                      )
-                      .map((r, i) => (
-                        <tr key={r.model + r.reasoning + i}>
-                          <td>
-                            <b>{displayName(r.model)}</b>
-                            <small>
-                              v{r.benchmark_version || "1.0"} ·{" "}
-                              {r.agent_mode || "standard"}
-                            </small>
-                            <small>
-                              {r.kind === "reference"
-                                ? "Fixture validation baseline"
-                                : r.reasoning + " reasoning"}{" "}
-                              · {r.runs} runs ·{" "}
-                              {r.platform || "legacy unspecified"} ·{" "}
-                              {r.integrity_class ||
-                                "historical, non-comparable"}{" "}
-                              · cohort {r.cohort}
-                            </small>
-                          </td>
-                          <td>
-                            <div className="rate">
-                              <b>{percent(r.success_rate)}</b>
-                              <div>
-                                <i style={{ width: percent(r.success_rate) }} />
-                              </div>
+                    {visibleBoard.map((r, i) => (
+                      <tr key={r.model + r.reasoning + i}>
+                        <td>
+                          <b>{displayName(r.model)}</b>
+                          <small>
+                            v{r.benchmark_version || "1.0"} ·{" "}
+                            {r.agent_mode || "standard"}
+                          </small>
+                          <small>
+                            {r.kind === "reference"
+                              ? "Fixture validation baseline"
+                              : r.reasoning + " reasoning"}{" "}
+                            · {r.runs} runs ·{" "}
+                            {r.platform || "legacy unspecified"} ·{" "}
+                            {r.integrity_class || "historical, non-comparable"}{" "}
+                            · cohort {r.cohort}
+                          </small>
+                        </td>
+                        <td>
+                          <div className="rate">
+                            <b>{percent(r.success_rate)}</b>
+                            <div>
+                              <i style={{ width: percent(r.success_rate) }} />
                             </div>
-                          </td>
-                          <td>
-                            {percent(r.ci95[0])}–{percent(r.ci95[1])}
-                          </td>
-                          <td>
-                            {r.median_seconds === null
-                              ? "—"
-                              : r.median_seconds.toFixed(1) + "s"}
-                          </td>
-                          <td>{percent(r.field_accuracy)}</td>
-                          <td>{money(r.cost_per_success)}</td>
-                        </tr>
-                      ))}
+                          </div>
+                        </td>
+                        <td>
+                          {percent(r.ci95[0])}–{percent(r.ci95[1])}
+                        </td>
+                        <td>
+                          {r.median_seconds === null
+                            ? "—"
+                            : r.median_seconds.toFixed(1) + "s"}
+                        </td>
+                        <td>{percent(r.field_accuracy)}</td>
+                        <td>{money(r.cost_per_success)}</td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
-                {!board.length && (
+                {!visibleBoard.length && (
                   <div className="empty compact">
                     <FlaskConical size={26} />
-                    <h3>No benchmark results yet</h3>
+                    <h3>No results match these filters</h3>
                     <p>
-                      Start with the reference executor to validate the
-                      environments.
+                      Choose Reference checks to see software validation, or run
+                      a configured model to collect AI results.
                     </p>
                   </div>
                 )}
@@ -1175,23 +1327,25 @@ function App() {
               <section className="card">
                 <div className="cardhead">
                   <h2>Success by scenario</h2>
-                  <span className="tag">Core + unseen holdouts</span>
+                  <span className="tag">
+                    Core + labelled regression holdouts
+                  </span>
                 </div>
                 <div className="tablewrap">
                   <table className="matrix">
                     <thead>
                       <tr>
                         <th>System</th>
-                        {scenarios.map((s) => (
+                        {resultScenarios.map((s) => (
                           <th key={s.id}>{s.id}</th>
                         ))}
                       </tr>
                     </thead>
                     <tbody>
-                      {board.map((b, i) => (
+                      {visibleBoard.map((b, i) => (
                         <tr key={i}>
                           <td>{displayName(b.model)}</td>
-                          {scenarios.map((s) => (
+                          {resultScenarios.map((s) => (
                             <td key={s.id}>
                               <span
                                 className={
@@ -1322,18 +1476,35 @@ function App() {
       </div>
       {estimate && (
         <div className="overlay">
-          <section className="dialog">
-            <button className="close" onClick={() => setEstimate(null)}>
+          <section
+            className="dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Review batch"
+          >
+            <button
+              className="close"
+              aria-label="Cancel"
+              onClick={() => setEstimate(null)}
+            >
               <X size={18} />
             </button>
-            <div className="eyebrow">READY TO BENCHMARK</div>
-            <h2>{estimate.runs} evaluations, identical conditions.</h2>
+            <div className="eyebrow">REVIEW BEFORE STARTING</div>
+            <h2>
+              {estimate.runs}{" "}
+              {estimate.runs === 1 ? "evaluation" : "evaluations"}, identical
+              conditions.
+            </h2>
             <p>{selected.map(displayName).join(", ")}</p>
             <div className="estimate">
               <span>Estimated inference expenditure</span>
               <b>{money(estimate.estimated_cost)}</b>
             </div>
-            <p className="fieldnote">{estimate.assumption}</p>
+            <p className="fieldnote">
+              {selected.every((id) => id === "reference")
+                ? "Software validation only. Programmed rules drive the browser; no model inference is requested. A pass is not an AI score."
+                : estimate.assumption}
+            </p>
             {estimate.unknown.length > 0 && (
               <p className="notice">
                 Pricing unavailable for {estimate.unknown.join(", ")}. Missing
@@ -1341,8 +1512,9 @@ function App() {
               </p>
             )}
             <p>
-              {cap ? `Spending cap: $${cap}` : "No spending cap configured."}{" "}
-              Three or more trials are recommended for initial comparisons.
+              {selected.every((id) => id === "reference")
+                ? "One trial per scenario is a useful software check. Each trial gets a fresh browser and checkout session."
+                : `${cap ? `Spending cap: $${cap}.` : "No spending cap configured."} Three or more trials are recommended for initial model comparisons.`}
             </p>
             <button
               className="button primary full"
@@ -1350,7 +1522,9 @@ function App() {
               onClick={launch}
             >
               <Play size={15} />
-              Start benchmark
+              {selected.every((id) => id === "reference")
+                ? "Start software check"
+                : "Start benchmark"}
             </button>
           </section>
         </div>

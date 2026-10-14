@@ -1,6 +1,29 @@
 # CheckoutBench 2.1
 
-A local research platform for comparing AI checkout systems on synthetic Indian delivery, UPI and test-card tasks. React/TypeScript dashboard, FastAPI, Playwright, Browser Use and SQLite. **All checkouts and payments are simulated.** Scored runs use local fictional fixtures. Optional official-sandbox validation is separate and disabled by default.
+CheckoutBench is a local browser-automation benchmark for testing checkout software and evaluating AI checkout systems. It includes a React/TypeScript dashboard, FastAPI runner, real Chromium browser execution, private scoring and SQLite results. **All scored checkouts and payments are simulated.** Optional official-sandbox validation is separate and disabled by default.
+
+There are two different uses:
+
+- **Validate the benchmark software:** a deterministic reference controller follows programmed rules. These runs check fixture solvability, scoring, browser behavior and logging without model inference.
+- **Evaluate an AI system:** a configured model supplies decisions through its adapter. The runner records model calls, actions, latency, errors and cost separately from deterministic assistance. Only these runs provide model-performance evidence.
+
+The current suite contains **74 v2.1 scenarios across nine environment families**, with 18 v1 and 56 v2 scenarios preserved for historical reference replay. Browser-based flows include merchant forms, hosted payments, embedded components, gateway modals, popups, redirects, QR handoff and fictional authentication. Provider and government interfaces are labelled approximations, with source confidence visible in Coverage.
+
+```mermaid
+flowchart LR
+    UI[Dashboard: choose system and scenarios] --> Runner[Runner: fresh session and fixed conditions]
+    Runner --> Decision[Reference rules or model adapter]
+    Decision --> Browser[Chromium browser actions]
+    Browser --> Fixture[Local simulated checkout]
+    Fixture --> Evaluator[Private outcome evaluator]
+    Browser --> Evidence[Screenshots and action traces]
+    Evaluator --> Results[SQLite results and exports]
+    Evidence --> Results
+```
+
+Playwright launches and operates the browser for reference/specialist paths and test automation. Browser Use provides the API-agent action loop. Neither browser tool is itself an AI model. Private answer keys are used for scoring, not supplied as field mappings to v2.1 models.
+
+![Guided dashboard overview](docs/ui/screenshots/overview-1440.png)
 
 
 ## v2.1 integrity and source fidelity
@@ -35,7 +58,7 @@ uv sync --python 3.12 --extra test --extra agent
 .venv/bin/playwright install chromium
 npm --prefix frontend ci
 npm --prefix frontend run build
-cp .env.example .env
+[ -f .env ] || cp .env.example .env
 ./scripts/start.sh
 ```
 
@@ -43,14 +66,58 @@ Open **http://127.0.0.1:8000**. The isolated checkout origin is **http://127.0.0
 
 If `uv` encounters an obsolete system interpreter on macOS, use `UV_PYTHON_PREFERENCE=only-managed uv python install 3.12`, then prefix the sync command with `UV_PYTHON_PREFERENCE=only-managed`. If Node reports a certificate-chain error on a managed Mac, use `NODE_EXTRA_CA_CERTS=/etc/ssl/cert.pem npm --prefix frontend ci` when that file contains your trusted CA bundle. Certificate verification remains enabled. The backend uses `SSL_CERT_FILE`, or `/etc/ssl/cert.pem` when available.
 
-## Run an experiment
+## Dashboard guide
 
-1. Select one or more models. The deterministic reference is a **fixture validation baseline**, not an AI model.
-2. Select a version and environment, then scenarios or holdouts. V1 retains its 15 core scenarios and three holdouts. Pick a synthetic customer, or use each scenario's default.
-3. Keep the initial three repetitions, or increase them. Advanced settings control seed, actions, timeout, output tokens, reasoning effort, video and optional batch spend cap.
-4. Review the estimated API expenditure, then start. Runs execute sequentially with a new browser profile and the same scenario-specific viewport across models (v1: 1280 × 900).
-5. Watch screenshots and actions in **Live session**. Pause takes effect at the next controller/agent boundary. Stop cancels the active run and remaining queue.
-6. Inspect **Results** for leaderboard, per-scenario success, action replay, videos and JSON/CSV exports. Unavailable, blocked and stopped runs are excluded from model failure rates.
+| Section | What it does | Typical next step |
+| --- | --- | --- |
+| **Overview** | Explains the system and offers one-scenario or full-v2.1 software-check presets. Shows reference and AI totals separately. | Prepare a software check, or go to Models. |
+| **Models** | Selects the decision-maker; shows availability, missing setup, architecture and API catalogue information. | Choose systems, then select **Next: choose scenarios**. |
+| **Scenarios** | Selects tasks, customer, repetitions and limits. Shows a separate interactive practice preview. | Review the batch, then explicitly start it. |
+| **Coverage** | Shows source provenance, fidelity limits, author criteria and reference validation status. | Explore a scenario manually or validate one reference path. |
+| **Live session** | Shows batch progress, screenshots and action traces; supports pause, resume and stop. | Watch execution or stop the remaining queue. |
+| **Results** | Shows saved system results, scenario matrix, run history, replay and JSON/CSV exports. | Filter by version and reference versus AI; inspect failures. |
+
+Result filters apply to the system table, scenario matrix and run history. Overview totals describe all saved versions. Link comparisons have their own equivalent-arm pairing. Exports contain **all saved runs**, regardless of display filters. Matching configurations accumulate across batches in the current results directory.
+
+### First run: check the software without AI
+
+1. Open Overview and choose **Set up a quick software check**, or **Set up all v2.1 checks** for all 74 scenarios.
+2. The preset selects only the reference controller, one repetition, seed 2026, 100 maximum actions and a 180-second timeout per trial. It does not start automatically.
+3. On Scenarios, inspect the selection and choose **Review & run**.
+4. The review identifies the batch as software validation with no model inference. Choose **Start software check**.
+5. Follow Live session, then inspect Results. A pass means the programmed fixture path and checks worked; it is not an AI capability score.
+
+To run the same complete reference suite against the running app from another terminal:
+
+```sh
+.venv/bin/python -m scripts.check --suite 2.1 --repeats 1
+```
+
+### Evaluate actual models
+
+1. Open Models and select one or more configured systems. **Configured** still requires a successful real inference check; **Unavailable** explains what setup is missing.
+2. Continue to Scenarios and select v2.1 tasks. Keep the same customer, seed, viewport, action budget and timeout across compared systems.
+3. Set repetitions and optional spending cap. Review estimated expenditure, then explicitly start. API model runs may incur charges; local specialists require their actual checkpoints and dependencies.
+4. Use Results to compare matched configurations and inspect model-versus-controller attribution. Missing systems are recorded as unavailable rather than silently replaced.
+
+Link's A/B/C arms are optional specialized comparisons; keep **Standard benchmark** for ordinary software checks and model evaluations. New model batches use v2.1. Earlier versions remain available for reference replay.
+
+### Start fresh without deleting history
+
+Each scored trial automatically starts with a **fresh browser profile and checkout session**. Cookies, form entries and prior transaction state do not carry into the next trial.
+
+- **Reset preview** creates a fresh practice checkout only; it does not affect active batches or saved results.
+- **Reset setup to one software check** restores the reference selection and default settings, preserving results.
+- **Clear selection** deselects scenarios; it does not delete their results.
+- **Stop** cancels the current run and remaining queue, retaining recorded evidence.
+
+There is no delete-history button. For an empty results dashboard, stop the batch and wait for it to stop, stop the server with Ctrl+C in its terminal, then start with a new data directory from the repository root:
+
+```sh
+BENCH_DATA_DIR="data/suites/$(date +%Y%m%d-%H%M%S)" ./scripts/start.sh
+```
+
+Refresh the dashboard. The new folder contains its own SQLite database and artifacts, while `.env`, original results and earlier suites remain untouched. Use a fixed `BENCH_DATA_DIR` path to reopen a particular suite. Stop the server and run `./scripts/start.sh` normally to return to the original `data/` history (or the directory configured in `.env`). Do not delete or move the database while the server is running.
 
 No inference spending cap is imposed by default. The action and timeout limits bound execution. The planning estimate assumes 6,000 input tokens and the full output budget per step; it is explicitly an estimate. If a cap is set, OpenRouter/direct calls reserve a conservative context-window cost ceiling **before** sending each request. Provider-reported cost replaces the reservation; missing usage is estimated and interrupted/uncertain calls retain their reservation. Provider pricing can change, so a provider-side credit limit remains the final billing control. Self-hosted specialist endpoint hosting/GPU costs are outside the API-cost ledger and are marked unreported when no cost is returned. A batch cap blocks remote specialist systems whose billing cannot be bounded; use local inference or an endpoint-side quota.
 
@@ -87,7 +154,7 @@ See [docs/SPECIALISTS.md](docs/SPECIALISTS.md) for real model inference, exact r
 
 Weights are never downloaded on application startup. Missing dependencies, weights, hardware or endpoints produce unavailable runs. Local inference is lazy and uses safetensors. CUA-S1 is not a generative LLM. The requested TinyClick repository currently has no weight files; its example mentions a different repository, which is not silently substituted.
 
-The reference/TinyClick controller uses public form names, labels, options and the supplied profile. It has no scenario-ID branches or access to the evaluator. It supplies workflow policy and field entry for TinyClick; this is a **system comparison**, not evidence that TinyClick independently solves checkout. CUA-S1 controls delivery/billing field assignments; payment orchestration is deterministic. Model-level field and grounding scores are recorded separately from end-to-end success. GUI agents receive screenshots, the public task and action history.
+In v2.1, the reference/TinyClick controller uses visible semantics and the independent customer profile. It has no evaluator access. TinyClick-only runs receive deterministic value-selection and workflow assistance; TinyClick supplies screenshot-grounded clicks. CUA-S1 supplies field-value choices, and the hybrid uses both predictions. Deterministic lifecycle actions remain separately attributed. This is a **system comparison**, not evidence that every specialist independently plans an entire checkout. GUI agents receive screenshots, the public task and action history; historical v1/v2 controller behavior is not comparable.
 
 Hardware planning: core reference/browser runs need no GPU; 8 GB system RAM is a practical starting point. CUA-S1 can run on CPU. TinyClick typically needs several GB of working memory. The 2B GUI systems should be planned around 8–12+ GB GPU/unified memory, depending on image/token budget; CPU fallback is slow. These are estimates, not measured requirements on this machine. CUDA/MPS/CPU detection and dependency state appear in model metadata. A configured model is marked `configured_unverified` until real inference succeeds. Local cancellation cannot forcibly interrupt a PyTorch kernel already executing; bounded generation may finish in its worker thread after Stop.
 
@@ -150,6 +217,10 @@ curl http://127.0.0.1:8000/api/export/csv -o benchmark.csv
 Exports retain conditions and exact configuration. They are deterministic snapshots while no run is changing. Action replays are screenshots, not re-execution of recorded transactions.
 
 ## Tests
+
+The full software suite requires no paid inference. It combines unit tests, real-browser reference paths and deliberately wrong model-response test doubles. It checks fixture workflows, scoring, isolation, authentication/QR handoff, model action contracts, guided dashboard setup and result filters. Test doubles establish integration behavior, not model quality.
+
+[Dashboard update and validation evidence](docs/ui/IMPLEMENTATION_REPORT.md) includes desktop/mobile captures and the latest complete regression result.
 
 ```sh
 .venv/bin/pytest -q

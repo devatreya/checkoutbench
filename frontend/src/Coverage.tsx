@@ -110,7 +110,8 @@ export default function Coverage() {
           </span>
         </div>
         <p className="table-caption">
-          Benchmark-author view. Expected criteria and fault configurations are
+          All-version inventory for benchmark authors. The filters below apply
+          to the scenario list. Expected criteria and fault configurations are
           never sent to the agent browser. Unverified rows need reference
           validation.
         </p>
@@ -242,10 +243,10 @@ export default function Coverage() {
               {mobile ? "Desktop" : "Mobile"} preview
             </button>
             <button className="button secondary" onClick={reset}>
-              Reset
+              Reset preview
             </button>
             <button className="button primary" onClick={run}>
-              Run reference
+              Validate this scenario
             </button>
           </div>
           {message && (

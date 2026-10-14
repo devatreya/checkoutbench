@@ -1,0 +1,122 @@
+[
+  {
+    "section": "Overview",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "document_overflow": false,
+    "javascript_errors": [],
+    "screenshot": "overview-1440.png"
+  },
+  {
+    "section": "Models",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "document_overflow": false,
+    "javascript_errors": [],
+    "screenshot": "models-1440.png"
+  },
+  {
+    "section": "Scenarios",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "document_overflow": false,
+    "javascript_errors": [],
+    "screenshot": "scenarios-1440.png"
+  },
+  {
+    "section": "Coverage",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "document_overflow": false,
+    "javascript_errors": [],
+    "screenshot": "coverage-1440.png"
+  },
+  {
+    "section": "Live session",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "document_overflow": false,
+    "javascript_errors": [],
+    "screenshot": "live-session-1440.png"
+  },
+  {
+    "section": "Results",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "document_overflow": false,
+    "javascript_errors": [],
+    "screenshot": "results-1440.png"
+  },
+  {
+    "section": "Overview",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "document_overflow": false,
+    "javascript_errors": [],
+    "screenshot": "overview-390.png"
+  },
+  {
+    "section": "Models",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "document_overflow": false,
+    "javascript_errors": [],
+    "screenshot": "models-390.png"
+  },
+  {
+    "section": "Scenarios",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "document_overflow": false,
+    "javascript_errors": [],
+    "screenshot": "scenarios-390.png"
+  },
+  {
+    "section": "Coverage",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "document_overflow": false,
+    "javascript_errors": [],
+    "screenshot": "coverage-390.png"
+  },
+  {
+    "section": "Live session",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "document_overflow": false,
+    "javascript_errors": [],
+    "screenshot": "live-session-390.png"
+  },
+  {
+    "section": "Results",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "document_overflow": false,
+    "javascript_errors": [],
+    "screenshot": "results-390.png"
+  }
+]

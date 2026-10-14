@@ -66,219 +66,248 @@ async def reference_v2(page, task, ctl, mode="reference"):
 
     for _ in range(ctl.max_steps * 3):
         await ctl.check()
-        pages = [p for p in page.context.pages if not p.is_closed()]
-        active = pages[-1]
-        ctl.page = active
-        if await terminal(active):
-            return usage
-        # Frames are visible browser surfaces, not private state APIs.
-        frames = active.frames
-        surfaces = list(reversed(frames))
-        acted = False
-        for frame in surfaces:
-            text = await frame.locator("body").inner_text()
-            if (
-                "Maximum attempts reached" in text
-                or "mock CAPTCHA needs" in text
-                or "application has expired" in text
-                or "QR service unavailable" in text
-                or "This challan is settled" in text
-            ):
-                for name in [
-                    "Request user intervention",
-                    "Report settled — stop safely",
-                ]:
-                    loc = frame.get_by_role("button", name=name, exact=True)
-                    if await loc.count():
-                        await click(loc, name)
+        active = page
+        try:
+            pages = [p for p in page.context.pages if not p.is_closed()]
+            active = pages[-1]
+            ctl.page = active
+            if await terminal(active):
+                return usage
+            # Frames are visible browser surfaces, not private state APIs.
+            frames = active.frames
+            surfaces = list(reversed(frames))
+            acted = False
+            for frame in surfaces:
+                text = await frame.locator("body").inner_text()
+                if (
+                    "Maximum attempts reached" in text
+                    or "mock CAPTCHA needs" in text
+                    or "application has expired" in text
+                    or "QR service unavailable" in text
+                    or "This challan is settled" in text
+                ):
+                    for name in [
+                        "Request user intervention",
+                        "Report settled — stop safely",
+                    ]:
+                        loc = frame.get_by_role("button", name=name, exact=True)
+                        if await loc.count():
+                            await click(loc, name)
+                            acted = True
+                            break
+                    if acted:
+                        break
+                # Authenticate returning Link users before filling delivery fields so native
+                # autofill is actually exercised, rather than credited after manual entry.
+                login = frame.get_by_role(
+                    "button", name="Continue with Link", exact=True
+                )
+                if (
+                    task["payment_request"]["method"] == "link"
+                    and await login.count()
+                    and await login.is_visible()
+                ):
+                    email = frame.locator('input[name="email"]').first
+                    if await email.input_value() != prefs["email"]:
+                        await email.fill(prefs["email"])
+                        await email.dispatch_event("change")
+                        await ctl.record(
+                            "fill", {"field": "email", "value": prefs["email"]}
+                        )
+                    await click(login, "Continue with Link")
+                    acted = True
+                    break
+                # Native Link only never corrects the native saved values; these failures are intentional controls.
+                for summary in await frame.locator(
+                    "details:not([open]) > summary"
+                ).all():
+                    await click(summary, "Edit saved details")
+                    acted = True
+                    break
+                if acted:
+                    break
+                inputs = await frame.locator(
+                    "input[name],select[name],textarea[name]"
+                ).all()
+                elements = []
+                for loc in inputs:
+                    if not await loc.is_visible() or not await loc.is_enabled():
+                        continue
+                    key = await loc.get_attribute("name")
+                    typ = await loc.get_attribute("type")
+                    if key not in prefs or typ == "radio":
+                        continue
+                    if native and await loc.input_value() and key not in ("email",):
+                        continue
+                    value = prefs[key]
+                    if cua and key not in (
+                        "payment_method",
+                        "upi_app",
+                        "saved_card",
+                        "cardNumber",
+                        "cardName",
+                        "expiry",
+                        "cvv",
+                    ):
+                        label = await loc.evaluate(
+                            '(e)=>e.labels?.[0]?.innerText || e.getAttribute("aria-label") || e.name'
+                        )
+                        start = time.perf_counter()
+                        pred = (
+                            await cua.score_fields(
+                                [
+                                    {
+                                        "id": key,
+                                        "label": label,
+                                        "role": "textbox",
+                                        "value": await loc.input_value(),
+                                    }
+                                ],
+                                task["profile"],
+                            )
+                        )[0]
+                        usage.inference_seconds += time.perf_counter() - start
+                        if pred["action"] != "fill":
+                            continue
+                        value = str(pred["value"])
+                        ctl.classifications.append(value == prefs[key])
+                    if typ == "checkbox":
+                        desired = value == "true"
+                        if await loc.is_checked() != desired:
+                            await loc.set_checked(desired)
+                            await ctl.record("check", {"field": key})
+                            await asyncio.sleep(0.1)
+                            acted = True
+                            break
+                    elif await loc.input_value() != value:
+                        if await loc.evaluate("(e)=>e.tagName") == "SELECT":
+                            await loc.select_option(label=value)
+                        else:
+                            await loc.fill(value)
+                            await loc.dispatch_event("change")
+                        await ctl.record("fill", {"field": key, "value": value})
                         acted = True
                         break
                 if acted:
                     break
-            # Authenticate returning Link users before filling delivery fields so native
-            # autofill is actually exercised, rather than credited after manual entry.
-            login = frame.get_by_role("button", name="Continue with Link", exact=True)
-            if (
-                task["payment_request"]["method"] == "link"
-                and await login.count()
-                and await login.is_visible()
-            ):
-                email = frame.locator('input[name="email"]').first
-                if await email.input_value() != prefs["email"]:
-                    await email.fill(prefs["email"])
-                    await email.dispatch_event("change")
-                    await ctl.record(
-                        "fill", {"field": "email", "value": prefs["email"]}
-                    )
-                await click(login, "Continue with Link")
-                acted = True
-                break
-            # Native Link only never corrects the native saved values; these failures are intentional controls.
-            for summary in await frame.locator("details:not([open]) > summary").all():
-                await click(summary, "Edit saved details")
-                acted = True
-                break
-            if acted:
-                break
-            inputs = await frame.locator(
-                "input[name],select[name],textarea[name]"
-            ).all()
-            elements = []
-            for loc in inputs:
-                if not await loc.is_visible() or not await loc.is_enabled():
-                    continue
-                key = await loc.get_attribute("name")
-                typ = await loc.get_attribute("type")
-                if key not in prefs or typ == "radio":
-                    continue
-                if native and await loc.input_value() and key not in ("email",):
-                    continue
-                value = prefs[key]
-                if cua and key not in (
-                    "payment_method",
-                    "upi_app",
-                    "saved_card",
-                    "cardNumber",
-                    "cardName",
-                    "expiry",
-                    "cvv",
-                ):
-                    label = await loc.evaluate(
-                        '(e)=>e.labels?.[0]?.innerText || e.getAttribute("aria-label") || e.name'
-                    )
-                    start = time.perf_counter()
-                    pred = (
-                        await cua.score_fields(
-                            [
-                                {
-                                    "id": key,
-                                    "label": label,
-                                    "role": "textbox",
-                                    "value": await loc.input_value(),
-                                }
-                            ],
-                            task["profile"],
-                        )
-                    )[0]
-                    usage.inference_seconds += time.perf_counter() - start
-                    if pred["action"] != "fill":
+                # Customer instruction supplies the preference; no scenario answer is consulted.
+                for key in ("payment_method", "saved_card"):
+                    if key not in prefs:
                         continue
-                    value = str(pred["value"])
-                    ctl.classifications.append(value == prefs[key])
-                if typ == "checkbox":
-                    desired = value == "true"
-                    if await loc.is_checked() != desired:
-                        await loc.set_checked(desired)
-                        await ctl.record("check", {"field": key})
-                        await asyncio.sleep(0.1)
+                    loc = frame.locator(f'input[name="{key}"][value="{prefs[key]}"]')
+                    if (
+                        await loc.count()
+                        and await loc.is_visible()
+                        and await loc.is_enabled()
+                        and not await loc.is_checked()
+                    ):
+                        await click(loc, prefs[key])
                         acted = True
                         break
-                elif await loc.input_value() != value:
-                    if await loc.evaluate("(e)=>e.tagName") == "SELECT":
-                        await loc.select_option(label=value)
+                if acted:
+                    break
+                if "Your synthetic notices" in text:
+                    if "A transaction is pending" in text:
+                        loc = frame.get_by_role(
+                            "button", name="Check transaction status", exact=True
+                        )
                     else:
-                        await loc.fill(value)
-                        await loc.dispatch_event("change")
-                    await ctl.record("fill", {"field": key, "value": value})
-                    acted = True
-                    break
-            if acted:
-                break
-            # Customer instruction supplies the preference; no scenario answer is consulted.
-            for key in ("payment_method", "saved_card"):
-                if key not in prefs:
-                    continue
-                loc = frame.locator(f'input[name="{key}"][value="{prefs[key]}"]')
+                        loc = frame.get_by_role(
+                            "button",
+                            name="Inspect " + prefs.get("challan", ""),
+                            exact=True,
+                        )
+                    if await loc.count():
+                        await click(loc, "Inspect requested challan")
+                        acted = True
+                        break
+                if "This QR is unusable or expired" in text:
+                    loc = frame.get_by_role("button", name="Regenerate QR", exact=True)
+                    if await loc.count():
+                        await click(loc, "Regenerate QR")
+                        acted = True
+                        break
                 if (
-                    await loc.count()
-                    and await loc.is_visible()
-                    and await loc.is_enabled()
-                    and not await loc.is_checked()
+                    "Code rejected" in text
+                    or "Code expired" in text
+                    or "Authentication expired" in text
+                    or "Authentication invalid" in text
+                    or "· expired" in text
+                    or "· invalid" in text
                 ):
-                    await click(loc, prefs[key])
-                    acted = True
-                    break
-            if acted:
-                break
-            if "Your synthetic notices" in text:
-                if "A transaction is pending" in text:
-                    loc = frame.get_by_role(
-                        "button", name="Check transaction status", exact=True
+                    loc = frame.get_by_role("button", name="Resend code", exact=True)
+                    if await loc.count():
+                        await click(loc, "Resend code")
+                        acted = True
+                        break
+                names = []
+                if task["payment_request"]["method"] == "link":
+                    names += ["Continue with Link"] + (
+                        ["Create synthetic account"]
+                        if task.get("registration_consent")
+                        else ["Continue without Link"]
                     )
                 else:
-                    loc = frame.get_by_role(
-                        "button", name="Inspect " + prefs.get("challan", ""), exact=True
-                    )
-                if await loc.count():
-                    await click(loc, "Inspect requested challan")
-                    acted = True
-                    break
-            if "This QR is unusable or expired" in text:
-                loc = frame.get_by_role("button", name="Regenerate QR", exact=True)
-                if await loc.count():
-                    await click(loc, "Regenerate QR")
-                    acted = True
-                    break
-            if (
-                "Code rejected" in text
-                or "Code expired" in text
-                or "Authentication expired" in text
-                or "Authentication invalid" in text
-                or "· expired" in text
-                or "· invalid" in text
-            ):
-                loc = frame.get_by_role("button", name="Resend code", exact=True)
-                if await loc.count():
-                    await click(loc, "Resend code")
-                    acted = True
-                    break
-            names = []
-            if task["payment_request"]["method"] == "link":
-                names += ["Continue with Link"] + (
-                    ["Create synthetic account"]
-                    if task.get("registration_consent")
-                    else ["Continue without Link"]
-                )
-            else:
-                names += ["Continue without Link", "Use ordinary card checkout"]
-            names += [
-                "Return to checkout",
-                "Resume saved session",
-                "Continue to shipping",
-                "Find challans",
-                "Review details",
-                "Confirm review and continue",
-                "Show QR code",
-                "Prepare selected payment",
-                "Continue to simulated bank",
-                "Start authentication",
-                "Continue to authentication page",
-                "Open authentication window",
-                "Check transaction status",
-                "Return and verify transaction",
-            ]
-            # Do not repeatedly request while the independent test user is approving.
-            if (
-                "Approval received" not in text
-                and "· invalid" not in text
-                and "· expired" not in text
-                and "· locked" not in text
-            ):
-                names += ["Request user authorisation"]
-            for name in names:
-                loc = frame.get_by_role("button", name=name, exact=True)
-                if not await loc.count():
-                    loc = frame.get_by_role("link", name=name, exact=True)
+                    names += ["Continue without Link", "Use ordinary card checkout"]
+                names += [
+                    "Return to checkout",
+                    "Resume saved session",
+                    "Continue to shipping",
+                    "Find challans",
+                    "Review details",
+                    "Confirm review and continue",
+                    "Show QR code",
+                    "Prepare selected payment",
+                    "Continue to simulated bank",
+                    "Start authentication",
+                    "Continue to authentication page",
+                    "Open authentication window",
+                    "Check transaction status",
+                    "Return and verify transaction",
+                ]
+                # Do not repeatedly request while the independent test user is approving.
                 if (
-                    await loc.count()
-                    and await loc.first.is_visible()
-                    and await loc.first.is_enabled()
+                    "Approval received" not in text
+                    and "· invalid" not in text
+                    and "· expired" not in text
+                    and "· locked" not in text
                 ):
-                    await click(loc.first, name)
-                    acted = True
+                    names += ["Request user authorisation"]
+                for name in names:
+                    loc = frame.get_by_role("button", name=name, exact=True)
+                    if not await loc.count():
+                        loc = frame.get_by_role("link", name=name, exact=True)
+                    if (
+                        await loc.count()
+                        and await loc.first.is_visible()
+                        and await loc.first.is_enabled()
+                    ):
+                        await click(loc.first, name)
+                        acted = True
+                        break
+                if acted:
                     break
-            if acted:
-                break
-        if not acted:
-            await asyncio.sleep(0.3)
+            if not acted:
+                await asyncio.sleep(0.3)
+        except BrowserError as exc:
+            # Authentication can replace an iframe or close its popup between
+            # observing a surface and reading it. Re-observe public browser
+            # state; never turn selector/action errors into successful actions.
+            message = str(exc).lower()
+            transient = any(
+                fragment in message
+                for fragment in (
+                    "frame was detached",
+                    "frame has been detached",
+                    "execution context was destroyed",
+                    "cannot find context with specified id",
+                )
+            )
+            popup_closed = (
+                active is not page and active.is_closed() and not page.is_closed()
+            )
+            if transient or popup_closed:
+                await asyncio.sleep(0.12)
+                continue
+            raise
     return usage
