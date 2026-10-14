@@ -11,6 +11,10 @@ def norm(key, value):
 
 
 def evaluate(s, state):
+    if s.get("benchmark_version") == "2.1":
+        from backend.workflows_v21 import evaluate as evaluate_v21
+
+        return evaluate_v21(s, state)
     if s.get("benchmark_version") == "2.0":
         from backend.evaluator.v2 import evaluate_v2
 

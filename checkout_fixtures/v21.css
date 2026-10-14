@@ -1,0 +1,276 @@
+@import url("/assets/v2.css");
+:root {
+  font-family: Inter, system-ui, sans-serif;
+}
+.table-scroll {
+  overflow: auto;
+}
+.passenger-table {
+  width: 100%;
+  table-layout: auto;
+}
+.passenger-table td {
+  min-width: 100px;
+}
+.passenger-table td:first-of-type {
+  min-width: 160px;
+}
+.passenger-table .field > span {
+  font-size: 11px;
+}
+.family-railway .shell {
+  max-width: 1500px;
+  grid-template-columns: minmax(0, 1fr) 240px;
+}
+.family-railway.variant-web-inspired-2026 .brand-header {
+  background: #183354;
+  color: white;
+}
+.family-railway.variant-web-inspired-2026 .journey-strip {
+  background: #edf4fa;
+  border-left: 5px solid #ef9c37;
+}
+.family-passport.variant-refreshed .brand-header {
+  background: #103e55;
+  color: white;
+}
+.family-passport.variant-refreshed .panel {
+  border-radius: 12px;
+  border-top: 3px solid #168c96;
+}
+.legacy-form .field {
+  display: grid;
+  grid-template-columns: 210px 1fr;
+  gap: 16px;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+.legacy-form .field input,
+.legacy-form .field select {
+  margin: 0;
+}
+.family-echallan .lookup-card {
+  max-width: 580px;
+}
+dialog.razor-modal[open] {
+  position: fixed;
+  inset: 65px auto auto 50%;
+  transform: translateX(-50%);
+  max-height: calc(100vh - 110px);
+  overflow: auto;
+  width: 490px;
+  box-shadow: 0 0 0 200vmax #12263b66;
+  border: 0;
+  border-radius: 10px;
+  z-index: 5;
+  background: #fff;
+  margin: 0;
+  padding: 0;
+}
+.razor-modal header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #174c85;
+  color: #fff;
+  padding: 18px;
+}
+.razor-modal header button {
+  font-size: 11px;
+}
+.provider-menu {
+  padding: 15px;
+  background: #edf4ff;
+  border-bottom: 1px solid #ccd;
+}
+.razor-modal > .field,
+.razor-modal > .card-element,
+.razor-modal > .qr-box {
+  margin: 16px;
+}
+.family-cashfree .submain {
+  max-width: 680px;
+  margin: 24px auto;
+}
+.family-cashfree .submain .panel {
+  border-top: 5px solid #6635aa;
+}
+.family-stripe.variant-hosted .shell {
+  grid-template-columns: 1fr 1fr;
+  background: #fafafa;
+}
+.family-stripe .card-element {
+  padding: 20px;
+  border: 1px solid #dce0e6;
+  border-radius: 10px;
+}
+.embedded-shell {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  max-width: 1200px;
+  margin: 30px auto;
+  gap: 32px;
+}
+.embedded-shell iframe {
+  width: 100%;
+  height: 900px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+}
+.payment-frame {
+  min-height: 720px;
+}
+.family-generic.variant-compact .shell {
+  grid-template-columns: minmax(0, 600px) 220px;
+}
+.compact-form .field {
+  margin: 8px 0;
+}
+.family-generic.variant-split-address .panel {
+  border-radius: 0;
+  box-shadow: 3px 3px 0 #d9e4d9;
+}
+.family-generic.variant-address-book .notice {
+  border-left: 4px solid #376d52;
+}
+.submain .outcome {
+  min-height: 300px;
+}
+.family-shopify .stage-list {
+  list-style: none;
+  padding: 0;
+}
+.family-shopify .rollup {
+  border-color: #704bd5;
+}
+.family-shopify .express {
+  background: #5a31f4;
+  color: white;
+}
+footer {
+  overflow-wrap: anywhere;
+}
+@media (max-width: 700px) {
+  .shell,
+  .family-railway .shell,
+  .family-generic.variant-compact .shell,
+  .family-stripe.variant-hosted .shell,
+  .embedded-shell {
+    display: block;
+  }
+  .order-summary {
+    padding: 14px;
+  }
+  .order-summary .product-art,
+  .order-summary .stage-list {
+    display: none;
+  }
+  dialog.razor-modal[open] {
+    inset: 55px 8px auto 8px;
+    transform: none;
+    width: auto;
+    max-height: calc(100vh - 75px);
+  }
+  .legacy-form .field {
+    display: block;
+  }
+  .legacy-form .field input {
+    margin-top: 5px;
+  }
+  .embedded-shell iframe {
+    height: 950px;
+  }
+  .table-scroll {
+    max-width: 100%;
+  }
+  .brand-header {
+    padding: 16px;
+  }
+  .shell main {
+    padding: 16px;
+  }
+}
+
+.merchant-extension-frame {
+  width: 100%;
+  height: 520px;
+  border: 0;
+}
+.method-tabs {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid #ccd;
+  padding-bottom: 12px;
+}
+.method-tabs button {
+  border: 1px solid #d4d9e1;
+  background: white;
+  border-radius: 8px;
+  padding: 12px 24px;
+}
+.method-tabs [aria-checked="true"] {
+  border-color: #6655d4;
+  box-shadow: 0 0 0 1px #6655d4;
+}
+.method-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.method-accordion button {
+  padding: 16px;
+  text-align: left;
+  border: 1px solid #d1c7e1;
+  background: #fff;
+  border-radius: 7px;
+}
+.method-accordion [aria-checked="true"] {
+  background: #f0eafb;
+  border-color: #6635aa;
+}
+.method-categories {
+  display: flex;
+  gap: 6px;
+  padding: 16px;
+  background: #eef5fd;
+}
+.method-categories button {
+  border: 0;
+  padding: 12px;
+  background: transparent;
+}
+.method-categories [aria-checked="true"] {
+  background: #174c85;
+  color: white;
+  border-radius: 6px;
+}
+.provider-contact {
+  padding: 0 16px;
+  font-size: 12px;
+}
+.provider-contact div {
+  display: flex;
+  gap: 12px;
+}
+.provider-contact dt {
+  font-weight: 600;
+}
+.provider-contact dd {
+  margin: 0;
+}
+.legacy .passenger-table input,
+.legacy .passenger-table select {
+  max-width: 180px;
+}
+#extension {
+  padding: 12px;
+  background: #fff;
+  font-size: 14px;
+}
+#extension .field {
+  margin-bottom: 12px;
+}
+#extension input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+}

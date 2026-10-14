@@ -1,5 +1,7 @@
 # Workflow provenance and realism boundaries
 
+> Historical v2.0 record. The v2.1 audit found answer-derived task preferences and specialist controller assistance that prevent comparison with v2.1 model results. See [v2.1 audit](../v2.1/SOURCE_AUDIT.md). Original fixtures and results are preserved.
+
 Reviewed 2026-10-13. All rendered layouts, names, prices, identifiers, artwork and fault schedules are original synthetic fixtures. These are workflow-inspired interfaces, not production replicas, and no live transaction is part of local evaluation.
 
 | Official reference | Reproduced behaviour | Simplification / stress-test boundary |

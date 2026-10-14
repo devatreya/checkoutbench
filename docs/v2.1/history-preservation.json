@@ -1,0 +1,8 @@
+{
+  "historical_rows": 163,
+  "unchanged": true,
+  "comparison": "Exact stored JSON bytes by original run ID",
+  "digest_encoding": "UTF-8 compact JSON array of [id,data] rows ordered by id, ensure_ascii=false",
+  "sha256_before": "85342bdab392ed2a91017da939ae49970498bd21fe5635f2a7d18724f3509949",
+  "sha256_after": "85342bdab392ed2a91017da939ae49970498bd21fe5635f2a7d18724f3509949"
+}

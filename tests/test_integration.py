@@ -153,7 +153,7 @@ async def test_unavailable_not_failure(server):
     async with httpx.AsyncClient() as c:
         r = await c.post(
             server + "/api/batches",
-            json={"models": ["openai/gpt-6-astra"], "scenarios": ["T01"], "repeats": 1},
+            json={"models": ["openai/gpt-6-astra"], "scenarios": ["V21-S01"], "repeats": 1},
         )
         assert r.status_code == 200
         for _ in range(50):

@@ -69,6 +69,11 @@ type Run = {
   status: string;
   success: boolean;
   wall_seconds?: number;
+  platform?: string;
+  integrity_class?: string;
+  evaluation_claim?: string;
+  latency_breakdown?: Record<string, number>;
+  latency_measurement?: string;
   required_field_accuracy?: number;
   cost: number;
   failure_reason?: string;
@@ -95,6 +100,8 @@ type Board = {
   success_rate: number;
   ci95: number[];
   median_seconds: number | null;
+  platform?: string;
+  integrity_class?: string;
   field_accuracy: number;
   actions: number;
   cost_per_success: number | null;
@@ -135,8 +142,8 @@ function App() {
     [models, setModels] = useState<Model[]>([]),
     [scenarios, setScenarios] = useState<Scenario[]>([]),
     [selected, setSelected] = useState(["reference"]),
-    [chosen, setChosen] = useState(["T01"]),
-    [focus, setFocus] = useState("T01"),
+    [chosen, setChosen] = useState(["V21-S01"]),
+    [focus, setFocus] = useState("V21-S01"),
     [profile, setProfile] = useState(""),
     [profiles, setProfiles] = useState<{ id: string; name: string }[]>([]),
     [repeats, setRepeats] = useState(3),
@@ -165,9 +172,9 @@ function App() {
     [inspect, setInspect] = useState<Run | null>(null),
     [replay, setReplay] = useState(0),
     [catalogNote, setCatalogNote] = useState(""),
-    [boardVersion, setBoardVersion] = useState("all"),
+    [boardVersion, setBoardVersion] = useState("2.1"),
     [agentMode, setAgentMode] = useState("standard"),
-    [suite, setSuite] = useState("1.0"),
+    [suite, setSuite] = useState("2.1"),
     [environment, setEnvironment] = useState("all"),
     [linkComparisons, setLinkComparisons] = useState<any[]>([]);
   const visibleScenarios = scenarios.filter(
@@ -333,7 +340,7 @@ function App() {
             <CircleHelp size={16} /> API documentation <ArrowRight size={14} />
           </a>
           <div className="version">
-            CHECKOUTBENCH <span>v2.0</span>
+            CHECKOUTBENCH <span>v2.1</span>
           </div>
         </div>
       </aside>
@@ -636,7 +643,12 @@ function App() {
                         onChange={(e) => setSuite(e.target.value)}
                       >
                         <option value="1.0">v1.0 · preserved suite</option>
-                        <option value="2.0">v2.0 · expanded workflows</option>
+                        <option value="2.1">
+                          v2.1 · isolated customer intent
+                        </option>
+                        <option value="2.0">
+                          v2.0 · historical, non-comparable
+                        </option>
                         <option value="all">All · version labelled</option>
                       </select>
                     </label>
@@ -1028,7 +1040,10 @@ function App() {
                       onChange={(e) => setBoardVersion(e.target.value)}
                     >
                       <option value="all">Combined · versions labelled</option>
-                      <option value="1.0">v1.0</option>
+                      <option value="1.0">v1.0 · historical</option>
+                      <option value="2.1">
+                        v2.1 · isolated customer intent
+                      </option>
                       <option value="2.0">v2.0</option>
                     </select>
                   </label>
@@ -1071,7 +1086,11 @@ function App() {
                               {r.kind === "reference"
                                 ? "Fixture validation baseline"
                                 : r.reasoning + " reasoning"}{" "}
-                              · {r.runs} runs · cohort {r.cohort}
+                              · {r.runs} runs ·{" "}
+                              {r.platform || "legacy unspecified"} ·{" "}
+                              {r.integrity_class ||
+                                "historical, non-comparable"}{" "}
+                              · cohort {r.cohort}
                             </small>
                           </td>
                           <td>
@@ -1353,6 +1372,17 @@ function App() {
               Grounding {percent(inspect.grounding_accuracy)} · Field
               classification {percent(inspect.field_classification_accuracy)}
             </p>
+            <p>
+              {inspect.evaluation_claim} · {inspect.platform} ·{" "}
+              {inspect.integrity_class}
+            </p>
+            {inspect.latency_breakdown && (
+              <details>
+                <summary>Measured latency breakdown</summary>
+                <p>{inspect.latency_measurement}</p>
+                <pre>{JSON.stringify(inspect.latency_breakdown, null, 2)}</pre>
+              </details>
+            )}
             {inspect.events.length > 0 ? (
               <>
                 <img

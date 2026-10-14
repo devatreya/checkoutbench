@@ -1,6 +1,30 @@
-# CheckoutBench 1.0
+# CheckoutBench 2.1
 
-A local research platform for comparing AI checkout systems on synthetic Indian delivery, UPI and test-card tasks. React/TypeScript dashboard, FastAPI, Playwright, Browser Use and SQLite. **All checkouts and payments are simulated.** No merchant accounts or payment-provider SDKs are used.
+A local research platform for comparing AI checkout systems on synthetic Indian delivery, UPI and test-card tasks. React/TypeScript dashboard, FastAPI, Playwright, Browser Use and SQLite. **All checkouts and payments are simulated.** Scored runs use local fictional fixtures. Optional official-sandbox validation is separate and disabled by default.
+
+
+## v2.1 integrity and source fidelity
+
+Use **v2.1** for new model comparisons. Its customer task is independent of the private answer key, field IDs are opaque, CUA-selected values drive fills, and TinyClick coordinates drive both field and navigation clicks. The hybrid invokes both models. Wrong semantic choices and wrong clicks are executed and scored; neither is silently corrected. CUA/TinyClick systems still use disclosed deterministic lifecycle assistance and must not be presented as equivalent to fully autonomous agents.
+
+The 74 v2.1 scenarios retain nine environment families and add distinct hosted/embedded/payment-component, modal/popup/redirect, browser-government and merchant-address structures. Desktop/mobile web and supported payment methods are explicit. Native mobile apps are not evaluated. Link uses a US/USD customer and is labelled unavailable in India. QR preparation/handoff is separate from payment completion. Shopify extensions are sandboxed local approximations, not the Shopify SDK.
+
+The Coverage panel shows source URL, source type/date, confidence, fidelity classification, platform and expected outcome. Replay shows action attribution and measured latency intervals. Original v1/v2 definitions and SQLite results are preserved; historical model results are **not comparable** with v2.1. Historical versions remain available for deterministic reference replay. Migrated holdouts are regression cases; freeze a fresh unseen evaluation set before making generalisation claims.
+
+- [Source-to-implementation audit](docs/v2.1/SOURCE_AUDIT.md)
+- [Implementation report and evidence](docs/v2.1/IMPLEMENTATION_REPORT.md)
+- [Optional official sandbox validation](docs/v2.1/SANDBOX_VALIDATION.md)
+- [Screenshot inspection index](docs/v2.1/screenshots/inspection.json)
+
+Validation commands (no paid inference):
+
+```sh
+.venv/bin/pytest -q
+.venv/bin/python -m scripts.check --suite 2.1 --repeats 1
+.venv/bin/python -m scripts.visual_v21
+```
+
+A passing reference executor demonstrates fixture solvability, not model capability or research-grade validity. Current authenticated government layouts, real payment SDK behavior and actual specialist performance remain separately qualified in the report.
 
 ## Start locally
 
@@ -47,7 +71,7 @@ DIRECT_MODELS_JSON='[{"id":"direct/my-frontier","name":"My direct frontier","mod
 DIRECT_PROVIDER_API_KEY=
 ```
 
-The endpoint must support chat completions with JSON-schema structured output. Direct pricing/capabilities are operator-supplied, not catalogue-verified. `token_parameter` may be `max_completion_tokens` when required. The direct adapter sends `reasoning_effort`; providers using another protocol need a new typed adapter. Native Anthropic direct API and official payment gateway sandboxes are not bundled.
+The endpoint must support chat completions with JSON-schema structured output. Direct pricing/capabilities are operator-supplied, not catalogue-verified. `token_parameter` may be `max_completion_tokens` when required. The direct adapter sends `reasoning_effort`; providers using another protocol need a new typed adapter. Native Anthropic direct API is not bundled. Optional read-only official sandbox routes are documented separately; scored fixtures never use them.
 
 ## Specialist systems
 

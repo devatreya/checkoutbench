@@ -1,0 +1,92 @@
+{
+  "benchmark_version": "2.1",
+  "reviewed_at": "2026-10-14",
+  "tests": {
+    "distinct_tests_collected": 65,
+    "distinct_tests_passed_across_runs": 65,
+    "single_full_suite_pass_claim": false,
+    "runs": [
+      {
+        "command": ".venv/bin/pytest -q",
+        "passed": 59,
+        "failed": 2,
+        "seconds": 827.63,
+        "resolution": "Corrected two stale test setups: unavailable-model test now targets v2.1; Shopify progression test selects the actual one-page and three-page scenarios."
+      },
+      {
+        "command": ".venv/bin/pytest -q tests/test_v21.py tests/test_integration.py::test_unavailable_not_failure --tb=short",
+        "passed": 18,
+        "failed": 0,
+        "seconds": 394.1,
+        "note": "Includes all 74 v2.1 reference paths; run collected before the last two visibility tests were added."
+      },
+      {
+        "command": ".venv/bin/pytest -q tests/test_v21.py::test_tiny_scrolls_fixed_steps_without_revisiting_completed_fields tests/test_v21.py::test_iframe_visibility_is_clipped_to_browser_screenshot",
+        "passed": 2,
+        "failed": 0,
+        "seconds": 1.9
+      }
+    ]
+  },
+  "reference_runs": {
+    "scenarios": 74,
+    "passed": 74,
+    "evidence": "reference-verification.json",
+    "claim": "Fixture solvability only; no AI capability claim"
+  },
+  "visual_checks": {
+    "fixture_screenshots": 112,
+    "dashboard_screenshots": 1,
+    "javascript_errors": 0,
+    "document_overflows": 0,
+    "evidence": "screenshots/inspection.json",
+    "viewports": [
+      [
+        1280,
+        900
+      ],
+      [
+        390,
+        844
+      ]
+    ],
+    "note": "Responsive captures do not change scenario payment platform policy."
+  },
+  "static_checks": {
+    "frontend_production_build": "passed",
+    "python_undefined_names_and_syntax": "passed (ruff E9,F821,F822,F823)",
+    "javascript_syntax": "passed",
+    "git_diff_whitespace": "passed"
+  },
+  "historical_results": {
+    "original_rows": 163,
+    "unchanged": true,
+    "evidence": "history-preservation.json"
+  },
+  "secret_check": {
+    "configured_secret_values_checked": 1,
+    "matches_in_publishable_files": 0,
+    "local_env_ignored": true,
+    "common_credential_pattern_matches": 0
+  },
+  "external_activity": {
+    "paid_inference_calls": 0,
+    "real_payment_transactions": 0,
+    "government_transactions": 0,
+    "optional_provider_sandboxes_exercised": false
+  },
+  "limitations": [
+    "Specialist negative controls use test doubles; real checkpoints/endpoints not evaluated.",
+    "Current authenticated government UI was not inspected.",
+    "Optional sandbox routes are read-only object validation, not official SDK UI fidelity validation.",
+    "Migrated holdouts are regression cases, not a fresh unseen suite."
+  ],
+  "restart_smoke": {
+    "scenarios": [
+      "V21-S03",
+      "V21-ST03"
+    ],
+    "passed": 2,
+    "failed": 0
+  }
+}

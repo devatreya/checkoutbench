@@ -19,6 +19,18 @@ type Row = {
   merchant?: string;
   agent_modes?: string[];
   expected_outcome?: string;
+  platform?: string;
+  supported_payment_methods?: string[];
+  integrity_class?: string;
+  provenance?: {
+    provider_reference: string;
+    source_url: string;
+    source_type: string;
+    source_date: string | null;
+    confidence: string;
+    reviewed_at: string;
+    fidelity_classification: string;
+  };
   viewport?: { width: number; height: number };
 };
 const call = async (path: string, body?: unknown) => {
@@ -46,9 +58,9 @@ export default function Coverage() {
       variants: number;
       matrix: any[];
     } | null>(null),
-    [id, setId] = useState("S01"),
+    [id, setId] = useState("V21-S01"),
     [family, setFamily] = useState("all"),
-    [version, setVersion] = useState("2.0"),
+    [version, setVersion] = useState("2.1"),
     [seed, setSeed] = useState(2026),
     [preview, setPreview] = useState<any>(null),
     [message, setMessage] = useState(""),
@@ -144,6 +156,7 @@ export default function Coverage() {
                 value={version}
                 onChange={(e) => setVersion(e.target.value)}
               >
+                <option value="2.1">v2.1</option>
                 <option value="2.0">v2.0</option>
                 <option value="1.0">v1.0</option>
                 <option value="all">All, labelled</option>
@@ -287,7 +300,40 @@ export default function Coverage() {
             </button>
           </div>
           <details className="coverage-doc" open>
-            <summary>Task and expected outcome</summary>
+            <summary>Source fidelity and task</summary>
+            <p>
+              {row?.platform || "Legacy platform unspecified"} ·{" "}
+              {row?.integrity_class}
+            </p>
+            {row?.provenance && (
+              <p>
+                <a
+                  href={row.provenance.source_url}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {row.provenance.provider_reference}
+                </a>
+                <br />
+                {row.provenance.source_type} ·{" "}
+                {row.provenance.fidelity_classification}
+                <br />
+                Source date:{" "}
+                {row.provenance.source_date || "Not published / not verified"} ·
+                reviewed {row.provenance.reviewed_at}
+                <br />
+                Confidence: {row.provenance.confidence}
+              </p>
+            )}
+            <p>
+              Device-supported payment methods:{" "}
+              {row?.supported_payment_methods?.join(", ") ||
+                "Historical configuration"}
+            </p>
+            <p>
+              Reference passes verify fixture solvability. They are not evidence
+              of AI performance. v1/v2 and v2.1 results are not comparable.
+            </p>
             <p>{preview?.task?.instruction}</p>
             <ul>
               {row?.success_conditions.map((x) => (

@@ -210,7 +210,7 @@ async def visual_agent(page, task, ctl, model):
     ctl.usage = usage
     for _ in range(ctl.max_steps):
         await ctl.check()
-        if "preferences" in task:
+        if "preferences" in task or task.get("benchmark_version") == "2.1":
             pages = [p for p in page.context.pages if not p.is_closed()]
             page = pages[-1]
             ctl.page = page
@@ -218,18 +218,29 @@ async def visual_agent(page, task, ctl, model):
             "heading", name="Ready for payment authorisation"
         ).count():
             break
-        if "preferences" in task:
+        if "preferences" in task or task.get("benchmark_version") == "2.1":
             from backend.browser.v2 import terminal
 
             pages = [p for p in page.context.pages if not p.is_closed()]
             page = pages[-1]
             ctl.page = page
-            if await terminal(page):
+            if any([await terminal(f) for f in page.frames]):
                 break
+        capture = time.perf_counter()
         image = Image.open(io.BytesIO(await page.screenshot()))
+        ctl.timings["model_screenshot_seconds"] += time.perf_counter() - capture
         start = time.perf_counter()
         action = await adapter.act(image, task, history)
-        usage.inference_seconds += time.perf_counter() - start
+        elapsed = time.perf_counter() - start
+        usage.inference_seconds += elapsed
+        usage.calls.append(
+            dict(
+                model=model,
+                operation="act",
+                seconds=elapsed,
+                backend=adapter.last_metrics.get("backend"),
+            )
+        )
         tokens = adapter.last_metrics.get("usage", {})
         usage.prompt_tokens += tokens.get("prompt_tokens", 0)
         usage.completion_tokens += tokens.get("completion_tokens", 0)
@@ -238,6 +249,7 @@ async def visual_agent(page, task, ctl, model):
         if tokens.get("cost") is not None:
             usage.cost += tokens["cost"]
             usage.cost_kind = "actual"
+        browser_start = time.perf_counter()
         kind = action["action"]
         if kind == "click":
             await page.mouse.click(action["x"], action["y"])
@@ -278,6 +290,10 @@ async def visual_agent(page, task, ctl, model):
             break
         else:
             raise ValueError("Unsupported visual action: " + kind)
+        ctl.timings["browser_execution_seconds"] += time.perf_counter() - browser_start
         history.append(action)
-        await ctl.record("visual_action", action)
+        await ctl.record(
+            "visual_action",
+            {**action, "selection_source": "model", "grounding_source": model},
+        )
     return usage

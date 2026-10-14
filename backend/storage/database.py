@@ -61,6 +61,8 @@ def leaderboard(rows):
             r.get("benchmark_version", "1.0"),
             r.get("agent_mode", "standard"),
             r.get("evaluation_mode", "handoff"),
+            r.get("platform", "legacy_unspecified"),
+            r.get("integrity_class", "historical-controller-not-comparable"),
         )
         groups[key].append(r)
     result = []
@@ -92,6 +94,8 @@ def leaderboard(rows):
                 benchmark_version=key[6],
                 agent_mode=key[7],
                 evaluation_mode=key[8],
+                platform=key[9],
+                integrity_class=key[10],
                 by_environment={
                     e: mean(
                         bool(r.get("success"))

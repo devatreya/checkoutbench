@@ -1,5 +1,7 @@
 # CheckoutBench v2.0 implementation report
 
+> Historical v2.0 record. The v2.1 audit found answer-derived task preferences and specialist controller assistance that prevent comparison with v2.1 model results. See [v2.1 audit](../v2.1/SOURCE_AUDIT.md). Original fixtures and results are preserved.
+
 Implemented 13 October 2026 in the existing application. The dashboard runs on `http://127.0.0.1:8000`; isolated synthetic checkouts run on port 8001.
 
 ## Delivered scope

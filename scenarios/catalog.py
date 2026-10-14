@@ -209,6 +209,9 @@ SPECS = [
 
 
 def scenario(sid, seed=None, profile_id=None):
+    if sid.startswith("V21-"):
+        from scenarios.v21 import scenario_v21
+        return scenario_v21(sid, seed, profile_id)
     if not any(x[0] == sid for x in SPECS):
         from scenarios.v2 import scenario_v2
 
@@ -267,6 +270,9 @@ def scenario(sid, seed=None, profile_id=None):
 
 
 def task(s, agent_mode="standard"):
+    if s.get("benchmark_version") == "2.1":
+        from scenarios.v21 import task_v21
+        return task_v21(s, agent_mode)
     if s.get("benchmark_version") == "2.0":
         from scenarios.v2 import task_v2
 

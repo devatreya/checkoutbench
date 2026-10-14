@@ -24,6 +24,23 @@ def allowed_url(url: str, origin: str, token: str) -> bool:
             "/assets/card.html",
             "/assets/card.js",
             "/assets/v2.js",
+            "/assets/v21.js",
+            "/assets/v21.css",
+            "/assets/v21-extension.js",
+            *{
+                f"/v21/{token}/{suffix}"
+                for suffix in (
+                    "state",
+                    "action",
+                    "qr",
+                    "challenge",
+                    "component",
+                    "gateway",
+                    "provider",
+                    "verification",
+                    "extension",
+                )
+            },
             "/assets/v2.css",
             "/assets/v2-base.css",
             *{

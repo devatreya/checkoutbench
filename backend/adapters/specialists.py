@@ -591,7 +591,9 @@ class _VisualAdapter(_Adapter):
                 rw, rh = ceil(w * factor / 32) * 32, ceil(h * factor / 32) * 32
             prepared = prepared.resize((rw, rh))
         prompt = MAI_PROMPT if self.key == "mai-ui" else VENUS_PROMPT
-        if isinstance(task, dict) and "preferences" in task:
+        if isinstance(task, dict) and (
+            "preferences" in task or task.get("benchmark_version") == "2.1"
+        ):
             prompt = prompt.replace(
                 "Stop at simulated authorisation; never enter a real OTP or UPI PIN.",
                 "Never enter a real OTP or UPI PIN.",

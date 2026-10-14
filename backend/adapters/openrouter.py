@@ -158,14 +158,15 @@ async def run_openrouter(page, task, ctl, model, config, ledger, cdp_url):
         cdp_url=cdp_url,
         allowed_domains=[ctl.origin],
         keep_alive=True,
-        viewport={"width": 1280, "height": 900},
+        viewport=getattr(ctl, "run", {}).get(
+            "viewport", {"width": 1280, "height": 900}
+        ),
     )
     tools = Tools(
         exclude_actions=[
             "search",
             "navigate",
             "go_back",
-            "switch",
             "close",
             "evaluate",
             "read_file",
@@ -210,13 +211,31 @@ async def run_openrouter(page, task, ctl, model, config, ledger, cdp_url):
         ):
             if key:
                 errors = [e.replace(key, "[REDACTED]")[:1000] for e in errors]
-        await ctl.record("browser_use", {"actions": actions, "errors": errors})
+        pages = [p for p in page.context.pages if not p.is_closed()]
+        if pages and hasattr(ctl, "page"):
+            ctl.page = pages[-1]
+        await ctl.record(
+            "browser_use",
+            {
+                "actions": actions,
+                "errors": errors,
+                "selection_source": "model",
+                "grounding_source": "browser-use",
+            },
+        )
 
     async def stopped():
-        if "preferences" in task:
+        if "preferences" in task or task.get("benchmark_version") == "2.1":
             from backend.browser.v2 import terminal
 
-            return ctl.stopped or await terminal(page)
+            return ctl.stopped or any(
+                [
+                    await terminal(f)
+                    for p in page.context.pages
+                    if not p.is_closed()
+                    for f in p.frames
+                ]
+            )
         return (
             ctl.stopped
             or await page.get_by_role(

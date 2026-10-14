@@ -13,6 +13,12 @@ SESSIONS = {}
 
 
 def new_session(s, agent_mode="standard"):
+    if s.get("benchmark_version") == "2.1":
+        from backend.workflows_v21 import init
+
+        token = uuid4().hex
+        SESSIONS[token] = init(s, agent_mode)
+        return token
     if s.get("benchmark_version") == "2.0":
         from backend.workflows import init
 
@@ -52,6 +58,9 @@ def asset(name: str):
         "card.html",
         "card.js",
         "v2.js",
+        "v21.js",
+        "v21.css",
+        "v21-extension.js",
         "v2.css",
         "v2-base.css",
     ):
@@ -67,7 +76,9 @@ def page(token: str):
         ROOT
         / "checkout_fixtures"
         / (
-            "v2.html"
+            "v21.html"
+            if SESSIONS[token]["scenario"].get("benchmark_version") == "2.1"
+            else "v2.html"
             if SESSIONS[token]["scenario"].get("benchmark_version") == "2.0"
             else "index.html"
         )
@@ -84,7 +95,7 @@ def session(token):
 def config(token: str):
     st = session(token)
     s = st["scenario"]
-    if s.get("benchmark_version") == "2.0":
+    if s.get("benchmark_version") in ("2.0", "2.1"):
         raise HTTPException(404)
     return dict(
         theme=s["theme"],
@@ -107,7 +118,7 @@ def config(token: str):
 @checkout.post("/session/{token}/input")
 async def inputs(token: str, request: Request):
     st = session(token)
-    if st["scenario"].get("benchmark_version") == "2.0":
+    if st["scenario"].get("benchmark_version") in ("2.0", "2.1"):
         raise HTTPException(404)
     data = await request.json()
     st["values"].update({k: str(v)[:300] for k, v in data.get("values", {}).items()})
@@ -120,7 +131,7 @@ async def inputs(token: str, request: Request):
 @checkout.post("/session/{token}/advance")
 async def advance(token: str, request: Request):
     st = session(token)
-    if st["scenario"].get("benchmark_version") == "2.0":
+    if st["scenario"].get("benchmark_version") in ("2.0", "2.1"):
         raise HTTPException(404)
     data = await request.json()
     action = data.get("action")
@@ -244,3 +255,75 @@ def qr_v2(token: str):
 def subpage_v2(token: str):
     session(token)
     return FileResponse(ROOT / "checkout_fixtures/v2.html")
+
+
+def v21_session(token):
+    st = session(token)
+    if st["scenario"].get("benchmark_version") != "2.1":
+        raise HTTPException(404)
+    return st
+
+
+@checkout.get("/v21/{token}/state")
+def state_v21(token: str):
+    from backend.workflows_v21 import public
+
+    return public(v21_session(token), token)
+
+
+@checkout.post("/v21/{token}/action")
+async def action_v21(token: str, request: Request):
+    import asyncio
+    from backend.workflows_v21 import transition, public
+    from backend.qr import LEVELS
+
+    st = v21_session(token)
+    data = await request.json()
+    await asyncio.sleep(st["scenario"]["difficulty_config"]["network_delay_ms"] / 1000)
+    if data.get("action") in ("show_qr", "qr_refresh", "qr_fullsize"):
+        await asyncio.sleep(LEVELS[st["scenario"].get("qr", "Q0")].delay_ms / 1000)
+    transition(st, data.get("action"), data, token)
+    return public(st, token)
+
+
+@checkout.get("/v21/{token}/qr")
+def qr_v21(token: str):
+    from fastapi.responses import Response
+
+    qr = v21_session(token).get("qr")
+    if not qr:
+        raise HTTPException(404)
+    return Response(qr["image"], media_type=qr["report"]["mime"])
+
+
+@checkout.get("/v21/{token}/challenge")
+@checkout.get("/v21/{token}/component")
+@checkout.get("/v21/{token}/gateway")
+@checkout.get("/v21/{token}/provider")
+@checkout.get("/v21/{token}/verification")
+def subpage_v21(token: str):
+    v21_session(token)
+    return FileResponse(ROOT / "checkout_fixtures/v21.html")
+
+
+@checkout.get("/v21/{token}/extension")
+def extension_v21(token: str):
+    import json, html
+    from fastapi.responses import HTMLResponse
+    from backend.workflows_v21 import public
+
+    st = v21_session(token)
+    if st["scenario"]["family"] != "shopify":
+        raise HTTPException(404)
+    d = public(st, token)
+    payload = {
+        "fields": [f for f in d["fields"] if f.get("section") == "shipping"],
+        "values": d["values"],
+    }
+    # Non-executable data, escaped against script termination. Opaque-origin sandbox has no checkout DOM access.
+    encoded = json.dumps(payload).replace("<", "\\u003c")
+    return HTMLResponse(
+        '<!doctype html><html lang="en"><head><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="/assets/v21.css"></head><body><main id="extension"></main><script type="application/json" id="context">'
+        + encoded
+        + '</script><script src="/assets/v21-extension.js" defer></script></body></html>'
+    )

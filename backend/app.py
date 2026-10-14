@@ -14,8 +14,9 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field, field_validator
 from scenarios.catalog import SPECS, PROFILES, scenario, task
 from scenarios.v2 import V2_SPECS
+from scenarios.v21 import V21_SPECS
 
-ALL_IDS = [s[0] for s in SPECS] + [s["id"] for s in V2_SPECS]
+ALL_IDS = [s[0] for s in SPECS] + [s["id"] for s in V2_SPECS + V21_SPECS]
 from backend.fixtures import new_session
 from backend.adapters import catalog
 from backend.storage.database import (
@@ -156,10 +157,40 @@ async def refresh():
 def scenarios():
     result = []
     for sid in ALL_IDS:
-        row = {k: v for k, v in scenario(sid).items() if k != "profile"}
+        row = {
+            k: v
+            for k, v in scenario(sid).items()
+            if k not in ("profile", "customer_brief", "dom_ids", "expected_values")
+        }
         row.setdefault("benchmark_version", "1.0")
         row.setdefault("family", row["theme"])
         row.setdefault("variant", row["theme"])
+        if "provenance" not in row:
+            from scenarios.provenance import SOURCES
+
+            row["provenance"] = {
+                **SOURCES.get(row["family"], SOURCES["generic"]),
+                "reviewed_at": "2026-10-14",
+                "fidelity_classification": "historical fixture; not corrected",
+                "live_authenticated_ui_verified": False,
+            }
+            if row["family"] == "railway":
+                legacy_web = row["variant"] == "legacy"
+                row["provenance"].update(
+                    source_url=(
+                        "https://contents.irctc.co.in/en/bookEticket.html"
+                        if legacy_web
+                        else "https://contents.irctc.co.in/en/UserGuideIRCTC.pdf"
+                    ),
+                    source_type="historical documentation" if legacy_web else "native mobile",
+                    confidence=(
+                        "historical browser reference; current layout unverified"
+                        if legacy_web
+                        else "historical app reference; not desktop fidelity evidence"
+                    ),
+                )
+        row.setdefault("platform", "legacy_unspecified")
+        row.setdefault("integrity_class", "historical-controller-not-comparable")
         result.append(row)
     return result
 
@@ -400,11 +431,18 @@ def approve_test_user(token: str):
     from backend.workflows import tick_test_user, public
 
     st = session(token)
-    if st["scenario"].get("benchmark_version") != "2.0":
+    if st["scenario"].get("benchmark_version") == "2.1":
+        from backend.workflows_v21 import tick_test_user, public
+    elif st["scenario"].get("benchmark_version") != "2.0":
         raise HTTPException(400)
     tick_test_user(st)
     return public(st, token)
 
+
+# Admin-only routes: the fixture origin and runner allowlist never expose them.
+from backend.sandboxes import router as sandbox_router
+
+app.include_router(sandbox_router)
 
 app.mount("/artifacts", StaticFiles(directory=DATA), name="artifacts")
 if (ROOT / "frontend/dist").exists():

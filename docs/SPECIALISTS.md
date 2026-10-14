@@ -62,6 +62,12 @@ The service returns `{"probabilities":[[0.8,0.1,0.05,0.05]]}`: exactly one finit
 
 TinyClick `_ENDPOINT` receives `POST /ground` with `model`, `image` (PNG data URL) and `instruction`. It returns `{"generated_text":"<loc_500><loc_250>"}` from actual Florence inference. The adapter validates and converts that output. This custom service is an integration contract; the application does not install or launch such a server.
 
+## v2.1 execution integrity
+
+New model runs use v2.1. Its controller passes only visible label/role/value/form-title and the independent customer document to CUA; opaque IDs remain executor handles and are not model features. The selected value controls execution, including invalid choices. TinyClick supplies coordinates for fills, choices and navigation as well as ordinary clicks. No locator scroll or predicted-coordinate correction occurs. Private grounding/classification measurements never select actions. The hybrid calls both models; lifecycle navigation remains deterministic assistance. Test doubles verify that wrong predictions cause actual mistakes, without claiming model capability.
+
+Per-model calls, invalid selections, semantic decision samples, grounding errors and measured timing are recorded. Field-classification samples include invalid and skipped decisions, preventing selective omission of model failures. Historical v1/v2 controllers remain only for reference replay; their earlier scores are not comparable.
+
 ## Input, output and controller boundaries
 
 CUA elements use `id` (opaque browser target), `label`, `role`, `value`, optional `checked`, and optional visible `form_title`. A profile is a nested dict of customer data; flattening only supplies candidate values. Do not pass evaluator fields, hidden expected values, private scenario keys, or scenario-specific answers. Each output contains `element_id`, `action` (`fill/check/click/skip`), selected `value`, selected `entity_key`, confidence and full distribution. Confidence is an uncalibrated softmax probability. The controller determines execution order and applies only appropriate visible browser actions.
