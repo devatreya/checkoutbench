@@ -11,6 +11,10 @@ def norm(key, value):
 
 
 def evaluate(s, state):
+    if s.get("benchmark_version") == "2.0":
+        from backend.evaluator.v2 import evaluate_v2
+
+        return evaluate_v2(s, state)
     p = s["profile"]
     values = state.get("values", {})
     required = {

@@ -13,9 +13,19 @@ from fastapi.responses import StreamingResponse, FileResponse, Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field, field_validator
 from scenarios.catalog import SPECS, PROFILES, scenario, task
+from scenarios.v2 import V2_SPECS
+
+ALL_IDS = [s[0] for s in SPECS] + [s["id"] for s in V2_SPECS]
 from backend.fixtures import new_session
 from backend.adapters import catalog
-from backend.storage.database import DATA, runs, get, leaderboard, recover
+from backend.storage.database import (
+    DATA,
+    runs,
+    get,
+    leaderboard,
+    recover,
+    link_comparisons,
+)
 from backend.runner.engine import Runner
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -33,7 +43,7 @@ async def lifespan(app):
     refresh.cancel()
 
 
-app = FastAPI(title="CheckoutBench", version="1.0.0", lifespan=lifespan)
+app = FastAPI(title="CheckoutBench", version="2.0.0", lifespan=lifespan)
 
 
 @app.middleware("http")
@@ -55,7 +65,8 @@ async def local_only(request, call_next):
 
 class Batch(BaseModel):
     models: list[str] = Field(min_length=1, max_length=30)
-    scenarios: list[str] = Field(min_length=1, max_length=18)
+    scenarios: list[str] = Field(min_length=1, max_length=200)
+    agent_mode: str = "standard"
     profile: str | None = None
     repeats: int = Field(default=3, ge=1, le=100)
     seed: int = Field(default=2026, ge=0, le=2**31 - 1)
@@ -67,10 +78,23 @@ class Batch(BaseModel):
     video: bool = False
     infrastructure_retries: int = Field(default=1, ge=0, le=3)
 
+    @field_validator("agent_mode")
+    @classmethod
+    def mode_known(cls, v):
+        if v not in (
+            "standard",
+            "native_link",
+            "agent_with_link",
+            "agent_without_link",
+            "paired_link",
+        ):
+            raise ValueError("Unknown experimental arm")
+        return v
+
     @field_validator("scenarios")
     @classmethod
     def scenarios_known(cls, v):
-        if any(x not in {s[0] for s in SPECS} for x in v):
+        if any(x not in set(ALL_IDS) for x in v):
             raise ValueError("Unknown scenario")
         return list(dict.fromkeys(v))
 
@@ -108,7 +132,7 @@ class Batch(BaseModel):
 
 @app.get("/api/health")
 def health():
-    return {"ok": True, "version": "1.0.0"}
+    return {"ok": True, "version": "2.0.0"}
 
 
 @app.get("/api/models")
@@ -130,9 +154,14 @@ async def refresh():
 
 @app.get("/api/scenarios")
 def scenarios():
-    return [
-        {k: v for k, v in scenario(spec[0]).items() if k != "profile"} for spec in SPECS
-    ]
+    result = []
+    for sid in ALL_IDS:
+        row = {k: v for k, v in scenario(sid).items() if k != "profile"}
+        row.setdefault("benchmark_version", "1.0")
+        row.setdefault("family", row["theme"])
+        row.setdefault("variant", row["theme"])
+        result.append(row)
+    return result
 
 
 @app.get("/api/profiles")
@@ -141,12 +170,25 @@ def profiles():
 
 
 @app.post("/api/preview/{sid}")
-def preview(sid: str, seed: int = 2026, profile: str | None = None):
-    if sid not in {s[0] for s in SPECS}:
+def preview(
+    sid: str, seed: int = 2026, profile: str | None = None, agent_mode: str = "standard"
+):
+    if agent_mode not in (
+        "standard",
+        "native_link",
+        "agent_with_link",
+        "agent_without_link",
+    ):
+        raise HTTPException(400)
+    if sid not in set(ALL_IDS):
         raise HTTPException(404)
     s = scenario(sid, seed, profile)
-    token = new_session(s)
-    return {"url": runner.origin + "/checkout/" + token, "task": task(s)}
+    token = new_session(s, agent_mode)
+    return {
+        "url": runner.origin + "/checkout/" + token,
+        "task": task(s, agent_mode),
+        "token": token,
+    }
 
 
 @app.post("/api/estimate")
@@ -172,8 +214,9 @@ def estimate(c: Batch):
             )
         )
     return {
-        "runs": count * len(c.models),
-        "estimated_cost": amount,
+        "runs": count
+        * (1 + 2 * len(c.models) if c.agent_mode == "paired_link" else len(c.models)),
+        "estimated_cost": amount * (2 if c.agent_mode == "paired_link" else 1),
         "unknown": unknown,
         "assumption": "Planning estimate: 6,000 input tokens and full output budget per step. Actual usage varies. Caps reserve the context-window price ceiling before each request.",
     }
@@ -201,11 +244,16 @@ def state():
 
 
 @app.get("/api/results")
-def results():
-    rows = runs()
+def results(version: str = "all"):
+    rows = [
+        r
+        for r in runs()
+        if version == "all" or r.get("benchmark_version", "1.0") == version
+    ]
     return {
         "runs": rows,
         "leaderboard": leaderboard(rows),
+        "link_comparisons": link_comparisons(rows),
         "excluded": {
             s: sum(r["status"] == s for r in rows)
             for s in ("unavailable", "blocked", "stopped")
@@ -226,7 +274,7 @@ def export(fmt: str):
     rows = runs()
     if fmt == "json":
         return Response(
-            json.dumps({"version": "1.0.0", "runs": rows}, indent=2),
+            json.dumps({"version": "2.0.0", "runs": rows}, indent=2),
             media_type="application/json",
             headers={"Content-Disposition": "attachment; filename=checkoutbench.json"},
         )
@@ -234,6 +282,13 @@ def export(fmt: str):
         raise HTTPException(404)
     keys = [
         "id",
+        "benchmark_version",
+        "environment",
+        "variant",
+        "merchant",
+        "agent_mode",
+        "evaluation_mode",
+        "difficulty_config",
         "model",
         "kind",
         "scenario",
@@ -296,6 +351,59 @@ async def events(request: Request):
         media_type="text/event-stream",
         headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
     )
+
+
+@app.get("/api/coverage")
+def coverage():
+    rows = scenarios()
+    results = runs()
+    for s in rows:
+        refs = [
+            r
+            for r in results
+            if r["model"] == "reference"
+            and r["scenario"] == s["id"]
+            and r.get("agent_mode", "standard") == "standard"
+            and r["status"] in ("completed", "failed")
+        ]
+        s["reference_status"] = (
+            ("passed" if refs[0].get("success") else "failed") if refs else "unverified"
+        )
+    families = sorted({s["family"] for s in rows})
+    return {
+        "scenarios": rows,
+        "families": families,
+        "variants": len({(s["family"], s["variant"]) for s in rows}),
+        "matrix": [
+            {
+                "family": f,
+                "core": sum(
+                    s["family"] == f and "holdout" not in s["features"] for s in rows
+                ),
+                "holdouts": sum(
+                    s["family"] == f and "holdout" in s["features"] for s in rows
+                ),
+                "variants": sorted({s["variant"] for s in rows if s["family"] == f}),
+                "payments": sorted({s["method"] for s in rows if s["family"] == f}),
+                "unverified": sum(
+                    s["family"] == f and s["reference_status"] != "passed" for s in rows
+                ),
+            }
+            for f in families
+        ],
+    }
+
+
+@app.post("/api/test-user/{token}")
+def approve_test_user(token: str):
+    from backend.fixtures import session
+    from backend.workflows import tick_test_user, public
+
+    st = session(token)
+    if st["scenario"].get("benchmark_version") != "2.0":
+        raise HTTPException(400)
+    tick_test_user(st)
+    return public(st, token)
 
 
 app.mount("/artifacts", StaticFiles(directory=DATA), name="artifacts")

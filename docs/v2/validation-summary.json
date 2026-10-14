@@ -1,0 +1,60 @@
+{
+  "benchmark_version": "2.0",
+  "date": "2026-10-13",
+  "baseline_tests": 30,
+  "final_regression": {
+    "passed": 45,
+    "failed": 0,
+    "seconds": 296.84,
+    "log": "pytest-verification.txt"
+  },
+  "additional_aggregation_regression": {
+    "passed": 1,
+    "failed": 0,
+    "seconds": 0.25
+  },
+  "reference_suite": {
+    "passed": 74,
+    "total": 74,
+    "evidence": "reference-verification.json"
+  },
+  "link_attribution_rerun": {
+    "passed": 12,
+    "total": 12,
+    "evidence": "link-reference-verification.json"
+  },
+  "final_changed_scenarios_and_paired_controls": {
+    "total": 11,
+    "all_expected_outcomes": true,
+    "intentional_native_stale_billing_failure": 1,
+    "evidence": "final-reference-verification.json"
+  },
+  "historical_records": {
+    "original": 66,
+    "missing": 0,
+    "changed": 0,
+    "backup": "data/backups/results-pre-v2.sqlite3"
+  },
+  "frontend_build": "passed",
+  "static_checks": [
+    "compileall passed",
+    "ruff undefined-name checks passed",
+    "git diff --check passed"
+  ],
+  "paid_model_calls": 0,
+  "holdout_use": "fixture solvability validation only; no model training or tuning",
+  "server_health": {
+    "ok": true,
+    "version": "2.0.0"
+  },
+  "visual_inspection": {
+    "fixture_views": 76,
+    "javascript_errors": 0,
+    "document_overflow": 0,
+    "dashboard_viewports": [
+      "desktop",
+      "mobile"
+    ],
+    "manual_review": "all family/variant contact sheets plus updated Link, QR and authentication stage screenshots"
+  }
+}

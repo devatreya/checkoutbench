@@ -17,6 +17,7 @@ async def main():
                 host="127.0.0.1",
                 port=int(os.getenv("BENCH_PORT", "8000")),
                 log_level="warning",
+                timeout_graceful_shutdown=3,
             )
         ),
         uvicorn.Server(
@@ -25,6 +26,7 @@ async def main():
                 host="127.0.0.1",
                 port=int(os.getenv("CHECKOUT_PORT", "8001")),
                 log_level="warning",
+                timeout_graceful_shutdown=3,
             )
         ),
     ]

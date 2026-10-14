@@ -209,6 +209,10 @@ SPECS = [
 
 
 def scenario(sid, seed=None, profile_id=None):
+    if not any(x[0] == sid for x in SPECS):
+        from scenarios.v2 import scenario_v2
+
+        return scenario_v2(sid, seed, profile_id)
     spec = next(x for x in SPECS if x[0] == sid)
     sid, title, theme, method, app, features = spec
     seed = seed if seed is not None else 1000 + int(sid[1:])
@@ -262,7 +266,11 @@ def scenario(sid, seed=None, profile_id=None):
     )
 
 
-def task(s):
+def task(s, agent_mode="standard"):
+    if s.get("benchmark_version") == "2.0":
+        from scenarios.v2 import task_v2
+
+        return task_v2(s, agent_mode)
     return {
         "profile": s["profile"],
         "instruction": f"Use this synthetic profile to complete delivery{' and use the separate billing address' if 'billing' in s['features'] else ''}. Select {s['app'] or s['method']}. Correct prefilled information and recover from errors. Optional fields may be empty. Stop when 'Ready for payment authorisation' appears. Simulated payments only. Never authorise a real payment, enter an OTP or UPI PIN, or leave this checkout.",

@@ -213,6 +213,10 @@ async def run_openrouter(page, task, ctl, model, config, ledger, cdp_url):
         await ctl.record("browser_use", {"actions": actions, "errors": errors})
 
     async def stopped():
+        if "preferences" in task:
+            from backend.browser.v2 import terminal
+
+            return ctl.stopped or await terminal(page)
         return (
             ctl.stopped
             or await page.get_by_role(

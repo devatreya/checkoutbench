@@ -1,0 +1,914 @@
+[
+  {
+    "scenario": "T01",
+    "family": "razor",
+    "variant": "razor",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "razor-razor-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "T02",
+    "family": "generic",
+    "variant": "generic",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "generic-generic-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "T03",
+    "family": "stripe",
+    "variant": "stripe",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "stripe-stripe-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "T14",
+    "family": "cashfree",
+    "variant": "cashfree",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "cashfree-cashfree-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "S01",
+    "family": "shopify",
+    "variant": "fashion-1",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "shopify-fashion-1-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "S02",
+    "family": "shopify",
+    "variant": "fashion-2",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "shopify-fashion-2-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "S03",
+    "family": "shopify",
+    "variant": "beauty-1",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "shopify-beauty-1-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "S04",
+    "family": "shopify",
+    "variant": "beauty-2",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "shopify-beauty-2-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "S05",
+    "family": "shopify",
+    "variant": "electronics-1",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "shopify-electronics-1-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "S06",
+    "family": "shopify",
+    "variant": "electronics-2",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "shopify-electronics-2-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "S07",
+    "family": "shopify",
+    "variant": "groceries-1",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "shopify-groceries-1-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "S08",
+    "family": "shopify",
+    "variant": "groceries-2",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "shopify-groceries-2-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "S09",
+    "family": "shopify",
+    "variant": "furniture-1",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "shopify-furniture-1-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "S10",
+    "family": "shopify",
+    "variant": "furniture-2",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "shopify-furniture-2-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "S11",
+    "family": "shopify",
+    "variant": "subscription-1",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "shopify-subscription-1-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "S12",
+    "family": "shopify",
+    "variant": "subscription-2",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "shopify-subscription-2-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "R01",
+    "family": "railway",
+    "variant": "legacy",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "railway-legacy-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "R02",
+    "family": "railway",
+    "variant": "responsive",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "railway-responsive-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "P01",
+    "family": "passport",
+    "variant": "appointment",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "passport-appointment-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "P04",
+    "family": "passport",
+    "variant": "declarations",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "passport-declarations-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "E01",
+    "family": "echallan",
+    "variant": "lookup",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "echallan-lookup-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "E02",
+    "family": "echallan",
+    "variant": "identity",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "echallan-identity-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "E03",
+    "family": "echallan",
+    "variant": "ledger",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "echallan-ledger-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "L01",
+    "family": "link",
+    "variant": "hosted",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "link-hosted-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "L03",
+    "family": "link",
+    "variant": "express",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "link-express-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "L06",
+    "family": "link",
+    "variant": "embedded",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "link-embedded-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "Q00",
+    "family": "razor",
+    "variant": "qr-0",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "razor-qr-0-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "Q01",
+    "family": "cashfree",
+    "variant": "qr-1",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "cashfree-qr-1-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "Q02",
+    "family": "shopify",
+    "variant": "qr-2",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "shopify-qr-2-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "Q03",
+    "family": "railway",
+    "variant": "qr-3",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "railway-qr-3-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "Q04",
+    "family": "echallan",
+    "variant": "qr-4",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "echallan-qr-4-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "Q05",
+    "family": "generic",
+    "variant": "qr-5",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "generic-qr-5-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "A01",
+    "family": "stripe",
+    "variant": "auth-modal",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "stripe-auth-modal-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "A02",
+    "family": "stripe",
+    "variant": "auth-iframe",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "stripe-auth-iframe-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "A03",
+    "family": "stripe",
+    "variant": "auth-popup",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "stripe-auth-popup-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "A04",
+    "family": "stripe",
+    "variant": "auth-redirect",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "stripe-auth-redirect-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "A05",
+    "family": "stripe",
+    "variant": "auth-modal-locked",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "stripe-auth-modal-locked-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "A06",
+    "family": "stripe",
+    "variant": "auth-modal-captcha",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "screenshot": "stripe-auth-modal-captcha-1280.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "T01",
+    "family": "razor",
+    "variant": "razor",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "razor-razor-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "T02",
+    "family": "generic",
+    "variant": "generic",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "generic-generic-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "T03",
+    "family": "stripe",
+    "variant": "stripe",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "stripe-stripe-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "T14",
+    "family": "cashfree",
+    "variant": "cashfree",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "cashfree-cashfree-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "S01",
+    "family": "shopify",
+    "variant": "fashion-1",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "shopify-fashion-1-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "S02",
+    "family": "shopify",
+    "variant": "fashion-2",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "shopify-fashion-2-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "S03",
+    "family": "shopify",
+    "variant": "beauty-1",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "shopify-beauty-1-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "S04",
+    "family": "shopify",
+    "variant": "beauty-2",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "shopify-beauty-2-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "S05",
+    "family": "shopify",
+    "variant": "electronics-1",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "shopify-electronics-1-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "S06",
+    "family": "shopify",
+    "variant": "electronics-2",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "shopify-electronics-2-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "S07",
+    "family": "shopify",
+    "variant": "groceries-1",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "shopify-groceries-1-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "S08",
+    "family": "shopify",
+    "variant": "groceries-2",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "shopify-groceries-2-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "S09",
+    "family": "shopify",
+    "variant": "furniture-1",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "shopify-furniture-1-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "S10",
+    "family": "shopify",
+    "variant": "furniture-2",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "shopify-furniture-2-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "S11",
+    "family": "shopify",
+    "variant": "subscription-1",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "shopify-subscription-1-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "S12",
+    "family": "shopify",
+    "variant": "subscription-2",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "shopify-subscription-2-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "R01",
+    "family": "railway",
+    "variant": "legacy",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "railway-legacy-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "R02",
+    "family": "railway",
+    "variant": "responsive",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "railway-responsive-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "P01",
+    "family": "passport",
+    "variant": "appointment",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "passport-appointment-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "P04",
+    "family": "passport",
+    "variant": "declarations",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "passport-declarations-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "E01",
+    "family": "echallan",
+    "variant": "lookup",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "echallan-lookup-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "E02",
+    "family": "echallan",
+    "variant": "identity",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "echallan-identity-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "E03",
+    "family": "echallan",
+    "variant": "ledger",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "echallan-ledger-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "L01",
+    "family": "link",
+    "variant": "hosted",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "link-hosted-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "L03",
+    "family": "link",
+    "variant": "express",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "link-express-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "L06",
+    "family": "link",
+    "variant": "embedded",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "link-embedded-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "Q00",
+    "family": "razor",
+    "variant": "qr-0",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "razor-qr-0-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "Q01",
+    "family": "cashfree",
+    "variant": "qr-1",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "cashfree-qr-1-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "Q02",
+    "family": "shopify",
+    "variant": "qr-2",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "shopify-qr-2-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "Q03",
+    "family": "railway",
+    "variant": "qr-3",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "railway-qr-3-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "Q04",
+    "family": "echallan",
+    "variant": "qr-4",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "echallan-qr-4-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "Q05",
+    "family": "generic",
+    "variant": "qr-5",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "generic-qr-5-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "A01",
+    "family": "stripe",
+    "variant": "auth-modal",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "stripe-auth-modal-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "A02",
+    "family": "stripe",
+    "variant": "auth-iframe",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "stripe-auth-iframe-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "A03",
+    "family": "stripe",
+    "variant": "auth-popup",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "stripe-auth-popup-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "A04",
+    "family": "stripe",
+    "variant": "auth-redirect",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "stripe-auth-redirect-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "A05",
+    "family": "stripe",
+    "variant": "auth-modal-locked",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "stripe-auth-modal-locked-390.png",
+    "document_overflow": false,
+    "errors": []
+  },
+  {
+    "scenario": "A06",
+    "family": "stripe",
+    "variant": "auth-modal-captcha",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "stripe-auth-modal-captcha-390.png",
+    "document_overflow": false,
+    "errors": []
+  }
+]

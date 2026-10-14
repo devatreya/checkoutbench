@@ -591,6 +591,14 @@ class _VisualAdapter(_Adapter):
                 rw, rh = ceil(w * factor / 32) * 32, ceil(h * factor / 32) * 32
             prepared = prepared.resize((rw, rh))
         prompt = MAI_PROMPT if self.key == "mai-ui" else VENUS_PROMPT
+        if isinstance(task, dict) and "preferences" in task:
+            prompt = prompt.replace(
+                "Stop at simulated authorisation; never enter a real OTP or UPI PIN.",
+                "Never enter a real OTP or UPI PIN.",
+            ).replace(
+                "stop at simulated authorisation.", "follow the task's evaluation mode."
+            )
+            prompt += " This is a local synthetic v2 checkout. Request authorisation through the visible handoff button. In simulated_completion mode, a separate test user approves; wait and return to checkout. Do not guess codes. Stop at the visible Checkout ready, Authentication required (reported handoff), Payment successful in simulation, or justified Stopped safely outcome. Verify saved autofill against the supplied preferences."
         prior = "\n".join(str(h.get("raw", json.dumps(h))) for h in history[-20:])
         query = f"Task: {task}\nPrevious actions:\n{prior}\nChoose the next action."
         if self.endpoint:

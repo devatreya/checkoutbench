@@ -23,6 +23,20 @@ def allowed_url(url: str, origin: str, token: str) -> bool:
             "/assets/checkout.css",
             "/assets/card.html",
             "/assets/card.js",
+            "/assets/v2.js",
+            "/assets/v2.css",
+            "/assets/v2-base.css",
+            *{
+                f"/v2/{token}/{suffix}"
+                for suffix in (
+                    "state",
+                    "action",
+                    "qr",
+                    "challenge",
+                    "component",
+                    "gateway",
+                )
+            },
         }
     except ValueError:
         return False

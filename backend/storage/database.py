@@ -27,7 +27,7 @@ def save(run):
 def runs():
     with connect() as c:
         return [
-            json.loads(r[0])
+            {"benchmark_version": "1.0", "agent_mode": "standard", **json.loads(r[0])}
             for r in c.execute("SELECT data FROM runs ORDER BY rowid DESC")
         ]
 
@@ -58,6 +58,9 @@ def leaderboard(rows):
             r["config"]["max_steps"],
             r["config"]["timeout"],
             r.get("cohort", "legacy"),
+            r.get("benchmark_version", "1.0"),
+            r.get("agent_mode", "standard"),
+            r.get("evaluation_mode", "handoff"),
         )
         groups[key].append(r)
     result = []
@@ -85,7 +88,58 @@ def leaderboard(rows):
             dict(
                 model=key[0],
                 reasoning=key[1],
-                cohort=key[-1],
+                cohort=key[5],
+                benchmark_version=key[6],
+                agent_mode=key[7],
+                evaluation_mode=key[8],
+                by_environment={
+                    e: mean(
+                        bool(r.get("success"))
+                        for r in rs
+                        if r.get("environment", "legacy") == e
+                    )
+                    for e in {r.get("environment", "legacy") for r in rs}
+                },
+                by_difficulty={
+                    d: mean(
+                        bool(r.get("success"))
+                        for r in rs
+                        if r.get("difficulty_config", {}).get("reliability", "legacy")
+                        == d
+                    )
+                    for d in {
+                        r.get("difficulty_config", {}).get("reliability", "legacy")
+                        for r in rs
+                    }
+                },
+                by_difficulty_dimension={
+                    dimension: {
+                        value: {
+                            "runs": sum(
+                                r.get("difficulty_config", {}).get(dimension) == value
+                                for r in rs
+                            ),
+                            "success_rate": mean(
+                                bool(r.get("success"))
+                                for r in rs
+                                if r.get("difficulty_config", {}).get(dimension)
+                                == value
+                            ),
+                        }
+                        for value in {
+                            r["difficulty_config"][dimension]
+                            for r in rs
+                            if dimension in r.get("difficulty_config", {})
+                        }
+                    }
+                    for dimension in (
+                        "semantic",
+                        "visual",
+                        "interaction",
+                        "reliability",
+                        "payment",
+                    )
+                },
                 holdout_success_rate=mean(
                     bool(r.get("success")) for r in rs if r.get("holdout")
                 )
@@ -137,3 +191,59 @@ def leaderboard(rows):
             else float("inf"),
         ),
     )
+
+
+def link_comparisons(rows):
+    """Only pair matching scenario, seed, profile, repetition, viewport and resource budgets."""
+    groups = defaultdict(dict)
+    for r in reversed(rows):
+        if r.get("environment") != "link" or r["status"] not in ("completed", "failed"):
+            continue
+        c = r["config"]
+        key = (
+            r.get("benchmark_version"),
+            r["scenario"],
+            r["seed"],
+            r["profile_id"],
+            r["repeat"],
+            c["max_steps"],
+            c["timeout"],
+            c["max_tokens"],
+            c["reasoning"],
+            json.dumps(r.get("viewport"), sort_keys=True),
+        )
+        groups[key][(r.get("agent_mode"), r["model"])] = r
+    result = []
+    for key, arms in groups.items():
+        native = arms.get(("native_link", "reference"))
+        for (arm, model), r in arms.items():
+            if arm != "agent_with_link":
+                continue
+            without = arms.get(("agent_without_link", model))
+            result.append(
+                dict(
+                    scenario=key[1],
+                    seed=key[2],
+                    profile=key[3],
+                    model=model,
+                    paired=bool(native and without),
+                    native_run=native["id"] if native else None,
+                    with_link_run=r["id"],
+                    without_link_run=without["id"] if without else None,
+                    incremental_success=int(r["success"]) - int(native["success"])
+                    if native
+                    else None,
+                    user_interactions_saved=native.get("user_interactions", 0)
+                    - r.get("user_interactions", 0)
+                    if native
+                    else None,
+                    preparation_seconds_saved=without["wall_seconds"]
+                    - r["wall_seconds"]
+                    if without
+                    else None,
+                    interpretation="Synthetic Link only. Reference arms measure plumbing, not AI benefit."
+                    if model == "reference"
+                    else "Paired synthetic Link comparison; native autofill is attributed separately.",
+                )
+            )
+    return result

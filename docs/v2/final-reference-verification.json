@@ -1,0 +1,227 @@
+{
+  "checks": [
+    {
+      "name": "updated_scenarios",
+      "batch": "82f2fe0f78374f03aacaf3cad6841723",
+      "conditions": {
+        "models": [
+          "reference"
+        ],
+        "scenarios": [
+          "S06",
+          "E02",
+          "E04",
+          "V2H05",
+          "Q04"
+        ],
+        "repeats": 1,
+        "seed": 2026,
+        "max_steps": 100,
+        "timeout": 180,
+        "agent_mode": "standard"
+      },
+      "runs": 5,
+      "successes": 5,
+      "expected_negative_controls": 0,
+      "results": [
+        {
+          "id": "205363f50a0d48dcac4ffb9b9771e146",
+          "scenario": "Q04",
+          "agent_mode": "standard",
+          "success": true,
+          "status": "completed",
+          "failure_reason": null,
+          "completion_stage": "checkout_ready",
+          "native_autofill_fraction": 0.0,
+          "incorrect_autofill_values": 0,
+          "transaction_count": 0,
+          "wall_seconds": 2.939945458987495
+        },
+        {
+          "id": "d42a145780a84534ba4b22919c0abac5",
+          "scenario": "V2H05",
+          "agent_mode": "standard",
+          "success": true,
+          "status": "completed",
+          "failure_reason": null,
+          "completion_stage": "payment_successful_simulation",
+          "native_autofill_fraction": 0.0,
+          "incorrect_autofill_values": 0,
+          "transaction_count": 1,
+          "wall_seconds": 5.071220749989152
+        },
+        {
+          "id": "34a61c20d8ab4a30bf43cf5e3c75015f",
+          "scenario": "E04",
+          "agent_mode": "standard",
+          "success": true,
+          "status": "completed",
+          "failure_reason": null,
+          "completion_stage": "payment_successful_simulation",
+          "native_autofill_fraction": 0.0,
+          "incorrect_autofill_values": 0,
+          "transaction_count": 1,
+          "wall_seconds": 4.4119497499923455
+        },
+        {
+          "id": "a0bfa079f20f47bfa526cc5e4ca16732",
+          "scenario": "E02",
+          "agent_mode": "standard",
+          "success": true,
+          "status": "completed",
+          "failure_reason": null,
+          "completion_stage": "authentication_required",
+          "native_autofill_fraction": 0.0,
+          "incorrect_autofill_values": 0,
+          "transaction_count": 0,
+          "wall_seconds": 1.2541672919905977
+        },
+        {
+          "id": "03c8093b8f9941fdb6b18a5ea7c9c5b3",
+          "scenario": "S06",
+          "agent_mode": "standard",
+          "success": true,
+          "status": "completed",
+          "failure_reason": null,
+          "completion_stage": "payment_successful_simulation",
+          "native_autofill_fraction": 0.0,
+          "incorrect_autofill_values": 0,
+          "transaction_count": 1,
+          "wall_seconds": 4.728577082991251
+        }
+      ]
+    },
+    {
+      "name": "paired_link_controls",
+      "batch": "15e1f55ac012417aaae7a08a5d92d0b4",
+      "conditions": {
+        "models": [
+          "reference"
+        ],
+        "scenarios": [
+          "L01",
+          "L03"
+        ],
+        "repeats": 1,
+        "seed": 2026,
+        "max_steps": 100,
+        "timeout": 180,
+        "agent_mode": "paired_link"
+      },
+      "runs": 6,
+      "successes": 5,
+      "expected_negative_controls": 1,
+      "results": [
+        {
+          "id": "daf99d0eeba9445881738b45d15a76dc",
+          "scenario": "L03",
+          "agent_mode": "agent_with_link",
+          "success": true,
+          "status": "completed",
+          "failure_reason": null,
+          "completion_stage": "checkout_ready",
+          "native_autofill_fraction": 0.875,
+          "incorrect_autofill_values": 1,
+          "transaction_count": 0,
+          "wall_seconds": 2.9543902080040425
+        },
+        {
+          "id": "d39b380a8bfd49e989fbeb6e46dce0d0",
+          "scenario": "L03",
+          "agent_mode": "agent_without_link",
+          "success": true,
+          "status": "completed",
+          "failure_reason": null,
+          "completion_stage": "checkout_ready",
+          "native_autofill_fraction": 0.0,
+          "incorrect_autofill_values": 0,
+          "transaction_count": 0,
+          "wall_seconds": 2.9730147079972085
+        },
+        {
+          "id": "d4446d00d2324275806a6bd3a4b98d5c",
+          "scenario": "L03",
+          "agent_mode": "native_link",
+          "success": false,
+          "status": "failed",
+          "failure_reason": "field_mismatch",
+          "completion_stage": "checkout_ready",
+          "native_autofill_fraction": 0.875,
+          "incorrect_autofill_values": 1,
+          "transaction_count": 0,
+          "wall_seconds": 2.8962343750026776
+        },
+        {
+          "id": "8bf9db1ae9a447329990d00aabe1d2b6",
+          "scenario": "L01",
+          "agent_mode": "agent_with_link",
+          "success": true,
+          "status": "completed",
+          "failure_reason": null,
+          "completion_stage": "checkout_ready",
+          "native_autofill_fraction": 0.875,
+          "incorrect_autofill_values": 0,
+          "transaction_count": 0,
+          "wall_seconds": 3.3321293750050245
+        },
+        {
+          "id": "156f180df7a54ad5a79c771809f92051",
+          "scenario": "L01",
+          "agent_mode": "agent_without_link",
+          "success": true,
+          "status": "completed",
+          "failure_reason": null,
+          "completion_stage": "checkout_ready",
+          "native_autofill_fraction": 0.0,
+          "incorrect_autofill_values": 0,
+          "transaction_count": 0,
+          "wall_seconds": 2.3935563749982975
+        },
+        {
+          "id": "e6612bb22a724f8985595f91d7554325",
+          "scenario": "L01",
+          "agent_mode": "native_link",
+          "success": true,
+          "status": "completed",
+          "failure_reason": null,
+          "completion_stage": "checkout_ready",
+          "native_autofill_fraction": 0.875,
+          "incorrect_autofill_values": 0,
+          "transaction_count": 0,
+          "wall_seconds": 3.5136577499943087
+        }
+      ]
+    }
+  ],
+  "comparisons": [
+    {
+      "scenario": "L01",
+      "seed": 2026,
+      "profile": "aditi",
+      "model": "reference",
+      "paired": true,
+      "native_run": "e6612bb22a724f8985595f91d7554325",
+      "with_link_run": "8bf9db1ae9a447329990d00aabe1d2b6",
+      "without_link_run": "156f180df7a54ad5a79c771809f92051",
+      "incremental_success": 0,
+      "user_interactions_saved": 9,
+      "preparation_seconds_saved": -0.9385730000067269,
+      "interpretation": "Synthetic Link only. Reference arms measure plumbing, not AI benefit."
+    },
+    {
+      "scenario": "L03",
+      "seed": 2026,
+      "profile": "aditi",
+      "model": "reference",
+      "paired": true,
+      "native_run": "d4446d00d2324275806a6bd3a4b98d5c",
+      "with_link_run": "daf99d0eeba9445881738b45d15a76dc",
+      "without_link_run": "d39b380a8bfd49e989fbeb6e46dce0d0",
+      "incremental_success": 1,
+      "user_interactions_saved": 8,
+      "preparation_seconds_saved": 0.018624499993165955,
+      "interpretation": "Synthetic Link only. Reference arms measure plumbing, not AI benefit."
+    }
+  ],
+  "unverified_scenarios": 0
+}

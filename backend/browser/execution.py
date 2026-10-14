@@ -210,10 +210,22 @@ async def visual_agent(page, task, ctl, model):
     ctl.usage = usage
     for _ in range(ctl.max_steps):
         await ctl.check()
+        if "preferences" in task:
+            pages = [p for p in page.context.pages if not p.is_closed()]
+            page = pages[-1]
+            ctl.page = page
         if await page.get_by_role(
             "heading", name="Ready for payment authorisation"
         ).count():
             break
+        if "preferences" in task:
+            from backend.browser.v2 import terminal
+
+            pages = [p for p in page.context.pages if not p.is_closed()]
+            page = pages[-1]
+            ctl.page = page
+            if await terminal(page):
+                break
         image = Image.open(io.BytesIO(await page.screenshot()))
         start = time.perf_counter()
         action = await adapter.act(image, task, history)

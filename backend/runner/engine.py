@@ -54,6 +54,10 @@ class Controls:
             raise Stopped("Maximum action budget reached")
 
     async def record(self, kind, detail):
+        if self.page.is_closed():
+            remaining = [p for p in self.page.context.pages if not p.is_closed()]
+            if remaining:
+                self.page = remaining[-1]
         path = self.directory / f"step-{len(self.run['events']):04d}.jpg"
         await self.page.screenshot(path=str(path), type="jpeg", quality=65)
         event = {
@@ -91,6 +95,13 @@ class Runner:
     async def start(self, config):
         if self.worker and not self.worker.done():
             raise ValueError("A batch is already running")
+        if config.get("agent_mode") in (
+            "native_link",
+            "agent_with_link",
+            "agent_without_link",
+            "paired_link",
+        ) and any(scenario(sid).get("family") != "link" for sid in config["scenarios"]):
+            raise ValueError("Select only Link scenarios for Link comparison arms")
         self.stop_requested = False
         self.resume.set()
         self.current = None
@@ -104,6 +115,12 @@ class Runner:
             "status": "running",
             "spent": 0,
         }
+        if config.get("agent_mode") == "paired_link":
+            self.batch["total"] = (
+                (1 + 2 * len(config["models"]))
+                * len(config["scenarios"])
+                * config["repeats"]
+            )
         self.worker = asyncio.create_task(self.batch_run(config))
         return self.batch
 
@@ -112,12 +129,19 @@ class Runner:
         try:
             for repeat in range(c["repeats"]):
                 for sid in c["scenarios"]:
-                    for model in c["models"]:
+                    plan = [(m, c) for m in c["models"]]
+                    if c.get("agent_mode") == "paired_link":
+                        plan = [("reference", {**c, "agent_mode": "native_link"})] + [
+                            (m, {**c, "agent_mode": arm})
+                            for m in c["models"]
+                            for arm in ("agent_without_link", "agent_with_link")
+                        ]
+                    for model, run_config in plan:
                         await self.resume.wait()
                         if self.stop_requested:
                             return
                         self.active_task = asyncio.create_task(
-                            self.one(model, sid, c, repeat, ledger)
+                            self.one(model, sid, run_config, repeat, ledger)
                         )
                         try:
                             await self.active_task
@@ -136,7 +160,9 @@ class Runner:
                                 break
                             await asyncio.sleep(0.5)
                             self.active_task = asyncio.create_task(
-                                self.one(model, sid, c, repeat, ledger, attempt + 1)
+                                self.one(
+                                    model, sid, run_config, repeat, ledger, attempt + 1
+                                )
                             )
                             try:
                                 await self.active_task
@@ -152,8 +178,10 @@ class Runner:
 
     async def one(self, model, sid, c, repeat, ledger, infra_attempt=0):
         s = scenario(sid, c["seed"], c.get("profile"))
-        public = task(s)
-        public["payment_request"] = {"method": s["method"], "app": s["app"]}
+        is_v2 = s.get("benchmark_version") == "2.0"
+        agent_mode = c.get("agent_mode", "standard")
+        public = task(s, agent_mode)
+        public.setdefault("payment_request", {"method": s["method"], "app": s["app"]})
         public["separate_billing"] = "billing" in s["features"]
         rid = uuid4().hex
         directory = DATA / rid
@@ -185,7 +213,14 @@ class Runner:
             infrastructure_attempt=infra_attempt,
             events=[],
             hardware=detect_hardware(),
-            viewport=VIEWPORT,
+            viewport=s.get("viewport", VIEWPORT),
+            benchmark_version=s.get("benchmark_version", "1.0"),
+            environment=s.get("family", s["theme"]),
+            variant=s.get("variant", s["theme"]),
+            merchant=s.get("merchant"),
+            difficulty_config=s.get("difficulty_config", {"features": s["features"]}),
+            agent_mode=agent_mode,
+            evaluation_mode=s.get("evaluation_mode", "handoff"),
             success=False,
             cost=0,
         )
@@ -197,11 +232,28 @@ class Runner:
         ).hexdigest()[:12]
         self.current = run
         save(run)
-        token = new_session(s)
+        token = new_session(s, agent_mode)
+        user_task = None
         ctl = None
         context = None
         usage = Usage()
         try:
+            if agent_mode == "native_link" and (
+                s.get("family") != "link" or model != "reference"
+            ):
+                raise Unavailable(
+                    "Native Link is a scripted test-user baseline for Link scenarios only"
+                )
+            if is_v2:
+                from backend.workflows import tick_test_user
+
+                async def test_user():
+                    while True:
+                        if not self.stop_requested and self.resume.is_set():
+                            tick_test_user(SESSIONS[token])
+                        await asyncio.sleep(0.15)
+
+                user_task = asyncio.create_task(test_user())
             # Validate availability before launching a browser; blocked is not a model failure.
             if kind in ("openrouter", "direct"):
                 from backend.adapters.catalog import require
@@ -234,7 +286,7 @@ class Runner:
                     context = await pw.chromium.launch_persistent_context(
                         tmp,
                         headless=True,
-                        viewport=VIEWPORT,
+                        viewport=s.get("viewport", VIEWPORT),
                         device_scale_factor=1,
                         service_workers="block",
                         args=[
@@ -264,7 +316,9 @@ class Runner:
                     ctl = Controls(self, page, run, directory)
                     try:
                         await page.goto(self.origin + "/checkout/" + token)
-                        await page.locator("#shipping").wait_for()
+                        await page.locator(
+                            "#workflow" if is_v2 else "#shipping"
+                        ).wait_for()
                         await ctl.record("start", {"url": page.url})
                         if kind in ("openrouter", "direct"):
                             coro = run_openrouter(
@@ -278,6 +332,10 @@ class Runner:
                             )
                         elif model in ("mai-ui", "ui-venus"):
                             coro = visual_agent(page, public, ctl, model)
+                        elif is_v2:
+                            from backend.browser.v2 import reference_v2
+
+                            coro = reference_v2(page, public, ctl, model)
                         else:
                             coro = reference(page, public, ctl, model)
                         usage = await asyncio.wait_for(coro, timeout=c["timeout"])
@@ -325,6 +383,12 @@ class Runner:
                 error=type(e).__name__,
             )
         finally:
+            if user_task:
+                user_task.cancel()
+                try:
+                    await user_task
+                except asyncio.CancelledError:
+                    pass
             if ctl:
                 usage = ctl.usage
             score = evaluate(s, SESSIONS[token])
@@ -347,6 +411,15 @@ class Runner:
             run["action_count"] = len(
                 [e for e in run["events"] if e["action"] not in ("start", "finish")]
             )
+            if agent_mode == "native_link":
+                run["user_interactions"] = (
+                    run.get("user_interactions", 0) + run["action_count"]
+                )
+                run["agent_actions"] = 0
+            else:
+                run["agent_actions"] = (
+                    0 if model == "reference" else run["action_count"]
+                )
             run["invalid_actions"] = sum(
                 (e["action"] == "invalid_action") + len(e["detail"].get("errors", []))
                 for e in run["events"]

@@ -9,10 +9,20 @@ async def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--url", default="http://127.0.0.1:8000")
     parser.add_argument("--repeats", type=int, default=3)
+    parser.add_argument("--family", default=None)
+    parser.add_argument("--suite", choices=["all", "1.0", "2.0"], default="all")
     parser.add_argument("--output", default="data/reference-verification.json")
     args = parser.parse_args()
     async with httpx.AsyncClient(timeout=30) as c:
         specs = (await c.get(args.url + "/api/scenarios")).json()
+        specs = [
+            s
+            for s in specs
+            if (not args.family or s.get("family") == args.family)
+            and (args.suite == "all" or s.get("benchmark_version", "1.0") == args.suite)
+        ]
+        if not specs:
+            raise SystemExit("No matching scenarios")
         config = dict(
             models=["reference"],
             scenarios=[s["id"] for s in specs],

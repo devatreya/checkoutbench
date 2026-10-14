@@ -12,7 +12,13 @@ checkout = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
 SESSIONS = {}
 
 
-def new_session(s):
+def new_session(s, agent_mode="standard"):
+    if s.get("benchmark_version") == "2.0":
+        from backend.workflows import init
+
+        token = uuid4().hex
+        SESSIONS[token] = init(s, agent_mode)
+        return token
     token = uuid4().hex
     SESSIONS[token] = {
         "scenario": s,
@@ -40,7 +46,15 @@ async def secure(request, call_next):
 
 @checkout.get("/assets/{name}")
 def asset(name: str):
-    if name not in ("checkout.js", "checkout.css", "card.html", "card.js"):
+    if name not in (
+        "checkout.js",
+        "checkout.css",
+        "card.html",
+        "card.js",
+        "v2.js",
+        "v2.css",
+        "v2-base.css",
+    ):
         raise HTTPException(404)
     return FileResponse(ROOT / "checkout_fixtures" / name)
 
@@ -49,7 +63,15 @@ def asset(name: str):
 def page(token: str):
     if token not in SESSIONS:
         raise HTTPException(404)
-    return FileResponse(ROOT / "checkout_fixtures/index.html")
+    return FileResponse(
+        ROOT
+        / "checkout_fixtures"
+        / (
+            "v2.html"
+            if SESSIONS[token]["scenario"].get("benchmark_version") == "2.0"
+            else "index.html"
+        )
+    )
 
 
 def session(token):
@@ -62,6 +84,8 @@ def session(token):
 def config(token: str):
     st = session(token)
     s = st["scenario"]
+    if s.get("benchmark_version") == "2.0":
+        raise HTTPException(404)
     return dict(
         theme=s["theme"],
         features=s["features"],
@@ -83,6 +107,8 @@ def config(token: str):
 @checkout.post("/session/{token}/input")
 async def inputs(token: str, request: Request):
     st = session(token)
+    if st["scenario"].get("benchmark_version") == "2.0":
+        raise HTTPException(404)
     data = await request.json()
     st["values"].update({k: str(v)[:300] for k, v in data.get("values", {}).items()})
     for k in ("method", "app", "card", "vpa"):
@@ -94,6 +120,8 @@ async def inputs(token: str, request: Request):
 @checkout.post("/session/{token}/advance")
 async def advance(token: str, request: Request):
     st = session(token)
+    if st["scenario"].get("benchmark_version") == "2.0":
+        raise HTTPException(404)
     data = await request.json()
     action = data.get("action")
     s = st["scenario"]
@@ -170,3 +198,49 @@ async def advance(token: str, request: Request):
         st["stage"] = "authorisation_ready"
         return {"stage": st["stage"]}
     raise HTTPException(409, "Invalid checkout transition")
+
+
+@checkout.get("/v2/{token}/state")
+def state_v2(token: str):
+    from backend.workflows import public
+
+    st = session(token)
+    if st["scenario"].get("benchmark_version") != "2.0":
+        raise HTTPException(404)
+    return public(st, token)
+
+
+@checkout.post("/v2/{token}/action")
+async def action_v2(token: str, request: Request):
+    import asyncio
+    from backend.workflows import transition, public
+
+    st = session(token)
+    if st["scenario"].get("benchmark_version") != "2.0":
+        raise HTTPException(404)
+    data = await request.json()
+    await asyncio.sleep(st["scenario"]["difficulty_config"]["network_delay_ms"] / 1000)
+    if data.get("action") in ("show_qr", "qr_refresh", "qr_fullsize"):
+        from backend.qr import LEVELS
+
+        await asyncio.sleep(LEVELS[st["scenario"].get("qr", "Q0")].delay_ms / 1000)
+    transition(st, data.get("action"), data, token)
+    return public(st, token)
+
+
+@checkout.get("/v2/{token}/qr")
+def qr_v2(token: str):
+    from fastapi.responses import Response
+
+    qr = session(token).get("qr")
+    if not qr:
+        raise HTTPException(404)
+    return Response(qr["image"], media_type=qr["report"]["mime"])
+
+
+@checkout.get("/v2/{token}/challenge")
+@checkout.get("/v2/{token}/component")
+@checkout.get("/v2/{token}/gateway")
+def subpage_v2(token: str):
+    session(token)
+    return FileResponse(ROOT / "checkout_fixtures/v2.html")

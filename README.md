@@ -22,9 +22,9 @@ If `uv` encounters an obsolete system interpreter on macOS, use `UV_PYTHON_PREFE
 ## Run an experiment
 
 1. Select one or more models. The deterministic reference is a **fixture validation baseline**, not an AI model.
-2. Select a scenario, all 15 core scenarios, or include the three holdouts. Pick a synthetic customer, or use each scenario's default.
+2. Select a version and environment, then scenarios or holdouts. V1 retains its 15 core scenarios and three holdouts. Pick a synthetic customer, or use each scenario's default.
 3. Keep the initial three repetitions, or increase them. Advanced settings control seed, actions, timeout, output tokens, reasoning effort, video and optional batch spend cap.
-4. Review the estimated API expenditure, then start. Runs execute sequentially with a new browser profile and identical 1280 × 900 viewport.
+4. Review the estimated API expenditure, then start. Runs execute sequentially with a new browser profile and the same scenario-specific viewport across models (v1: 1280 × 900).
 5. Watch screenshots and actions in **Live session**. Pause takes effect at the next controller/agent boundary. Stop cancels the active run and remaining queue.
 6. Inspect **Results** for leaderboard, per-scenario success, action replay, videos and JSON/CSV exports. Unavailable, blocked and stopped runs are excluded from model failure rates.
 
@@ -69,7 +69,7 @@ Hardware planning: core reference/browser runs need no GPU; 8 GB system RAM is a
 
 ## Environments and scenarios
 
-Four original visual environments draw on public checkout interaction patterns without copying provider code/assets or implying affiliation:
+The four preserved v1 visual environments draw on public checkout interaction patterns without copying provider code/assets or implying affiliation:
 
 - **Paper & Form / Stripe-inspired:** contact/shipping, billing toggle, embedded card iframe, simulated 3DS preparation and validation recovery.
 - **Northstar / Razorpay-inspired:** PhonePe, Google Pay, Paytm and BHIM, app switching, non-scannable QR preparation, card and legacy dummy VPA.
@@ -105,9 +105,9 @@ Checkout business validation checks formats, required fields and allowed test-pa
 
 Empty Address Line 2 never blocks or lowers a score. If supplied, it must match the profile's optional value. The original `index.html` bug is fixed and regression-tested. That legacy page still contains its old client-side fixture and is retained only for regression/reference; the benchmark does not serve or run it.
 
-The control API and checkout have different loopback ports. The agent's browser route policy permits only its opaque session URL, that session's submit endpoints, and four fixture assets. Other sessions, the dashboard, model catalogue, results, arbitrary loopback ports, external websites and WebSockets are blocked. CSP also restricts fixture resources to the local origin. Neither expected customer data nor scoring results are returned by the fixture configuration. This is a controlled benchmark boundary, not a hardened isolation system for hostile code with operating-system access.
+The control API and checkout have different loopback ports. The agent's browser route policy permits only its opaque session URL, that session's submit endpoints, and the allowlisted fixture assets. Other sessions, the dashboard, model catalogue, results, arbitrary loopback ports, external websites and WebSockets are blocked. CSP also restricts fixture resources to the local origin. Neither expected customer data nor scoring results are returned by the fixture configuration. This is a controlled benchmark boundary, not a hardened isolation system for hostile code with operating-system access.
 
-Only the documented Stripe `4242 4242 4242 4242` test card with synthetic expiry/CVV and `checkoutbench@example.invalid` VPA are accepted by new fixtures. There is no banking request, OTP prompt, UPI PIN, usable QR or approval button.
+Only synthetic test-card and VPA inputs are accepted. V1 stops at authorisation preparation. V2 adds real QR images containing nonpayable `.invalid` URLs and fictional OTP/approval flows through a separate test-user simulator. Neither version sends banking requests or accepts a real UPI PIN.
 
 ## Persistence, statistics and exports
 
@@ -132,7 +132,7 @@ Exports retain conditions and exact configuration. They are deterministic snapsh
 npm --prefix frontend run build
 ```
 
-Tests start separate servers on 8765/8766 and use temporary SQLite/artifact directories. They cover all 18 scenarios with browser execution and video, the original optional-field regression, partial/wrong scoring, dependent controls, iframe/retry transitions, unavailable classification, exact network allowlisting, hidden-metadata isolation, cost reservations/reconciliation, strict specialist parsers, pause/resume/stop, exports, and a **scripted-response** native Browser Use action in real Chromium. Mocked adapter tests are not benchmark model results. A genuinely paid or weights-backed run requires your credentials/checkpoints.
+Tests start separate servers on 8765/8766 and use temporary SQLite/artifact directories. The v1 tests cover all 18 original scenarios with browser execution and video; v2 adds its complete reference suite and negative controls. Other checks include the original optional-field regression, partial/wrong scoring, dependent controls, iframe/retry transitions, unavailable classification, exact network allowlisting, hidden-metadata isolation, cost reservations/reconciliation, strict specialist parsers, pause/resume/stop, exports, and a **scripted-response** native Browser Use action in real Chromium. Mocked adapter tests are not benchmark model results. A genuinely paid or weights-backed run requires your credentials/checkpoints.
 
 See [docs/IMPLEMENTATION_REPORT.md](docs/IMPLEMENTATION_REPORT.md), [docs/RESEARCH.md](docs/RESEARCH.md), and [docs/SPECIALISTS.md](docs/SPECIALISTS.md).
 
@@ -154,3 +154,31 @@ tests/                 pytest + actual Playwright/Browser Use execution
 ```
 
 Private GitHub repository: [devatreya/checkoutbench](https://github.com/devatreya/checkoutbench). Runtime data, environment files and installed dependencies are excluded from Git.
+
+## CheckoutBench v2.0
+
+The v1 T01–T15 and H01–H03 definitions and historical results are preserved. V2 adds 48 core scenarios and eight holdouts (74 scenarios total), with nine environment families. `S01–S12` cover six fictional Shopify-style merchants, `R01–R06` railway booking, `P01–P04` appointment payment, `E01–E04` challans, `L01–L09` plus paired `L06H` Link flows, `Q00–Q05` QR quality, and `A01–A06` authentication. `V2H01–V2H08` are infrastructure-validated holdouts, not training examples.
+
+Open **Coverage** to inspect the family/variant matrix, select a scenario, read the task and private author criteria, interact with its preview, change the seed, reset, or run a reference execution. **Scenarios** has version and family filters for model runs. V2 viewports are scenario-specific (desktop 1280×900 or mobile 390×844) and identical across models on that scenario. Models still run sequentially. **Results** separates benchmark versions and experimental arms; combined views label each row instead of pooling v1 and v2.
+
+### Link comparison
+
+Select only Link scenarios and choose **Paired A / B / C Link comparison**. The runner executes a native-Link scripted test user (A), each selected agent without Link (B), and with Link (C), sequentially using equivalent profiles, seeds and limits. You can also run arms individually. Reference in B/C validates the experiment without paid inference; it is not an AI result. Native stale billing intentionally fails in A. `L09` is the explicit registration-consent case; every other Link task prohibits enrolment.
+
+The separate comparison table reports matched success differences and user-action savings only when corresponding runs exist. Native autofill is recorded separately. Link scenarios represent a US/USD card-funding configuration and expose no UPI wallet functionality. These are original local Link simulations, not Stripe Payment Links and not an actual Stripe sandbox integration.
+
+### Authentication and QR
+
+`backend/authentication.py` provides seeded four-/six-digit OTPs, expiry, resend, invalid/locked/delayed states and separate test-user approval. Agents request authorisation through the page. In **handoff** mode they must explicitly report the handoff and stop. In **simulated_completion** mode a runner-owned test user approves the synthetic challenge; the agent waits and resumes. The test-user function operates outside the browser and never exposes the code to the agent origin. In a manual Coverage preview, click **Provide requested test-user approval** after requesting approval inside the checkout. Invalid/expired challenges require resend first. Modal, iframe, popup and redirect surfaces share this simulator. Mock CAPTCHA always requires intervention.
+
+`backend/qr.py` uses `qrcode` to generate images and `zxing-cpp` to independently decode them. Payloads use reserved `.invalid` URLs, never payable UPI URIs. Quality presets cover clean, small, blurred, compressed, obscured and expired codes. `QRConfig` exposes size, density, contrast, blur, JPEG quality, crop, quiet zone, error correction, expiration and appearance delay. Identical seeds generate identical images across fresh sessions. Display enlargement does not restore lost information or automatically earn success; the evaluator checks actual decoder output and expiration. Expected payloads and decoding reports stay on the server.
+
+### Outcomes and evidence
+
+V2 distinguishes `checkout_ready`, `authentication_required`, simulated authentication events, `payment_successful_simulation`, pending/failed workflow states and `safe_abort`. A safe abort only succeeds where a real blocking condition was encountered; reporting one prematurely fails. Fields, selected payment, consent, transaction count and requested outcome are independently checked. Scenario metadata, per-stage checks, QR reports, native autofill counts, user handoffs and recovery events are included in run JSON and replay artifacts. The error-detection timing metric is a behavioural proxy (error display to recovery action).
+
+Dependencies are locked in `uv.lock`; the normal installation includes the two lightweight QR libraries. Existing OpenRouter, Browser Use, direct-provider and specialist integrations are retained. Specialist weights remain separately configured; no model weights or paid evaluations are needed to validate fixtures. The SQLite JSON schema is additive: old records are read as v1 without rewriting their stored data.
+
+Research provenance and limitations: [v2 research](docs/v2/RESEARCH.md). Plan and audit: [implementation plan](docs/v2/PLAN.md). Optional real Shopify development-store/Bogus Gateway, official Stripe sandbox and live government workflows are **not enabled**. Local test sessions remain restricted to their own fixture origin and allowlisted per-session paths.
+
+Validation and delivered scope: [v2 implementation report](docs/v2/IMPLEMENTATION_REPORT.md), [reference evidence](docs/v2/reference-verification.json), and [visual inspection evidence](docs/v2/screenshots/inspection.json).

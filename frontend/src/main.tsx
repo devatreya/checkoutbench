@@ -23,6 +23,7 @@ import {
   X,
 } from "lucide-react";
 import "./style.css";
+import Coverage from "./Coverage";
 type Model = {
   status?: string;
   id: string;
@@ -40,6 +41,9 @@ type Model = {
   tools?: boolean;
 };
 type Scenario = {
+  benchmark_version?: string;
+  family?: string;
+  variant?: string;
   id: string;
   title: string;
   theme: string;
@@ -57,6 +61,8 @@ type Event = {
   screenshot: string;
 };
 type Run = {
+  benchmark_version?: string;
+  agent_mode?: string;
   id: string;
   model: string;
   scenario: string;
@@ -76,6 +82,8 @@ type Run = {
   cost_kind?: string;
 };
 type Board = {
+  benchmark_version?: string;
+  agent_mode?: string;
   duration_stddev: number | null;
   cohort: string;
   holdout_success_rate: number | null;
@@ -156,8 +164,19 @@ function App() {
     [searchModels, setSearchModels] = useState<Model[]>([]),
     [inspect, setInspect] = useState<Run | null>(null),
     [replay, setReplay] = useState(0),
-    [catalogNote, setCatalogNote] = useState("");
+    [catalogNote, setCatalogNote] = useState(""),
+    [boardVersion, setBoardVersion] = useState("all"),
+    [agentMode, setAgentMode] = useState("standard"),
+    [suite, setSuite] = useState("1.0"),
+    [environment, setEnvironment] = useState("all"),
+    [linkComparisons, setLinkComparisons] = useState<any[]>([]);
+  const visibleScenarios = scenarios.filter(
+    (s) =>
+      (suite === "all" || s.benchmark_version === suite) &&
+      (environment === "all" || s.family === environment),
+  );
   const config = {
+    agent_mode: agentMode,
     models: selected,
     scenarios: chosen,
     profile: profile || null,
@@ -175,6 +194,7 @@ function App() {
       .then((d) => {
         setRuns(d.runs);
         setBoard(d.leaderboard);
+        setLinkComparisons(d.link_comparisons || []);
       })
       .catch((e) => setError(e.message));
   const loadModels = () =>
@@ -285,6 +305,7 @@ function App() {
             ["Overview", BarChart3],
             ["Models", Cpu],
             ["Scenarios", Layers],
+            ["Coverage", FlaskConical],
             ["Live session", Monitor],
             ["Results", Activity],
           ].map(([label, Icon]) => (
@@ -298,7 +319,7 @@ function App() {
               {label === "Live session" && state.running && (
                 <span className="live-dot" />
               )}
-              {label === "Scenarios" && <small>18</small>}
+              {label === "Scenarios" && <small>{scenarios.length}</small>}
             </button>
           ))}
         </nav>
@@ -312,7 +333,7 @@ function App() {
             <CircleHelp size={16} /> API documentation <ArrowRight size={14} />
           </a>
           <div className="version">
-            CHECKOUTBENCH <span>v1.0</span>
+            CHECKOUTBENCH <span>v2.0</span>
           </div>
         </div>
       </aside>
@@ -340,7 +361,7 @@ function App() {
                     : tab === "Models"
                       ? "Compare architectures, with capability and reliability first."
                       : tab === "Scenarios"
-                        ? "Reproducible checkout conditions. Four stores. Eighteen challenges."
+                        ? "Nine environment families. Versioned scenarios and explicit outcomes."
                         : tab === "Live session"
                           ? "Follow every browser action as the run unfolds."
                           : "Objective outcomes, recorded actions, and reproducible exports."}
@@ -371,6 +392,34 @@ function App() {
               </button>
             </div>
           )}
+          {(tab === "Overview" || tab === "Models" || tab === "Scenarios") && (
+            <div className="arm-control">
+              <label>
+                Experimental arm{" "}
+                <select
+                  aria-label="Experimental arm"
+                  value={agentMode}
+                  onChange={(e) => setAgentMode(e.target.value)}
+                >
+                  <option value="standard">Standard benchmark</option>
+                  <option value="native_link">
+                    A · Native Link only (select reference)
+                  </option>
+                  <option value="agent_without_link">
+                    B · Agent without Link
+                  </option>
+                  <option value="agent_with_link">C · Agent with Link</option>
+                  <option value="paired_link">
+                    Paired A / B / C Link comparison
+                  </option>
+                </select>
+              </label>
+              <span>
+                Link comparisons require Link scenarios. Same profile, seed and
+                resource budgets across arms.
+              </span>
+            </div>
+          )}
           {(tab === "Overview" || tab === "Results") && (
             <div className="stats">
               <Stat
@@ -380,19 +429,19 @@ function App() {
                 icon={<FlaskConical />}
               />
               <Stat
-                label="Checkout-ready success"
+                label="Outcome success · all versions"
                 value={
                   completed.length
                     ? percent(successes.length / completed.length)
                     : "—"
                 }
-                note="Required fields + payment + stage"
+                note="Ready, handoff, simulated success or safe abort"
                 icon={<Check />}
               />
               <Stat
                 label="Test environments"
-                value="04"
-                note="15 core scenarios + 3 holdouts"
+                value="09"
+                note={`${scenarios.length} scenarios · v1 and v2 preserved`}
                 icon={<Layers />}
               />
               <Stat
@@ -561,7 +610,7 @@ function App() {
                         className="textbutton"
                         onClick={() =>
                           setChosen(
-                            scenarios
+                            visibleScenarios
                               .filter((s) => !s.features.includes("holdout"))
                               .map((s) => s.id),
                           )
@@ -571,16 +620,45 @@ function App() {
                       </button>
                       <button
                         className="textbutton"
-                        onClick={() => setChosen(scenarios.map((s) => s.id))}
+                        onClick={() =>
+                          setChosen(visibleScenarios.map((s) => s.id))
+                        }
                       >
                         Include holdouts
                       </button>
                     </div>
                   </div>
+                  <div className="formrow">
+                    <label>
+                      Benchmark suite
+                      <select
+                        value={suite}
+                        onChange={(e) => setSuite(e.target.value)}
+                      >
+                        <option value="1.0">v1.0 · preserved suite</option>
+                        <option value="2.0">v2.0 · expanded workflows</option>
+                        <option value="all">All · version labelled</option>
+                      </select>
+                    </label>
+                    <label>
+                      Environment
+                      <select
+                        value={environment}
+                        onChange={(e) => setEnvironment(e.target.value)}
+                      >
+                        <option value="all">All environments</option>
+                        {[...new Set(scenarios.map((s) => s.family))].map(
+                          (f) => (
+                            <option key={f}>{f}</option>
+                          ),
+                        )}
+                      </select>
+                    </label>
+                  </div>
                   <div className="scenario-chips">
-                    {scenarios.map((s) => (
+                    {visibleScenarios.map((s) => (
                       <button
-                        title={s.title}
+                        title={`v${s.benchmark_version} · ${s.family} · ${s.title}`}
                         key={s.id}
                         className={
                           (chosen.includes(s.id) ? "selected " : "") +
@@ -766,7 +844,7 @@ function App() {
                   >
                     {scenarios.map((s) => (
                       <option value={s.id} key={s.id}>
-                        {s.id} — {s.title}
+                        v{s.benchmark_version} · {s.id} — {s.title}
                       </option>
                     ))}
                   </select>
@@ -827,13 +905,14 @@ function App() {
                   <ShieldCheck size={18} />
                   <p>
                     <b>Same conditions. Fair comparisons.</b> Every trial starts
-                    with a fresh browser, the same 1280 × 900 viewport, profile,
-                    and seed.
+                    with a fresh browser and the scenario’s fixed viewport,
+                    profile, and seed.
                   </p>
                 </div>
               </section>
             </div>
           )}
+          {tab === "Coverage" && <Coverage />}
           {(tab === "Live session" ||
             (tab === "Overview" && state.running)) && (
             <section className="card">
@@ -940,7 +1019,21 @@ function App() {
                   <BarChart3 size={18} />
                   <h2>Performance leaderboard</h2>
                 </div>
-                <span className="tag">Reliability first</span>
+                <div className="leaderboard-controls">
+                  <label>
+                    Suite{" "}
+                    <select
+                      aria-label="Leaderboard version"
+                      value={boardVersion}
+                      onChange={(e) => setBoardVersion(e.target.value)}
+                    >
+                      <option value="all">Combined · versions labelled</option>
+                      <option value="1.0">v1.0</option>
+                      <option value="2.0">v2.0</option>
+                    </select>
+                  </label>
+                  <span className="tag">Reliability first</span>
+                </div>
               </div>
               <p className="table-caption">
                 Ranked by checkout-ready success, confidence, successful-run
@@ -960,37 +1053,47 @@ function App() {
                     </tr>
                   </thead>
                   <tbody>
-                    {board.map((r, i) => (
-                      <tr key={r.model + r.reasoning + i}>
-                        <td>
-                          <b>{displayName(r.model)}</b>
-                          <small>
-                            {r.kind === "reference"
-                              ? "Fixture validation baseline"
-                              : r.reasoning + " reasoning"}{" "}
-                            · {r.runs} runs · cohort {r.cohort}
-                          </small>
-                        </td>
-                        <td>
-                          <div className="rate">
-                            <b>{percent(r.success_rate)}</b>
-                            <div>
-                              <i style={{ width: percent(r.success_rate) }} />
+                    {board
+                      .filter(
+                        (r) =>
+                          boardVersion === "all" ||
+                          (r.benchmark_version || "1.0") === boardVersion,
+                      )
+                      .map((r, i) => (
+                        <tr key={r.model + r.reasoning + i}>
+                          <td>
+                            <b>{displayName(r.model)}</b>
+                            <small>
+                              v{r.benchmark_version || "1.0"} ·{" "}
+                              {r.agent_mode || "standard"}
+                            </small>
+                            <small>
+                              {r.kind === "reference"
+                                ? "Fixture validation baseline"
+                                : r.reasoning + " reasoning"}{" "}
+                              · {r.runs} runs · cohort {r.cohort}
+                            </small>
+                          </td>
+                          <td>
+                            <div className="rate">
+                              <b>{percent(r.success_rate)}</b>
+                              <div>
+                                <i style={{ width: percent(r.success_rate) }} />
+                              </div>
                             </div>
-                          </div>
-                        </td>
-                        <td>
-                          {percent(r.ci95[0])}–{percent(r.ci95[1])}
-                        </td>
-                        <td>
-                          {r.median_seconds === null
-                            ? "—"
-                            : r.median_seconds.toFixed(1) + "s"}
-                        </td>
-                        <td>{percent(r.field_accuracy)}</td>
-                        <td>{money(r.cost_per_success)}</td>
-                      </tr>
-                    ))}
+                          </td>
+                          <td>
+                            {percent(r.ci95[0])}–{percent(r.ci95[1])}
+                          </td>
+                          <td>
+                            {r.median_seconds === null
+                              ? "—"
+                              : r.median_seconds.toFixed(1) + "s"}
+                          </td>
+                          <td>{percent(r.field_accuracy)}</td>
+                          <td>{money(r.cost_per_success)}</td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
                 {!board.length && (
@@ -1002,6 +1105,48 @@ function App() {
                       environments.
                     </p>
                   </div>
+                )}
+              </div>
+            </section>
+          )}
+          {tab === "Results" && (
+            <section className="card">
+              <div className="cardhead">
+                <h2>Native Link versus agent autofill</h2>
+              </div>
+              <p className="table-caption">
+                Only equivalent scenario, profile, seed, viewport and budgets
+                are paired. Native autofill is credited separately. Reference
+                comparisons validate plumbing, not AI performance.
+              </p>
+              <div className="tablewrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Scenario</th>
+                      <th>System</th>
+                      <th>Pairing</th>
+                      <th>Success gain over native</th>
+                      <th>User interactions saved</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {linkComparisons.map((x, i) => (
+                      <tr key={i}>
+                        <td>{x.scenario}</td>
+                        <td>{displayName(x.model)}</td>
+                        <td>{x.paired ? "Complete A/B/C" : "Missing arm"}</td>
+                        <td>{x.incremental_success ?? "—"}</td>
+                        <td>{x.user_interactions_saved ?? "—"}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                {!linkComparisons.length && (
+                  <p className="table-caption">
+                    Run the three Link arms from the experiment selector to
+                    populate paired results.
+                  </p>
                 )}
               </div>
             </section>
@@ -1097,6 +1242,10 @@ function App() {
                         <tr key={r.id}>
                           <td>
                             <b>{displayName(r.model)}</b>
+                            <small>
+                              v{r.benchmark_version || "1.0"} ·{" "}
+                              {r.agent_mode || "standard"}
+                            </small>
                             <small>{r.id.slice(0, 8)}</small>
                           </td>
                           <td>{r.scenario}</td>
