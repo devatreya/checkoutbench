@@ -1,7 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from backend.storage.database import runs
 from backend.research.protocol import release, readiness
-from backend.research.statistics import analyse
 
 router = APIRouter(prefix="/api/research", tags=["research"])
 
@@ -20,18 +19,19 @@ def report():
 
 
 @router.get("/analysis")
-def analysis(protocol: str | None = None):
-    return analyse(runs(), release(), protocol)
+def analysis():
+    from backend.research.official import dataset
+    return dataset(runs())
 
 
 @router.get("/export")
-def export(protocol: str | None = None):
+def export():
     from fastapi.responses import Response
     from backend.research.export import bundle
 
     try:
         return Response(
-            bundle(runs(), protocol),
+            bundle(runs()),
             media_type="application/zip",
             headers={
                 "Content-Disposition": 'attachment; filename="checkoutbench-research.zip"'

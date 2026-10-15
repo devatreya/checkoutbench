@@ -2,7 +2,7 @@
 
 A local research workbench for evaluating lightweight checkout specialists. **Select Models → Understand Benchmark Coverage → Review → Run All → Analyse Results.**
 
-Research release **3.0-pilot.1** adds 174 active tasks across nine environment families and three research tracks. The dashboard is version 3.0.0; the compatible fixture engine remains 2.1. Historical saved records are preserved.
+Research release **3.0-pilot.1** adds 174 active tasks across nine environment families and three research tracks. The dashboard is version 3.0.0; the compatible fixture engine remains 2.1. Obsolete validation records are preserved in a verified local archive; the active results database starts empty.
 
 **Publication status: NOT READY.** Independent ground-truth review, genuinely unseen independent holdouts, adequate independent implementations, remaining checkpoint verification and official sandbox validation are still required. [Read the limitations](docs/research/LIMITATIONS.md). Software regression success is not evidence of model capability or scientific validity.
 
@@ -24,13 +24,21 @@ npm --prefix frontend run build
 
 Open [CheckoutBench](http://127.0.0.1:8000). The isolated fixture server uses port 8001. Restart after backend/environment changes; rebuild after frontend changes. Keep credentials and local model paths in the ignored `.env` file. Never overwrite an existing `.env` to add one setting.
 
+## Unified official results
+
+CheckoutBench displays one unified set of results from the current official benchmark release. Internal software validation is separate from genuine AI model evaluations.
+
+The active frozen manifest and an explicitly configured official evaluation protocol determine eligibility. Without that configuration or eligible runs, Results shows **No benchmark results yet**. No record is chosen implicitly to define the protocol. Configure the intended settings and verified checkpoint identities before evaluation using the [operator instructions](docs/operations/RESULTS_DATASET.md).
+
+Reference/debug runs and test doubles use separate validation storage. Genuine verified experiment attempts—including failures, timeouts and blocked attempts—are preserved. Incompatible experiments remain internally inspectable without being combined in official statistics. Future releases do not delete prior evidence. See the [one-time cleanup audit](docs/operations/RESULTS_CLEANUP_AUDIT.md) and [backup/migration guidance](docs/operations/RESULTS_DATASET.md#one-time-cleanup-and-future-migrations).
+
 ## Run a benchmark
 
 1. **Models:** choose among the five specialists below. Availability alone does not prove checkpoint identity or inference. Research runs require exact local checkpoint verification and a real smoke test.
 2. **Benchmark Coverage:** understand the three tracks and nine environments. Every model runs the entire frozen development/validation manifest. There are no per-scenario selectors in ordinary setup.
 3. **Review:** confirm total trials, repetitions, action/token/time limits and recording. Seed/profile/suite are fixed. Unknown inference/hosting cost is not zero. Large batches may take hours. Repetition counts are pilot choices, not final-study power estimates.
 4. **Run All:** start only after explicit confirmation. Pause/resume/stop retain recorded attempts. No automatic model run occurs on refresh.
-5. **Results:** Summary, Model Comparison, Scenario Analysis, **Payment & Stage Analysis**, Run Explorer. The new tab has payment rankings, branching stage funnel, failure drilldowns and vendor × method matrix. Insufficient evidence never generates a winner. Historical v1–v2.1 results retain their original scoring definitions.
+5. **Results:** Summary, Model Comparison, Scenario Analysis, **Payment & Stage Analysis**, Run Explorer. The new tab has payment rankings, branching stage funnel, failure drilldowns and vendor × method matrix. Insufficient evidence never generates a winner. Every tab uses the same current official dataset; version/protocol/cohort selectors are absent.
 
 | Configuration | Parameters | Learned contribution / assistance |
 |---|---:|---|
@@ -81,6 +89,6 @@ npm --prefix frontend run build
 BENCH_DATA_DIR="$PWD/data/new-study" ./scripts/start.sh
 ```
 
-Stop the previous server before starting another instance on the same ports. The original `data/` remains intact. The regression suite starts separate temporary storage and servers; test doubles and reference records never populate public research rankings.
+Stop the previous server before starting another instance on the same ports. Existing experiment and archive storage remains intact. The regression suite starts separate temporary storage and servers; test doubles and reference records never populate public research rankings.
 
 The deterministic reference policy can fail unfamiliar-label tasks; that measures its own coverage, not fixture solvability. The full pytest suite additionally uses a private test oracle to validate all ten controlled layout cases. Those oracle checks never count as AI evaluations.

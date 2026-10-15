@@ -4,10 +4,10 @@
 
 ## Completed software verification
 
-- 113 automated tests passed, covering legacy behavior, controlled matrices, new merchant fixtures, measurement, statistical guards, adapters and browser UI.
-- 41 final scoring/UI checks passed after the last scoring-preservation and cohort-separation changes.
+- 132 full regression tests passed, plus 34 final official-results/API/UI checks and 50 backend checks.
+- All five Results tabs and exports use one explicitly configured official dataset; mocks, references and incompatible experiments are excluded.
 - 27 real desktop/mobile UI captures passed layout and JavaScript checks.
-- All 313 pre-existing stored run records were preserved byte for byte.
+- All 313 obsolete validation records were preserved byte for byte in a verified ignored archive before the explicit one-time cleanup. The active experiment database is empty.
 - CUA-S1's exact checkpoint and loader were verified and genuine cold/warm inference executed. This is an inference-format smoke test, not a checkout accuracy evaluation.
 - Frozen source hashes match the release. Research charts remain marked templates because no eligible comparative model evaluations were collected.
 

@@ -15,7 +15,8 @@ def main():
     sub.add_parser("readiness")
     ex = sub.add_parser("export")
     ex.add_argument("--output", default="data/research/export.zip")
-    ex.add_argument("--protocol")
+    official = sub.add_parser("configure-official")
+    official.add_argument("config", help="Complete Batch JSON; explicit settings and verified models")
     rv = sub.add_parser("review-packet")
     rv.add_argument("--output", default="data/research/review-packet.json")
     im = sub.add_parser("import-review")
@@ -39,12 +40,16 @@ def main():
                 indent=2,
             )
         )
+    elif a.command == "configure-official":
+        from backend.app import Batch
+        from backend.research.official import configure
+        print(json.dumps(configure(Batch(**json.loads(Path(a.config).read_text())).model_dump()), indent=2))
     elif a.command == "readiness":
         print(json.dumps(readiness(), indent=2))
     elif a.command == "export":
         path = Path(a.output)
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_bytes(bundle(runs(), a.protocol))
+        path.write_bytes(bundle(runs()))
         print(path)
     elif a.command == "review-packet":
         from scenarios.catalog import task

@@ -10,3 +10,7 @@
 8. A separate custodian supplies an independently authored final corpus. `manage seal` records commitments; `reserve-final` atomically consumes a one-use reservation for frozen protocol/checkpoints. No ordinary preview/tuning route exists. The current release contains no final corpus and therefore makes no held-out generalisation claim.
 
 Official test-mode evidence is separate. Existing Stripe/Shopify/Razorpay/Cashfree API checks are read-only connectivity/object checks. Optional `official_browser --stripe-session cs_test_...` verifies test mode and records hosted browser inspection; it does not claim completed payment validation. Full authenticated official workflows for all providers remain pending credentials and reviewed interaction evidence. Never use live keys, genuine cards/OTPs or government transactions.
+
+## Official Results population
+
+Before collecting official comparisons, explicitly configure the release/settings/checkpoint identities as described in [Results operations](../operations/RESULTS_DATASET.md). All Results views and standard exports use this one central population. No user-facing selector or implicit first/latest-record protocol exists. Incompatible genuine attempts remain stored; validation runs use isolated storage.

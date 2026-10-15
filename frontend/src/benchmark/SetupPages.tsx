@@ -69,23 +69,17 @@ export function Overview({
         />
         <Stat
           label="Checkout environments"
-          value={
-            new Set(
-              scenarios
-                .filter((s) => s.benchmark_version === "3.0")
-                .map((s) => s.family),
-            ).size
-          }
+          value={new Set(scenarios.map((s) => s.family)).size}
         />
         <Stat
           label="Benchmark scenarios"
-          value={scenarios.filter((s) => s.benchmark_version === "3.0").length}
-          note="Validated v2.1 suite"
+          value={scenarios.length}
+          note="Active frozen release"
         />
         <Stat
           label="Completed AI evaluations"
           value={completed.length}
-          note="Specialist runs across saved versions"
+          note="Current official evaluation dataset"
         />
       </div>
       <section className="panel grow">
@@ -309,12 +303,14 @@ export function ScenarioPreview({
 export function Scenarios({
   scenarios,
   setup,
+  releaseName,
 }: {
+  releaseName: string;
   scenarios: Scenario[];
   setup: Setup;
   update: (v: Partial<Setup>) => void;
 }) {
-  const active = scenarios.filter((s) => s.benchmark_version === "3.0");
+  const active = scenarios;
   const families = new Set(active.map((s) => s.implementation_family));
   return (
     <div className="coverage-workspace">
@@ -343,7 +339,7 @@ export function Scenarios({
       <section className="panel grow scroll">
         <div className="panel-title">
           <h2>Understand the coverage. Run the whole suite.</h2>
-          <span className="badge">3.0-pilot.1</span>
+          <span className="badge">{releaseName}</span>
         </div>
         <p>
           Every selected model receives all {active.length} tasks in the same

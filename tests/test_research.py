@@ -305,7 +305,7 @@ def test_publication_excludes_debug_subsets_but_retains_failed_attempt_costs():
     assert analyse([r], m)["genuine_trials"] == 0
     r["execution_manifest"]["standard_run_all"] = True
     blocked = {**r, "id": "blocked", "status": "blocked", "calls": [], "cost": 2}
-    result = analyse([r, blocked], m)
+    result = analyse([r, blocked], m, "p")
     assert result["genuine_trials"] == 1 and result["total_attempts"] == 2
     assert result["models"][0]["cost_per_success"] == 3
 

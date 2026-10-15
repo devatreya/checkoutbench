@@ -8,8 +8,10 @@ DATA.mkdir(parents=True, exist_ok=True)
 DB = DATA / "results.sqlite3"
 
 
-def connect():
-    c = sqlite3.connect(DB)
+def connect(diagnostic=False):
+    path = DATA / "validation" / "results.sqlite3" if diagnostic else DB
+    path.parent.mkdir(parents=True, exist_ok=True)
+    c = sqlite3.connect(path)
     c.execute("PRAGMA journal_mode=WAL")
     c.execute(
         "CREATE TABLE IF NOT EXISTS runs (id TEXT PRIMARY KEY, data TEXT NOT NULL)"
@@ -17,29 +19,42 @@ def connect():
     return c
 
 
+def experiment_attempt(run):
+    ex = run.get("execution_manifest") or {}
+    return bool(
+        os.getenv("BENCH_STORAGE_ROLE") != "validation"
+        and run.get("model") != "reference"
+        and run.get("kind") != "reference"
+        and ex.get("standard_run_all")
+        and (ex.get("checkpoint") or {}).get("verified")
+        and not any(run.get(k) for k in ("test_only", "test_double", "is_test_double"))
+    )
+
+
 def save(run):
-    with connect() as c:
+    diagnostic = run.get("result_store") != "experiments" or not experiment_attempt(run)
+    with connect(diagnostic) as c:
         c.execute(
             "INSERT OR REPLACE INTO runs VALUES (?,?)", (run["id"], json.dumps(run))
         )
 
 
-def runs():
-    with connect() as c:
+def runs(diagnostic=False):
+    with connect(diagnostic) as c:
         return [
             {"benchmark_version": "1.0", "agent_mode": "standard", **json.loads(r[0])}
             for r in c.execute("SELECT data FROM runs ORDER BY rowid DESC")
         ]
 
 
-def get(rid):
-    with connect() as c:
+def get(rid, diagnostic=False):
+    with connect(diagnostic) as c:
         r = c.execute("SELECT data FROM runs WHERE id=?", (rid,)).fetchone()
     return json.loads(r[0]) if r else None
 
 
 def recover():
-    for r in runs():
+    for r in runs() + runs(diagnostic=True):
         if r.get("status") == "running":
             r.update(status="blocked", failure_reason="server_restarted")
             save(r)

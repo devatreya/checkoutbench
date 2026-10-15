@@ -16,6 +16,7 @@ def server(tmp_path_factory):
         "BENCH_PORT": str(port),
         "CHECKOUT_PORT": str(port+1),
         "BENCH_DATA_DIR": str(data),
+        "BENCH_STORAGE_ROLE": "validation",
         "OPENROUTER_API_KEY": "",
     }
     proc = subprocess.Popen(

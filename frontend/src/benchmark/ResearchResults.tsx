@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
-  api,
+  date,
+  csv,
   human,
   pct,
   seconds,
@@ -30,42 +31,42 @@ function Rate({ value }: { value: any }) {
 export default function ResearchResults({
   view,
   onRun,
+  onStart,
+  data,
 }: {
   view: string;
   onRun: (id: string) => void;
+  onStart: () => void;
+  data: any;
 }) {
-  const [data, setData] = useState<any>(null),
-    [ready, setReady] = useState<any>(null),
-    [protocol, setProtocol] = useState(""),
-    [model, setModel] = useState("all"),
+  const [model, setModel] = useState("all"),
     [sub, setSub] = useState("Payment Method Ranking"),
     [dimension, setDimension] = useState("Tracks"),
-    [error, setError] = useState("");
-  useEffect(() => {
-    let live = true;
-    Promise.all([
-      api(
-        "/research/analysis" +
-          (protocol ? "?protocol=" + encodeURIComponent(protocol) : ""),
-      ),
-      api("/research/readiness"),
-    ])
-      .then(([a, b]) => {
-        if (live) {
-          setData(a);
-          setReady(b);
-        }
-      })
-      .catch((e) => setError(e.message));
-    return () => {
-      live = false;
-    };
-  }, [protocol]);
-  if (error)
-    return <Empty title="Research analysis unavailable">{error}</Empty>;
-  if (!data) return <Empty title="Loading research measurements…" />;
+    [scenarioDimension, setScenarioDimension] = useState("Scenario"),
+    [vendor, setVendor] = useState("all"),
+    [method, setMethod] = useState("all"),
+    [outcome, setOutcome] = useState("all"),
+    [stage, setStage] = useState("all"),
+    [search, setSearch] = useState("");
+  const attempts = (data.runs || []).filter(
+    (r: any) =>
+      (model === "all" || r.model === model) &&
+      (vendor === "all" || r.environment === vendor) &&
+      (method === "all" || r.requested_payment_method === method) &&
+      (outcome === "all" || r.status === outcome) &&
+      (stage === "all" || r.failed_stage === stage) &&
+      (!search ||
+        [r.id, r.model, r.scenario, r.failure_reason]
+          .join(" ")
+          .toLowerCase()
+          .includes(search.toLowerCase())),
+  );
   const rows = (key: string) =>
     (data[key] || []).filter((r: any) => model === "all" || r.model === model);
+  const summary =
+    model === "all"
+      ? data.summary
+      : data.models.find((r: any) => r.model === model) || {};
   const methods = [
     "Payment Method Ranking",
     "Checkout Funnel",
@@ -101,6 +102,7 @@ export default function ResearchResults({
             <th>Checkout preparation</th>
             <th>Required field accuracy</th>
             <th>Successful median / inference</th>
+            <th>Payment / recovery / grounding</th>
             <th>Cost / success</th>
           </tr>
         </thead>
@@ -133,6 +135,17 @@ export default function ResearchResults({
                 {seconds(r.median_successful_seconds)} /{" "}
                 {seconds(r.median_inference_seconds)}
               </td>
+              <td>
+                Method <Rate value={r.payment_method} />
+                <small>
+                  Details {pct(r.payment_detail?.rate)} · QR recovery{" "}
+                  {pct(r.qr_recovery?.rate)} · model-wide grounding{" "}
+                  {pct(
+                    data.components?.find((c: any) => c.model === r.model)
+                      ?.grounding_accuracy,
+                  )}
+                </small>
+              </td>
               <td>{money(r.cost_per_success)}</td>
             </tr>
           ))}
@@ -143,16 +156,6 @@ export default function ResearchResults({
   return (
     <div className="research-workspace">
       <div className="filters">
-        <Select
-          label="Research protocol"
-          value={protocol || data.selected_protocol || ""}
-          onChange={setProtocol}
-          options={
-            data.protocols.length
-              ? data.protocols.map((p: string) => [p, p.slice(0, 16)])
-              : [["", "No verified model trials"]]
-          }
-        />
         <Select
           label="Research model"
           value={model}
@@ -165,27 +168,92 @@ export default function ResearchResults({
         <button onClick={() => download("research-analysis.json", data)}>
           Analysis JSON
         </button>
-        <a
-          className="button"
-          href={
-            "/api/research/export" +
-            (data.selected_protocol
-              ? "?protocol=" + encodeURIComponent(data.selected_protocol)
-              : "")
-          }
-        >
+        <a className="button" href="/api/research/export">
           Research bundle ↓
         </a>
       </div>
+      <details className="metrics-explained">
+        <summary>Metrics Explained</summary>
+        <p>
+          Task resolution includes correct safe aborts and authorisation
+          handoffs; checkout preparation and simulated payment completion are
+          separate outcomes. No real payment is made. Payment-method selection,
+          payment-detail accuracy and OTP/3DS authentication are distinct. QR
+          recovery includes only encountered recoverable problems; clean QR
+          cases receive no recovery credit. Conditional stage success uses
+          encountered applicable stages; end-to-end rates use assigned scored
+          trials. Successful median time excludes failures. Confidence intervals
+          resample independent implementation clusters, not repeated trials;
+          insufficient independent coverage means no population interval or
+          winner. Cost per successful preparation includes reported costs of all
+          finished attempts and stays unknown when costs are missing.
+        </p>
+      </details>
       <p className="notice">
-        {ready?.status} · {data.genuine_trials} eligible genuine trials ·{" "}
-        {data.release}. Synthetic results only. Protocols and historical scores
-        are never pooled.
+        Active release {data.release} · {data.genuine_trials} evaluations with
+        inference · {data.total_attempts} verified experiment attempts.
+        Synthetic checkout environments.
       </p>
       <section className="panel grow scroll">
-        {view === "Summary" ? (
+        {!data.total_attempts && (
+          <Empty title="No benchmark results yet">
+            <p>
+              CheckoutBench is ready to collect results from genuine AI model
+              evaluations. Select your models and run the benchmark to start
+              comparing checkout accuracy, payment handling, speed, and
+              reliability.
+            </p>
+            <button className="primary" onClick={onStart}>
+              Start Benchmark →
+            </button>
+            {data.empty_reason && <p className="muted">{data.empty_reason}</p>}
+          </Empty>
+        )}
+
+        {!data.total_attempts &&
+        view !== "Payment & Stage Analysis" ? null : view === "Summary" ? (
           <>
-            <h2>Three research questions, three separate scores</h2>
+            <h2>Official evaluation summary</h2>
+            {data.total_attempts > 0 && (
+              <div className="coverage-tracks">
+                <section>
+                  <h3>Task resolution</h3>
+                  <Rate value={summary.task_resolution} />
+                  <p>
+                    Checkout preparation{" "}
+                    <Rate value={summary.checkout_preparation} />
+                  </p>
+                </section>
+                <section>
+                  <h3>Accuracy and successful time</h3>
+                  <p>
+                    Required fields{" "}
+                    {pct(summary.required_field_accuracy?.estimate)}
+                  </p>
+                  <p>
+                    Payment selection <Rate value={summary.payment_method} />
+                  </p>
+                  <p>
+                    Successful median{" "}
+                    {seconds(summary.median_successful_seconds)}
+                  </p>
+                </section>
+                <section>
+                  <h3>Distinct outcomes</h3>
+                  <p>
+                    Safe abort <Rate value={summary.safe_abort} />
+                  </p>
+                  <p>
+                    Handoff <Rate value={summary.authorisation_handoff} />
+                  </p>
+                  <p>
+                    Simulated completion{" "}
+                    <Rate value={summary.simulated_completion} />
+                  </p>
+                </section>
+              </div>
+            )}
+            <h3>Three research tracks</h3>
             <div className="coverage-tracks">
               {[
                 ["A", "Core Checkout", "Correct checkout preparation"],
@@ -218,16 +286,6 @@ export default function ResearchResults({
               ))}
             </div>
             {table(rows("models"))}
-            <details>
-              <summary>
-                Publication blockers ({ready?.blockers?.length || 0})
-              </summary>
-              <ul>
-                {ready?.blockers?.map((b: string) => (
-                  <li key={b}>{human(b)}</li>
-                ))}
-              </ul>
-            </details>
             <p>
               Strengths and weaknesses remain unreported until verified model
               trials establish comparable coverage. A passing reference executor
@@ -242,6 +300,13 @@ export default function ResearchResults({
               value={dimension}
               onChange={setDimension}
             />
+            <p>
+              CUA-S1 performs semantic matching through Playwright. TinyClick
+              grounds clicks with deterministic semantic/controller assistance.
+              The hybrid invokes both. MAI-UI and UI-Venus generate visual GUI
+              actions. Inspect action attribution before crediting a decision to
+              a model.
+            </p>
             {table(comparison)}
             <h3>Paired comparisons</h3>
             {data.paired_comparisons.length ? (
@@ -257,8 +322,8 @@ export default function ResearchResults({
               ))
             ) : (
               <p>
-                Insufficient data for CUA versus TinyClick versus hybrid or
-                other matched comparisons.
+                Insufficient comparable data for CUA versus TinyClick versus
+                hybrid or other matched comparisons.
               </p>
             )}
           </>
@@ -270,8 +335,32 @@ export default function ResearchResults({
               implementation variants are correlated, not independent
               replications.
             </p>
+            <Tabs
+              label="Scenario breakdown"
+              items={["Scenario", "Provider", "Track", "Difficulty"]}
+              value={scenarioDimension}
+              onChange={setScenarioDimension}
+            />
             {table(
-              rows("scenarios").map((r: any) => ({ ...r, label: r.scenario })),
+              scenarioDimension === "Provider"
+                ? rows("providers")
+                : scenarioDimension === "Difficulty"
+                  ? rows("difficulties").map((r: any) => ({
+                      ...r,
+                      label: r.difficulty,
+                    }))
+                  : scenarioDimension === "Track"
+                    ? rows("models").flatMap((r: any) =>
+                        Object.entries(r.tracks).map(([track, s]: any) => ({
+                          ...s,
+                          model: r.model,
+                          label: track,
+                        })),
+                      )
+                    : rows("scenarios").map((r: any) => ({
+                        ...r,
+                        label: r.scenario,
+                      })),
             )}
             <h3>Failures by category</h3>
             {rows("failures").map((r: any) => (
@@ -282,6 +371,149 @@ export default function ResearchResults({
                 </button>
               </p>
             ))}
+          </>
+        ) : view === "Run Explorer" ? (
+          <>
+            <div className="toolbar">
+              <input
+                aria-label="Search run records"
+                placeholder="Run ID, model, scenario or failure"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              <Select
+                label="Vendor"
+                value={vendor}
+                onChange={setVendor}
+                options={[
+                  "all",
+                  ...(Array.from(
+                    new Set(data.runs.map((r: any) => r.environment)),
+                  ) as string[]),
+                ]}
+              />
+              <Select
+                label="Payment method"
+                value={method}
+                onChange={setMethod}
+                options={["all", ...data.payment_methods]}
+              />
+              <Select
+                label="Run status"
+                value={outcome}
+                onChange={setOutcome}
+                options={[
+                  "all",
+                  "completed",
+                  "failed",
+                  "blocked",
+                  "unavailable",
+                  "stopped",
+                  "running",
+                ]}
+              />
+              <Select
+                label="Failed stage"
+                value={stage}
+                onChange={setStage}
+                options={[
+                  "all",
+                  ...Array.from(
+                    { length: 13 },
+                    (_, i) => `S${String(i + 1).padStart(2, "0")}`,
+                  ),
+                ]}
+              />
+              <button
+                onClick={() =>
+                  download("official-runs.json", { runs: attempts })
+                }
+              >
+                Export run JSON
+              </button>
+              <button
+                onClick={() =>
+                  download(
+                    "official-runs.csv",
+                    csv(
+                      attempts.map((r: any) => ({
+                        id: r.id,
+                        model: r.model,
+                        scenario: r.scenario,
+                        status: r.status,
+                        task_resolved_correctly: r.task_resolved_correctly,
+                        checkout_prepared: r.checkout_prepared,
+                        failed_stage: r.failed_stage,
+                        wall_seconds: r.wall_seconds,
+                      })),
+                    ),
+                    true,
+                  )
+                }
+              >
+                Export filtered summaries CSV
+              </button>
+            </div>
+            <div className="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Run / started</th>
+                    <th>Model / scenario</th>
+                    <th>Environment / method</th>
+                    <th>Outcome / failed stage</th>
+                    <th>Duration / cost</th>
+                    <th>Evidence</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {attempts.map((r: any) => (
+                    <tr key={r.id}>
+                      <td className="mono">
+                        {r.id}
+                        <small>{date(r.timestamp)}</small>
+                      </td>
+                      <td>
+                        {modelName(r.model)}
+                        <small>{r.scenario}</small>
+                      </td>
+                      <td>
+                        {familyName(r.environment)}
+                        <small>{human(r.requested_payment_method)}</small>
+                      </td>
+                      <td>
+                        {human(r.status)}
+                        <small>
+                          {r.task_resolved_correctly === true
+                            ? "Task resolved"
+                            : r.failure_reason || "No resolution recorded"}
+                        </small>
+                        <small>{r.failed_stage}</small>
+                      </td>
+                      <td>
+                        {seconds(r.wall_seconds)}
+                        <small>
+                          {money(
+                            r.cost_kind === "not_reported" ? null : r.cost,
+                          )}
+                        </small>
+                      </td>
+                      <td>
+                        <button
+                          aria-label={`Open run ${r.id}`}
+                          onClick={() => onRun(r.id)}
+                        >
+                          Open run →
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            {!!data.total_attempts && !attempts.length && (
+              <Empty title="No matching evaluation attempts" />
+            )}
           </>
         ) : (
           <>
@@ -484,14 +716,6 @@ export default function ResearchResults({
               </>
             )}
           </>
-        )}
-        {!data.genuine_trials && (
-          <Empty title="Insufficient data — no verified model evaluations">
-            Configure the exact checkpoints, run genuine smoke verification,
-            then Run All. Reference and test-double records never populate
-            research rankings. Exported charts remain clearly labelled
-            templates.
-          </Empty>
         )}
       </section>
     </div>

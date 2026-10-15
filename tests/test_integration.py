@@ -56,7 +56,7 @@ async def test_all_scenarios_reference_and_exports(server):
             await asyncio.sleep(0.25)
         else:
             pytest.fail("Reference suite timed out")
-        all_results = (await c.get(server + "/api/results")).json()
+        all_results = (await c.get(server + "/api/diagnostics/results")).json()
         rows = [r for r in all_results["runs"] if r["batch_id"] == batch]
         assert len(rows) == 18
         assert all(r["success"] for r in rows), [
@@ -74,12 +74,12 @@ async def test_all_scenarios_reference_and_exports(server):
         assert all(not r.get("blocked_requests") for r in rows)
         assert next(r for r in rows if r["scenario"] == "T14")["retries"] == 1
         assert next(r for r in rows if r["scenario"] == "T13")["validation_errors"] == 1
-        j = await c.get(server + "/api/export/json")
+        j = await c.get(server + "/api/diagnostics/export/json")
         assert len(j.json()["runs"]) >= 18
-        j2 = await c.get(server + "/api/export/json")
+        j2 = await c.get(server + "/api/diagnostics/export/json")
         assert j.content == j2.content
         exported = list(
-            csv.DictReader(io.StringIO((await c.get(server + "/api/export/csv")).text))
+            csv.DictReader(io.StringIO((await c.get(server + "/api/diagnostics/export/csv")).text))
         )
         assert {r["id"] for r in rows} <= {r["id"] for r in exported}
         assert json.loads(exported[0]["config"])["seed"] == 731
@@ -101,7 +101,7 @@ async def test_required_dependencies_and_network_isolation(server, page):
         fixture_origin = info["url"].split("/checkout/")[0]
         for path in [
             "/api/scenarios",
-            "/api/results",
+            "/api/diagnostics/results",
             "/fixtures.json",
             "/docs",
             "/openapi.json",
@@ -163,7 +163,7 @@ async def test_unavailable_not_failure(server):
             await asyncio.sleep(0.1)
         assert st["current"]["status"] == "unavailable"
         assert not st["current"]["success"]
-        board = (await c.get(server + "/api/results")).json()["leaderboard"]
+        board = (await c.get(server + "/api/diagnostics/results")).json()["leaderboard"]
         assert all(b["model"] != "openai/gpt-6-astra" for b in board)
 
 

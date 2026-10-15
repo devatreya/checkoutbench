@@ -12,7 +12,7 @@ from playwright.async_api import (
 from scenarios.catalog import scenario, task
 from backend.fixtures import new_session, SESSIONS
 from backend.evaluator.scoring import evaluate
-from backend.storage.database import DATA, save
+from backend.storage.database import DATA, save, experiment_attempt
 from backend.adapters.base import Usage, Ledger, Unavailable, Stopped, BudgetExceeded
 from backend.adapters.specialists import (
     SpecialistUnavailable,
@@ -90,7 +90,7 @@ class Controls:
             "elapsed": time.perf_counter() - self.started,
             "action": kind,
             "detail": detail,
-            "screenshot": f"/artifacts/{self.run['id']}/{path.name}",
+            "screenshot": f"/artifacts/{path.relative_to(DATA)}",
         }
         self.run["events"].append(event)
         self.run["screenshot"] = event["screenshot"]
@@ -250,8 +250,6 @@ class Runner:
         public.setdefault("payment_request", {"method": s["method"], "app": s["app"]})
         public["separate_billing"] = "billing" in s["features"]
         rid = uuid4().hex
-        directory = DATA / rid
-        directory.mkdir()
         started = time.perf_counter()
         kind = (
             "reference"
@@ -310,6 +308,11 @@ class Runner:
             from backend.research.protocol import execution_manifest
 
             run.update(execution_manifest(c, s, model))
+        run["result_store"] = "experiments" if experiment_attempt(run) else "validation"
+        if s.get("research_release"):
+            run["scoring_version"] = "3.0"
+        directory = DATA / rid if run["result_store"] == "experiments" else DATA / "validation" / rid
+        directory.mkdir(parents=True)
         self.current = run
         save(run)
         token = new_session(s, agent_mode)
@@ -593,7 +596,7 @@ class Runner:
             )
             run["videos"] = (
                 [
-                    f"/artifacts/{rid}/video/{p.name}"
+                    f"/artifacts/{p.relative_to(DATA)}"
                     for p in (directory / "video").glob("*.webm")
                 ]
                 if c["video"]

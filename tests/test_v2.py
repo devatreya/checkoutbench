@@ -87,7 +87,7 @@ async def run_batch(server, ids, mode="standard", timeout=120):
             await asyncio.sleep(0.25)
         rows = [
             r
-            for r in (await c.get(server + "/api/results")).json()["runs"]
+            for r in (await c.get(server + "/api/diagnostics/results")).json()["runs"]
             if r["batch_id"] == batch
         ]
         assert len(rows) == len(ids)
@@ -166,11 +166,11 @@ async def test_link_arms(server):
         if mode == "native_link":
             assert not next(r for r in rows if r["scenario"] == "L03")["success"]
     async with httpx.AsyncClient() as c:
-        d = (await c.get(server + "/api/results")).json()
+        d = (await c.get(server + "/api/diagnostics/results")).json()
         assert any(p["paired"] for p in d["link_comparisons"])
         assert all(
             b["benchmark_version"] == "2.0"
-            for b in (await c.get(server + "/api/results?version=2.0")).json()[
+            for b in (await c.get(server + "/api/diagnostics/results?version=2.0")).json()[
                 "leaderboard"
             ]
         )

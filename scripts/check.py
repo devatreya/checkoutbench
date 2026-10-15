@@ -11,7 +11,7 @@ async def main():
     parser.add_argument("--repeats", type=int, default=3)
     parser.add_argument("--family", default=None)
     parser.add_argument("--suite", choices=["all", "1.0", "2.0", "2.1", "3.0"], default="all")
-    parser.add_argument("--output", default="data/reference-verification.json")
+    parser.add_argument("--output", default="data/validation/reference-verification.json")
     args = parser.parse_args()
     async with httpx.AsyncClient(timeout=30) as c:
         specs = (await c.get(args.url + "/api/scenarios")).json()
@@ -41,7 +41,7 @@ async def main():
             await asyncio.sleep(1)
         rows = [
             r
-            for r in (await c.get(args.url + "/api/results")).json()["runs"]
+            for r in (await c.get(args.url + "/api/diagnostics/results")).json()["runs"]
             if r["batch_id"] == batch
         ]
         summary = {

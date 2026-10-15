@@ -295,34 +295,42 @@ def state():
 
 
 @app.get("/api/results")
-def results(version: str = "all"):
-    rows = [
-        r
-        for r in runs()
-        if version == "all" or r.get("benchmark_version", "1.0") == version
-    ]
-    return {
-        "runs": rows,
-        "leaderboard": leaderboard(rows),
-        "link_comparisons": link_comparisons(rows),
-        "excluded": {
-            s: sum(r["status"] == s for r in rows)
-            for s in ("unavailable", "blocked", "stopped")
-        },
-    }
+def results():
+    from backend.research.official import dataset
+    return dataset(runs())
+
+
+@app.get("/api/diagnostics/experiments")
+def experiment_history():
+    # Operator diagnostics only; never used by the ordinary dashboard or exports.
+    return {"runs": runs()}
+
+
+@app.get("/api/diagnostics/results")
+def diagnostic_results(version: str = "all"):
+    rows = [r for r in runs(diagnostic=True) if version == "all" or r.get("benchmark_version", "1.0") == version]
+    return {"runs": rows, "leaderboard": leaderboard(rows), "link_comparisons": link_comparisons(rows)}
 
 
 @app.get("/api/results/{rid}")
 def result(rid: str):
-    r = get(rid)
+    r = next((r for r in results()["runs"] if r["id"] == rid), None)
     if not r:
         raise HTTPException(404)
     return r
 
 
+@app.get("/api/diagnostics/export/{fmt}")
+def diagnostic_export(fmt: str):
+    return export_rows(fmt, runs(diagnostic=True))
+
+
 @app.get("/api/export/{fmt}")
 def export(fmt: str):
-    rows = runs()
+    return export_rows(fmt, results()["runs"])
+
+
+def export_rows(fmt, rows):
     if fmt == "json":
         return Response(
             json.dumps({"version": "3.0.0", "runs": rows}, indent=2),
@@ -347,6 +355,15 @@ def export(fmt: str):
         "profile_id",
         "repeat",
         "status",
+        "task_resolved_correctly",
+        "checkout_prepared",
+        "authorisation_handoff_correct",
+        "safe_abort_correct",
+        "simulated_payment_completed",
+        "payment_method_correct",
+        "scoring_version",
+        "research_protocol_hash",
+        "release_hash",
         "success",
         "required_field_accuracy",
         "optional_correct",
@@ -407,7 +424,7 @@ async def events(request: Request):
 @app.get("/api/coverage")
 def coverage():
     rows = scenarios()
-    results = runs()
+    results = runs(diagnostic=True)
     for s in rows:
         refs = [
             r

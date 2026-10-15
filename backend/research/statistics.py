@@ -137,6 +137,7 @@ def summary(rows):
         final_simulated_state=rate("final_simulated_payment_state_accuracy"),
         payment_method=rate("payment_method_correct"),
         authorisation_handoff=rate("authorisation_handoff_correct"),
+        safe_abort=rate("safe_abort_correct"),
         simulated_completion=rate("simulated_payment_completed"),
         median_successful_seconds=med(
             r.get("successful_resolution_seconds") for r in valid
@@ -230,7 +231,7 @@ def eligible_attempt(r, manifest):
     ).get("verified"):
         return False
     return genuine(r) or (
-        r.get("status") in ("blocked", "unavailable", "stopped", "running")
+        r.get("status") in ("blocked", "unavailable", "stopped", "running", "failed")
         and not r.get("calls")
     )
 
@@ -238,8 +239,6 @@ def eligible_attempt(r, manifest):
 def analyse(rows, manifest, protocol=None):
     visible = [r for r in rows if eligible_attempt(r, manifest)]
     protocols = sorted({r.get("research_protocol_hash", "unreported") for r in visible})
-    if protocol is None and len(protocols) == 1:
-        protocol = protocols[0]
     selected = (
         [r for r in visible if r.get("research_protocol_hash") == protocol]
         if protocol

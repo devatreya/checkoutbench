@@ -139,60 +139,30 @@ async def test_coverage_is_frozen_and_no_scenario_selection(server,page):
 async def test_results_scoping_comparison_and_scenario_analysis(server, page):
     fixture = await install_ui_data(page, server)
     await page.goto(server + "/#/results")
-    await page.get_by_label("Results version").select_option("2.1")
-    summary = page.locator(".summary-workspace")
-    await expect(summary.get_by_text("66.7%", exact=True).first).to_be_visible()
-    await expect(
-        summary.get_by_text("8 successful / 12 scored runs", exact=True)
-    ).to_be_visible()
-    await page.get_by_role("button", name="Metrics Explained").click()
-    await expect(
-        page.get_by_role("heading", name="Confidence interval", exact=True)
-    ).to_be_visible()
-    await page.get_by_role("button", name="Close dialog").click()
+    for label in ("Results version", "Research protocol", "Scenario cohort / conditions"):
+        await expect(page.get_by_label(label, exact=True)).to_have_count(0)
+    await expect(page.get_by_text("66.7%", exact=False).first).to_be_visible()
+    await page.get_by_label("Research model", exact=True).select_option("cua-s1")
+    resolution = page.locator(".coverage-tracks").first.locator("section").filter(has=page.get_by_role("heading", name="Task resolution", exact=True))
+    await expect(resolution).to_contain_text("100.0%")
+    await expect(resolution).to_contain_text("6 / 6 trials")
+    await expect(resolution).not_to_contain_text("66.7%")
+    await page.get_by_label("Research model", exact=True).select_option("all")
+    await page.get_by_text("Metrics Explained", exact=True).click()
+    await expect(page.get_by_text("Confidence intervals resample", exact=False)).to_be_visible()
     await page.get_by_role("tab", name="Model Comparison", exact=True).click()
-    await expect(
-        page.get_by_text("CUA-S1 has the highest observed success rate", exact=False)
-    ).to_be_visible()
-    await page.get_by_role("button", name="Filter runs", exact=True).click()
-    await page.get_by_label("Results environment", exact=True).select_option("generic")
-    await expect(
-        page.get_by_text("No overall winner is inferred.", exact=False)
-    ).to_be_visible()
+    await expect(page.get_by_text("deterministic semantic/controller assistance", exact=False)).to_be_visible()
+    await page.get_by_role("tab", name="Providers", exact=True).click()
+    await expect(page.get_by_role("cell", name="Shopify", exact=False).first).to_be_visible()
     await page.get_by_role("tab", name="Scenario Analysis", exact=True).click()
-    await expect(page.get_by_role("cell", name=re.compile("V21-G02"))).to_be_visible()
-    await expect(page.get_by_role("cell", name=re.compile("V21-S01"))).to_have_count(0)
-    await page.get_by_role("button", name="Analyse", exact=True).click()
-    await expect(
-        page.get_by_role("heading", name="V21-G02 · performance across systems")
-    ).to_be_visible()
-    # Infrastructure attempts can incur costs without entering scored denominators.
-    blocked = {
-        **fixture["runs"][0],
-        "id": "ui-blocked-cost",
-        "status": "blocked",
-        "success": False,
-        "cost": 0.005,
-    }
-    fixture["runs"].append(blocked)
+    await expect(page.get_by_role("cell", name="V3-G02", exact=False).first).to_be_visible()
+    fixture["runs"].append({**fixture["runs"][0],"id":"ui-blocked-cost","status":"blocked","success":False,"calls":[],"cost":0.005})
     await page.reload()
-    await page.get_by_label("Results version").select_option("2.1")
-    await expect(
-        summary.get_by_text("8 successful / 12 scored runs", exact=True)
-    ).to_be_visible()
-    expenditure = summary.locator(".stat").filter(
-        has=page.get_by_text("Inference expenditure", exact=True)
-    )
-    await expect(expenditure).to_contain_text("$0.0170")
-    blocked["cost_kind"] = "not_reported"
-    await page.reload()
-    await page.get_by_label("Results version").select_option("2.1")
-    await expect(expenditure).to_contain_text("Not reported")
+    await page.get_by_role("tab", name="Run Explorer", exact=True).click()
+    await expect(page.get_by_role("button", name="Open run ui-blocked-cost", exact=True)).to_be_visible()
     await page.get_by_role("tab", name="Summary", exact=True).focus()
     await page.keyboard.press("ArrowRight")
-    await expect(
-        page.get_by_role("tab", name="Model Comparison", exact=True)
-    ).to_have_attribute("aria-selected", "true")
+    await expect(page.get_by_role("tab", name="Model Comparison", exact=True)).to_have_attribute("aria-selected", "true")
 
 
 async def test_run_explorer_evidence_missing_metrics_and_exports(
@@ -201,15 +171,13 @@ async def test_run_explorer_evidence_missing_metrics_and_exports(
     fixture = await install_ui_data(page, server)
     await page.goto(server + "/#/results")
     await page.get_by_role("tab", name="Run Explorer", exact=True).click()
-    await page.get_by_label("Scenario cohort / conditions").select_option("all")
-    await page.get_by_label("Results version").select_option("all")
     async with page.expect_download() as got:
-        await page.get_by_role("button", name="Export all specialist runs JSON").click()
+        await page.get_by_role("button", name="Export run JSON").click()
     downloaded = await got.value
     target = tmp_path / "all.json"
     await downloaded.save_as(target)
     data = json.loads(target.read_text())
-    assert len(data["runs"]) == 14
+    assert len(data["runs"]) == 12
     assert all(
         r["model"] in IDS and not r["id"].startswith("hidden") for r in data["runs"]
     )
@@ -258,7 +226,8 @@ async def test_run_explorer_evidence_missing_metrics_and_exports(
     downloaded = await got.value
     target = tmp_path / "run.json"
     await downloaded.save_as(target)
-    assert json.loads(target.read_text()) == fixture["runs"][0]
+    from tests.ui_fixtures import official_ui_data
+    assert json.loads(target.read_text()) == official_ui_data(fixture["runs"])["runs"][0]
 
 
 async def test_hidden_run_deep_link_and_saved_model_ids_are_sanitised(server, page):
@@ -270,7 +239,7 @@ async def test_hidden_run_deep_link_and_saved_model_ids_are_sanitised(server, pa
     await expect(page.get_by_role("checkbox", checked=True)).to_have_count(1)
     await nav(page, "results/hidden-frontier")
     await expect(
-        page.get_by_role("heading", name="Run unavailable in this workspace")
+        page.get_by_role("heading", name="Run is not in the official evaluation dataset")
     ).to_be_visible()
     await expect(page.get_by_text("GPT-6", exact=False)).to_have_count(0)
 
@@ -338,11 +307,22 @@ def test_hidden_frontier_and_reference_backend_catalogue_still_available(server)
 
 
 async def test_research_payment_stage_views_show_honest_empty_state(server,page):
-    await install_ui_data(page,server)
+    await install_ui_data(page,server,populated=False)
     await page.goto(server+'/#/results')
     await expect(page.get_by_role('tab',name='Payment & Stage Analysis',exact=True)).to_be_visible()
     await page.get_by_role('tab',name='Payment & Stage Analysis',exact=True).click()
     for name in ['Payment Method Ranking','Checkout Funnel','Failure Breakdown','Vendor × Payment Method']:
         await page.get_by_role('tab',name=name,exact=True).click()
-        await expect(page.get_by_role('heading',name='Insufficient data — no verified model evaluations',exact=True)).to_be_visible()
+        await expect(page.get_by_role('heading',name='No benchmark results yet',exact=True)).to_be_visible()
     await expect(page.get_by_role('link',name='Research bundle ↓')).to_be_visible()
+
+
+async def test_official_empty_state_start_navigation(server,page):
+    await install_ui_data(page,server,populated=False)
+    await page.goto(server+'/#/results')
+    for name in ['Summary','Model Comparison','Scenario Analysis','Payment & Stage Analysis','Run Explorer']:
+        await page.get_by_role('tab',name=name,exact=True).click()
+        await expect(page.get_by_role('heading',name='No benchmark results yet',exact=True)).to_be_visible()
+        await expect(page.locator('.page-body')).not_to_contain_text('100.0%')
+    await page.get_by_role('button',name='Start Benchmark →',exact=True).click()
+    await expect(page).to_have_url(re.compile('/#/models$'))

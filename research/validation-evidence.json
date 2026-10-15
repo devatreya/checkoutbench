@@ -1,7 +1,7 @@
 {
-  "release_hash": "0eb464ed3f8029e0564189055aee087eb4127114998e190a20ec54a9ffc7a978",
-  "recorded_at": "2026-10-15T10:31:31.539052+00:00",
-  "scope": "Local software verification; not independent benchmark validation or comparative AI evaluation",
+  "release_hash": "6b385d58387d15ffdafc55d0b139acd94d64ef76309582411d91df8e391701c5",
+  "recorded_at": "2026-10-15T11:56:51.140651+00:00",
+  "scope": "Local software validation; no comparative model evaluation or independent publication validation",
   "regression_passed": true,
   "measurement_negative_controls_passed": true,
   "cluster_statistics_tested": true,
@@ -9,37 +9,58 @@
   "historical_data_preserved": true,
   "stage_events_and_denominators_tested": true,
   "controlled_public_run_reviewed": false,
-  "historical_record_count": 313,
-  "historical_raw_snapshot_sha256": "c7392a698314d2c3cdcfc48d61bb19ff01fc76382eabdc1cbecfcd1ca00ece42",
   "checks": {
     "full_regression": {
-      "sha256": "f2a2e842141e4a3c29fd2b5afa455028b941398f32a9e20c0d600cc97a743381",
-      "summary": "113 passed in 1209.47s (0:20:09)"
+      "sha256": "d2a193a0c72034c306785273587f20cac6512388ef70ee59ed670553c20889c1",
+      "summary": "132 passed in 1086.14s (0:18:06)"
     },
-    "final_scoring_ui": {
-      "sha256": "9dc5432ee2ad516fb71171b6a23ff8e615f3aba62bf6c5d3e428ee3a7e272469",
-      "summary": "41 passed in 26.15s"
+    "final_focused": {
+      "sha256": "9efea60830ecd6587fba70c6ef0042e59aa83127f5af229dcf28ebcf348de36a",
+      "summary": "34 passed in 24.80s"
     },
-    "link_transition_regression": {
-      "sha256": "d09845f81e9ab9d1014e2258fa24da1c331a8d9fd3347e61875f86a016f46184",
-      "summary": "2 passed in 42.67s"
+    "final_backend": {
+      "sha256": "e4806254ab4ae0821ef1e05b2dd3c7073ea6429a3e64cc24d6e522cb1a0ecddc",
+      "summary": "50 passed in 4.45s"
     },
     "browser_visual": {
       "sha256": "1911add074be8cae52f2659a07c9a03859176fd3d7c919b646389c7e5f097dc5",
       "summary": "27 real UI captures passed layout and JavaScript checks"
     },
     "frontend_build": {
-      "sha256": "35d2a99bf65bac2941e92b5fdb0c09c5b103a42e096fd19fe8d1a7c19b43634c",
-      "summary": "\u2713 built in 1.01s"
+      "sha256": "09f912b5c6bda00370faaddaf9469f9d434a7c54d5983a5963c05ed063734293",
+      "summary": "\u2713 built in 821ms"
     }
   },
-  "verification_note": "The full suite passed 113 tests. The final raw-success-preservation and frontend scoring-cohort changes additionally passed 41 scoring/UI tests. Visual checks captured 27 real UI views without injected model results.",
+  "preservation_mode": "Verified ignored archive; explicit one-time pre-evaluation cleanup",
+  "cleanup": {
+    "record_count": 313,
+    "classification": {
+      "deterministic_reference": 302,
+      "unconfigured_availability_check": 11
+    },
+    "versions": {
+      "2.0": 79,
+      "2.1": 150,
+      "1.0 (unversioned legacy)": 66,
+      "1.0": 18
+    },
+    "backup": "data/archives/pre-evaluation-validation-20261015T113455Z/backup.tar.gz",
+    "backup_sha256": "a199e0a0b216097be628c9fcea0b6fd64e597e9feb3fab619636b934b1175b31",
+    "backup_verified": true,
+    "active_records_after": 0,
+    "artifact_files_archived": 5722
+  },
+  "live_reference_isolation": {
+    "reference_success": true,
+    "isolated_storage": "validation",
+    "official_attempts": 0,
+    "standard_export_runs": 0
+  },
+  "verification_note": "Full regression run plus final focused checks cover the final implementation. Three additional API/configuration/restart tests were added after full-suite collection and passed in the 34-test focused run. Final frontend model-filter/release-label/empty-state changes and atomic protocol snapshot handling were covered by focused checks.",
   "security_scan": {
-    "tracked_and_nonignored_files": 493,
-    "known_configured_secret_values": 1,
-    "sensitive_patterns": 3,
-    "findings": [],
-    "reachable_historical_blobs": 372,
-    "history_findings": []
+    "tracked_and_nonignored_files": 498,
+    "known_secret_values": 1,
+    "patterns": 3,
+    "findings": []
   }
 }

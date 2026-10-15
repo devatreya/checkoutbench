@@ -133,16 +133,12 @@ def chart(title, rows, metric="task_resolution"):
         return out.getvalue()
 
 
-def bundle(rows, protocol=None):
+def bundle(rows):
     m = release(verify=True)
-    a = analyse(rows, m, protocol)
+    from backend.research.official import dataset
+    a = dataset(rows)
     ready = readiness()
-    selected = [
-        r
-        for r in rows
-        if eligible_attempt(r, m)
-        and r.get("research_protocol_hash") == a["selected_protocol"]
-    ]
+    selected = a["runs"]
     files = {
         "manifest.json": dump(m),
         "analysis.json": dump(a),
@@ -263,7 +259,7 @@ Verify bundle SHA256SUMS.json. Follow REPRODUCING.md with pinned dependencies, e
         path = ROOT / "research" / name
         if path.exists():
             files[name] = path.read_text()
-    for folder in ("docs/research", "scenarios"):
+    for folder in ("docs/research", "docs/operations", "scenarios"):
         for p in (ROOT / folder).rglob("*"):
             if p.is_file() and p.suffix in (".md", ".json", ".py"):
                 files[str(p.relative_to(ROOT))] = p.read_text()

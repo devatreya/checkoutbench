@@ -120,7 +120,9 @@ export default function App() {
       .then(([m, s, p, r, st, rel, ready]) => {
         if (!live) return;
         setModels((m.models || []).filter((x: Model) => visibleModel(x.id)));
-        setScenarios(s);
+        setScenarios(
+          s.filter((x: Scenario) => rel.scenario_ids.includes(x.id)),
+        );
         setProfiles(p);
         setRuns((r.runs || []).filter(visibleRun));
         setState(st);
@@ -385,7 +387,12 @@ export default function App() {
             ) : page === "models" ? (
               <Models models={models} setup={setup} update={update} />
             ) : page === "scenarios" ? (
-              <Scenarios scenarios={scenarios} setup={setup} update={update} />
+              <Scenarios
+                scenarios={scenarios}
+                setup={setup}
+                update={update}
+                releaseName={release?.release || "Active release"}
+              />
             ) : page === "review" ? (
               <Review
                 models={models}
@@ -411,6 +418,7 @@ export default function App() {
                 runId={runId}
                 onRun={(id) => navigate("results", id)}
                 onBack={() => navigate("results")}
+                onStart={() => navigate("models")}
               />
             ) : (
               <Coverage scenarios={scenarios} setup={setup} />

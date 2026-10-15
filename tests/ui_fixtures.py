@@ -129,6 +129,21 @@ def sample_runs():
     return rows
 
 
+def official_ui_data(rows):
+    # Synthetic response only. Never written through the persistence layer.
+    from backend.research.protocol import release
+    from backend.research.statistics import analyse, summary
+    m=release();selected=[]
+    for r in rows:
+        if not r['id'].startswith('ui-'): continue
+        x=copy.deepcopy(r)
+        x.update(research_release=m['release'],release_hash=m['release_hash'],research_protocol_hash='ui-only',scoring_version='3.0',scenario=r['scenario'].replace('V21-','V3-'),research_track='A',implementation_family='ui-only',task_resolved_correctly=r['success'],checkout_prepared=r['success'],payment_method_correct=True,requested_payment_method='card',successful_resolution_seconds=r['wall_seconds'] if r['success'] else None,execution_manifest={'standard_run_all':True,'checkpoint':{'verified':True}})
+        selected.append(x)
+    a=analyse(selected,m,'ui-only')
+    a.update(runs=selected,summary=summary(selected),difficulties=[],official_protocol_configured=bool(selected),empty_reason=None if selected else 'No official evaluation protocol is configured.')
+    return a
+
+
 async def install_ui_data(page, server, populated=True):
     metadata = httpx.get(server + "/api/models").json()
     for m in metadata["models"]:
@@ -156,6 +171,7 @@ async def install_ui_data(page, server, populated=True):
     runs = sample_runs() if populated else []
     await page.route("**/api/research/readiness", lambda r: r.fulfill(json={"status":"NOT READY","blockers":["test-data-only"],"checkpoints":{k:{"verified":True} for k in IDS if k!="ui-venus"}}))
     await page.route("**/api/models", lambda r: r.fulfill(json=metadata))
+    await page.route("**/api/research/analysis", lambda r: r.fulfill(json=official_ui_data(runs)))
     await page.route(
         "**/api/results",
         lambda r: r.fulfill(
