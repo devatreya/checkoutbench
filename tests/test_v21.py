@@ -487,3 +487,33 @@ async def test_iframe_visibility_is_clipped_to_browser_screenshot(page):
     await page.mouse.wheel(0, 700)
     await page.wait_for_timeout(150)
     assert (await observe(frame))[0]["onscreen"]
+
+
+async def test_controller_reobserves_new_fields_before_advancing(page, monkeypatch):
+    """A Link-like asynchronous return must not advance using an older field snapshot."""
+    from backend.browser import v21
+
+    original = v21.observe
+    changed = False
+
+    async def changing_screen(frame):
+        nonlocal changed
+        rows = await original(frame)
+        if not changed:
+            changed = True
+            await page.set_content(
+                """<details><summary>Billing · Review saved details</summary><label>Billing address<input id="opaque_billing" value="Old address"></label></details><button onclick="document.body.innerHTML='<h1>Checkout ready</h1>'">Review details</button>"""
+            )
+        return rows
+
+    monkeypatch.setattr(v21, "observe", changing_screen)
+    await page.set_content("<button>Review details</button>")
+    ctl = SpyControls(page, limit=30)
+    await v21.reference_v21(page, task(scenario("V21-L03")), ctl)
+    fills = [d for k, d in ctl.events if k == "fill"]
+    assert (
+        fills
+        and fills[0]["value"]
+        == scenario("V21-L03")["customer_brief"]["customer"]["billing"]["full_address"]
+    )
+    assert ctl.events[-1][1]["field"] == "Review details"

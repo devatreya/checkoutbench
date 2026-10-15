@@ -1544,3 +1544,5 @@ progress {
   color: #176447;
   font-weight: 600;
 }
+/* Research workspace keeps comparisons in bounded, scrollable panels. */
+.research-workspace,.coverage-workspace{display:flex;flex-direction:column;gap:12px;min-height:0;flex:1}.coverage-tracks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:18px 0}.coverage-tracks>section{border:1px solid var(--border,#e0e5ee);border-radius:10px;padding:16px;background:#f8fafc}.environment-grid>article{padding:12px;border:1px solid #e0e5ee;border-radius:8px}.environment-grid small,.research-workspace td small{display:block;color:#637187;font-size:11px;line-height:1.6}.research-workspace .bar-track{height:7px;min-width:100px;margin:6px 0}.research-workspace .bar-track>div{height:100%;background:#4f64dd;border-radius:4px}.research-workspace table td{vertical-align:top}.research-workspace .filters{flex-wrap:wrap}.research-workspace details{margin:10px 0}.button{padding:9px 12px;border:1px solid #dbe2ed;border-radius:8px;text-decoration:none;color:inherit;font-size:12px}@media(max-width:800px){.coverage-tracks{grid-template-columns:1fr}.research-workspace .filters{gap:6px}}

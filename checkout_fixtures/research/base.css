@@ -1,0 +1,150 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: #f5f3ee;
+  color: #22332e;
+  font: 16px/1.5 system-ui;
+}
+#workflow {
+  max-width: 1100px;
+  margin: 20px auto;
+  padding: 24px;
+  background: white;
+  border: 1px solid #d5dfd8;
+  border-radius: 10px;
+}
+header {
+  border-bottom: 2px solid #294f45;
+  margin-bottom: 24px;
+}
+header small {
+  font-size: 11px;
+}
+h1 {
+  font-size: 27px;
+}
+h2 {
+  font-size: 20px;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 12px 0;
+}
+input,
+select,
+button {
+  font: inherit;
+  min-height: 42px;
+  border: 1px solid #9aaea5;
+  border-radius: 5px;
+  padding: 8px;
+  max-width: 100%;
+}
+input,
+select {
+  width: 100%;
+}
+button {
+  background: #264f43;
+  color: white;
+  margin: 8px 8px 8px 0;
+  cursor: pointer;
+}
+label {
+  display: block;
+}
+fieldset {
+  border: 1px solid #bacabe;
+  margin: 12px 0;
+  padding: 16px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+td,
+th {
+  border-bottom: 1px solid #d7e1d9;
+  padding: 10px;
+  text-align: left;
+}
+[role="alert"] {
+  color: #982b27;
+}
+aside {
+  background: #eff3e9;
+  padding: 20px;
+}
+.payment {
+  max-width: 560px;
+}
+.payment img {
+  display: block;
+  width: 180px;
+}
+dialog {
+  max-width: 600px;
+  width: 90%;
+  border: 1px solid #99ad9f;
+  border-radius: 12px;
+}
+details {
+  padding: 10px;
+  border: 1px solid #c9d5cd;
+  margin: 10px 0;
+}
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.drawer {
+  margin-left: auto;
+  max-width: 550px;
+  border-left: 5px solid #88a789;
+  padding: 16px;
+}
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.form-card {
+  border: 1px solid #c8d4c9;
+  padding: 16px;
+}
+.tabs {
+  display: flex;
+  gap: 12px;
+}
+.progress {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+}
+.active {
+  font-weight: bold;
+  text-decoration: underline;
+}
+@media (max-width: 600px) {
+  #workflow {
+    margin: 0;
+    padding: 16px;
+  }
+  .columns,
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+  td,
+  th {
+    padding: 5px;
+  }
+  h1 {
+    font-size: 23px;
+  }
+}

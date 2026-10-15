@@ -54,10 +54,9 @@ async def test_setup_persists_and_start_requires_explicit_confirmation(server, p
     ).check()
     await page.get_by_role("button", name="Continue to Scenarios →").click()
     await expect(
-        page.get_by_role("heading", name="Scenarios", exact=True)
+        page.get_by_role("heading", name="Benchmark Coverage", exact=True)
     ).to_be_visible()
     await expect(page.locator(".model-card")).to_have_count(0)
-    await page.get_by_role("button", name="Quick benchmark · 5").click()
     await page.get_by_role("button", name="Continue to Review →").click()
     await expect(
         page.get_by_role("heading", name="Review & Run", exact=True)
@@ -67,15 +66,15 @@ async def test_setup_persists_and_start_requires_explicit_confirmation(server, p
     await expect(
         page.get_by_label("Repetitions per scenario", exact=True)
     ).to_have_value("1")
-    await expect(page.get_by_text("5 planned evaluations", exact=False)).to_be_visible()
+    await expect(page.get_by_text("174 planned evaluations", exact=False)).to_be_visible()
     assert not mock["posted"]
-    await page.get_by_role("button", name="Start Benchmark →", exact=True).click()
+    await page.get_by_role("button", name="Run All →", exact=True).click()
     await expect(
         page.get_by_role("dialog", name="Confirm benchmark start")
     ).to_be_visible()
     assert not mock["posted"]
     await page.get_by_role("button", name="Cancel", exact=True).click()
-    await page.get_by_role("button", name="Start Benchmark →", exact=True).click()
+    await page.get_by_role("button", name="Run All →", exact=True).click()
     await page.get_by_role("button", name="Confirm and start", exact=True).click()
     await expect(
         page.get_by_role("heading", name="Live Benchmark", exact=True)
@@ -83,7 +82,7 @@ async def test_setup_persists_and_start_requires_explicit_confirmation(server, p
     await expect(page.get_by_role("progressbar", name="Batch progress")).to_be_visible()
     assert len(mock["posted"]) == 1
     assert mock["posted"][0]["models"] == ["cua-s1"]
-    assert len(mock["posted"][0]["scenarios"]) == 5
+    assert len(mock["posted"][0]["scenarios"]) == 174
     await page.reload()
     await expect(
         page.get_by_role("heading", name="Live Benchmark", exact=True)
@@ -109,10 +108,9 @@ async def test_unavailable_and_historical_review_safeguards(server, page):
     await page.goto(server + "/#/models")
     await page.get_by_role("checkbox", name="UI-Venus-1.5-2B", exact=True).check()
     await page.get_by_role("button", name="Continue to Scenarios →").click()
-    await page.get_by_role("button", name="Quick benchmark · 5").click()
     await page.get_by_role("button", name="Continue to Review →").click()
     await expect(
-        page.get_by_role("button", name="Start Benchmark →", exact=True)
+        page.get_by_role("button", name="Run All →", exact=True)
     ).to_be_disabled()
     await expect(
         page.get_by_text("Checkpoint weights are not configured.", exact=False)
@@ -123,43 +121,25 @@ async def test_unavailable_and_historical_review_safeguards(server, page):
         "checkbox", name="CUA-S1-Forms + Playwright", exact=True
     ).check()
     await nav(page, "scenarios")
-    await page.get_by_role("button", name="Filters & versions").click()
-    await page.get_by_label("Advanced: benchmark version").select_option("2.0")
-    await page.get_by_role("button", name="Full suite · 56", exact=True).click()
-    await page.get_by_role("button", name="Continue to Review →").click()
-    await expect(
-        page.get_by_role("button", name="Start Benchmark →", exact=True)
-    ).to_be_disabled()
-    await expect(
-        page.get_by_text("Historical suites are preview-only", exact=False)
-    ).to_be_visible()
+    await expect(page.get_by_role("checkbox")).to_have_count(0)
     assert not mock["posted"]
 
 
-async def test_scenario_filters_and_independent_preview(server, page):
-    mock = await install_ui_data(page, server)
-    await page.goto(server + "/#/scenarios")
-    await page.get_by_role("button", name="Filters & versions").click()
-    await page.get_by_label("Environment", exact=True).select_option("razor")
-    await page.get_by_label("Device", exact=True).select_option("mobile_web")
-    await page.get_by_label("Payment method", exact=True).select_option("upi_app")
-    rows = page.locator(".scenario-list article")
-    await expect(rows).not_to_have_count(0)
-    await rows.first.get_by_role("button", name="Preview", exact=True).click()
-    await expect(page.get_by_role("dialog")).to_be_visible()
-    await expect(page.get_by_title("Checkout preview")).to_be_visible()
-    await page.get_by_role("tab", name="Customer profile", exact=True).click()
-    await expect(page.locator(".modal pre")).to_contain_text("customer")
-    await page.get_by_role("tab", name="Task & challenges", exact=True).click()
-    await expect(
-        page.get_by_role("heading", name="Success condition", exact=True)
-    ).to_be_visible()
-    assert not mock["posted"]
+async def test_coverage_is_frozen_and_no_scenario_selection(server,page):
+    mock=await install_ui_data(page,server)
+    await page.goto(server+'/#/scenarios')
+    await expect(page.get_by_role('heading',name='Benchmark Coverage',exact=True)).to_be_visible()
+    await expect(page.get_by_role('checkbox')).to_have_count(0)
+    await expect(page.get_by_role('button',name=re.compile('Quick benchmark|Full suite|Select all'))).to_have_count(0)
+    await expect(page.get_by_text('Frozen active tasks',exact=True)).to_be_visible()
+    await expect(page.get_by_text('174',exact=True)).to_be_visible()
+    assert not mock['posted']
 
 
 async def test_results_scoping_comparison_and_scenario_analysis(server, page):
     fixture = await install_ui_data(page, server)
     await page.goto(server + "/#/results")
+    await page.get_by_label("Results version").select_option("2.1")
     summary = page.locator(".summary-workspace")
     await expect(summary.get_by_text("66.7%", exact=True).first).to_be_visible()
     await expect(
@@ -196,6 +176,7 @@ async def test_results_scoping_comparison_and_scenario_analysis(server, page):
     }
     fixture["runs"].append(blocked)
     await page.reload()
+    await page.get_by_label("Results version").select_option("2.1")
     await expect(
         summary.get_by_text("8 successful / 12 scored runs", exact=True)
     ).to_be_visible()
@@ -205,6 +186,7 @@ async def test_results_scoping_comparison_and_scenario_analysis(server, page):
     await expect(expenditure).to_contain_text("$0.0170")
     blocked["cost_kind"] = "not_reported"
     await page.reload()
+    await page.get_by_label("Results version").select_option("2.1")
     await expect(expenditure).to_contain_text("Not reported")
     await page.get_by_role("tab", name="Summary", exact=True).focus()
     await page.keyboard.press("ArrowRight")
@@ -353,3 +335,14 @@ def test_hidden_frontier_and_reference_backend_catalogue_still_available(server)
     assert any(r["id"] == "reference" for r in rows)
     assert sum(r["kind"] == "openrouter" for r in rows) >= 6
     assert {r["id"] for r in rows if r["kind"] == "specialist"} == set(IDS)
+
+
+async def test_research_payment_stage_views_show_honest_empty_state(server,page):
+    await install_ui_data(page,server)
+    await page.goto(server+'/#/results')
+    await expect(page.get_by_role('tab',name='Payment & Stage Analysis',exact=True)).to_be_visible()
+    await page.get_by_role('tab',name='Payment & Stage Analysis',exact=True).click()
+    for name in ['Payment Method Ranking','Checkout Funnel','Failure Breakdown','Vendor × Payment Method']:
+        await page.get_by_role('tab',name=name,exact=True).click()
+        await expect(page.get_by_role('heading',name='Insufficient data — no verified model evaluations',exact=True)).to_be_visible()
+    await expect(page.get_by_role('link',name='Research bundle ↓')).to_be_visible()

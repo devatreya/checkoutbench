@@ -274,3 +274,8 @@ footer {
   width: 18px;
   height: 18px;
 }
+
+/* Controlled density factor; no task/answer changes. */
+body.research-dense { font-size: 12px; }
+.research-dense .field { margin: 2px; gap: 2px; }
+.research-dense input,.research-dense select { padding: 5px; min-height: 28px; }

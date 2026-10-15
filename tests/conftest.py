@@ -9,10 +9,12 @@ sys.path.insert(0, str(ROOT))
 @pytest.fixture(scope="session")
 def server(tmp_path_factory):
     data = tmp_path_factory.mktemp("benchmark-data")
+    port = int(os.getenv("BENCH_TEST_PORT", "8765"))
+    base_url = f"http://127.0.0.1:{port}"
     env = {
         **os.environ,
-        "BENCH_PORT": "8765",
-        "CHECKOUT_PORT": "8766",
+        "BENCH_PORT": str(port),
+        "CHECKOUT_PORT": str(port+1),
         "BENCH_DATA_DIR": str(data),
         "OPENROUTER_API_KEY": "",
     }
@@ -25,7 +27,7 @@ def server(tmp_path_factory):
     )
     for _ in range(100):
         try:
-            if httpx.get("http://127.0.0.1:8765/api/health").status_code == 200:
+            if httpx.get(base_url + "/api/health").status_code == 200:
                 break
         except httpx.ConnectError:
             pass
@@ -35,7 +37,7 @@ def server(tmp_path_factory):
     else:
         proc.terminate()
         raise RuntimeError("Test servers did not start")
-    yield "http://127.0.0.1:8765"
+    yield base_url
     proc.terminate()
     try:
         proc.wait(timeout=10)

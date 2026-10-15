@@ -34,8 +34,8 @@ const pages = {
   ],
   scenarios: [
     "Scenarios",
-    "Scenarios",
-    "Select checkout environments and tasks to evaluate different structures, payment methods and interaction difficulties.",
+    "Benchmark Coverage",
+    "CheckoutBench evaluates each model across a standardised suite of checkout environments. Every model faces the same tasks, allowing us to compare accuracy, speed, payment-method handling, and recovery fairly.",
   ],
   review: [
     "Review & Run",
@@ -71,6 +71,8 @@ export default function App() {
     [setup, setSetup] = useState<Setup>(loadSetup),
     [models, setModels] = useState<Model[]>([]),
     [scenarios, setScenarios] = useState<Scenario[]>([]),
+    [release, setRelease] = useState<any>(null),
+    [readiness, setReadiness] = useState<any>(null),
     [profiles, setProfiles] = useState<{ id: string; name: string }[]>([]),
     [runs, setRuns] = useState<Run[]>([]),
     [state, setState] = useState<RunnerState>({ running: false }),
@@ -112,14 +114,25 @@ export default function App() {
       api("/profiles"),
       api("/results"),
       api("/state"),
+      api("/research/release"),
+      api("/research/readiness"),
     ])
-      .then(([m, s, p, r, st]) => {
+      .then(([m, s, p, r, st, rel, ready]) => {
         if (!live) return;
         setModels((m.models || []).filter((x: Model) => visibleModel(x.id)));
         setScenarios(s);
         setProfiles(p);
         setRuns((r.runs || []).filter(visibleRun));
         setState(st);
+        setRelease(rel);
+        setReadiness(ready);
+        setSetup((old) => ({
+          ...old,
+          scenarios: rel.scenario_ids,
+          seed: rel.seed,
+          profile: null,
+          agent_mode: "standard",
+        }));
       })
       .catch((e) => live && setError(e.message))
       .finally(() => live && setLoading(false));
@@ -165,24 +178,16 @@ export default function App() {
         `${modelName(id)} is unavailable. ${m?.reason || "Configuration metadata is not available."}`,
       );
   }
-  if (!setup.scenarios.length) issues.push("Select at least one scenario.");
-  if (chosen.length !== setup.scenarios.length)
-    issues.push(
-      "Some saved scenarios are no longer in the catalogue. Re-select scenarios.",
-    );
-  if (chosen.some((s) => s.benchmark_version !== "2.1"))
-    issues.push(
-      "Historical suites are preview-only for model runs. Select v2.1 scenarios.",
-    );
   if (
-    setup.agent_mode !== "standard" &&
-    chosen.some((s) => s.family !== "link")
+    !release ||
+    JSON.stringify(setup.scenarios) !== JSON.stringify(release.scenario_ids)
   )
-    issues.push("Link execution arms require only Stripe Link scenarios.");
-  if (setup.profile && !profiles.some((p) => p.id === setup.profile))
-    issues.push(
-      "The saved customer profile is not available. Choose another profile.",
-    );
+    issues.push("The complete frozen manifest is required.");
+  for (const id of setup.models)
+    if (!readiness?.checkpoints?.[id]?.verified)
+      issues.push(
+        `${modelName(id)}: checkpoint hashes and genuine smoke inference must be verified before Run All.`,
+      );
   for (const [k, min, max] of [
     ["repeats", 1, 100],
     ["seed", 0, 2147483647],
@@ -230,6 +235,8 @@ export default function App() {
       await api("/batches", {
         ...setup,
         models: setup.models.filter(visibleModel),
+        research_release: release.release,
+        release_hash: release.release_hash,
       });
       setConfirm(false);
       navigate("live");
@@ -251,7 +258,7 @@ export default function App() {
     <div className="shell">
       <aside className={menu ? "sidebar open" : "sidebar"}>
         <a className="brand" href="#/overview">
-          <span>▱</span> CheckoutBench <small>v2.2</small>
+          <span>▱</span> CheckoutBench <small>v3.0</small>
         </a>
         <p className="sidebar-label">AI BENCHMARK WORKSPACE</p>
         <nav aria-label="Main navigation">
@@ -457,7 +464,7 @@ export default function App() {
                   ? "Continue to Scenarios →"
                   : page === "scenarios"
                     ? "Continue to Review →"
-                    : "Start Benchmark →"}
+                    : "Run All →"}
               </button>
             </footer>
           )}

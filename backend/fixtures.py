@@ -72,6 +72,11 @@ def asset(name: str):
 def page(token: str):
     if token not in SESSIONS:
         raise HTTPException(404)
+    renderer = SESSIONS[token]["scenario"].get("research_renderer")
+    if renderer:
+        return FileResponse(
+            ROOT / "checkout_fixtures" / "research" / (renderer + ".html")
+        )
     return FileResponse(
         ROOT
         / "checkout_fixtures"
@@ -283,6 +288,9 @@ async def action_v21(token: str, request: Request):
     if data.get("action") in ("show_qr", "qr_refresh", "qr_fullsize"):
         await asyncio.sleep(LEVELS[st["scenario"].get("qr", "Q0")].delay_ms / 1000)
     transition(st, data.get("action"), data, token)
+    from backend.research.measurement import observe
+
+    observe(st["scenario"], st, data.get("action"), "browser")
     return public(st, token)
 
 
@@ -327,3 +335,13 @@ def extension_v21(token: str):
         + encoded
         + '</script><script src="/assets/v21-extension.js" defer></script></body></html>'
     )
+
+
+@checkout.get("/research-assets/{name}")
+def research_asset(name: str):
+    from scenarios.research import IMPLEMENTATIONS
+
+    allowed = {"bridge.js", "base.css"} | {x[0] + ".js" for x in IMPLEMENTATIONS}
+    if name not in allowed:
+        raise HTTPException(404)
+    return FileResponse(ROOT / "checkout_fixtures" / "research" / name)

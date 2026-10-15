@@ -209,6 +209,9 @@ SPECS = [
 
 
 def scenario(sid, seed=None, profile_id=None):
+    if sid.startswith("V3-"):
+        from scenarios.research import scenario_research
+        return scenario_research(sid, seed, profile_id)
     if sid.startswith("V21-"):
         from scenarios.v21 import scenario_v21
         return scenario_v21(sid, seed, profile_id)

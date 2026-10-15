@@ -298,6 +298,10 @@ def make_qr(st, token, clean=False):
         expected_payload=payload,
         expires=time.monotonic() + cfg.expires_seconds,
     )
+    if "research_qr_initial" not in st:
+        st["research_qr_initial"] = {
+            "usable": bool(report["decoder_success"] and cfg.expires_seconds > 0)
+        }
     event(st, "qr_presented", level=cfg.level, generation=st["qr_generation"])
 
 

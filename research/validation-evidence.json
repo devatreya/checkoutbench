@@ -1,0 +1,45 @@
+{
+  "release_hash": "0eb464ed3f8029e0564189055aee087eb4127114998e190a20ec54a9ffc7a978",
+  "recorded_at": "2026-10-15T10:31:31.539052+00:00",
+  "scope": "Local software verification; not independent benchmark validation or comparative AI evaluation",
+  "regression_passed": true,
+  "measurement_negative_controls_passed": true,
+  "cluster_statistics_tested": true,
+  "controlled_matrices_tested": true,
+  "historical_data_preserved": true,
+  "stage_events_and_denominators_tested": true,
+  "controlled_public_run_reviewed": false,
+  "historical_record_count": 313,
+  "historical_raw_snapshot_sha256": "c7392a698314d2c3cdcfc48d61bb19ff01fc76382eabdc1cbecfcd1ca00ece42",
+  "checks": {
+    "full_regression": {
+      "sha256": "f2a2e842141e4a3c29fd2b5afa455028b941398f32a9e20c0d600cc97a743381",
+      "summary": "113 passed in 1209.47s (0:20:09)"
+    },
+    "final_scoring_ui": {
+      "sha256": "9dc5432ee2ad516fb71171b6a23ff8e615f3aba62bf6c5d3e428ee3a7e272469",
+      "summary": "41 passed in 26.15s"
+    },
+    "link_transition_regression": {
+      "sha256": "d09845f81e9ab9d1014e2258fa24da1c331a8d9fd3347e61875f86a016f46184",
+      "summary": "2 passed in 42.67s"
+    },
+    "browser_visual": {
+      "sha256": "1911add074be8cae52f2659a07c9a03859176fd3d7c919b646389c7e5f097dc5",
+      "summary": "27 real UI captures passed layout and JavaScript checks"
+    },
+    "frontend_build": {
+      "sha256": "35d2a99bf65bac2941e92b5fdb0c09c5b103a42e096fd19fe8d1a7c19b43634c",
+      "summary": "\u2713 built in 1.01s"
+    }
+  },
+  "verification_note": "The full suite passed 113 tests. The final raw-success-preservation and frontend scoring-cohort changes additionally passed 41 scoring/UI tests. Visual checks captured 27 real UI views without injected model results.",
+  "security_scan": {
+    "tracked_and_nonignored_files": 493,
+    "known_configured_secret_values": 1,
+    "sensitive_patterns": 3,
+    "findings": [],
+    "reachable_historical_blobs": 372,
+    "history_findings": []
+  }
+}

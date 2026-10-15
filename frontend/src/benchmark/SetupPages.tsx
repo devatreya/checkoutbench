@@ -72,14 +72,14 @@ export function Overview({
           value={
             new Set(
               scenarios
-                .filter((s) => s.benchmark_version === "2.1")
+                .filter((s) => s.benchmark_version === "3.0")
                 .map((s) => s.family),
             ).size
           }
         />
         <Stat
           label="Benchmark scenarios"
-          value={scenarios.filter((s) => s.benchmark_version === "2.1").length}
+          value={scenarios.filter((s) => s.benchmark_version === "3.0").length}
           note="Validated v2.1 suite"
         />
         <Stat
@@ -222,8 +222,8 @@ export function Models({
       </div>
       <p className="footnote">
         You can plan with unavailable systems. Review will require their
-        checkpoints or endpoints before execution. Configured systems are
-        validated by their first explicit inference run.
+        verified exact checkpoints before research execution. Genuine cold/warm
+        smoke evidence is required; availability alone is insufficient.
       </p>
     </>
   );
@@ -309,238 +309,113 @@ export function ScenarioPreview({
 export function Scenarios({
   scenarios,
   setup,
-  update,
 }: {
   scenarios: Scenario[];
   setup: Setup;
   update: (v: Partial<Setup>) => void;
 }) {
-  const [family, setFamily] = useState("all"),
-    [difficulty, setDifficulty] = useState("all"),
-    [method, setMethod] = useState("all"),
-    [type, setType] = useState("all"),
-    [auth, setAuth] = useState("all"),
-    [device, setDevice] = useState("all"),
-    [query, setQuery] = useState(""),
-    [version, setVersion] = useState("2.1"),
-    [preview, setPreview] = useState<Scenario | null>(null),
-    [filters, setFilters] = useState(false);
-  const suite = scenarios.filter((s) => s.benchmark_version === version);
-  const visible = suite.filter(
-    (s) =>
-      (family === "all" || s.family === family) &&
-      (difficulty === "all" || s.difficulty === difficulty) &&
-      (method === "all" || s.method === method) &&
-      (type === "all" ||
-        (type === "core"
-          ? !s.features.includes("holdout")
-          : type === "holdout"
-            ? s.features.includes("holdout")
-            : s.provenance?.fidelity_classification?.includes("stress") ||
-              s.variant?.includes("stress"))) &&
-      (auth === "all" ||
-        (auth === "qr"
-          ? s.method === "upi_qr" || !!s.qr
-          : auth === "auth"
-            ? requiresAuth(s)
-            : !requiresAuth(s))) &&
-      (device === "all" || s.platform === device) &&
-      `${s.id} ${s.title} ${challenge(s)}`
-        .toLowerCase()
-        .includes(query.toLowerCase()),
-  );
-  const choose = (rows: Scenario[]) =>
-    update({ scenarios: rows.map((s) => s.id) });
+  const active = scenarios.filter((s) => s.benchmark_version === "3.0");
+  const families = new Set(active.map((s) => s.implementation_family));
   return (
-    <>
-      <div className="environment-grid">
-        {environments.map(([id, name, description]) => (
-          <button
-            key={id}
-            className={family === id ? "chosen" : ""}
-            aria-pressed={family === id}
-            onClick={() => setFamily(family === id ? "all" : id)}
-          >
-            <b>{name}</b>
-            <small>{description}</small>
-          </button>
-        ))}
-      </div>
-      <div className="toolbar compact">
-        <input
-          aria-label="Search scenarios"
-          placeholder="Search scenarios or capabilities"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
+    <div className="coverage-workspace">
+      <div className="stats four">
+        <Stat
+          label="Environment families"
+          value={9}
+          note="Provider-inspired and government simulations"
         />
-        <Select
-          label="Environment"
-          value={family}
-          onChange={setFamily}
-          options={[
-            ["all", "All environments"],
-            ...environments.map((e) => [e[0], e[1]] as [string, string]),
-          ]}
+        <Stat
+          label="Client implementation families"
+          value={families.size}
+          note="Shared infrastructure; independent validation pending"
         />
-        <button onClick={() => setFilters(!filters)} aria-expanded={filters}>
-          Filters & versions
-        </button>
+        <Stat
+          label="Frozen active tasks"
+          value={active.length}
+          note="Development + validation; sealed tests excluded"
+        />
+        <Stat
+          label="Research tracks"
+          value={3}
+          note="Core · Resilience · Complex portals"
+        />
       </div>
-      {filters && (
-        <div className="filters compact">
-          <Select
-            label="Difficulty"
-            value={difficulty}
-            onChange={setDifficulty}
-            options={[
-              "all",
-              ...new Set(suite.map((s) => s.difficulty || "standard")),
-            ]}
-          />
-          <Select
-            label="Payment method"
-            value={method}
-            onChange={setMethod}
-            options={["all", ...new Set(suite.map((s) => s.method))]}
-          />
-          <Select
-            label="Scenario type"
-            value={type}
-            onChange={setType}
-            options={["all", "core", "holdout", "stress"]}
-          />
-          <Select
-            label="QR / authentication"
-            value={auth}
-            onChange={setAuth}
-            options={[
-              "all",
-              ["qr", "QR"],
-              ["auth", "OTP / authentication"],
-              ["none", "No authentication"],
-            ]}
-          />
-          <Select
-            label="Device"
-            value={device}
-            onChange={setDevice}
-            options={["all", "desktop_web", "mobile_web"]}
-          />
-          <Select
-            label="Advanced: benchmark version"
-            value={version}
-            onChange={(v) => {
-              setVersion(v);
-              setMethod("all");
-              setDifficulty("all");
-            }}
-            options={[
-              "2.1",
-              ["2.0", "2.0 · historical preview"],
-              ["1.0", "1.0 · historical preview"],
-            ]}
-          />
+      <section className="panel grow scroll">
+        <div className="panel-title">
+          <h2>Understand the coverage. Run the whole suite.</h2>
+          <span className="badge">3.0-pilot.1</span>
         </div>
-      )}
-      <div className="toolbar selection-tools">
-        <button
-          onClick={() =>
-            choose(suite.filter((s) => family === "all" || s.family === family))
-          }
-        >
-          Select environment
-        </button>
-        <button
-          onClick={() =>
-            choose(suite.filter((s) => !s.features.includes("holdout")))
-          }
-        >
-          All core
-        </button>
-        <button
-          onClick={() =>
-            choose(
-              ["V21-S01", "V21-G02", "V21-RZ01", "V21-ST03", "V21-R01"].flatMap(
-                (id) => scenarios.filter((s) => s.id === id),
-              ),
-            )
-          }
-        >
-          Quick benchmark · 5
-        </button>
-        <button onClick={() => choose(suite)}>
-          Full suite · {suite.length}
-        </button>
-        <button onClick={() => update({ scenarios: [] })}>
-          Clear selection
-        </button>
-      </div>
-      <div className="panel grow scroll scenario-collection">
-        <div className="scenario-list">
-          {visible.map((s) => (
-            <article
-              key={s.id}
-              className={setup.scenarios.includes(s.id) ? "selected" : ""}
-            >
-              <label>
-                <input
-                  type="checkbox"
-                  aria-label={`${s.id} ${s.title}`}
-                  checked={setup.scenarios.includes(s.id)}
-                  onChange={() =>
-                    update({
-                      scenarios: setup.scenarios.includes(s.id)
-                        ? setup.scenarios.filter((x) => x !== s.id)
-                        : [...setup.scenarios, s.id],
-                    })
-                  }
-                />
-                <div>
-                  <b>
-                    {s.id} · {s.title}
-                  </b>
-                  <p>{challenge(s)}</p>
-                  <div className="tags">
-                    <Badge>{s.difficulty || "standard"}</Badge>
-                    <Badge>{human(s.method)}</Badge>
-                    <Badge>{human(s.platform || "legacy web")}</Badge>
-                    <Badge>
-                      {requiresAuth(s)
-                        ? human(
-                            s.authentication_method || "authentication handoff",
-                          )
-                        : "No authentication"}
-                    </Badge>
-                  </div>
-                </div>
-              </label>
-              <button onClick={() => setPreview(s)}>Preview</button>
+        <p>
+          Every selected model receives all {active.length} tasks in the same
+          frozen order, with identical synthetic customer data. Repetitions
+          measure variability; they do not add independent websites.
+        </p>
+        <div className="environment-grid">
+          {environments.map(([id, name, description]) => (
+            <article key={id}>
+              <b>{name}</b>
+              <small>{description}</small>
             </article>
           ))}
-          {!visible.length && (
-            <Empty title="No matching scenarios">
-              Adjust your filters to see more tasks.
-            </Empty>
-          )}
         </div>
-      </div>
-      <small>
-        {setup.scenarios.length} selected ·{" "}
-        {
-          setup.scenarios.filter((id) => !visible.some((s) => s.id === id))
-            .length
-        }{" "}
-        outside current filters. Quick-selection buttons replace the selection.
-        Historical suites are previewable; model execution requires v2.1.
-      </small>
-      {preview && (
-        <ScenarioPreview
-          scenario={preview}
-          setup={setup}
-          onClose={() => setPreview(null)}
-        />
-      )}
-    </>
+        <div className="coverage-tracks">
+          {[
+            [
+              "A",
+              "Core Checkout",
+              "Contact, addresses, optional fields, billing and payment preparation.",
+            ],
+            [
+              "B",
+              "Checkout Resilience",
+              "QR degradation, authentication, redirects, validation and recovery.",
+            ],
+            [
+              "C",
+              "Complex / Legacy Portals",
+              "Railway passengers, appointments and challan verification.",
+            ],
+          ].map(([id, title, desc]) => (
+            <section key={id}>
+              <h3>
+                {id} · {title}
+              </h3>
+              <p>{desc}</p>
+              <small>
+                {active.filter((s) => s.research_track === id).length} assigned
+                tasks
+              </small>
+            </section>
+          ))}
+        </div>
+        <details>
+          <summary>Payment methods and authentication</summary>
+          <p>
+            Card · UPI QR · mobile UPI intent · legacy VPA where supported ·
+            Netbanking · Stripe Link · cash on delivery. OTP and 3DS are
+            authentication mechanisms attached to funding methods, not separate
+            payment methods. Unsupported combinations follow predefined safe
+            handling.
+          </p>
+        </details>
+        <details>
+          <summary>What the scores mean</summary>
+          <p>
+            Preparation, safe abort, authentication handoff and simulated
+            completion are separate outcomes. No real financial transaction
+            occurs. These synthetic environments do not measure
+            production-provider success. Human ground-truth review and
+            checkpoint verification are required before publication.
+          </p>
+        </details>
+      </section>
+      <p className="notice">
+        {active.length * setup.repeats} trials per model ·{" "}
+        {active.length * setup.repeats * setup.models.length} total. Runtime and
+        hosting cost are unknown until measured; this may take hours. Review
+        before starting, then pause or stop from Live Benchmark.
+      </p>
+    </div>
   );
 }
 export function Review({
@@ -673,8 +548,8 @@ export function Review({
           </div>
         ) : (
           <p className="notice">
-            Conditions are ready for review. Configured but unverified systems
-            will attempt real inference only after you explicitly confirm Start.
+            Conditions are ready for review. Verified systems will attempt real
+            inference only after you explicitly confirm Run All.
           </p>
         )}
       </section>
@@ -682,22 +557,15 @@ export function Review({
         <h2>Evaluation conditions</h2>
         <div className="form-grid">
           {number("repeats", "Repetitions per scenario", 1, 100)}
-          <Select
-            label="Customer profile"
-            value={setup.profile || ""}
-            onChange={(v) => update({ profile: v || null })}
-            options={[
-              ["", "Scenario default"],
-              ...profiles.map((p) => [p.id, p.name] as [string, string]),
-            ]}
-          />
+          <p className="notice">
+            Frozen seed 2026 · scenario-default profiles · full active manifest
+          </p>
           {number("max_steps", "Maximum actions", 5, 500)}
           {number("timeout", "Timeout (seconds)", 10, 1800)}
         </div>
         <details className="advanced">
           <summary>Advanced settings</summary>
           <div className="form-grid">
-            {number("seed", "Random seed", 0, 2147483647)}
             {number("max_tokens", "Output token budget", 256, 131072)}
             <Select
               label="Reasoning configuration"
@@ -723,16 +591,6 @@ export function Review({
               />
             </label>
             {number("infrastructure_retries", "Infrastructure retries", 0, 3)}
-            <Select
-              label="Link execution arm"
-              value={setup.agent_mode}
-              onChange={(v) => update({ agent_mode: v })}
-              options={[
-                ["standard", "Standard benchmark"],
-                ["agent_with_link", "AI with Link"],
-                ["agent_without_link", "AI without Link"],
-              ]}
-            />
           </div>
           <p className="footnote">
             These specialist adapters do not advertise configurable reasoning

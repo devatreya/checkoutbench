@@ -154,6 +154,7 @@ async def install_ui_data(page, server, populated=True):
     state = {"running": False, "paused": False}
     posted = []
     runs = sample_runs() if populated else []
+    await page.route("**/api/research/readiness", lambda r: r.fulfill(json={"status":"NOT READY","blockers":["test-data-only"],"checkpoints":{k:{"verified":True} for k in IDS if k!="ui-venus"}}))
     await page.route("**/api/models", lambda r: r.fulfill(json=metadata))
     await page.route(
         "**/api/results",

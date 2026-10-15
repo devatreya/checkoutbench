@@ -16,6 +16,7 @@ export function conditions(r: Run) {
   if (!r.cohort || !r.config) return `unreported:${r.id}`;
   return JSON.stringify([
     r.benchmark_version,
+    r.scoring_version || "historical",
     r.cohort,
     r.platform,
     r.integrity_class,

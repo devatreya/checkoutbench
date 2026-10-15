@@ -206,6 +206,15 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
                 model=adapter.key,
                 operation=operation,
                 seconds=elapsed,
+                call_temperature=getattr(adapter, "last_metrics", {}).get(
+                    "call_temperature"
+                ),
+                cold_model_loading_seconds=getattr(adapter, "last_metrics", {}).get(
+                    "cold_model_loading_seconds"
+                ),
+                warm_inference_seconds=getattr(adapter, "last_metrics", {}).get(
+                    "warm_inference_seconds"
+                ),
                 backend=getattr(adapter, "last_metrics", {}).get(
                     "backend", "test-double"
                 ),
@@ -510,6 +519,12 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
                     "Return and verify transaction",
                     "Continue with this address",
                 ]
+                # Re-observe asynchronous screen transitions before navigation. A button
+                # can appear after the field snapshot (for example a Link return),
+                # otherwise newly revealed saved fields can be skipped entirely.
+                if await frame.locator("body").inner_text() != text:
+                    acted = True
+                    break
                 # Expand user-visible saved summaries; no selector encodes a profile attribute.
                 for summary in await frame.locator(
                     "details:not([open]) > summary"
@@ -529,6 +544,9 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
                         and await loc.first.is_visible()
                         and await loc.first.is_enabled()
                     ):
+                        if await frame.locator("body").inner_text() != text:
+                            acted = True
+                            break
                         if tiny:
                             # Never scroll a correct target into view for the visual grounder.
                             visible = await loc.first.evaluate(

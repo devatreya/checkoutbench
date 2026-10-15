@@ -1,0 +1,7 @@
+# Licenses and attribution
+
+The repository does not currently contain a root redistribution license. An owner-selected code/data license is pending before a licensed public research release. Synthetic profiles and fixture designs are authored for CheckoutBench; provider names identify inspirations, not affiliation or copied production checkout code. Provider references are preserved in scenario provenance and the original docs. Government-inspired portals are local simulations only.
+
+Model licenses are recorded from pinned upstream model metadata: CUA forms MIT; identified TinyClick repository MIT (weights availability unresolved); MAI-UI and UI-Venus Apache-2.0. Redistributability of future separately supplied weights must be reviewed; no model weights are committed or included in exports. Upstream CUA loader source is used locally at its recorded revision, not silently replaced by a homemade architecture.
+
+Primary references: [CUA](https://huggingface.co/cua-ai/cua-s1-forms), [TinyClick](https://huggingface.co/kzawistowsk/TinyClick), [MAI-UI](https://huggingface.co/Tongyi-MAI/MAI-UI-2B), [UI-Venus](https://huggingface.co/inclusionAI/UI-Venus-1.5-2B), [Stripe test mode](https://docs.stripe.com/testing), [Stripe test-session retrieval](https://docs.stripe.com/api/checkout/sessions/retrieve). Consult each pinned card for training data/provenance limitations; upstream benchmark numbers are not reproduced here.

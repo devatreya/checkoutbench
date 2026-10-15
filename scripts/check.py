@@ -10,7 +10,7 @@ async def main():
     parser.add_argument("--url", default="http://127.0.0.1:8000")
     parser.add_argument("--repeats", type=int, default=3)
     parser.add_argument("--family", default=None)
-    parser.add_argument("--suite", choices=["all", "1.0", "2.0", "2.1"], default="all")
+    parser.add_argument("--suite", choices=["all", "1.0", "2.0", "2.1", "3.0"], default="all")
     parser.add_argument("--output", default="data/reference-verification.json")
     args = parser.parse_args()
     async with httpx.AsyncClient(timeout=30) as c:

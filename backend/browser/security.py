@@ -14,7 +14,13 @@ def allowed_url(url: str, origin: str, token: str) -> bool:
             return False
         if u.username or u.password:
             return False
-        return u.path in {
+        from scenarios.research import IMPLEMENTATIONS
+
+        research_assets = {
+            "/research-assets/bridge.js",
+            "/research-assets/base.css",
+        } | {"/research-assets/" + x[0] + ".js" for x in IMPLEMENTATIONS}
+        return u.path in research_assets or u.path in {
             f"/checkout/{token}",
             f"/session/{token}",
             f"/session/{token}/input",

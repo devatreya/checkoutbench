@@ -94,6 +94,28 @@ class Controls:
         }
         self.run["events"].append(event)
         self.run["screenshot"] = event["screenshot"]
+        state = getattr(self, "session_state", None)
+        if state and state["scenario"].get("benchmark_version") == "2.1":
+            from backend.research.measurement import observe
+
+            source = detail.get("selection_source") or detail.get("grounding_source")
+            actor = (
+                "model"
+                if source in ("model", "cua-s1", "tinyclick")
+                else "controller"
+                if source
+                else "browser"
+            )
+            observe(
+                state["scenario"],
+                state,
+                kind,
+                actor,
+                detail.get("prediction"),
+                event["screenshot"],
+                event["index"],
+            )
+            self.run["stage_events"] = state.get("research_events", [])
         storage_started = time.perf_counter()
         save(self.run)
         self.timings["artifact_storage_seconds"] += (
@@ -122,6 +144,10 @@ class Runner:
         }
 
     async def start(self, config):
+        if any(s.startswith("V3-") for s in config.get("scenarios", [])):
+            from backend.research.protocol import validate_checkpoints
+
+            validate_checkpoints(config["models"])
         if self.worker and not self.worker.done():
             raise ValueError("A batch is already running")
         if config.get("agent_mode") in (
@@ -131,9 +157,13 @@ class Runner:
             "paired_link",
         ) and any(scenario(sid).get("family") != "link" for sid in config["scenarios"]):
             raise ValueError("Select only Link scenarios for Link comparison arms")
-        if any(not sid.startswith("V21-") for sid in config["scenarios"]) and any(
-            m != "reference" for m in config["models"]
-        ):
+        if config.get("research_release"):
+            from backend.research.protocol import validate_standard
+
+            validate_standard(config)
+        if any(
+            not sid.startswith(("V21-", "V3-")) for sid in config["scenarios"]
+        ) and any(m != "reference" for m in config["models"]):
             raise ValueError(
                 "Historical v1/v2 controllers are archived for reference replay. Use v2.1 for model evaluation."
             )
@@ -276,9 +306,15 @@ class Runner:
                 sort_keys=True,
             ).encode()
         ).hexdigest()[:12]
+        if s.get("research_release"):
+            from backend.research.protocol import execution_manifest
+
+            run.update(execution_manifest(c, s, model))
         self.current = run
         save(run)
         token = new_session(s, agent_mode)
+        # Token is held only in memory and removed before persistence/export.
+        SESSIONS[token].update(research_run_id=rid, research_model=model)
         user_task = None
         ctl = None
         context = None
@@ -364,6 +400,13 @@ class Runner:
                     page = context.pages[0]
                     page.set_default_timeout(7000)
                     ctl = Controls(self, page, run, directory)
+                    ctl.session_state = SESSIONS[token]
+                    if run.get("execution_manifest"):
+                        run["execution_manifest"]["browser_version"] = (
+                            context.browser.version
+                            if context.browser
+                            else "persistent-context: see Playwright runtime"
+                        )
                     ctl.timings["browser_setup_seconds"] = (
                         time.perf_counter() - launch_started
                     )
@@ -556,6 +599,10 @@ class Runner:
                 if c["video"]
                 else []
             )
+            if is_v21:
+                from backend.research.measurement import finish as research_finish
+
+                run.update(research_finish(run, s, SESSIONS[token]))
             (directory / "actions.json").write_text(json.dumps(run, indent=2))
             save(run)
             self.current = run

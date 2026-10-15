@@ -26,6 +26,7 @@ import {
 } from "./analysis";
 import { Empty, Modal, Pager, Select, Stat, Tabs } from "./shared";
 import RunDetails from "./RunDetails";
+import ResearchResults from "./ResearchResults";
 const metricDefinitions = [
   [
     "Checkout success rate",
@@ -72,6 +73,24 @@ function Metrics({ close }: { close: () => void }) {
   return (
     <Modal title="Metrics Explained" onClose={close}>
       <div className="scroll modal-body">
+        <section>
+          <h3>Research v3.0 definitions</h3>
+          <p>
+            Task resolution includes valid safe stops and handoffs. Preparation
+            requires correct fields, method and payment details. Neither means
+            money moved. QR recovery uses only encountered recoverable problems;
+            clean QR trials are excluded. OTP/3DS handoff accuracy is separate
+            from the funding method. Stage success is conditional on
+            encountering that applicable stage; end-to-end success uses all
+            scored assigned trials. Successful latency excludes failures.
+            Research intervals resample implementation clusters after averaging
+            repetitions within tasks. Fewer than five clusters: insufficient
+            data. Shared infrastructure limits generalisation even with more
+            clusters. Cost per success includes all finished attempts and
+            remains unknown if any cost is missing.
+          </p>
+        </section>
+        <h3>Historical v1–v2.1 definitions</h3>
         {metricDefinitions.map(([k, v]) => (
           <section key={k}>
             <h3>{k}</h3>
@@ -126,7 +145,7 @@ export default function Results({
   onBack: () => void;
 }) {
   const [view, setView] = useState("Summary"),
-    [version, setVersion] = useState("2.1"),
+    [version, setVersion] = useState("3.0"),
     [cohort, setCohort] = useState(""),
     [family, setFamily] = useState("all"),
     [difficulty, setDifficulty] = useState("all"),
@@ -268,6 +287,7 @@ export default function Results({
               "Summary",
               "Model Comparison",
               "Scenario Analysis",
+              "Payment & Stage Analysis",
               "Run Explorer",
             ]}
             value={view}
@@ -309,6 +329,7 @@ export default function Results({
               value={version}
               onChange={setVersion}
               options={[
+                "3.0",
                 "2.1",
                 "2.0",
                 "1.0",
@@ -317,27 +338,31 @@ export default function Results({
                   : []),
               ]}
             />
-            <Select
-              label="Scenario cohort / conditions"
-              value={activeCohort}
-              onChange={setCohort}
-              options={[
-                ...(view === "Run Explorer"
-                  ? [["all", "All configurations"] as [string, string]]
-                  : []),
-                ...(!conditionMap.size
-                  ? [["", "No recorded conditions"] as [string, string]]
-                  : []),
-                ...[...conditionMap].map(
-                  ([k, r]) => [k, conditionLabel(r)] as [string, string],
-                ),
-              ]}
-            />
-            <button aria-expanded={more} onClick={() => setMore(!more)}>
-              Filter runs
-            </button>
+            {(version !== "3.0" || view === "Run Explorer") && (
+              <>
+                <Select
+                  label="Scenario cohort / conditions"
+                  value={activeCohort}
+                  onChange={setCohort}
+                  options={[
+                    ...(view === "Run Explorer"
+                      ? [["all", "All configurations"] as [string, string]]
+                      : []),
+                    ...(!conditionMap.size
+                      ? [["", "No recorded conditions"] as [string, string]]
+                      : []),
+                    ...[...conditionMap].map(
+                      ([k, r]) => [k, conditionLabel(r)] as [string, string],
+                    ),
+                  ]}
+                />
+                <button aria-expanded={more} onClick={() => setMore(!more)}>
+                  Filter runs
+                </button>
+              </>
+            )}
           </div>
-          {more && (
+          {more && (version !== "3.0" || view === "Run Explorer") && (
             <div className="filters">
               <Select
                 label="Results environment"
@@ -376,7 +401,14 @@ export default function Results({
               </button>
             </div>
           )}
-          {version === "all" && view !== "Run Explorer" ? (
+          {version === "3.0" && view !== "Run Explorer" ? (
+            <ResearchResults view={view} onRun={onRun} />
+          ) : view === "Payment & Stage Analysis" ? (
+            <Empty title="Stage analytics require research scoring v3.0">
+              Historical raw records are preserved without retroactive stage
+              reconstruction. Select version 3.0.
+            </Empty>
+          ) : version === "all" && view !== "Run Explorer" ? (
             <Empty title="Choose one benchmark version">
               Summary and comparisons never pool benchmark versions.
             </Empty>
@@ -755,7 +787,7 @@ export default function Results({
                       <tr>
                         <th>Run / started</th>
                         <th>Model / scenario</th>
-                        <th>Environment</th>
+                        <th>Environment / method</th>
                         <th>Result / failure</th>
                         <th>Duration / cost</th>
                         <th>Evidence</th>
@@ -774,9 +806,17 @@ export default function Results({
                           </td>
                           <td>
                             {familyName(r.environment || meta(r)?.family)}
+                            <small>
+                              {human(
+                                r.requested_payment_method || meta(r)?.method,
+                              )}
+                            </small>
                           </td>
                           <td>
                             {status(r)}
+                            {r.failed_stage && (
+                              <small>Failed stage: {r.failed_stage}</small>
+                            )}
                             <small>
                               {r.failure_reason
                                 ? human(r.failure_reason)

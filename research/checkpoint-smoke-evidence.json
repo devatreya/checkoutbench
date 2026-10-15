@@ -1,0 +1,90 @@
+{
+  "scope": "Observed implementation-machine smoke only; rerun exact verification on each deployment. Not benchmark performance.",
+  "models": {
+    "cua-s1": {
+      "model": "cua-s1",
+      "verified": true,
+      "checked_at": "2026-10-15T09:58:16.922023+00:00",
+      "repository": "cua-ai/cua-s1-forms",
+      "revision": "4a7a9f42a3d42e6dfbd111c0c843e37ac50f1332",
+      "license": "mit",
+      "checkpoint_hashes": {
+        "cua-s1-forms.safetensors": "05954c1caf51c2fb6c13ea4acbfc88a2e7653dea192252bb51dc89e76a356ddc",
+        "cua-s1-forms.json": "62d31e2f9a001a8e9b6f8534c5194d07ebdd3f9d62ef1ac281906622992650ca"
+      },
+      "parameters": 706048,
+      "architecture": "TinyTransformerScorer",
+      "backend": "local",
+      "torch": "2.14.1",
+      "runtime_versions": {
+        "torch": "2.14.1",
+        "transformers": null,
+        "safetensors": "0.8.0",
+        "numpy": "2.5.4"
+      },
+      "precision": "torch.float32",
+      "quantisation": "none",
+      "device": "mps:0",
+      "hardware": {
+        "machine": "arm64",
+        "processor": "arm",
+        "os": "macOS-27.0.1-arm64-arm-64bit"
+      },
+      "adapter_hash": "a5ca17e3ac67847153c72c640a3fb7004cb59076ca5a50eb5d563a506efe07be",
+      "calls": [
+        {
+          "inference_seconds": 7.2162265829974785,
+          "cold_model_loading_seconds": 0.18199391700909473,
+          "call_temperature": "cold",
+          "warm_inference_seconds": null,
+          "model_id": "cua-ai/cua-s1-forms",
+          "backend": "local"
+        },
+        {
+          "inference_seconds": 0.028553791984450072,
+          "cold_model_loading_seconds": 0.0,
+          "call_temperature": "warm",
+          "warm_inference_seconds": 0.028556207980727777,
+          "model_id": "cua-ai/cua-s1-forms",
+          "backend": "local"
+        }
+      ],
+      "smoke": "Real cold then warm inference; format validation only, not benchmark accuracy",
+      "loader_hash": "7538cb4c9730d70a0b325050f370f981a9e109a1b182b8c66be3ba0fa2474344",
+      "loader_revision": "6d82b3b1b21813ad047f966ab1384a1258c16170"
+    },
+    "tinyclick": {
+      "model": "tinyclick",
+      "verified": false,
+      "checked_at": "2026-10-15T09:40:25.271359+00:00",
+      "repository": "kzawistowsk/TinyClick",
+      "revision": "a9c0e2cfb9d3660217254838198d227501629085",
+      "license": "mit",
+      "blocker": "Exact upstream safetensors weights unavailable; no substitute accepted"
+    },
+    "mai-ui": {
+      "model": "mai-ui",
+      "verified": false,
+      "checked_at": "2026-10-15T09:40:25.349590+00:00",
+      "repository": "Tongyi-MAI/MAI-UI-2B",
+      "revision": "503050934809558c8dfd2ddedaf9621fa74ac2de",
+      "license": "apache-2.0",
+      "blocker": "Exact local checkpoint is not configured"
+    },
+    "ui-venus": {
+      "model": "ui-venus",
+      "verified": false,
+      "checked_at": "2026-10-15T09:40:25.420682+00:00",
+      "repository": "inclusionAI/UI-Venus-1.5-2B",
+      "revision": "bc4c6e62a1c545e043761439be95646d801853a4",
+      "license": "apache-2.0",
+      "blocker": "Exact local checkpoint is not configured"
+    },
+    "hybrid": {
+      "model": "hybrid",
+      "verified": false,
+      "checked_at": "2026-10-15T09:40:25.489190+00:00",
+      "blocker": "Both exact component checkpoints must be verified first"
+    }
+  }
+}

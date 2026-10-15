@@ -23,6 +23,17 @@ def init(s, mode="standard"):
     if s.get("layout") == "express" and s["family"] == "shopify":
         st["values"] = {}
         st["autofilled"] = {}
+    if s.get("research_autofill"):
+        st["values"].update(
+            {
+                k: v
+                for k, v in s["expected_values"].items()
+                if k in {f["key"] for f in s["fields"]}
+            }
+        )
+        if s["research_autofill"] == "stale":
+            st["values"].update(name="Old Demo Recipient", postal="999999")
+        st["autofilled"] = deepcopy(st["values"])
     return st
 
 
@@ -69,6 +80,7 @@ def public(st, token):
         d.pop("application_summary", None)
     d.update(
         version="2.1",
+        research_density=s.get("research_density"),
         platform=s["platform"],
         os=s["os"],
         market="US / USD · Link unavailable in India"
@@ -422,6 +434,7 @@ def evaluate(s, st):
 
 
 def tick_test_user(st):
+    before = (st.get("auth") or {}).get("status")
     a = st["auth"]
     if a and a["purpose"] == "accelerated":
         actual = st["scenario"]
@@ -432,3 +445,8 @@ def tick_test_user(st):
             st["scenario"] = actual
     else:
         old.tick_test_user(st)
+    after = (st.get("auth") or {}).get("status")
+    if after != before and st.get("research_run_id"):
+        from backend.research.measurement import observe
+
+        observe(st["scenario"], st, "synthetic_auth_" + str(after), "user")

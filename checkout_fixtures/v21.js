@@ -459,6 +459,7 @@
     return `<section class="outcome"><div class="outcome-icon">${stage === "safe_abort" ? "Ⅱ" : "✓"}</div><h1>${title}</h1><p>${stage === "authentication_required" ? "User authorisation has been requested. No payment has been completed." : stage === "safe_abort" ? "The unresolved condition has been reported for user intervention." : stage === "checkout_ready" ? "Preparation complete. No money has moved." : "Fictional transaction only. No real money or account was involved."}</p><span class="pill">BENCHMARK SIMULATION</span>${state.family === "passport" ? "<p>Appointment confirmation · DEMO-ARN-2026-0042</p>" : state.family === "railway" ? "<p>Booking reference · DEMO-RAIL-042</p>" : ""}</section>`;
   }
   function render() {
+    document.body.classList.toggle("research-dense", state.research_density === "dense");
     const family = state.family,
       m = state.merchant,
       part = parts[3],

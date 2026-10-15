@@ -17,6 +17,9 @@ from scenarios.v2 import V2_SPECS
 from scenarios.v21 import V21_SPECS
 
 ALL_IDS = [s[0] for s in SPECS] + [s["id"] for s in V2_SPECS + V21_SPECS]
+from scenarios.research import SPECS as RESEARCH_SPECS
+
+ALL_IDS += [s["id"] for s in RESEARCH_SPECS]
 from backend.fixtures import new_session
 from backend.adapters import catalog
 from backend.storage.database import (
@@ -44,7 +47,7 @@ async def lifespan(app):
     refresh.cancel()
 
 
-app = FastAPI(title="CheckoutBench", version="2.0.0", lifespan=lifespan)
+app = FastAPI(title="CheckoutBench", version="3.0.0", lifespan=lifespan)
 
 
 @app.middleware("http")
@@ -66,7 +69,9 @@ async def local_only(request, call_next):
 
 class Batch(BaseModel):
     models: list[str] = Field(min_length=1, max_length=30)
-    scenarios: list[str] = Field(min_length=1, max_length=200)
+    scenarios: list[str] = Field(min_length=1, max_length=500)
+    research_release: str | None = None
+    release_hash: str | None = None
     agent_mode: str = "standard"
     profile: str | None = None
     repeats: int = Field(default=3, ge=1, le=100)
@@ -133,12 +138,22 @@ class Batch(BaseModel):
 
 @app.get("/api/health")
 def health():
-    return {"ok": True, "version": "2.0.0"}
+    return {"ok": True, "version": "3.0.0"}
 
 
 @app.get("/api/models")
 def models(q: str = ""):
     data = catalog.models()
+    from backend.research.protocol import checkpoint_records, validate_checkpoints
+
+    proof = checkpoint_records()
+    for row in data["models"]:
+        if proof.get(row["id"], {}).get("verified"):
+            try:
+                validate_checkpoints([row["id"]])
+                row["status"] = "verified"
+            except (ValueError, ImportError, OSError):
+                pass
     if q:
         data["search"] = [
             catalog.entry(mid)
@@ -163,6 +178,9 @@ def scenarios():
             if k not in ("profile", "customer_brief", "dom_ids", "expected_values")
         }
         row.setdefault("benchmark_version", "1.0")
+        if row.get("research_release"):
+            row["fixture_engine_version"] = row["benchmark_version"]
+            row["benchmark_version"] = "3.0"
         row.setdefault("family", row["theme"])
         row.setdefault("variant", row["theme"])
         if "provenance" not in row:
@@ -182,7 +200,9 @@ def scenarios():
                         if legacy_web
                         else "https://contents.irctc.co.in/en/UserGuideIRCTC.pdf"
                     ),
-                    source_type="historical documentation" if legacy_web else "native mobile",
+                    source_type="historical documentation"
+                    if legacy_web
+                    else "native mobile",
                     confidence=(
                         "historical browser reference; current layout unverified"
                         if legacy_web
@@ -305,7 +325,7 @@ def export(fmt: str):
     rows = runs()
     if fmt == "json":
         return Response(
-            json.dumps({"version": "2.0.0", "runs": rows}, indent=2),
+            json.dumps({"version": "3.0.0", "runs": rows}, indent=2),
             media_type="application/json",
             headers={"Content-Disposition": "attachment; filename=checkoutbench.json"},
         )
@@ -443,6 +463,9 @@ def approve_test_user(token: str):
 from backend.sandboxes import router as sandbox_router
 
 app.include_router(sandbox_router)
+from backend.research.api import router as research_router
+
+app.include_router(research_router)
 
 app.mount("/artifacts", StaticFiles(directory=DATA), name="artifacts")
 if (ROOT / "frontend/dist").exists():

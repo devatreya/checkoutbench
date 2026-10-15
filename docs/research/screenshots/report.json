@@ -1,0 +1,245 @@
+[
+  {
+    "page": "overview",
+    "width": 1440,
+    "height": 900,
+    "horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "overview-1440.png"
+  },
+  {
+    "page": "models",
+    "width": 1440,
+    "height": 900,
+    "horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "models-1440.png"
+  },
+  {
+    "page": "scenarios",
+    "width": 1440,
+    "height": 900,
+    "horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "scenarios-1440.png"
+  },
+  {
+    "page": "review",
+    "width": 1440,
+    "height": 900,
+    "horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "review-1440.png"
+  },
+  {
+    "page": "results",
+    "width": 1440,
+    "height": 900,
+    "horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "results-1440.png"
+  },
+  {
+    "page": "payment-method-ranking",
+    "width": 1440,
+    "height": 900,
+    "horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "payment-method-ranking-1440.png"
+  },
+  {
+    "page": "checkout-funnel",
+    "width": 1440,
+    "height": 900,
+    "horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "checkout-funnel-1440.png"
+  },
+  {
+    "page": "failure-breakdown",
+    "width": 1440,
+    "height": 900,
+    "horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "failure-breakdown-1440.png"
+  },
+  {
+    "page": "vendor-by-payment-method",
+    "width": 1440,
+    "height": 900,
+    "horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "vendor-by-payment-method-1440.png"
+  },
+  {
+    "page": "overview",
+    "width": 1280,
+    "height": 800,
+    "horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "overview-1280.png"
+  },
+  {
+    "page": "models",
+    "width": 1280,
+    "height": 800,
+    "horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "models-1280.png"
+  },
+  {
+    "page": "scenarios",
+    "width": 1280,
+    "height": 800,
+    "horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "scenarios-1280.png"
+  },
+  {
+    "page": "review",
+    "width": 1280,
+    "height": 800,
+    "horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "review-1280.png"
+  },
+  {
+    "page": "results",
+    "width": 1280,
+    "height": 800,
+    "horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "results-1280.png"
+  },
+  {
+    "page": "payment-method-ranking",
+    "width": 1280,
+    "height": 800,
+    "horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "payment-method-ranking-1280.png"
+  },
+  {
+    "page": "checkout-funnel",
+    "width": 1280,
+    "height": 800,
+    "horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "checkout-funnel-1280.png"
+  },
+  {
+    "page": "failure-breakdown",
+    "width": 1280,
+    "height": 800,
+    "horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "failure-breakdown-1280.png"
+  },
+  {
+    "page": "vendor-by-payment-method",
+    "width": 1280,
+    "height": 800,
+    "horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "vendor-by-payment-method-1280.png"
+  },
+  {
+    "page": "overview",
+    "width": 390,
+    "height": 844,
+    "horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "overview-390.png"
+  },
+  {
+    "page": "models",
+    "width": 390,
+    "height": 844,
+    "horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "models-390.png"
+  },
+  {
+    "page": "scenarios",
+    "width": 390,
+    "height": 844,
+    "horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "scenarios-390.png"
+  },
+  {
+    "page": "review",
+    "width": 390,
+    "height": 844,
+    "horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "review-390.png"
+  },
+  {
+    "page": "results",
+    "width": 390,
+    "height": 844,
+    "horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "results-390.png"
+  },
+  {
+    "page": "payment-method-ranking",
+    "width": 390,
+    "height": 844,
+    "horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "payment-method-ranking-390.png"
+  },
+  {
+    "page": "checkout-funnel",
+    "width": 390,
+    "height": 844,
+    "horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "checkout-funnel-390.png"
+  },
+  {
+    "page": "failure-breakdown",
+    "width": 390,
+    "height": 844,
+    "horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "failure-breakdown-390.png"
+  },
+  {
+    "page": "vendor-by-payment-method",
+    "width": 390,
+    "height": 844,
+    "horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "vendor-by-payment-method-390.png"
+  }
+]

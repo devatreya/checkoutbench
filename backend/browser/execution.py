@@ -238,7 +238,16 @@ async def visual_agent(page, task, ctl, model):
                 model=model,
                 operation="act",
                 seconds=elapsed,
+                call_temperature=getattr(adapter, "last_metrics", {}).get(
+                    "call_temperature"
+                ),
                 backend=adapter.last_metrics.get("backend"),
+                cold_model_loading_seconds=adapter.last_metrics.get(
+                    "cold_model_loading_seconds"
+                ),
+                warm_inference_seconds=adapter.last_metrics.get(
+                    "warm_inference_seconds"
+                ),
             )
         )
         tokens = adapter.last_metrics.get("usage", {})

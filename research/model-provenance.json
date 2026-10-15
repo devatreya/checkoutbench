@@ -1,0 +1,235 @@
+{
+  "cua-s1": {
+    "repository": "cua-ai/cua-s1-forms",
+    "revision": "4a7a9f42a3d42e6dfbd111c0c843e37ac50f1332",
+    "source_url": "https://huggingface.co/cua-ai/cua-s1-forms",
+    "license": "mit",
+    "architectures": null,
+    "model_type": null,
+    "safetensors_metadata": null,
+    "weight_files": [
+      {
+        "path": "cua-s1-forms.safetensors",
+        "sha256": "05954c1caf51c2fb6c13ea4acbfc88a2e7653dea192252bb51dc89e76a356ddc",
+        "size": 2828784
+      }
+    ],
+    "files": [
+      {
+        "path": ".gitattributes",
+        "sha256": null,
+        "size": 1519
+      },
+      {
+        "path": "README.md",
+        "sha256": null,
+        "size": 7468
+      },
+      {
+        "path": "cua-s1-forms.json",
+        "sha256": null,
+        "size": 1053
+      },
+      {
+        "path": "cua-s1-forms.safetensors",
+        "sha256": "05954c1caf51c2fb6c13ea4acbfc88a2e7653dea192252bb51dc89e76a356ddc",
+        "size": 2828784
+      }
+    ],
+    "status": "metadata_identified; local verification and real inference pending",
+    "checked_at": "2026-10-15T08:19:55.966979+00:00"
+  },
+  "tinyclick": {
+    "repository": "kzawistowsk/TinyClick",
+    "revision": "a9c0e2cfb9d3660217254838198d227501629085",
+    "source_url": "https://huggingface.co/kzawistowsk/TinyClick",
+    "license": "mit",
+    "architectures": null,
+    "model_type": null,
+    "safetensors_metadata": null,
+    "weight_files": [],
+    "files": [
+      {
+        "path": ".gitattributes",
+        "sha256": null,
+        "size": 1519
+      },
+      {
+        "path": "README.md",
+        "sha256": null,
+        "size": 3228
+      }
+    ],
+    "status": "BLOCKED: requested distribution has no safetensors weights",
+    "checked_at": "2026-10-15T08:19:56.369803+00:00"
+  },
+  "mai-ui": {
+    "repository": "Tongyi-MAI/MAI-UI-2B",
+    "revision": "503050934809558c8dfd2ddedaf9621fa74ac2de",
+    "source_url": "https://huggingface.co/Tongyi-MAI/MAI-UI-2B",
+    "license": "apache-2.0",
+    "architectures": [
+      "Qwen3VLForConditionalGeneration"
+    ],
+    "model_type": "qwen3_vl",
+    "safetensors_metadata": {
+      "parameters": {
+        "BF16": 2127532032
+      },
+      "total": 2127532032
+    },
+    "weight_files": [
+      {
+        "path": "model.safetensors",
+        "sha256": "aca87ef72df956f648864a41261f600bf17a9cb8300ac13cc271c0044cb4ae2b",
+        "size": 4255140280
+      }
+    ],
+    "files": [
+      {
+        "path": ".gitattributes",
+        "sha256": null,
+        "size": 1570
+      },
+      {
+        "path": "README.md",
+        "sha256": null,
+        "size": 3183
+      },
+      {
+        "path": "added_tokens.json",
+        "sha256": null,
+        "size": 707
+      },
+      {
+        "path": "chat_template.jinja",
+        "sha256": null,
+        "size": 5292
+      },
+      {
+        "path": "config.json",
+        "sha256": null,
+        "size": 1552
+      },
+      {
+        "path": "generation_config.json",
+        "sha256": null,
+        "size": 213
+      },
+      {
+        "path": "merges.txt",
+        "sha256": null,
+        "size": 1671853
+      },
+      {
+        "path": "model.safetensors",
+        "sha256": "aca87ef72df956f648864a41261f600bf17a9cb8300ac13cc271c0044cb4ae2b",
+        "size": 4255140280
+      },
+      {
+        "path": "preprocessor_config.json",
+        "sha256": null,
+        "size": 782
+      },
+      {
+        "path": "special_tokens_map.json",
+        "sha256": null,
+        "size": 613
+      },
+      {
+        "path": "tokenizer.json",
+        "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+        "size": 11422654
+      },
+      {
+        "path": "tokenizer_config.json",
+        "sha256": null,
+        "size": 5445
+      },
+      {
+        "path": "video_preprocessor_config.json",
+        "sha256": null,
+        "size": 817
+      },
+      {
+        "path": "vocab.json",
+        "sha256": null,
+        "size": 2776833
+      }
+    ],
+    "status": "metadata_identified; local verification and real inference pending",
+    "checked_at": "2026-10-15T08:19:56.845219+00:00"
+  },
+  "ui-venus": {
+    "repository": "inclusionAI/UI-Venus-1.5-2B",
+    "revision": "bc4c6e62a1c545e043761439be95646d801853a4",
+    "source_url": "https://huggingface.co/inclusionAI/UI-Venus-1.5-2B",
+    "license": "apache-2.0",
+    "architectures": [
+      "Qwen3VLForConditionalGeneration"
+    ],
+    "model_type": "qwen3_vl",
+    "safetensors_metadata": {
+      "parameters": {
+        "F16": 2438696960
+      },
+      "total": 2438696960
+    },
+    "weight_files": [
+      {
+        "path": "model.safetensors",
+        "sha256": "ca2e059e729b1d6dcb29040d817f36ddf09b4c6b7bf8c95b6c0929f069f64bea",
+        "size": 4877469712
+      }
+    ],
+    "files": [
+      {
+        "path": ".gitattributes",
+        "sha256": null,
+        "size": 1519
+      },
+      {
+        "path": "README.md",
+        "sha256": null,
+        "size": 7823
+      },
+      {
+        "path": "chat_template.json",
+        "sha256": null,
+        "size": 5499
+      },
+      {
+        "path": "config.json",
+        "sha256": null,
+        "size": 1522
+      },
+      {
+        "path": "generation_config.json",
+        "sha256": null,
+        "size": 269
+      },
+      {
+        "path": "model.safetensors",
+        "sha256": "ca2e059e729b1d6dcb29040d817f36ddf09b4c6b7bf8c95b6c0929f069f64bea",
+        "size": 4877469712
+      },
+      {
+        "path": "preprocessor_config.json",
+        "sha256": null,
+        "size": 390
+      },
+      {
+        "path": "tokenizer.json",
+        "sha256": null,
+        "size": 7032403
+      },
+      {
+        "path": "tokenizer_config.json",
+        "sha256": null,
+        "size": 10868
+      }
+    ],
+    "status": "metadata_identified; local verification and real inference pending",
+    "checked_at": "2026-10-15T08:19:57.339249+00:00"
+  }
+}

@@ -1,0 +1,203 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "3.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "run_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Run Id"
+    },
+    "model": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Model"
+    },
+    "scenario": {
+      "title": "Scenario",
+      "type": "string"
+    },
+    "environment": {
+      "title": "Environment",
+      "type": "string"
+    },
+    "stage_id": {
+      "enum": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S07",
+        "S08",
+        "S09",
+        "S10",
+        "S11",
+        "S12",
+        "S13"
+      ],
+      "title": "Stage Id",
+      "type": "string"
+    },
+    "payment_method": {
+      "title": "Payment Method",
+      "type": "string"
+    },
+    "event_type": {
+      "enum": [
+        "stage_transition",
+        "terminal_failure",
+        "observed_error"
+      ],
+      "title": "Event Type",
+      "type": "string"
+    },
+    "timestamp": {
+      "title": "Timestamp",
+      "type": "string"
+    },
+    "elapsed": {
+      "title": "Elapsed",
+      "type": "number"
+    },
+    "previous_status": {
+      "title": "Previous Status",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "not_applicable",
+        "not_reached",
+        "reached",
+        "attempted",
+        "completed",
+        "failed",
+        "recovered",
+        "handoff_required",
+        "safe_abort"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "action_attempted": {
+      "title": "Action Attempted",
+      "type": "string"
+    },
+    "action_source": {
+      "enum": [
+        "model",
+        "controller",
+        "browser",
+        "user"
+      ],
+      "title": "Action Source",
+      "type": "string"
+    },
+    "model_prediction": {
+      "default": null,
+      "title": "Model Prediction"
+    },
+    "validation_result": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Validation Result"
+    },
+    "error_type": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Error Type"
+    },
+    "recovery_attempted": {
+      "title": "Recovery Attempted",
+      "type": "boolean"
+    },
+    "recovery_outcome": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Recovery Outcome"
+    },
+    "screenshot": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Screenshot"
+    },
+    "action_trace": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Action Trace"
+    }
+  },
+  "required": [
+    "schema_version",
+    "run_id",
+    "model",
+    "scenario",
+    "environment",
+    "stage_id",
+    "payment_method",
+    "event_type",
+    "timestamp",
+    "elapsed",
+    "previous_status",
+    "status",
+    "action_attempted",
+    "action_source",
+    "validation_result",
+    "error_type",
+    "recovery_attempted",
+    "recovery_outcome",
+    "screenshot",
+    "action_trace"
+  ],
+  "title": "StageEvent",
+  "type": "object"
+}

@@ -336,6 +336,7 @@ class _Adapter:
         self.max_tokens = max_tokens
         self.model = self.processor = None
         self.last_metrics: dict = {}
+        self._load_seconds = 0.0
         self._lock = threading.Lock()
 
     async def _post(self, suffix: str, payload: dict) -> dict:
@@ -432,6 +433,8 @@ class CuaS1Adapter(_Adapter):
                 f'TASK fill the form from the document, then submit\nFORM {str(element.get("form_title", "Checkout"))[:64]}\nELEMENT {role} "{str(element.get("label", ""))[:72]}" {state}'
             )
         started = time.perf_counter()
+        was_warm = self.model is not None
+        self._load_seconds = 0.0
         if self.endpoint:
             data = await self._post(
                 "/score",
@@ -442,6 +445,15 @@ class CuaS1Adapter(_Adapter):
             probabilities = await self._local(self._score, contexts, options)
         self.last_metrics = {
             "inference_seconds": time.perf_counter() - started,
+            "cold_model_loading_seconds": None if self.endpoint else self._load_seconds,
+            "call_temperature": "remote_unobserved"
+            if self.endpoint
+            else "warm"
+            if was_warm
+            else "cold",
+            "warm_inference_seconds": None
+            if self.endpoint or not was_warm
+            else max(0, time.perf_counter() - started - self._load_seconds),
             "model_id": self.model_id,
             "backend": "remote" if self.endpoint else "local",
         }
@@ -484,6 +496,7 @@ class CuaS1Adapter(_Adapter):
 
         self._require_path()
         if self.model is None:
+            load_start = time.perf_counter()
             path = Path(self.path)
             path = path / "cua-s1-forms.safetensors" if path.is_dir() else path
             if path.suffix != ".safetensors" or not path.with_suffix(".json").is_file():
@@ -491,6 +504,7 @@ class CuaS1Adapter(_Adapter):
                     "CUA-S1 requires its safetensors checkpoint and signed JSON sidecar; pickle is forbidden"
                 )
             self.model, self.processor, _ = load_checkpoint(path, self._device())
+            self._load_seconds = time.perf_counter() - load_start
         batch = self.processor([ChoiceExample(c, tuple(options), 0) for c in contexts])
         batch = {
             key: value.to(next(self.model.parameters()).device)
@@ -505,6 +519,8 @@ class TinyClickAdapter(_Adapter):
 
     async def ground(self, image: Any, instruction: str) -> dict:
         started = time.perf_counter()
+        was_warm = self.model is not None
+        self._load_seconds = 0.0
         if self.endpoint:
             data = await self._post(
                 "/ground",
@@ -523,6 +539,15 @@ class TinyClickAdapter(_Adapter):
             raw = await self._local(self._generate, image, instruction)
         self.last_metrics = {
             "inference_seconds": time.perf_counter() - started,
+            "cold_model_loading_seconds": None if self.endpoint else self._load_seconds,
+            "call_temperature": "remote_unobserved"
+            if self.endpoint
+            else "warm"
+            if was_warm
+            else "cold",
+            "warm_inference_seconds": None
+            if self.endpoint or not was_warm
+            else max(0, time.perf_counter() - started - self._load_seconds),
             "model_id": self.model_id,
             "backend": "remote" if self.endpoint else "local",
         }
@@ -534,6 +559,7 @@ class TinyClickAdapter(_Adapter):
 
         self._require_path()
         if self.model is None:
+            load_start = time.perf_counter()
             trusted = os.getenv("TINYCLICK_TRUST_LOCAL_CODE", "0") == "1"
             self.processor = AutoProcessor.from_pretrained(
                 self.path, local_files_only=True, trust_remote_code=trusted
@@ -548,6 +574,7 @@ class TinyClickAdapter(_Adapter):
                 .to(self._device())
                 .eval()
             )
+            self._load_seconds = time.perf_counter() - load_start
         text = ("What to do to execute the command? " + instruction.strip()).lower()
         inputs = self.processor(
             images=image.convert("RGB"), text=text, return_tensors="pt", do_resize=True
@@ -570,6 +597,8 @@ Return <action>Function(keyword=value)</action>. Coordinates are pixels in the p
 class _VisualAdapter(_Adapter):
     async def act(self, image: Any, task: str, history: list[dict]) -> dict:
         started = time.perf_counter()
+        was_warm = self.model is not None
+        self._load_seconds = 0.0
         prepared = image.convert("RGB")
         if self.key == "ui-venus":
             # The actual 1.5 Qwen3 checkpoint uses patch_size=16, merge_size=2.
@@ -638,6 +667,15 @@ class _VisualAdapter(_Adapter):
             raw, usage = await self._local(self._generate, prepared, prompt, query)
         self.last_metrics = {
             "inference_seconds": time.perf_counter() - started,
+            "cold_model_loading_seconds": None if self.endpoint else self._load_seconds,
+            "call_temperature": "remote_unobserved"
+            if self.endpoint
+            else "warm"
+            if was_warm
+            else "cold",
+            "warm_inference_seconds": None
+            if self.endpoint or not was_warm
+            else max(0, time.perf_counter() - started - self._load_seconds),
             "model_id": self.model_id,
             "backend": "remote" if self.endpoint else "local",
             "usage": usage,
@@ -655,6 +693,7 @@ class _VisualAdapter(_Adapter):
 
         self._require_path()
         if self.model is None:
+            load_start = time.perf_counter()
             device = self._device()
             dtype = (
                 torch.float32
@@ -677,6 +716,7 @@ class _VisualAdapter(_Adapter):
                 .to(device)
                 .eval()
             )
+            self._load_seconds = time.perf_counter() - load_start
         messages = [
             {"role": "system", "content": prompt},
             {

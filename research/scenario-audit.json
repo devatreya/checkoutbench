@@ -1,0 +1,1186 @@
+[
+  {
+    "scenario": "V21-S01",
+    "environment": "shopify",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-S01"
+  },
+  {
+    "scenario": "V21-S02",
+    "environment": "shopify",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-S02"
+  },
+  {
+    "scenario": "V21-S03",
+    "environment": "shopify",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-S03"
+  },
+  {
+    "scenario": "V21-S04",
+    "environment": "shopify",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-S04"
+  },
+  {
+    "scenario": "V21-S05",
+    "environment": "shopify",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-S05"
+  },
+  {
+    "scenario": "V21-S06",
+    "environment": "shopify",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-S06"
+  },
+  {
+    "scenario": "V21-S07",
+    "environment": "shopify",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-S07"
+  },
+  {
+    "scenario": "V21-S08",
+    "environment": "shopify",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-S08"
+  },
+  {
+    "scenario": "V21-S09",
+    "environment": "shopify",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-S09"
+  },
+  {
+    "scenario": "V21-S10",
+    "environment": "shopify",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-S10"
+  },
+  {
+    "scenario": "V21-S11",
+    "environment": "shopify",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-S11"
+  },
+  {
+    "scenario": "V21-S12",
+    "environment": "shopify",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-S12"
+  },
+  {
+    "scenario": "V21-R01",
+    "environment": "railway",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-R01"
+  },
+  {
+    "scenario": "V21-R02",
+    "environment": "railway",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-R02"
+  },
+  {
+    "scenario": "V21-R03",
+    "environment": "railway",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-R03"
+  },
+  {
+    "scenario": "V21-R04",
+    "environment": "railway",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-R04"
+  },
+  {
+    "scenario": "V21-R05",
+    "environment": "railway",
+    "method": "upi_qr",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-R05"
+  },
+  {
+    "scenario": "V21-R06",
+    "environment": "railway",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-R06"
+  },
+  {
+    "scenario": "V21-P01",
+    "environment": "passport",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-P01"
+  },
+  {
+    "scenario": "V21-P02",
+    "environment": "passport",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-P02"
+  },
+  {
+    "scenario": "V21-P03",
+    "environment": "passport",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-P03"
+  },
+  {
+    "scenario": "V21-P04",
+    "environment": "passport",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-P04"
+  },
+  {
+    "scenario": "V21-E01",
+    "environment": "echallan",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-E01"
+  },
+  {
+    "scenario": "V21-E02",
+    "environment": "echallan",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-E02"
+  },
+  {
+    "scenario": "V21-E03",
+    "environment": "echallan",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-E03"
+  },
+  {
+    "scenario": "V21-E04",
+    "environment": "echallan",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-E04"
+  },
+  {
+    "scenario": "V21-L01",
+    "environment": "link",
+    "method": "link",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-L01"
+  },
+  {
+    "scenario": "V21-L02",
+    "environment": "link",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-L02"
+  },
+  {
+    "scenario": "V21-L03",
+    "environment": "link",
+    "method": "link",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-L03"
+  },
+  {
+    "scenario": "V21-L04",
+    "environment": "link",
+    "method": "link",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-L04"
+  },
+  {
+    "scenario": "V21-L05",
+    "environment": "link",
+    "method": "link",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-L05"
+  },
+  {
+    "scenario": "V21-L06",
+    "environment": "link",
+    "method": "link",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-L06"
+  },
+  {
+    "scenario": "V21-L06H",
+    "environment": "link",
+    "method": "link",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-L06H"
+  },
+  {
+    "scenario": "V21-L07",
+    "environment": "link",
+    "method": "link",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-L07"
+  },
+  {
+    "scenario": "V21-L08",
+    "environment": "link",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-L08"
+  },
+  {
+    "scenario": "V21-L09",
+    "environment": "link",
+    "method": "link",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-L09"
+  },
+  {
+    "scenario": "V21-Q00",
+    "environment": "razor",
+    "method": "upi_qr",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-Q00"
+  },
+  {
+    "scenario": "V21-Q01",
+    "environment": "cashfree",
+    "method": "upi_qr",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-Q01"
+  },
+  {
+    "scenario": "V21-Q02",
+    "environment": "shopify",
+    "method": "upi_qr",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-Q02"
+  },
+  {
+    "scenario": "V21-Q03",
+    "environment": "railway",
+    "method": "upi_qr",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-Q03"
+  },
+  {
+    "scenario": "V21-Q04",
+    "environment": "echallan",
+    "method": "upi_qr",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-Q04"
+  },
+  {
+    "scenario": "V21-Q05",
+    "environment": "generic",
+    "method": "upi_qr",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-Q05"
+  },
+  {
+    "scenario": "V21-A01",
+    "environment": "stripe",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-A01"
+  },
+  {
+    "scenario": "V21-A02",
+    "environment": "stripe",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-A02"
+  },
+  {
+    "scenario": "V21-A03",
+    "environment": "stripe",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-A03"
+  },
+  {
+    "scenario": "V21-A04",
+    "environment": "stripe",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-A04"
+  },
+  {
+    "scenario": "V21-A05",
+    "environment": "stripe",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-A05"
+  },
+  {
+    "scenario": "V21-A06",
+    "environment": "stripe",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-A06"
+  },
+  {
+    "scenario": "V21-V2H01",
+    "environment": "shopify",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": true,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-V2H01"
+  },
+  {
+    "scenario": "V21-V2H02",
+    "environment": "shopify",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": true,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-V2H02"
+  },
+  {
+    "scenario": "V21-V2H03",
+    "environment": "railway",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": true,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-V2H03"
+  },
+  {
+    "scenario": "V21-V2H04",
+    "environment": "passport",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": true,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-V2H04"
+  },
+  {
+    "scenario": "V21-V2H05",
+    "environment": "echallan",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": true,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-V2H05"
+  },
+  {
+    "scenario": "V21-V2H06",
+    "environment": "link",
+    "method": "link",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": true,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-V2H06"
+  },
+  {
+    "scenario": "V21-V2H07",
+    "environment": "link",
+    "method": "link",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": true,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-V2H07"
+  },
+  {
+    "scenario": "V21-V2H08",
+    "environment": "echallan",
+    "method": "upi_qr",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": true,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-V2H08"
+  },
+  {
+    "scenario": "V21-ST01",
+    "environment": "stripe",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-ST01"
+  },
+  {
+    "scenario": "V21-ST02",
+    "environment": "stripe",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-ST02"
+  },
+  {
+    "scenario": "V21-ST03",
+    "environment": "stripe",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-ST03"
+  },
+  {
+    "scenario": "V21-RZ01",
+    "environment": "razor",
+    "method": "upi_qr",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-RZ01"
+  },
+  {
+    "scenario": "V21-RZ02",
+    "environment": "razor",
+    "method": "upi_app",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-RZ02"
+  },
+  {
+    "scenario": "V21-RZ03",
+    "environment": "razor",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-RZ03"
+  },
+  {
+    "scenario": "V21-CF01",
+    "environment": "cashfree",
+    "method": "upi_qr",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-CF01"
+  },
+  {
+    "scenario": "V21-CF02",
+    "environment": "cashfree",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-CF02"
+  },
+  {
+    "scenario": "V21-CF03",
+    "environment": "cashfree",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-CF03"
+  },
+  {
+    "scenario": "V21-CF04",
+    "environment": "cashfree",
+    "method": "upi_vpa",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-CF04"
+  },
+  {
+    "scenario": "V21-G01",
+    "environment": "generic",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-G01"
+  },
+  {
+    "scenario": "V21-G02",
+    "environment": "generic",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-G02"
+  },
+  {
+    "scenario": "V21-G03",
+    "environment": "generic",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-G03"
+  },
+  {
+    "scenario": "V21-P05",
+    "environment": "passport",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-P05"
+  },
+  {
+    "scenario": "V21-E05",
+    "environment": "echallan",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-E05"
+  },
+  {
+    "scenario": "V21-E06",
+    "environment": "echallan",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-E06"
+  },
+  {
+    "scenario": "V21-X01",
+    "environment": "generic",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-X01"
+  },
+  {
+    "scenario": "V21-X02",
+    "environment": "generic",
+    "method": "card",
+    "implementation_family": "shared-v21-client",
+    "historical_holdout_is_regression": false,
+    "model_input": "independent customer brief; private evaluator not supplied",
+    "truth_review": "pending independent human review",
+    "risks": [
+      "shared implementation correlation",
+      "synthetic external validity",
+      "legacy binary success includes specified safe stops/handoffs"
+    ],
+    "verification": "existing all-reference-paths browser test plus v3 negative controls; human review pending",
+    "v3_successor": "V3-X02"
+  }
+]

@@ -104,6 +104,7 @@ export default function RunDetails({
           "Visual replay",
           "Fields",
           "Payment & authentication",
+          "Stages & failure",
           "Performance",
         ]}
         value={tab}
@@ -149,6 +150,79 @@ export default function RunDetails({
               <pre>{JSON.stringify(run.config ?? "Not reported", null, 2)}</pre>
             </details>
           </>
+        )}
+        {tab === "Stages & failure" && (
+          <section>
+            <h2>Stage evidence</h2>
+            <Facts
+              rows={[
+                ["Task resolved correctly", run.task_resolved_correctly],
+                ["Checkout prepared", run.checkout_prepared],
+                [
+                  "Correct authorisation handoff",
+                  run.authorisation_handoff_correct,
+                ],
+                [
+                  "Simulated payment completed",
+                  run.simulated_payment_completed,
+                ],
+                ["Correct safe abort", run.safe_abort_correct],
+                ["Primary failure", run.primary_failure_category],
+                ["Secondary failures", run.secondary_failure_categories],
+                ["Failed stage", run.failed_stage],
+                ["Cold loading", run.cold_model_loading_seconds],
+                ["Warm inference", run.warm_inference_seconds],
+              ]}
+            />
+            <p>
+              Stages branch; not applicable and not reached are distinct. Events
+              report observed browser/server transitions, not unobserved model
+              cognition.
+            </p>
+            {run.stage_events?.length ? (
+              <table>
+                <thead>
+                  <tr>
+                    <th>Time</th>
+                    <th>Stage</th>
+                    <th>Status</th>
+                    <th>Action / source</th>
+                    <th>Error / recovery</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {run.stage_events.map((e: any, i: number) => (
+                    <tr key={i}>
+                      <td>{seconds(e.elapsed)}</td>
+                      <td>{e.stage_id}</td>
+                      <td>{human(e.status)}</td>
+                      <td>
+                        {human(e.action_attempted)} · {e.action_source}
+                      </td>
+                      <td>
+                        {human(e.error_type)} / {human(e.recovery_outcome)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <Empty title="Stage events not reported" />
+            )}
+            <details>
+              <summary>Reproducibility and complete event payloads</summary>
+              <pre>
+                {JSON.stringify(
+                  {
+                    manifest: run.execution_manifest,
+                    events: run.stage_events,
+                  },
+                  null,
+                  2,
+                )}
+              </pre>
+            </details>
+          </section>
         )}
         {tab === "Action timeline" && (
           <div className="evidence-grid">
