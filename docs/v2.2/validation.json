@@ -1,0 +1,54 @@
+{
+  "release": "2.2 UI / 2.1 benchmark",
+  "date": "2026-10-15",
+  "full_regression": {
+    "command": ".venv/bin/pytest -q --tb=short",
+    "passed": 79,
+    "seconds": 751.05
+  },
+  "final_ui_regression": {
+    "command": ".venv/bin/pytest -q tests/test_dashboard.py --tb=short",
+    "passed": 11,
+    "seconds": 20.79,
+    "note": "Repeated after final frontend refinements; backend code unchanged."
+  },
+  "production_build": {
+    "command": "npm --prefix frontend run build",
+    "passed": true
+  },
+  "screenshots": {
+    "count": 57,
+    "actual_workspace": 21,
+    "labelled_synthetic_ui_states": 36,
+    "viewports": [
+      [
+        1440,
+        900
+      ],
+      [
+        1280,
+        800
+      ],
+      [
+        390,
+        844
+      ]
+    ],
+    "javascript_errors": 0,
+    "horizontal_overflows": 0,
+    "desktop_document_scrolls": 0
+  },
+  "history": {
+    "before": 313,
+    "after": 313,
+    "changed": 0,
+    "new": 0
+  },
+  "backend_fixtures_scenarios_unchanged": true,
+  "paid_inference_calls": 0,
+  "weights_backed_inference_calls": 0,
+  "publishable_file_secret_check": {
+    "files_checked": 392,
+    "known_secret_or_credential_pattern_matches": 0
+  }
+}

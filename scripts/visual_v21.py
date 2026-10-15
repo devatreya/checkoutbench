@@ -112,10 +112,9 @@ async def main():
                         await active.close()
             await page.close()
         page = await browser.new_page(viewport={"width": 1440, "height": 1100})
-        await page.goto(args.url)
-        await page.get_by_role("button", name="Coverage", exact=True).click()
+        await page.goto(args.url + "/#/coverage")
         await page.get_by_role(
-            "heading", name="Scenario coverage", exact=True
+            "heading", name="Coverage & Sources", exact=True
         ).wait_for()
         await page.screenshot(path=str(out / "coverage-desktop.png"), full_page=True)
         await browser.close()

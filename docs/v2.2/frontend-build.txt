@@ -1,0 +1,13 @@
+
+> checkoutbench-dashboard@2.2.0 build
+> tsc -b && vite build
+
+vite v6.4.4 building for production...
+transforming...
+✓ 37 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.42 kB │ gzip:  0.30 kB
+dist/assets/index-DgAzI_RX.css   19.12 kB │ gzip:  4.81 kB
+dist/assets/index-z_20Rh19.js   291.39 kB │ gzip: 90.22 kB
+✓ built in 1.81s

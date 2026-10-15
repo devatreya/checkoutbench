@@ -1,0 +1,686 @@
+[
+  {
+    "page": "overview",
+    "synthetic_ui_data": false,
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "overview-1440.png"
+  },
+  {
+    "page": "models",
+    "synthetic_ui_data": false,
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "models-1440.png"
+  },
+  {
+    "page": "scenarios",
+    "synthetic_ui_data": false,
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "scenarios-1440.png"
+  },
+  {
+    "page": "review",
+    "synthetic_ui_data": false,
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "review-1440.png"
+  },
+  {
+    "page": "live",
+    "synthetic_ui_data": false,
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "live-1440.png"
+  },
+  {
+    "page": "results",
+    "synthetic_ui_data": false,
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "results-1440.png"
+  },
+  {
+    "page": "coverage",
+    "synthetic_ui_data": false,
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "coverage-1440.png"
+  },
+  {
+    "page": "review",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-review-1440.png"
+  },
+  {
+    "page": "live",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-live-1440.png"
+  },
+  {
+    "page": "results-summary",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-results-summary-1440.png"
+  },
+  {
+    "page": "results-model-comparison",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-results-model-comparison-1440.png"
+  },
+  {
+    "page": "results-scenario-analysis",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-results-scenario-analysis-1440.png"
+  },
+  {
+    "page": "results-run-explorer",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-results-run-explorer-1440.png"
+  },
+  {
+    "page": "detail-outcome",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-detail-outcome-1440.png"
+  },
+  {
+    "page": "detail-action-timeline",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-detail-action-timeline-1440.png"
+  },
+  {
+    "page": "detail-visual-replay",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-detail-visual-replay-1440.png"
+  },
+  {
+    "page": "detail-fields",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-detail-fields-1440.png"
+  },
+  {
+    "page": "detail-payment-authentication",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-detail-payment-authentication-1440.png"
+  },
+  {
+    "page": "detail-performance",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-detail-performance-1440.png"
+  },
+  {
+    "page": "overview",
+    "synthetic_ui_data": false,
+    "viewport": {
+      "width": 1280,
+      "height": 800
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "overview-1280.png"
+  },
+  {
+    "page": "models",
+    "synthetic_ui_data": false,
+    "viewport": {
+      "width": 1280,
+      "height": 800
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "models-1280.png"
+  },
+  {
+    "page": "scenarios",
+    "synthetic_ui_data": false,
+    "viewport": {
+      "width": 1280,
+      "height": 800
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "scenarios-1280.png"
+  },
+  {
+    "page": "review",
+    "synthetic_ui_data": false,
+    "viewport": {
+      "width": 1280,
+      "height": 800
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "review-1280.png"
+  },
+  {
+    "page": "live",
+    "synthetic_ui_data": false,
+    "viewport": {
+      "width": 1280,
+      "height": 800
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "live-1280.png"
+  },
+  {
+    "page": "results",
+    "synthetic_ui_data": false,
+    "viewport": {
+      "width": 1280,
+      "height": 800
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "results-1280.png"
+  },
+  {
+    "page": "coverage",
+    "synthetic_ui_data": false,
+    "viewport": {
+      "width": 1280,
+      "height": 800
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "coverage-1280.png"
+  },
+  {
+    "page": "review",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 1280,
+      "height": 800
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-review-1280.png"
+  },
+  {
+    "page": "live",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 1280,
+      "height": 800
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-live-1280.png"
+  },
+  {
+    "page": "results-summary",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 1280,
+      "height": 800
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-results-summary-1280.png"
+  },
+  {
+    "page": "results-model-comparison",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 1280,
+      "height": 800
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-results-model-comparison-1280.png"
+  },
+  {
+    "page": "results-scenario-analysis",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 1280,
+      "height": 800
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-results-scenario-analysis-1280.png"
+  },
+  {
+    "page": "results-run-explorer",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 1280,
+      "height": 800
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-results-run-explorer-1280.png"
+  },
+  {
+    "page": "detail-outcome",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 1280,
+      "height": 800
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-detail-outcome-1280.png"
+  },
+  {
+    "page": "detail-action-timeline",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 1280,
+      "height": 800
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-detail-action-timeline-1280.png"
+  },
+  {
+    "page": "detail-visual-replay",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 1280,
+      "height": 800
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-detail-visual-replay-1280.png"
+  },
+  {
+    "page": "detail-fields",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 1280,
+      "height": 800
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-detail-fields-1280.png"
+  },
+  {
+    "page": "detail-payment-authentication",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 1280,
+      "height": 800
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-detail-payment-authentication-1280.png"
+  },
+  {
+    "page": "detail-performance",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 1280,
+      "height": 800
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-detail-performance-1280.png"
+  },
+  {
+    "page": "overview",
+    "synthetic_ui_data": false,
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "overview-390.png"
+  },
+  {
+    "page": "models",
+    "synthetic_ui_data": false,
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "models-390.png"
+  },
+  {
+    "page": "scenarios",
+    "synthetic_ui_data": false,
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "scenarios-390.png"
+  },
+  {
+    "page": "review",
+    "synthetic_ui_data": false,
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "review-390.png"
+  },
+  {
+    "page": "live",
+    "synthetic_ui_data": false,
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "live-390.png"
+  },
+  {
+    "page": "results",
+    "synthetic_ui_data": false,
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "results-390.png"
+  },
+  {
+    "page": "coverage",
+    "synthetic_ui_data": false,
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "coverage-390.png"
+  },
+  {
+    "page": "review",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-review-390.png"
+  },
+  {
+    "page": "live",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-live-390.png"
+  },
+  {
+    "page": "results-summary",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-results-summary-390.png"
+  },
+  {
+    "page": "results-model-comparison",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-results-model-comparison-390.png"
+  },
+  {
+    "page": "results-scenario-analysis",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-results-scenario-analysis-390.png"
+  },
+  {
+    "page": "results-run-explorer",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-results-run-explorer-390.png"
+  },
+  {
+    "page": "detail-outcome",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-detail-outcome-390.png"
+  },
+  {
+    "page": "detail-action-timeline",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-detail-action-timeline-390.png"
+  },
+  {
+    "page": "detail-visual-replay",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-detail-visual-replay-390.png"
+  },
+  {
+    "page": "detail-fields",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-detail-fields-390.png"
+  },
+  {
+    "page": "detail-payment-authentication",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-detail-payment-authentication-390.png"
+  },
+  {
+    "page": "detail-performance",
+    "synthetic_ui_data": true,
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "document_horizontal_overflow": false,
+    "desktop_document_scroll": false,
+    "javascript_errors": [],
+    "screenshot": "fixture-detail-performance-390.png"
+  }
+]
