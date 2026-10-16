@@ -1,0 +1,48 @@
+{
+  "experiment_id": "cua-generalization-factorial-v1",
+  "verified_at": "2026-10-16T12:48:57.807966+00:00",
+  "preregistration_commit": "9cb0e8d",
+  "base_commit": "4df772d893b8b5246ff96ffc226078414a1829ec",
+  "frozen_release_hash": "ca8a3a4d939fce39986e723d33203d9c76fb40bf5954e707204e252ab62332ee",
+  "frozen_sources_match": true,
+  "frozen_source_files_checked": 87,
+  "tracked_runtime_source_files_unchanged": 60,
+  "databases": {
+    "data/results.sqlite3": {
+      "rows": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "unchanged": true
+    },
+    "data/validation/results.sqlite3": {
+      "rows": 10,
+      "rows_sha256": "9a1a169d83e36fc038bd11209a91007f5159aa792e2b1799a37fb959865cfec1",
+      "unchanged": true
+    }
+  },
+  "original_run": {
+    "id": "6c30aaa4aebf45b0b57c84ea4f1756f1",
+    "record_unchanged": true,
+    "record_sha256": "7c7cd26dc1be2730c7147d9bd1c5e4baaa16c54d220b06a071b22145dd2078bd",
+    "artifacts_unchanged": 82
+  },
+  "study_freeze_matches": true,
+  "genuine_forward_calls": 244,
+  "raw_artifact_mode": "0600",
+  "raw_artifact_sha256": "fb8a7d19e30ec56659eb2878f1ef84c3beea07f9824971cc51f948fd63dd27e6",
+  "public_evidence_sha256": "0c2de1000b4ab2bc3e5688e271d9a34454a64145b5505700b6c4c11dca6c714a",
+  "regression": {
+    "summary": "110 passed, 4 upstream nested-tensor optimization warnings",
+    "genuine_model_checks_enabled": true,
+    "full_174_scenario_benchmark_launched": false,
+    "log_sha256": "b27c14f55376691753235d20605545e3bd07ebb9312c1d43bd22d651674f9ec8",
+    "test_files": [
+      "tests/test_cua_generalization.py",
+      "tests/test_cua_fidelity.py",
+      "tests/test_adapters.py",
+      "tests/test_harness.py",
+      "tests/test_evaluator.py",
+      "tests/test_official_results.py"
+    ]
+  },
+  "independent_review_sha256": "2c009b91b116e0ef325ec906032d97563cbc64d58f35d368368589e60d6a9b9e"
+}

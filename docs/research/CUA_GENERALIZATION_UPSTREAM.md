@@ -44,7 +44,7 @@ Only the displayed label changes; the section title, role, value/state, candidat
 
 | Original label | Familiar label | Cases | Reason and limitation |
 | --- | --- | --- | --- |
-| Receipt email | Email address | G01 | Both request the email address for this checkout; purpose is retained in task context, but the receipt modifier is removed. |
+| Receipt email | Email address | G01 | Both request the email address for this checkout; the Contact section is retained, but the receipt-purpose modifier is removed. This does not test distinctions between multiple email purposes. |
 | Recipient | Full name | G01, ST03 | A person receiving the delivery; scope remains Delivery. The original customer/traveller candidates remain, so competing names are not pruned. |
 | Town / city | City | G01, ST03 | Equivalent locality concept. |
 | Delivery PIN | Postal code | G01 | Delivery section establishes postal PIN rather than authentication PIN. |

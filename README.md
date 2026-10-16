@@ -94,3 +94,5 @@ Stop the previous server before starting another instance on the same ports. Exi
 The deterministic reference policy can fail unfamiliar-label tasks; that measures its own coverage, not fixture solvability. The full pytest suite additionally uses a private test oracle to validate all ten controlled layout cases. Those oracle checks never count as AI evaluations.
 
 Browser harness behavior, trace fields, and single-checkpoint reproduction: [CUA harness guide](docs/operations/CUA_HARNESS.md).
+
+Controlled development diagnostics: [CUA generalization study](docs/research/CUA_GENERALIZATION_STUDY.md) separates field-label and candidate-format effects with 244 genuine local forward passes. These experiments preserve the benchmark fixtures and official results, and do not count as unmodified benchmark performance.
