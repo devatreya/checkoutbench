@@ -1,0 +1,189 @@
+{
+  "kind": "single_scenario_genuine_model_integration_check_not_official_comparison",
+  "verified_at": "2026-10-16T11:12:24.847041+00:00",
+  "checkpoint": {
+    "repository": "cua-ai/cua-s1-forms",
+    "revision": "4a7a9f42a3d42e6dfbd111c0c843e37ac50f1332",
+    "checkpoint_hashes": {
+      "cua-s1-forms.safetensors": "05954c1caf51c2fb6c13ea4acbfc88a2e7653dea192252bb51dc89e76a356ddc",
+      "cua-s1-forms.json": "62d31e2f9a001a8e9b6f8534c5194d07ebdd3f9d62ef1ac281906622992650ca"
+    },
+    "parameters": 706048,
+    "architecture": "TinyTransformerScorer",
+    "device": "mps:0",
+    "precision": "torch.float32",
+    "adapter_hash": "731bf8f478402e974c8b5f517d1ce789c363dd07a6747286518d9dd25ab330f8",
+    "loader_hash": "7538cb4c9730d70a0b325050f370f981a9e109a1b182b8c66be3ba0fa2474344"
+  },
+  "release_hash": "ca8a3a4d939fce39986e723d33203d9c76fb40bf5954e707204e252ab62332ee",
+  "original": {
+    "id": "6c30aaa4aebf45b0b57c84ea4f1756f1",
+    "scenario": "V21-G01",
+    "seed": 2026,
+    "model_call_count": 7,
+    "action_count": 80,
+    "validation_errors": 79,
+    "field_classification_accuracy": 0.0,
+    "failure_reason": "max_steps",
+    "success": false
+  },
+  "integrated": {
+    "id": "f2519521adf94466845df33b97e2a22e",
+    "scenario": "V21-G01",
+    "seed": 2026,
+    "model_call_count": 7,
+    "action_count": 4,
+    "validation_errors": 3,
+    "field_classification_accuracy": 0.0,
+    "failure_reason": "no_progress",
+    "success": false,
+    "failure_attribution": {
+      "model_field_decision": true,
+      "browser_execution": false,
+      "navigation_controller": false,
+      "controller_stop": "no_progress",
+      "infrastructure": false,
+      "validation": true,
+      "note": "Independent dimensions; validation attempts are not additional field decisions. A bounded controller stop can be caused by model-selected invalid fields."
+    },
+    "action_attribution": {
+      "deterministic_reference": 0,
+      "deterministic_semantic_assistance": 0,
+      "deterministic_controller": 3,
+      "cua-s1": 1,
+      "model": 0
+    },
+    "wall_seconds": 3.5103971250064205
+  },
+  "semantic_summary": {
+    "scoring_version": "semantic-2",
+    "denominator_unit": "decision_attempt; repeated controls count repeatedly",
+    "decisions_total": 7,
+    "scored_decisions": 7,
+    "unscored_decisions": 0,
+    "unique_scored_fields": 6,
+    "repeated_decisions": 1,
+    "expected_fields_with_handles": 11,
+    "unobserved_fields": [
+      "cardName",
+      "cardNumber",
+      "cvv",
+      "expiry",
+      "payment_method"
+    ],
+    "unobserved_required_fields": [],
+    "field_classification_accuracy": 0.0,
+    "strict_assignment_accuracy": 0.0,
+    "strict_entity_accuracy": null,
+    "entity_scored_decisions": 0,
+    "entity_unscored_decisions": 7,
+    "required_field_accuracy": 0.0,
+    "required_scored_decisions": 6,
+    "optional_scored_decisions": 1,
+    "optional_field_acceptability": 1.0,
+    "acceptable_optional_skips": 1,
+    "wrong_value_selections": 1,
+    "skip_predictions": 6,
+    "invalid_action_selections": 0,
+    "execution_statuses": {
+      "executed": 1,
+      "skipped": 6
+    },
+    "inference_kinds": {
+      "actual_model": 7
+    }
+  },
+  "trace": {
+    "full_input_candidate_bytes_and_distributions": true,
+    "actual_model_calls": 7,
+    "final_screenshot_sha256": "af13e599ebcc45fe97b097f09e0e707da91f38fdd0af231a7950f32e97ba4d35"
+  },
+  "original_preservation_manifest_sha256": "db766cfcbd5db3872410b86a0942e40f5b1d2d53d55255ff5978fbb04f74c101",
+  "software_validation": {
+    "focused_combined": "72 passed, including pinned CPU real inference",
+    "v21_regression": "20 passed",
+    "full_suite": "189 distinct tests verified passing across the complete run and focused reruns. The initial complete run had 180 passes, six CUA import skips, one CUA import failure, and one V21-ST03 provider refresh race. A bounded settling wait fixes that race, with a new delayed-transition test and the complete affected browser groups rerun successfully. The regular-wheel runtime repair preserved exact loader/weight hashes; all 52 fidelity/adapter tests, including those seven cases, then passed. No failing case was waived.",
+    "runtime_repair": "Regular non-editable CUA wheel installed from audited source; loader and weight hashes unchanged; 52 fidelity/adapter tests pass including actual inference",
+    "distinct_tests_verified_passing": 189,
+    "logs": {
+      "complete_regression": {
+        "sha256": "cb1b101a65f5b54481d1d786f594718ade6f71d3a98963edd275995e1a0423f3",
+        "summary": "180 passed; initial CUA import failure/six skips and V21-ST03 provider refresh race; both fixed and rerun"
+      },
+      "affected_runtime_recheck": {
+        "sha256": "5e794efc0d60477303bf22b938e8391e11397a52ddd108194f2649d8e26b90ce",
+        "summary": "52 passed including all seven affected tests and real pinned CPU inference"
+      },
+      "combined_focused": {
+        "sha256": "bcbf71eeb36d1b7c11e90ff9bdccee55e4683d9bc9cc36f283a330759a31a950",
+        "summary": "72 passed including real pinned CPU inference"
+      },
+      "v21_regression": {
+        "sha256": "c89500f673d082520aeacd2d6d98b189e7f4589ec73de89103b431d5bc489542",
+        "summary": "20 passed before final transition correction"
+      },
+      "final_browser_regression": {
+        "sha256": "4626534d040bcc110e5115d62e859841430655c174857b03fbdc217b40a2f3c8",
+        "summary": "23 passed, including all 74 V21 paths and research provider/auth/layout matrices"
+      },
+      "final_combined_focused": {
+        "sha256": "6ee23984819edde25b112dd37015155bd586d71d3106ead44f13b96ece477779",
+        "summary": "73 passed including delayed-transition regression and real pinned inference"
+      }
+    }
+  },
+  "installed_runtime_replay": {
+    "id": "082b01a7bc1345cbb83a97859f97ca74",
+    "model_call_count": 7,
+    "action_count": 4,
+    "validation_errors": 3,
+    "failure_reason": "no_progress",
+    "success": false,
+    "failure_attribution": {
+      "model_field_decision": true,
+      "browser_execution": false,
+      "navigation_controller": false,
+      "controller_stop": "no_progress",
+      "infrastructure": false,
+      "validation": true,
+      "note": "Independent dimensions; validation attempts are not additional field decisions. A bounded controller stop can be caused by model-selected invalid fields."
+    },
+    "same_decisions_as_initial_integration": true,
+    "final_screenshot_sha256": "af13e599ebcc45fe97b097f09e0e707da91f38fdd0af231a7950f32e97ba4d35"
+  },
+  "initial_integration_release_hash": "e0b4072678e132b802274d3e61c5966a06cdc1dca47f80611b0e7b2ef43b143e",
+  "final_source_replay": {
+    "id": "83167839dfc94537b7d6352b8a7ee0df",
+    "model_call_count": 7,
+    "action_count": 4,
+    "validation_errors": 3,
+    "failure_reason": "no_progress",
+    "success": false,
+    "failure_attribution": {
+      "model_field_decision": true,
+      "browser_execution": false,
+      "navigation_controller": false,
+      "controller_stop": "no_progress",
+      "infrastructure": false,
+      "validation": true,
+      "note": "Independent dimensions; validation attempts are not additional field decisions. A bounded controller stop can be caused by model-selected invalid fields."
+    },
+    "same_model_decisions_as_initial_integration": true,
+    "final_screenshot_sha256": "af13e599ebcc45fe97b097f09e0e707da91f38fdd0af231a7950f32e97ba4d35",
+    "screenshot_matches_visually_inspected_initial_integration": true
+  },
+  "transition_race_regression": {
+    "model": "reference",
+    "genuine_model_evaluation": false,
+    "scenario": "V21-ST03",
+    "repeats": 5,
+    "successful": 5,
+    "run_ids": [
+      "93896e054da9464c8f19e4de910ea357",
+      "b4942b2e8a0d4b0cafb4523209916176",
+      "d6a9a2a1a67d410189bde7c406ed694f",
+      "9a40f9d78f074c2a828dd09eb0ffaf0c",
+      "170aeac9ac344f39be40c3f5c226e0e3"
+    ]
+  }
+}

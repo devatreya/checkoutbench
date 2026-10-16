@@ -1,7 +1,7 @@
 {
-  "release_hash": "6b385d58387d15ffdafc55d0b139acd94d64ef76309582411d91df8e391701c5",
-  "recorded_at": "2026-10-15T11:56:51.140651+00:00",
-  "scope": "Local software validation; no comparative model evaluation or independent publication validation",
+  "release_hash": "ca8a3a4d939fce39986e723d33203d9c76fb40bf5954e707204e252ab62332ee",
+  "recorded_at": "2026-10-16T11:49:33.821584+00:00",
+  "scope": "Local software regression plus three genuine single-scenario CUA integration runs; not a comparative model evaluation or independent publication validation",
   "regression_passed": true,
   "measurement_negative_controls_passed": true,
   "cluster_statistics_tested": true,
@@ -10,57 +10,34 @@
   "stage_events_and_denominators_tested": true,
   "controlled_public_run_reviewed": false,
   "checks": {
-    "full_regression": {
-      "sha256": "d2a193a0c72034c306785273587f20cac6512388ef70ee59ed670553c20889c1",
-      "summary": "132 passed in 1086.14s (0:18:06)"
+    "complete_regression": {
+      "sha256": "cb1b101a65f5b54481d1d786f594718ade6f71d3a98963edd275995e1a0423f3",
+      "summary": "180 passed; initial CUA import failure/six skips and V21-ST03 provider refresh race; both fixed and rerun"
     },
-    "final_focused": {
-      "sha256": "9efea60830ecd6587fba70c6ef0042e59aa83127f5af229dcf28ebcf348de36a",
-      "summary": "34 passed in 24.80s"
+    "affected_runtime_recheck": {
+      "sha256": "5e794efc0d60477303bf22b938e8391e11397a52ddd108194f2649d8e26b90ce",
+      "summary": "52 passed including all seven affected tests and real pinned CPU inference"
     },
-    "final_backend": {
-      "sha256": "e4806254ab4ae0821ef1e05b2dd3c7073ea6429a3e64cc24d6e522cb1a0ecddc",
-      "summary": "50 passed in 4.45s"
+    "combined_focused": {
+      "sha256": "bcbf71eeb36d1b7c11e90ff9bdccee55e4683d9bc9cc36f283a330759a31a950",
+      "summary": "72 passed including real pinned CPU inference"
     },
-    "browser_visual": {
-      "sha256": "1911add074be8cae52f2659a07c9a03859176fd3d7c919b646389c7e5f097dc5",
-      "summary": "27 real UI captures passed layout and JavaScript checks"
+    "v21_regression": {
+      "sha256": "c89500f673d082520aeacd2d6d98b189e7f4589ec73de89103b431d5bc489542",
+      "summary": "20 passed before final transition correction"
     },
-    "frontend_build": {
-      "sha256": "09f912b5c6bda00370faaddaf9469f9d434a7c54d5983a5963c05ed063734293",
-      "summary": "\u2713 built in 821ms"
+    "final_browser_regression": {
+      "sha256": "4626534d040bcc110e5115d62e859841430655c174857b03fbdc217b40a2f3c8",
+      "summary": "23 passed, including all 74 V21 paths and research provider/auth/layout matrices"
+    },
+    "final_combined_focused": {
+      "sha256": "6ee23984819edde25b112dd37015155bd586d71d3106ead44f13b96ece477779",
+      "summary": "73 passed including delayed-transition regression and real pinned inference"
     }
   },
-  "preservation_mode": "Verified ignored archive; explicit one-time pre-evaluation cleanup",
-  "cleanup": {
-    "record_count": 313,
-    "classification": {
-      "deterministic_reference": 302,
-      "unconfigured_availability_check": 11
-    },
-    "versions": {
-      "2.0": 79,
-      "2.1": 150,
-      "1.0 (unversioned legacy)": 66,
-      "1.0": 18
-    },
-    "backup": "data/archives/pre-evaluation-validation-20261015T113455Z/backup.tar.gz",
-    "backup_sha256": "a199e0a0b216097be628c9fcea0b6fd64e597e9feb3fab619636b934b1175b31",
-    "backup_verified": true,
-    "active_records_after": 0,
-    "artifact_files_archived": 5722
-  },
-  "live_reference_isolation": {
-    "reference_success": true,
-    "isolated_storage": "validation",
-    "official_attempts": 0,
-    "standard_export_runs": 0
-  },
-  "verification_note": "Full regression run plus final focused checks cover the final implementation. Three additional API/configuration/restart tests were added after full-suite collection and passed in the 34-test focused run. Final frontend model-filter/release-label/empty-state changes and atomic protocol snapshot handling were covered by focused checks.",
-  "security_scan": {
-    "tracked_and_nonignored_files": 498,
-    "known_secret_values": 1,
-    "patterns": 3,
-    "findings": []
-  }
+  "distinct_tests_verified_passing": 189,
+  "verification_note": "189 distinct tests verified passing across the complete run and focused reruns. The initial complete run had 180 passes, six CUA import skips, one CUA import failure, and one V21-ST03 provider refresh race. A bounded settling wait fixes that race, with a new delayed-transition test and the complete affected browser groups rerun successfully. The regular-wheel runtime repair preserved exact loader/weight hashes; all 52 fidelity/adapter tests, including those seven cases, then passed. No failing case was waived.",
+  "previous_validation_commit": "67e1ba7872465b9a1ddc641f8421be8368e2e52d",
+  "preservation_mode": "Original genuine failed record and 82 artifact files verified byte-identical; all three new genuine runs retained; no cleanup",
+  "integration_evidence": "research/harness-integration-evidence.json"
 }

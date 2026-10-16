@@ -4,11 +4,11 @@
 
 ## Completed software verification
 
-- 132 full regression tests passed, plus 34 final official-results/API/UI checks and 50 backend checks.
+- 189 distinct tests verified passing across the complete regression run and affected CUA rerun after local runtime repair; 73 focused integration checks and 23 V2.1/research-browser regressions also passed.
 - All five Results tabs and exports use one explicitly configured official dataset; mocks, references and incompatible experiments are excluded.
 - 27 real desktop/mobile UI captures passed layout and JavaScript checks.
 - All 313 obsolete validation records were preserved byte for byte in a verified ignored archive before the explicit one-time cleanup. The active experiment database is empty.
-- CUA-S1's exact checkpoint and loader were verified and genuine cold/warm inference executed. This is an inference-format smoke test, not a checkout accuracy evaluation.
+- CUA-S1's exact checkpoint and loader were verified. Three genuine V21-G01 runs each made seven inference calls and failed on model-selected invalid fields; the harness stopped after three submissions. This is single-scenario integration evidence, not a comparative accuracy study.
 - Frozen source hashes match the release. Research charts remain marked templates because no eligible comparative model evaluations were collected.
 
 ## Remaining blockers

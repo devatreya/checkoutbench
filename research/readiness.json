@@ -209,7 +209,7 @@
     "cua-s1": {
       "model": "cua-s1",
       "verified": true,
-      "checked_at": "2026-10-15T09:58:16.922023+00:00",
+      "checked_at": "2026-10-16T11:17:22.474813+00:00",
       "repository": "cua-ai/cua-s1-forms",
       "revision": "4a7a9f42a3d42e6dfbd111c0c843e37ac50f1332",
       "license": "mit",
@@ -223,7 +223,7 @@
       "torch": "2.14.1",
       "runtime_versions": {
         "torch": "2.14.1",
-        "transformers": null,
+        "transformers": "4.57.6",
         "safetensors": "0.8.0",
         "numpy": "2.5.4"
       },
@@ -235,23 +235,29 @@
         "processor": "arm",
         "os": "macOS-27.0.1-arm64-arm-64bit"
       },
-      "adapter_hash": "a5ca17e3ac67847153c72c640a3fb7004cb59076ca5a50eb5d563a506efe07be",
+      "adapter_hash": "731bf8f478402e974c8b5f517d1ce789c363dd07a6747286518d9dd25ab330f8",
       "calls": [
         {
-          "inference_seconds": 7.2162265829974785,
-          "cold_model_loading_seconds": 0.18199391700909473,
+          "inference_seconds": 3.277335667022271,
+          "cold_model_loading_seconds": 0.11919954197946936,
           "call_temperature": "cold",
           "warm_inference_seconds": null,
           "model_id": "cua-ai/cua-s1-forms",
-          "backend": "local"
+          "backend": "local",
+          "input_protocol": "path-v2",
+          "inference_kind": "actual_model",
+          "model_forward_seconds": 2.1726134160126094
         },
         {
-          "inference_seconds": 0.028553791984450072,
+          "inference_seconds": 0.09144724998623133,
           "cold_model_loading_seconds": 0.0,
           "call_temperature": "warm",
-          "warm_inference_seconds": 0.028556207980727777,
+          "warm_inference_seconds": 0.09144724998623133,
           "model_id": "cua-ai/cua-s1-forms",
-          "backend": "local"
+          "backend": "local",
+          "input_protocol": "path-v2",
+          "inference_kind": "actual_model",
+          "model_forward_seconds": 0.04772783300722949
         }
       ],
       "smoke": "Real cold then warm inference; format validation only, not benchmark accuracy",
