@@ -84,11 +84,29 @@ An exclusion sidecar prevents reporting its historical failure classifications
 as model reasoning or grounding performance. The exact seven-case plan must be
 rerun under the corrected adapter before full coverage starts.
 
+## Phase B: corrected seven-case pilot
+
+The same predefined cases were rerun under adapter `ui-venus-1.5-web-mlx-v2-normalized1000` and the final timing-fixed worker. All seven intended trials completed: **0/7 successful checkouts**, five no-progress model failures, one evaluation timeout, and one invalid native action. There were 35 completed genuine generations from 36 attempted calls, 34 executed actions, no inference failures and no token-limit truncations. The invalid action predicted `y=1100`, outside the documented native range. Required-field correctness was **0/53**. All seven optional-field checks passed because those fields were left untouched; this does not establish successful checkout.
+
+| Public scenario | Corrected outcome | Genuine calls | Executed actions | Elapsed seconds |
+| --- | --- | ---: | ---: | ---: |
+| GENERIC-01 | no_progress | 3 | 3 | 59.6 |
+| SHOPIFY-01 | no_progress | 5 | 5 | 109.8 |
+| IRCTC-02 | no_progress | 4 | 4 | 102.2 |
+| STRIPE-03 | invalid_model_action | 5 | 4 | 129.7 |
+| RAZORPAY-01 | no_progress | 6 | 6 | 150.0 |
+| CASHFREE-01 | timeout | 6 | 6 | 182.2 |
+| RAZORPAY-QR-REGRESSION-00 | no_progress | 6 | 6 | 160.8 |
+
+Total trial time was 894.3 seconds; median completed model-call time was 23.75 seconds. Peak MLX allocation was 3.392 GB. These are observations on this machine, not a controlled hardware comparison. The reviewed first trace shows three identical ineffective clicks, correctly mapped from normalized coordinates, with unchanged screenshot hashes and no private task inputs; the shared stall monitor terminated it at three repeats. No further adapter defect was found in that review.
+
+The sanitized summary is `research/venus/pilot-summary.json`; complete private traces remain in `data/research/venus/pilot-normalized1000/validation/` and `data/research/venus/pilot-normalized1000-report/`. The exact runtime snapshot is `data/research/venus/normalized1000-runtime/`. The server began before the implementation commit, so its recorded source commit is the baseline; the complete changed execution identity is retained by the exact runtime source/binding hashes and snapshot.
+
 ## Phase C: full coverage
 
 Plan: `research/ui-venus-full-plan.json`, all 174 active scenarios, one trial each, 8,192 output tokens, 80 actions, 180 seconds, no retries. Results will remain a separate diagnostic study and will not silently replace the official dataset. The user confirmed that the machine can remain powered and awake; AC power was subsequently observed.
 
-Execution is pending corrected adapter validation and the repeated pilot. No full-coverage result is claimed yet.
+The corrected pilot and software checks are complete. The full run has started in isolated storage at `data/research/venus/full-normalized1000/`, with report output at `data/research/venus/full-normalized1000-report/`. No full-coverage result is claimed until all 174 intended records finish.
 
 ## Validation and remaining limits
 
