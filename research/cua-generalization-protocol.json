@@ -1,0 +1,321 @@
+{
+  "experiment_id": "cua-generalization-factorial-v1",
+  "status": "preregistered-before-inference",
+  "base_commit": "4df772d",
+  "seed": 2026,
+  "profile_id": "aditi",
+  "development_cases": [
+    "V21-G01",
+    "V21-S01",
+    "V21-ST03"
+  ],
+  "scope": "Development-only reproducible synthetic field snapshots; all scenario fields observed empty independently; no browser actions, official result writes or sealed holdouts.",
+  "conditions": {
+    "A": {
+      "labels": "original",
+      "serialization": "path-v2"
+    },
+    "B": {
+      "labels": "familiar",
+      "serialization": "path-v2"
+    },
+    "C": {
+      "labels": "original",
+      "serialization": "document-v2"
+    },
+    "D": {
+      "labels": "familiar",
+      "serialization": "document-v2"
+    }
+  },
+  "mappings": [
+    {
+      "case": "V21-G01",
+      "field_index": 0,
+      "original_label": "Receipt email",
+      "familiar_label": "Email address",
+      "eligibility": "changed",
+      "upstream_concept": "email",
+      "rationale": "Same requested information; original public form context and candidate roles are preserved."
+    },
+    {
+      "case": "V21-G01",
+      "field_index": 1,
+      "original_label": "Recipient",
+      "familiar_label": "Full name",
+      "eligibility": "changed",
+      "upstream_concept": "full_name",
+      "rationale": "Same requested information; original public form context and candidate roles are preserved."
+    },
+    {
+      "case": "V21-G01",
+      "field_index": 2,
+      "original_label": "House / flat / building",
+      "familiar_label": "House / flat / building",
+      "eligibility": "excluded",
+      "upstream_concept": null,
+      "rationale": "Ambiguous building/unit scope; not equivalent to full street address."
+    },
+    {
+      "case": "V21-G01",
+      "field_index": 3,
+      "original_label": "Town / city",
+      "familiar_label": "City",
+      "eligibility": "changed",
+      "upstream_concept": "city",
+      "rationale": "Same requested information; original public form context and candidate roles are preserved."
+    },
+    {
+      "case": "V21-G01",
+      "field_index": 4,
+      "original_label": "Delivery PIN",
+      "familiar_label": "Postal code",
+      "eligibility": "changed",
+      "upstream_concept": "zip",
+      "rationale": "Same requested information; original public form context and candidate roles are preserved."
+    },
+    {
+      "case": "V21-G01",
+      "field_index": 5,
+      "original_label": "Landmark",
+      "familiar_label": "Landmark",
+      "eligibility": "excluded",
+      "upstream_concept": null,
+      "rationale": "No upstream positive concept."
+    },
+    {
+      "case": "V21-S01",
+      "field_index": 0,
+      "original_label": "Email",
+      "familiar_label": "Email",
+      "eligibility": "identity",
+      "upstream_concept": "email",
+      "rationale": "Same requested information; original public form context and candidate roles are preserved."
+    },
+    {
+      "case": "V21-S01",
+      "field_index": 1,
+      "original_label": "Full name",
+      "familiar_label": "Full name",
+      "eligibility": "identity",
+      "upstream_concept": "full_name",
+      "rationale": "Same requested information; original public form context and candidate roles are preserved."
+    },
+    {
+      "case": "V21-S01",
+      "field_index": 2,
+      "original_label": "Address",
+      "familiar_label": "Address",
+      "eligibility": "identity",
+      "upstream_concept": "street",
+      "rationale": "Same requested information; original public form context and candidate roles are preserved."
+    },
+    {
+      "case": "V21-S01",
+      "field_index": 3,
+      "original_label": "Apartment, suite, etc. (optional)",
+      "familiar_label": "Apartment, suite, etc. (optional)",
+      "eligibility": "excluded",
+      "upstream_concept": null,
+      "rationale": "Original label includes optionality; changing to exact catalogue label would remove that cue. Existing fixture truth maps address2 to shipping.landmark, not apartment/unit; keep original label and evaluator truth, report semantic mismatch separately."
+    },
+    {
+      "case": "V21-S01",
+      "field_index": 4,
+      "original_label": "City",
+      "familiar_label": "City",
+      "eligibility": "identity",
+      "upstream_concept": "city",
+      "rationale": "Same requested information; original public form context and candidate roles are preserved."
+    },
+    {
+      "case": "V21-S01",
+      "field_index": 5,
+      "original_label": "PIN code",
+      "familiar_label": "Postal code",
+      "eligibility": "changed",
+      "upstream_concept": "zip",
+      "rationale": "Same requested information; original public form context and candidate roles are preserved."
+    },
+    {
+      "case": "V21-S01",
+      "field_index": 6,
+      "original_label": "Delivery method",
+      "familiar_label": "Delivery method",
+      "eligibility": "excluded",
+      "upstream_concept": null,
+      "rationale": "No upstream positive concept."
+    },
+    {
+      "case": "V21-S01",
+      "field_index": 7,
+      "original_label": "Discount code",
+      "familiar_label": "Discount code",
+      "eligibility": "excluded",
+      "upstream_concept": null,
+      "rationale": "Known upstream optional skip-only label; no positive entity concept."
+    },
+    {
+      "case": "V21-S01",
+      "field_index": 8,
+      "original_label": "Gift message (optional)",
+      "familiar_label": "Gift message (optional)",
+      "eligibility": "excluded",
+      "upstream_concept": null,
+      "rationale": "No upstream positive concept."
+    },
+    {
+      "case": "V21-ST03",
+      "field_index": 0,
+      "original_label": "Email address",
+      "familiar_label": "Email address",
+      "eligibility": "identity",
+      "upstream_concept": "email",
+      "rationale": "Same requested information; original public form context and candidate roles are preserved."
+    },
+    {
+      "case": "V21-ST03",
+      "field_index": 1,
+      "original_label": "Recipient",
+      "familiar_label": "Full name",
+      "eligibility": "changed",
+      "upstream_concept": "full_name",
+      "rationale": "Same requested information; original public form context and candidate roles are preserved."
+    },
+    {
+      "case": "V21-ST03",
+      "field_index": 2,
+      "original_label": "House / flat / building",
+      "familiar_label": "House / flat / building",
+      "eligibility": "excluded",
+      "upstream_concept": null,
+      "rationale": "Ambiguous building/unit scope; not equivalent to full street address."
+    },
+    {
+      "case": "V21-ST03",
+      "field_index": 3,
+      "original_label": "Town / city",
+      "familiar_label": "City",
+      "eligibility": "changed",
+      "upstream_concept": "city",
+      "rationale": "Same requested information; original public form context and candidate roles are preserved."
+    },
+    {
+      "case": "V21-ST03",
+      "field_index": 4,
+      "original_label": "ZIP code",
+      "familiar_label": "ZIP code",
+      "eligibility": "identity",
+      "upstream_concept": "zip",
+      "rationale": "Same requested information; original public form context and candidate roles are preserved."
+    },
+    {
+      "case": "V21-ST03",
+      "field_index": 5,
+      "original_label": "Landmark",
+      "familiar_label": "Landmark",
+      "eligibility": "excluded",
+      "upstream_concept": null,
+      "rationale": "No upstream positive concept."
+    },
+    {
+      "case": "V21-ST03",
+      "field_index": 6,
+      "original_label": "Billing address",
+      "familiar_label": "Billing address",
+      "eligibility": "excluded",
+      "upstream_concept": null,
+      "rationale": "Removing billing qualifier loses source-role distinction with competing shipping candidates."
+    },
+    {
+      "case": "V21-ST03",
+      "field_index": 7,
+      "original_label": "Billing ZIP code",
+      "familiar_label": "Billing ZIP code",
+      "eligibility": "excluded",
+      "upstream_concept": null,
+      "rationale": "Removing billing qualifier loses source-role distinction with competing shipping candidates."
+    }
+  ],
+  "synthetic_controls": "Existing control_cases()[contract-controls], all seven snapshots retained. Four text observations (one prefilled), two checkbox states, one submit button. Button scored separately as action contract.",
+  "supplemental": {
+    "policy": "Append the same six plausible distractor entities after every original profile, independent of target field. Correct original entities remain present. Run every condition on every snapshot; report separately from primary.",
+    "entities": {
+      "Emergency contact email": "emergency@example.invalid",
+      "Emergency contact name": "Taylor Example",
+      "Employer address": "701 Sample Industrial Road",
+      "Birth city": "Denver",
+      "Previous postal code": "80202",
+      "Work phone": "+1 202 555 0198"
+    }
+  },
+  "reproduction": {
+    "field": "V21-G01:0",
+    "repeats_per_condition": 1,
+    "excluded_from_accuracy_denominators": true,
+    "distribution_absolute_tolerance": 1e-07
+  },
+  "counts": {
+    "checkout_unique_fields": 23,
+    "changed_label_fields": 7,
+    "identity_familiar_fields": 6,
+    "excluded_label_fields": 10,
+    "contract_control_observations": 7,
+    "primary_forward_calls": 120,
+    "supplemental_forward_calls": 120,
+    "repeat_forward_calls": 4,
+    "total_forward_calls": 244,
+    "contract_conceptual_controls": 5,
+    "unique_conceptual_controls_including_checkout": 28
+  },
+  "scoring": {
+    "truth_access": "Use existing scenario constructor only through a one-way public projection; no private truth is consulted or passed for inference. Separate private grading runs after every forward pass and reproducibility repeat completes.",
+    "field_value": "Existing semantic-2 effective-value/action correctness, with original normalization; all selected fills retain their value. No browser select translation in decision-only snapshots.",
+    "strict_assignment": "Existing semantic-2: only correct fill/check assignments; skips remain in denominator.",
+    "required_empty_skip": "skip count divided by required scored observations with initially empty values.",
+    "wrong_value": "Wrong fill count divided by all scored field observations; also report among fills.",
+    "optional_acceptability": "Correct effective-value action or empty optional skip.",
+    "button": "Contract-only click correctness, excluded from field-value denominators.",
+    "coverage": "Primary changed-label subset7; inclusive familiar13 secondary; excluded10 separate; serialization comparison all23. Cases repeated across conditions are paired, not independent.",
+    "confidence": "Mean and min/max selected probability over incorrect field predictions; separately incorrect required skips and >0.99 confidence counts.",
+    "paired": "B-A and D-C label effects; C-A and D-B serialization; D-C-B+A interaction on same subset. Per-field transitions and counts for every contrast.",
+    "uncertainty": "Descriptive case study of three deliberately designated development cases and one profile, correlated fields. No significance or general-population claims."
+  },
+  "invariants": [
+    "Same underlying ordered entity key/value pairs in A/B/C/D.",
+    "Same public element except declared label substitution.",
+    "A/B and C/D options byte-identical.",
+    "A/C and B/D contexts byte-identical.",
+    "Repeat context/options and field ID identical; actual forward call required.",
+    "Candidate count or content mismatch invalidates run; never silently discard."
+  ],
+  "upstream_source_sha256": {
+    "concepts.py": "e5f7b87ca6eb8a07eb7d47f599ef7626b4e089873032d5d9acc9034ff88afbc4",
+    "schema.py": "89091773b050f538cb914a4da4cda59da0afa772b245b8e1264aa55e7e4b0e57",
+    "synth.py": "ba01ad9c9942d7141680ba8cb3df8e55240512bbd6fbcce75bf1cc18e81aa03b"
+  },
+  "amendments_before_inference": [
+    "Exclude S01 apartment mapping: removal of optional cue and existing landmark-valued truth confound strict semantic equivalence. No predictions used in amendment.",
+    "Use isolated scripts/diagnostics entrypoint because existing scripts/research is frozen by official release source hashes. Reuse its diagnostic helpers without modifying the frozen path."
+  ],
+  "model_identity": {
+    "repository": "cua-ai/cua-s1-forms",
+    "model_revision": "4a7a9f42a3d42e6dfbd111c0c843e37ac50f1332",
+    "loader_revision": "6d82b3b1b21813ad047f966ab1384a1258c16170",
+    "sha256": {
+      "cua-s1-forms.safetensors": "05954c1caf51c2fb6c13ea4acbfc88a2e7653dea192252bb51dc89e76a356ddc",
+      "cua-s1-forms.json": "62d31e2f9a001a8e9b6f8534c5194d07ebdd3f9d62ef1ac281906622992650ca",
+      "model.py": "7538cb4c9730d70a0b325050f370f981a9e109a1b182b8c66be3ba0fa2474344",
+      "checkpoint.py": "724c42cf2955cf7d8991c08b14369afc9be3b408835ceec52bdc10cfd41ab61b"
+    }
+  },
+  "inference_configuration": {
+    "device": "cpu",
+    "precision": "torch.float32",
+    "threads": 4,
+    "batch_size": 1,
+    "evaluation_mode": true,
+    "endpoint": "",
+    "parameters": 706048
+  }
+}
