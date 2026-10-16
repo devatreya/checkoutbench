@@ -528,11 +528,12 @@ class Runner:
             if is_v21 and ctl:
                 from backend.evaluator.scoring import norm
 
-                from backend.evaluator.semantic import grade_decisions
+                from backend.evaluator.semantic import grade_decisions, decision_report
 
                 decisions = getattr(ctl, "semantic_decisions", [])
                 ctl.classifications = grade_decisions(s, decisions)
                 run["semantic_decisions"] = decisions
+                run["semantic_report"] = decision_report(s, decisions)
                 run["model_decision_count"] = len(decisions)
                 run["model_execution_count"] = sum(d.get("execution_status") == "executed" for d in decisions)
                 run["harness_diagnostics"] = getattr(ctl, "harness_diagnostics", [])

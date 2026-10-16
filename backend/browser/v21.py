@@ -17,7 +17,7 @@ class NoProgress(RuntimeError):
         self.diagnostics = diagnostics
 
 
-async def page_state(page):
+async def page_state(page, *, include_viewport=False):
     """Public UI state, excluding timestamps, validation counters and toast text.
 
     Field values, visibility, checked state, options, headings and enabled actions
@@ -41,6 +41,9 @@ async def page_state(page):
                   e.textContent.trim(),e.disabled,e.getAttribute('aria-expanded'),e.tagName==='SUMMARY'?e.parentElement.open:null])
               };
             }""")])
+    if not include_viewport:
+        for _, frame_state in state:
+            frame_state.pop("viewport", None)
     return hashlib.sha256(json.dumps(state, sort_keys=True).encode()).hexdigest()
 
 
@@ -239,7 +242,7 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
     usage = Usage()
     ctl.usage = usage
     ctl.semantic_decisions = []
-    cua = cua or (CuaS1Adapter() if mode in ("cua-s1", "hybrid") else None)
+    cua = cua or (CuaS1Adapter(diagnostics=True) if mode in ("cua-s1", "hybrid") else None)
     tiny = tiny or (TinyClickAdapter() if mode in ("tinyclick", "hybrid") else None)
     if (cua and getattr(cua, "endpoint", None)) or (
         tiny and getattr(tiny, "endpoint", None)
@@ -254,7 +257,7 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
 
     async def scroll_fixed():
         nonlocal scrolls
-        before_state = await page_state(ctl.page)
+        before_state = await page_state(ctl.page, include_viewport=True)
         amount = 500 if scrolls % 8 < 7 else -4000
         scrolls += 1
         start = time.perf_counter()
@@ -264,7 +267,7 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
             "scroll", {"amount": amount, "selection_source": "deterministic_controller"}
         )
         await asyncio.sleep(0.15)
-        after_state = await page_state(ctl.page)
+        after_state = await page_state(ctl.page, include_viewport=True)
         count = guard.observe(("scroll", amount), before_state, after_state)
         if count >= guard.limit:
             diagnostics = {"reason": "equivalent_action_without_state_change", "action": "scroll", "attempts": count, "limit": guard.limit, "selection_source": "deterministic_controller", "state_fingerprint": after_state}
