@@ -390,6 +390,16 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
         )
         await asyncio.sleep(0.15)
         after_state = await page_state(ctl.page)
+        if kind == "click" and selected_by == "deterministic_controller" and before_state == after_state:
+            # Let asynchronous provider/poll transitions settle before another
+            # submission. Rapid retries can repeatedly invalidate an in-flight
+            # public UI refresh even after the server accepted the first click.
+            for _ in range(6):
+                await ctl.check()
+                await asyncio.sleep(0.1)
+                after_state = await page_state(ctl.page)
+                if after_state != before_state:
+                    break
         count = guard.observe((kind, handle or label, str(value), selected_by), before_state, after_state)
         if count >= guard.limit:
             diagnostics = {

@@ -233,3 +233,13 @@ async def test_hybrid_revalidates_field_after_grounding_inference(page):
     assert ctl.semantic_decisions[0]['execution_status']=='stale_observation'
     assert await page.locator('#same').input_value()=='New prediction'
     assert ctl.events[0][1]['value']=='New prediction'
+
+
+async def test_navigation_waits_for_delayed_public_transition_before_retry(page):
+    # Each click invalidates an in-flight UI refresh, as a revision-guarded
+    # provider poll does. Rapid retries prevent the accepted action rendering.
+    await page.set_content('''<h2>Demo bank gateway</h2><button onclick="clearTimeout(window.refresh);window.refresh=setTimeout(()=>{document.body.innerHTML='<h2>Checkout ready</h2>'},450)">Continue to simulated bank</button>''')
+    ctl=await run(page,StubCua(lambda e:{'action':'skip'}))
+    assert len(ctl.events)==1
+    assert ctl.events[0][1]['selection_source']=='deterministic_controller'
+    assert await page.get_by_role('heading',name='Checkout ready').count()==1

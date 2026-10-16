@@ -537,18 +537,23 @@ class Runner:
                 run["model_decision_count"] = len(decisions)
                 run["model_execution_count"] = sum(d.get("execution_status") == "executed" for d in decisions)
                 run["harness_diagnostics"] = getattr(ctl, "harness_diagnostics", [])
+                form_validation = bool(
+                    SESSIONS[token].get("validation_errors") or any(
+                        "control_handle" in feedback
+                        for feedback in run.get("no_progress", {}).get("validation", [])
+                    )
+                )
                 run["failure_attribution"] = {
                     "model_field_decision": bool(decisions and not all(ctl.classifications)),
                     "browser_execution": any(e["action"] == "invalid_action" for e in run["events"]) or run.get("failure_reason") in ("invalid_browser_action", "browser_action_timeout"),
                     "navigation_controller": run.get("failure_reason") in ("max_steps", "timeout") or (
                         run.get("failure_reason") == "no_progress"
-                        and not SESSIONS[token].get("validation_errors")
-                        and not run.get("no_progress", {}).get("validation")
+                        and not form_validation
                         and not run.get("no_progress", {}).get("execution_error")
                     ),
                     "controller_stop": run.get("failure_reason") if run.get("failure_reason") in ("no_progress", "max_steps", "timeout") else None,
                     "infrastructure": run.get("failure_reason") == "infrastructure_error",
-                    "validation": bool(SESSIONS[token].get("validation_errors") or run.get("no_progress", {}).get("validation")),
+                    "validation": form_validation,
                     "note": "Independent dimensions; validation attempts are not additional field decisions. A bounded controller stop can be caused by model-selected invalid fields.",
                 }
                 run["field_classification_samples"] = len(ctl.classifications)
