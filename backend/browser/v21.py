@@ -1,11 +1,68 @@
 """Public-observation controller. No scenario, fixture state or evaluator imports."""
 
-import asyncio, io, re, time
+import asyncio, io, re, time, json, hashlib
 from PIL import Image
 from playwright.async_api import Error as BrowserError, TimeoutError as BrowserTimeout
 from backend.adapters.base import Usage
-from backend.adapters.specialists import CuaS1Adapter, TinyClickAdapter
+from backend.adapters.specialists import CuaS1Adapter, TinyClickAdapter, SpecialistOutputError
 from backend.browser.v2 import terminal
+
+
+
+class NoProgress(RuntimeError):
+    """Bounded controller stop; never a replacement for field evaluation."""
+
+    def __init__(self, diagnostics):
+        super().__init__("Browser made no meaningful progress")
+        self.diagnostics = diagnostics
+
+
+async def page_state(page):
+    """Public UI state, excluding timestamps, validation counters and toast text.
+
+    Field values, visibility, checked state, options, headings and enabled actions
+    count as progress. Repeated validation messages do not reset the retry budget.
+    """
+    state = []
+    for active in page.context.pages:
+        if active.is_closed():
+            continue
+        for frame in active.frames:
+            state.append([frame.url, await frame.evaluate("""() => {
+              const visible = e => e.checkVisibility({visibilityProperty:true,opacityProperty:true});
+              return {
+                headings: [...document.querySelectorAll('h1,h2,h3,legend')].filter(visible).map(e=>e.textContent.trim()),
+                controls: [...document.querySelectorAll('input,select,textarea,[role=radio]')].filter(e=>e.type!=='hidden'&&visible(e)).map(e=>[
+                  e.id,e.getAttribute('aria-label')||e.labels?.[0]?.textContent,e.type,e.value,
+                  e.checked??e.getAttribute('aria-checked'),e.disabled,e.readOnly,e.required,
+                  e.tagName==='SELECT'?[...e.options].map(o=>[o.value,o.textContent,o.disabled]):null]),
+                actions: [...document.querySelectorAll('button,a,summary')].filter(visible).map(e=>[
+                  e.textContent.trim(),e.disabled,e.getAttribute('aria-expanded'),e.tagName==='SUMMARY'?e.parentElement.open:null])
+              };
+            }""")])
+    return hashlib.sha256(json.dumps(state, sort_keys=True).encode()).hexdigest()
+
+
+async def validation_state(page):
+    result = []
+    for frame in page.frames:
+        result.extend(await frame.locator('input,select,textarea').evaluate_all("""es => es.filter(e=>e.checkVisibility() && !e.disabled && (e.validity && !e.validity.valid || e.getAttribute('aria-invalid')==='true')).map(e=>({control_handle:e.id,message:e.validationMessage||'aria-invalid'}))"""))
+        result.extend({"message": text} for text in await frame.locator('[role=alert],.error,.field-error').all_text_contents() if text.strip())
+    return result
+
+
+class ProgressGuard:
+    def __init__(self, limit=3):
+        self.limit = limit
+        self.counts = {}
+
+    def observe(self, action, before, after):
+        if before != after:
+            self.counts.clear()
+            return 0
+        key = (action, after)
+        self.counts[key] = self.counts.get(key, 0) + 1
+        return self.counts[key]
 
 
 def semantic_value(label, profile, options=()):
@@ -156,18 +213,25 @@ async def observe(frame):
     # Snapshot visible semantics atomically so a provider rerender cannot pair old labels with new controls.
     clip = await visible_clip(frame)
     rows = await frame.locator("input,select,textarea").evaluate_all(
-        """(es,c)=>es.filter(e=>e.checkVisibility()&&!e.disabled&&!['radio','hidden'].includes(e.type)).map(e=>{let r=e.getBoundingClientRect();return {handle:e.id,label:e.getAttribute('aria-label')||e.labels?.[0]?.innerText||e.parentElement.innerText,role:e.tagName==='SELECT'?'combobox':e.type==='checkbox'?'checkbox':'textbox',type:e.type,value:e.type==='checkbox'?String(e.checked):e.value,options:e.tagName==='SELECT'?[...e.options].filter(o=>!o.disabled&&o.value).map(o=>o.textContent):[],option_values:e.tagName==='SELECT'?[...e.options].filter(o=>!o.disabled&&o.value).map(o=>o.value):[],onscreen:r.top>=c.top&&r.bottom<=c.bottom&&r.left>=c.left&&r.right<=c.right,form_title:e.closest('fieldset')?.querySelector('legend')?.textContent||e.closest('section')?.querySelector('h2')?.textContent||'Checkout'}})""",
+        """(es,c)=>es.filter(e=>e.checkVisibility({visibilityProperty:true,opacityProperty:true})&&!e.disabled&&!['radio','hidden'].includes(e.type)).map(e=>{let r=e.getBoundingClientRect();return {handle:e.id,label:e.getAttribute('aria-label')||e.labels?.[0]?.innerText||e.parentElement.innerText,role:e.tagName==='SELECT'?'combobox':e.type==='checkbox'?'checkbox':'textbox',type:e.type,value:e.type==='checkbox'?String(e.checked):e.value,checked:e.type==='checkbox'?e.checked:null,readonly:e.readOnly,required:e.required,options:e.tagName==='SELECT'?[...e.options].filter(o=>!o.disabled&&o.value).map(o=>o.textContent):[],option_values:e.tagName==='SELECT'?[...e.options].filter(o=>!o.disabled&&o.value).map(o=>o.value):[],onscreen:r.top>=c.top&&r.bottom<=c.bottom&&r.left>=c.left&&r.right<=c.right,form_title:e.closest('fieldset')?.querySelector('legend')?.textContent||e.closest('section')?.querySelector('h2')?.textContent||'Checkout'}})""",
         clip,
     )
     groups = await frame.locator('[role="radiogroup"]').evaluate_all(
-        """(es,c)=>es.filter(e=>e.getClientRects().length).map(e=>{let r=e.getBoundingClientRect(),bs=[...e.querySelectorAll('[role=radio]')];return {handle:e.id,label:e.getAttribute('aria-label'),role:'combobox',type:'choicegroup',value:bs.find(b=>b.getAttribute('aria-checked')==='true')?.getAttribute('data-value')||'',options:bs.map(b=>b.textContent),option_values:bs.map(b=>b.getAttribute('data-value')),onscreen:r.top>=c.top&&r.bottom<=c.bottom&&r.left>=c.left&&r.right<=c.right,form_title:'Payment'}})""",
+        """(es,c)=>es.filter(e=>e.checkVisibility({visibilityProperty:true,opacityProperty:true})).map(e=>{let r=e.getBoundingClientRect(),bs=[...e.querySelectorAll('[role=radio]')];return {handle:e.id,label:e.getAttribute('aria-label'),role:'combobox',type:'choicegroup',checked:null,value:bs.find(b=>b.getAttribute('aria-checked')==='true')?.getAttribute('data-value')||'',options:bs.map(b=>b.textContent),option_values:bs.map(b=>b.getAttribute('data-value')),onscreen:r.top>=c.top&&r.bottom<=c.bottom&&r.left>=c.left&&r.right<=c.right,form_title:'Payment'}})""",
         clip,
     )
     rows += groups
     for row in rows:
         if row["handle"]:
-            row["locator"] = frame.locator('[id="' + row["handle"] + '"]')
+            row["locator"] = frame.locator("[id=" + json.dumps(row["handle"]) + "]")
     return [row for row in rows if row["handle"]]
+
+
+def field_identity(row):
+    return tuple(json.dumps(row.get(k), sort_keys=True) for k in (
+        "handle", "label", "role", "type", "value", "checked", "options",
+        "option_values", "form_title", "required", "readonly",
+    ))
 
 
 async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
@@ -184,6 +248,8 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
     profile = task["profile"]
     seen = {}
     scrolls = 0
+    guard = ProgressGuard()
+    ctl.harness_diagnostics = []
 
     async def scroll_fixed():
         nonlocal scrolls
@@ -220,6 +286,8 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
                 ),
             )
         )
+        if operation == "score_fields":
+            usage.calls[-1].update(inputs={"elements": args[0], "profile": args[1]}, outputs=result)
         return result
 
     async def perform(
@@ -231,6 +299,7 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
         action_handle=None,
     ):
         await ctl.check()
+        before_state = await page_state(ctl.page)
         prediction = None
         handle = action_handle or await loc.get_attribute("id")
         if tiny:
@@ -251,6 +320,7 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
             # The private recorder scores the prediction only AFTER inference; it cannot alter action choice.
             await ctl.assess_grounding(loc, prediction)
         start = time.perf_counter()
+        error = None
         try:
             if tiny:
                 await ctl.page.mouse.click(prediction["x"], prediction["y"])
@@ -264,27 +334,30 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
                     await ctl.page.keyboard.press("Enter")
                     await ctl.page.keyboard.press("Tab")
             elif kind == "fill":
-                await loc.fill(str(value))
+                await loc.fill(str(value), timeout=1200)
                 await loc.dispatch_event("change")
             elif kind == "select":
-                await loc.select_option(label=str(value))
+                await loc.select_option(label=str(value), timeout=1200)
             elif kind == "check":
-                await loc.set_checked(value == "true")
+                await loc.set_checked(value is True or str(value).lower() == "true", timeout=1200)
             else:
                 await loc.click(timeout=1200)
-        except Exception as exc:
-            await ctl.record(
-                "invalid_action",
-                {
-                    "target": label,
-                    "reason": type(exc).__name__,
-                    "selection_source": selected_by,
-                },
-            )
+        except BrowserError as exc:
+            error = type(exc).__name__
         ctl.timings["browser_execution_seconds"] += time.perf_counter() - start
+        if selected_by == "cua-s1" and ctl.semantic_decisions:
+            ctl.semantic_decisions[-1]["execution_status"] = "failed" if error else "executed"
+        try:
+            observed_after = await loc.evaluate("e=>({value:e.value??null,checked:e.type==='checkbox'?e.checked:null,visible:e.checkVisibility()})", timeout=250)
+        except BrowserError:
+            observed_after = None  # navigation or replacement removed the old target
         await ctl.record(
-            kind,
+            "invalid_action" if error else kind,
             {
+                "requested_action": kind,
+                "observed_after": observed_after,
+                "execution_status": "failed" if error else "executed",
+                "error": error,
                 "field": label,
                 "value": value,
                 "control_handle": handle,
@@ -293,7 +366,22 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
                 "grounding_source": "tinyclick" if tiny else "DOM",
             },
         )
-        await asyncio.sleep(0.09)
+        await asyncio.sleep(0.15)
+        after_state = await page_state(ctl.page)
+        count = guard.observe((kind, handle or label, str(value), selected_by), before_state, after_state)
+        if count >= guard.limit:
+            diagnostics = {
+                "reason": "equivalent_action_without_state_change",
+                "attempts": count, "limit": guard.limit,
+                "action": kind, "target": label, "control_handle": handle,
+                "selection_source": selected_by, "state_fingerprint": after_state,
+                "validation": await validation_state(ctl.page),
+                "execution_error": error,
+            }
+            ctl.harness_diagnostics.append(diagnostics)
+            await ctl.record("no_progress", diagnostics)
+            raise NoProgress(diagnostics)
+        return error is None
 
     for _ in range(ctl.max_steps * 4):
         try:
@@ -306,6 +394,7 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
             acted = False
             overflow = False
             for frame in reversed(active.frames):
+                observed_state = await page_state(active)
                 text = await frame.locator("body").inner_text()
                 # Explicit blockers and challenge recovery take precedence over form filling.
                 names = []
@@ -330,7 +419,7 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
                     names = ["Regenerate QR"]
                 for name in names:
                     loc = frame.get_by_role("button", name=name, exact=True)
-                    if await loc.count() and await loc.is_visible():
+                    if await loc.count() and await loc.is_visible() and await loc.is_enabled():
                         await perform(loc, name)
                         acted = True
                         break
@@ -343,6 +432,8 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
                 if (
                     task["payment_request"]["method"] == "link"
                     and await login.count()
+                    and await login.is_visible()
+                    and await login.is_enabled()
                     and any(
                         "email" in r["label"].lower()
                         and r["value"] == profile["customer"]["email"]
@@ -355,7 +446,7 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
                 accelerated = frame.get_by_role(
                     "button", name="Authenticate accelerated checkout", exact=True
                 )
-                if await accelerated.count():
+                if await accelerated.count() and await accelerated.is_visible() and await accelerated.is_enabled():
                     await perform(accelerated, "Authenticate accelerated checkout")
                     acted = True
                     break
@@ -366,12 +457,7 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
                         continue
                     if native and row["value"] and "email" not in row["label"].lower():
                         continue
-                    key = (
-                        frame.url,
-                        row["handle"],
-                        row["value"],
-                        tuple(row["options"]),
-                    )
+                    key = (frame, field_identity(row))
                     if key in seen:
                         continue
                     # A model receives visible semantics and the independent customer document only.
@@ -388,6 +474,7 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
                                             "role",
                                             "value",
                                             "form_title",
+                                            "checked",
                                         )
                                     }
                                 ],
@@ -397,10 +484,12 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
                         selected_by = "cua-s1"
                         value = prediction.get("value")
                         if prediction["action"] == "check":
-                            value = "true"
+                            value = "false" if value is False or str(value).lower() == "false" else "true"
+                        elif prediction["action"] == "uncheck":
+                            value = "false"
                         measured = (
                             value
-                            if prediction["action"] in ("fill", "check")
+                            if prediction["action"] in ("fill", "check", "uncheck")
                             else row["value"]
                         )
                         if str(measured) in row["options"]:
@@ -409,15 +498,35 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
                             ]
                         ctl.semantic_decisions.append(
                             {
+                                **prediction,
+                                "raw_prediction": prediction,
+                                "execution_status": "pending",
+                                "before_value": row["value"],
+                                "role": row["role"],
+                                "call_index": len(usage.calls) - 1,
                                 "control_handle": row["handle"],
                                 "action": prediction["action"],
                                 "value": measured,
                                 "visible_label": row["label"],
                             }
                         )
-                        if prediction["action"] not in ("fill", "check"):
+                        current = next((r for r in await observe(frame) if r["handle"] == row["handle"]), None)
+                        if current is None or field_identity(current) != field_identity(row):
+                            ctl.semantic_decisions[-1]["execution_status"] = "stale_observation"
+                            acted = True
+                            break
+                        if prediction["action"] not in ("fill", "check", "uncheck", "click", "skip"):
+                            raise SpecialistOutputError("Unsupported field action")
+                        if prediction["action"] == "skip":
+                            ctl.semantic_decisions[-1]["execution_status"] = "skipped"
                             seen[key] = True
                             continue
+                        if prediction["action"] == "fill" and row["type"] == "checkbox":
+                            ctl.semantic_decisions[-1]["execution_status"] = "invalid_selection"
+                            raise SpecialistOutputError("Fill action cannot toggle a checkbox")
+                        if prediction["action"] in ("check", "uncheck") and row["type"] != "checkbox":
+                            ctl.semantic_decisions[-1]["execution_status"] = "invalid_selection"
+                            raise SpecialistOutputError("Check action requires a checkbox")
                     else:
                         computation = time.perf_counter()
                         value = semantic_value(row["label"], profile, row["options"])
@@ -434,13 +543,16 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
                         if row["value"] in row["option_values"]
                         else row["value"]
                     )
-                    if value is None or str(value) in (row["value"], current_label):
+                    if not (cua and prediction["action"] == "click") and (value is None or str(value) in (row["value"], current_label)):
+                        if cua:
+                            ctl.semantic_decisions[-1]["execution_status"] = "unchanged"
                         seen[key] = True
                         continue
                     if tiny and not row["onscreen"]:
                         overflow = True
                         continue
                     kind = (
+                        "click" if cua and prediction["action"] == "click" else
                         "check"
                         if row["type"] == "checkbox"
                         else "select"
@@ -450,6 +562,8 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
                     if kind == "select" and str(value) in row["option_values"]:
                         value = row["options"][row["option_values"].index(str(value))]
                     if kind == "select" and str(value) not in row["options"]:
+                        if cua:
+                            ctl.semantic_decisions[-1]["execution_status"] = "invalid_selection"
                         await ctl.record(
                             "invalid_model_selection",
                             {
@@ -458,9 +572,12 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
                                 "selection_source": selected_by,
                             },
                         )
+                        seen[key] = True
                         continue
+                    if cua and prediction["action"] == "click":
+                        kind = "click"
                     if row["type"] == "choicegroup":
-                        await perform(
+                        executed = await perform(
                             row["locator"].get_by_role(
                                 "radio", name=str(value), exact=True
                             ),
@@ -471,9 +588,11 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
                             row["handle"],
                         )
                     else:
-                        await perform(
+                        executed = await perform(
                             row["locator"], row["label"], str(value), kind, selected_by
                         )
+                    if cua:
+                        ctl.semantic_decisions[-1]["execution_status"] = "executed" if executed else "failed"
                     acted = True
                     break
                 if acted:
@@ -522,7 +641,7 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
                 # Re-observe asynchronous screen transitions before navigation. A button
                 # can appear after the field snapshot (for example a Link return),
                 # otherwise newly revealed saved fields can be skipped entirely.
-                if await frame.locator("body").inner_text() != text:
+                if await page_state(active) != observed_state:
                     acted = True
                     break
                 # Expand user-visible saved summaries; no selector encodes a profile attribute.
@@ -544,7 +663,7 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
                         and await loc.first.is_visible()
                         and await loc.first.is_enabled()
                     ):
-                        if await frame.locator("body").inner_text() != text:
+                        if await page_state(active) != observed_state:
                             acted = True
                             break
                         if tiny:
@@ -575,4 +694,7 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
                 await asyncio.sleep(0.12)
                 continue
             raise
-    return usage
+    diagnostics = {"reason": "observation_budget_exhausted", "selection_source": "deterministic_controller", "validation": await validation_state(ctl.page)}
+    ctl.harness_diagnostics.append(diagnostics)
+    await ctl.record("no_progress", diagnostics)
+    raise NoProgress(diagnostics)

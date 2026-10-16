@@ -177,7 +177,7 @@ async def test_wrong_model_output_controls_real_execution(page, mode):
         await reference_v21(page, task(s), ctl, mode, cua, tiny)
     if cua:
         assert len(cua.inputs) == 1
-        assert set(cua.inputs[0][0][0]) == {"label", "role", "value", "form_title"}
+        assert set(cua.inputs[0][0][0]) == {"label", "role", "value", "form_title", "checked"}
         assert "expected_values" not in json.dumps(cua.inputs)
         assert "opaque_random_7" not in json.dumps(cua.inputs)
         assert ctl.usage.calls[0]["model"] == "cua-s1"

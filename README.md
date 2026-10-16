@@ -92,3 +92,5 @@ BENCH_DATA_DIR="$PWD/data/new-study" ./scripts/start.sh
 Stop the previous server before starting another instance on the same ports. Existing experiment and archive storage remains intact. The regression suite starts separate temporary storage and servers; test doubles and reference records never populate public research rankings.
 
 The deterministic reference policy can fail unfamiliar-label tasks; that measures its own coverage, not fixture solvability. The full pytest suite additionally uses a private test oracle to validate all ten controlled layout cases. Those oracle checks never count as AI evaluations.
+
+Browser harness behavior, trace fields, and single-checkpoint reproduction: [CUA harness guide](docs/operations/CUA_HARNESS.md).

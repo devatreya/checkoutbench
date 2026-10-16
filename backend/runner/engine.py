@@ -22,6 +22,7 @@ from backend.adapters.specialists import (
 from backend.browser.execution import reference, visual_agent, VIEWPORT
 from backend.browser.security import allowed_url
 from backend.adapters.openrouter import run_openrouter
+from backend.browser.v21 import NoProgress
 
 
 class Controls:
@@ -55,7 +56,7 @@ class Controls:
         if self.stopped:
             raise Stopped("Stopped by user")
         if (
-            sum(e["action"] not in ("start", "finish") for e in self.run["events"])
+            sum(e["action"] not in ("start", "finish", "no_progress") for e in self.run["events"])
             >= self.max_steps
         ):
             raise Stopped("Maximum action budget reached")
@@ -451,6 +452,8 @@ class Runner:
             run["status"] = "completed"
         except (Unavailable, SpecialistUnavailable) as e:
             run.update(status="unavailable", failure_reason=str(e))
+        except NoProgress as e:
+            run.update(status="failed", failure_reason="no_progress", no_progress=e.diagnostics)
         except BudgetExceeded as e:
             run.update(status="blocked", failure_reason="spending_cap", error=str(e))
         except (Stopped, asyncio.CancelledError) as e:
@@ -529,6 +532,23 @@ class Runner:
                 decisions = getattr(ctl, "semantic_decisions", [])
                 ctl.classifications = grade_decisions(s, decisions)
                 run["semantic_decisions"] = decisions
+                run["model_decision_count"] = len(decisions)
+                run["model_execution_count"] = sum(d.get("execution_status") == "executed" for d in decisions)
+                run["harness_diagnostics"] = getattr(ctl, "harness_diagnostics", [])
+                run["failure_attribution"] = {
+                    "model_field_decision": bool(decisions and not all(ctl.classifications)),
+                    "browser_execution": any(e["action"] == "invalid_action" for e in run["events"]) or run.get("failure_reason") in ("invalid_browser_action", "browser_action_timeout"),
+                    "navigation_controller": run.get("failure_reason") in ("max_steps", "timeout") or (
+                        run.get("failure_reason") == "no_progress"
+                        and not SESSIONS[token].get("validation_errors")
+                        and not run.get("no_progress", {}).get("validation")
+                        and not run.get("no_progress", {}).get("execution_error")
+                    ),
+                    "controller_stop": run.get("failure_reason") if run.get("failure_reason") in ("no_progress", "max_steps", "timeout") else None,
+                    "infrastructure": run.get("failure_reason") == "infrastructure_error",
+                    "validation": bool(SESSIONS[token].get("validation_errors") or run.get("no_progress", {}).get("validation")),
+                    "note": "Independent dimensions; validation attempts are not additional field decisions. A bounded controller stop can be caused by model-selected invalid fields.",
+                }
                 run["field_classification_samples"] = len(ctl.classifications)
                 run["latency_breakdown"] = {
                     **ctl.timings,
@@ -567,7 +587,7 @@ class Runner:
                 "wall_minus_inference_includes_controller_and_setup"
             )
             run["action_count"] = len(
-                [e for e in run["events"] if e["action"] not in ("start", "finish")]
+                [e for e in run["events"] if e["action"] not in ("start", "finish", "no_progress")]
             )
             if agent_mode == "native_link":
                 run["user_interactions"] = (
