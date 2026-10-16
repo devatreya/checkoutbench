@@ -31,6 +31,7 @@ async def page_state(page):
             state.append([frame.url, await frame.evaluate("""() => {
               const visible = e => e.checkVisibility({visibilityProperty:true,opacityProperty:true});
               return {
+                viewport: [scrollX,scrollY,innerWidth,innerHeight],
                 headings: [...document.querySelectorAll('h1,h2,h3,legend')].filter(visible).map(e=>e.textContent.trim()),
                 controls: [...document.querySelectorAll('input,select,textarea,[role=radio]')].filter(e=>e.type!=='hidden'&&visible(e)).map(e=>[
                   e.id,e.getAttribute('aria-label')||e.labels?.[0]?.textContent,e.type,e.value,
@@ -253,6 +254,7 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
 
     async def scroll_fixed():
         nonlocal scrolls
+        before_state = await page_state(ctl.page)
         amount = 500 if scrolls % 8 < 7 else -4000
         scrolls += 1
         start = time.perf_counter()
@@ -261,6 +263,14 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
         await ctl.record(
             "scroll", {"amount": amount, "selection_source": "deterministic_controller"}
         )
+        await asyncio.sleep(0.15)
+        after_state = await page_state(ctl.page)
+        count = guard.observe(("scroll", amount), before_state, after_state)
+        if count >= guard.limit:
+            diagnostics = {"reason": "equivalent_action_without_state_change", "action": "scroll", "attempts": count, "limit": guard.limit, "selection_source": "deterministic_controller", "state_fingerprint": after_state}
+            ctl.harness_diagnostics.append(diagnostics)
+            await ctl.record("no_progress", diagnostics)
+            raise NoProgress(diagnostics)
 
     async def model_call(adapter, operation, *args):
         start = time.perf_counter()
@@ -297,6 +307,7 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
         kind="click",
         selected_by="deterministic_controller",
         action_handle=None,
+        observed_field=None,
     ):
         await ctl.check()
         before_state = await page_state(ctl.page)
@@ -305,6 +316,8 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
         if tiny:
             frame = await (await loc.element_handle()).owner_frame()
             if not await in_view(frame, loc):
+                if selected_by == "cua-s1":
+                    ctl.semantic_decisions[-1]["execution_status"] = "deferred_offscreen"
                 await scroll_fixed()
                 return
         if tiny:
@@ -317,6 +330,12 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
                 Image.open(io.BytesIO(shot)),
                 f"{label}" + (" input" if kind == "fill" else ""),
             )
+            if observed_field is not None:
+                current = next((r for r in await observe(frame) if r["handle"] == observed_field["handle"]), None)
+                if current is None or field_identity(current) != field_identity(observed_field):
+                    if selected_by == "cua-s1":
+                        ctl.semantic_decisions[-1]["execution_status"] = "stale_observation"
+                    return None
             # The private recorder scores the prediction only AFTER inference; it cannot alter action choice.
             await ctl.assess_grounding(loc, prediction)
         start = time.perf_counter()
@@ -576,7 +595,7 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
                         continue
                     if cua and prediction["action"] == "click":
                         kind = "click"
-                    if row["type"] == "choicegroup":
+                    if row["type"] == "choicegroup" and kind == "select":
                         executed = await perform(
                             row["locator"].get_by_role(
                                 "radio", name=str(value), exact=True
@@ -586,12 +605,13 @@ async def reference_v21(page, task, ctl, mode="reference", cua=None, tiny=None):
                             "click",
                             selected_by,
                             row["handle"],
+                            observed_field=row,
                         )
                     else:
                         executed = await perform(
-                            row["locator"], row["label"], str(value), kind, selected_by
+                            row["locator"], row["label"], str(value), kind, selected_by, observed_field=row
                         )
-                    if cua:
+                    if cua and executed is not None:
                         ctl.semantic_decisions[-1]["execution_status"] = "executed" if executed else "failed"
                     acted = True
                     break

@@ -510,7 +510,8 @@ class Runner:
             run["model_call_count"] = len(usage.calls)
             run["action_attribution"] = {
                 label: sum(
-                    e["detail"].get("selection_source") == label for e in run["events"]
+                    e["detail"].get("selection_source") == label
+                    for e in run["events"] if e["action"] != "no_progress"
                 )
                 for label in (
                     "deterministic_reference",

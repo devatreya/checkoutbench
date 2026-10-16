@@ -196,3 +196,40 @@ async def test_fill_on_checkbox_does_not_silently_become_toggle(page):
     with pytest.raises(SpecialistOutputError):
         await run(page,StubCua(lambda e:{'action':'fill','value':'false'}))
     assert await page.locator('#x').is_checked()
+
+
+async def test_diagnostic_stop_does_not_consume_browser_budget(page, tmp_path):
+    from types import SimpleNamespace
+    from backend.runner.engine import Controls
+    resume=asyncio.Event()
+    resume.set()
+    runner=SimpleNamespace(origin='http://fixture.local',stop_requested=False,resume=resume)
+    ctl=Controls(runner,page,{'config':{'max_steps':1},'events':[{'action':'no_progress'}]},tmp_path)
+    await ctl.check()
+
+
+async def test_explicit_click_on_choicegroup_does_not_select_none(page):
+    await page.set_content('''<div id=x role=radiogroup aria-label=Payment onclick="document.body.innerHTML='<h2>Checkout ready</h2>'"><button role=radio aria-checked=false data-value=card>Card</button></div>''')
+    ctl=await run(page,StubCua(lambda e:{'action':'click','value':None}))
+    assert ctl.events[0][0]=='click'
+    assert ctl.events[0][1]['field']=='Payment'
+
+
+async def test_hybrid_revalidates_field_after_grounding_inference(page):
+    await page.set_content('<input id=same aria-label=Old style="width:200px;height:40px"><button>Review details</button>')
+    class MutatingTiny:
+        key='tinyclick'
+        last_metrics={'backend':'test-double'}
+        async def ground(self,image,prompt):
+            if await page.locator('#same').get_attribute('aria-label')=='Old':
+                await page.locator('#same').evaluate('e=>e.outerHTML=\'<input id=same aria-label=New style="width:200px;height:40px">\'')
+            box=await page.locator('#same').bounding_box()
+            return {'x':box['x']+10,'y':box['y']+10}
+    ctl=controls(page)
+    ctl.limit=1
+    from backend.adapters.base import Stopped
+    with pytest.raises(Stopped):
+        await reference_v21(page,task(scenario('V21-G01')),ctl,'hybrid',StubCua(lambda e:{'action':'fill','value':e['label']+' prediction'}),MutatingTiny())
+    assert ctl.semantic_decisions[0]['execution_status']=='stale_observation'
+    assert await page.locator('#same').input_value()=='New prediction'
+    assert ctl.events[0][1]['value']=='New prediction'
