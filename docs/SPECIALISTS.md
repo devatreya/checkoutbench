@@ -87,3 +87,14 @@ No weights-backed specialist inference was run during implementation because che
 - [TinyClick requested model card](https://huggingface.co/kzawistowsk/TinyClick) and [official paper](https://arxiv.org/html/2410.11871v2)
 - [MAI-UI model](https://huggingface.co/Tongyi-MAI/MAI-UI-2B), [official prompts](https://github.com/Tongyi-MAI/MAI-UI/blob/main/MAI-UI/src/prompt.py), and [action/coordinate parser](https://github.com/Tongyi-MAI/MAI-UI/blob/main/MAI-UI/src/mai_naivigation_agent.py)
 - [UI-Venus model and serving instructions](https://huggingface.co/inclusionAI/UI-Venus-1.5-2B), [1.5 action format](https://github.com/inclusionAI/UI-Venus/blob/UI-Venus-1.5/models/navigation/utils.py), and [coordinate transforms](https://github.com/inclusionAI/UI-Venus/blob/UI-Venus-1.5/models/navigation/ui_venus_navi_agent.py)
+
+### CUA fidelity protocol and diagnostics
+
+CUA defaults to `path-v2` (unchanged entity labels/order, corrected checkbox
+state and optional visible placeholder). Original output keys are preserved;
+selected index, protocol and inference provenance are additive. Exact input
+traces require `CuaS1Adapter(diagnostics=True)`. The experimental `document-v2`
+serializer is opt-in and has not solved the observed checkout failures.
+See [CUA fidelity audit](research/CUA_MODEL_FIDELITY.md) for reproducible pinned
+inference, privacy boundaries, complete interface details, and the separate
+value/assignment/entity/optional measurement definitions.

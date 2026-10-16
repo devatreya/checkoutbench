@@ -10,6 +10,7 @@ from __future__ import annotations
 import ast
 import asyncio
 import base64
+import hashlib
 import importlib.util
 import io
 import json
@@ -389,49 +390,128 @@ class _Adapter:
             ) from exc
 
 
+CUA_INPUT_PROTOCOLS = ("path-v1", "path-v2", "document-v2")
+
+
+def cua_inputs(elements: list[dict], profile: dict, protocol: str = "path-v2"):
+    """Serialize public observations and document candidates only.
+
+    path-v1 reproduces the historical adapter. path-v2 fixes state/hints while
+    keeping candidate labels unchanged. document-v2 is an opt-in experiment:
+    sentence-case leaf labels followed by all parent qualifiers. No candidates
+    are filtered, deduplicated, reordered, or chosen using a target field.
+    """
+    if protocol not in CUA_INPUT_PROTOCOLS:
+        raise ValueError(f"Unknown CUA input protocol: {protocol}")
+    entities: list[tuple[str, str]] = []
+
+    def flatten(value, prefix=""):
+        for key, item in value.items():
+            label = f"{prefix}.{key}" if prefix else key
+            if isinstance(item, dict):
+                flatten(item, label)
+            elif isinstance(item, (str, int, float)) and not isinstance(item, bool):
+                if isinstance(item, float) and not math.isfinite(item):
+                    raise ValueError("CUA candidate numbers must be finite")
+                entities.append((label, str(item)))
+
+    flatten(profile)
+    options = []
+    for key, value in entities:
+        parts = key.replace("_", " ").split(".")
+        label = " ".join(parts)
+        if protocol == "document-v2":
+            leaf = parts[-1]
+            label = leaf[:1].upper() + leaf[1:]
+            if len(parts) > 1:
+                label += " (" + " / ".join(parts[:-1]) + ")"
+        options.append(f"fill {label}: {value}")
+    options += ["check", "click", "skip"]
+    roles = {
+        "textbox": "Edit",
+        "input": "Edit",
+        "edit": "Edit",
+        "textfield": "Edit",
+        "axtextfield": "Edit",
+        "textarea": "Edit",
+        "select": "ComboBox",
+        "combobox": "ComboBox",
+        "axcombobox": "ComboBox",
+        "checkbox": "CheckBox",
+        "axcheckbox": "CheckBox",
+        "button": "Button",
+        "axbutton": "Button",
+        "radio": "RadioButton",
+    }
+    if protocol == "path-v1":
+        roles = {
+            k: v
+            for k, v in roles.items()
+            if k
+            in {"textbox", "input", "select", "combobox", "checkbox", "button", "radio"}
+        }
+    contexts = []
+    for element in elements:
+        raw_role = element.get("role", "textbox")
+        role = roles.get(str(raw_role).lower(), raw_role)
+        if role == "CheckBox":
+            checked = element.get("checked")
+            if protocol != "path-v1":
+                if checked is None:
+                    checked = element.get("value", False)
+                if isinstance(checked, str):
+                    state_text = checked.strip().lower()
+                    if state_text not in {"true", "false", ""}:
+                        raise ValueError("Checkbox state must be true/false text")
+                    checked = state_text == "true"
+                elif checked is not None and not isinstance(checked, bool):
+                    raise ValueError(
+                        "Checkbox state must be boolean or true/false text"
+                    )
+            state = "checked" if checked else "unchecked"
+        else:
+            state = f'value="{str(element.get("value", ""))[:48]}"'
+        hint = ""
+        if protocol != "path-v1" and element.get("placeholder"):
+            hint = f' hint="{str(element["placeholder"])[:72]}"'
+        contexts.append(
+            "TASK fill the form from the document, then submit\n"
+            f"FORM {str(element.get('form_title', 'Checkout'))[:64]}\n"
+            f'ELEMENT {role} "{str(element.get("label", ""))[:72]}" {state}{hint}'
+        )
+    return entities, contexts, options
+
+
+def cua_byte_trace(text: str, limit: int) -> dict:
+    """Exact UTF-8 truncation, including partial codepoints, as upstream sees it."""
+    raw = text.encode("utf-8", errors="replace")
+    return {
+        "byte_length": len(raw),
+        "limit": limit,
+        "truncated": len(raw) > limit,
+        "byte_ids": [byte + 1 for byte in raw[:limit]],
+    }
+
+
 class CuaS1Adapter(_Adapter):
     key = "cua-s1"
 
+    def __init__(self, *, input_protocol="path-v2", diagnostics=False, **kwargs):
+        super().__init__(**kwargs)
+        if input_protocol not in CUA_INPUT_PROTOCOLS:
+            raise ValueError(f"Unknown CUA input protocol: {input_protocol}")
+        self.input_protocol = input_protocol
+        self.diagnostics = diagnostics
+        self.model_config: dict = {}
+        self.checkpoint_identity: dict = {}
+        self._inference_kind = "unverified"
+
     async def score_fields(self, elements: list[dict], profile: dict) -> list[dict]:
-        entities: list[tuple[str, str]] = []
-
-        def flatten(value, prefix=""):
-            for key, item in value.items():
-                label = f"{prefix}.{key}" if prefix else key
-                if isinstance(item, dict):
-                    flatten(item, label)
-                elif isinstance(item, (str, int, float)) and not isinstance(item, bool):
-                    entities.append((label, str(item)))
-
-        flatten(profile)
         if not elements:
+            self.last_metrics = {}
             return []
-        options = [
-            f"fill {key.replace('_', ' ').replace('.', ' ')}: {value}"
-            for key, value in entities
-        ] + ["check", "click", "skip"]
-        contexts = []
-        roles = {
-            "textbox": "Edit",
-            "input": "Edit",
-            "select": "ComboBox",
-            "combobox": "ComboBox",
-            "checkbox": "CheckBox",
-            "button": "Button",
-            "radio": "RadioButton",
-        }
-        for element in elements:
-            role = roles.get(
-                str(element.get("role", "textbox")).lower(), element.get("role", "Edit")
-            )
-            state = (
-                ("checked" if element.get("checked") else "unchecked")
-                if role == "CheckBox"
-                else f'value="{str(element.get("value", ""))[:48]}"'
-            )
-            contexts.append(
-                f'TASK fill the form from the document, then submit\nFORM {str(element.get("form_title", "Checkout"))[:64]}\nELEMENT {role} "{str(element.get("label", ""))[:72]}" {state}'
-            )
+        entities, contexts, options = cua_inputs(elements, profile, self.input_protocol)
+        self._inference_kind = "unverified"
         started = time.perf_counter()
         was_warm = self.model is not None
         self._load_seconds = 0.0
@@ -443,8 +523,9 @@ class CuaS1Adapter(_Adapter):
             probabilities = data.get("probabilities")
         else:
             probabilities = await self._local(self._score, contexts, options)
+        elapsed = time.perf_counter() - started
         self.last_metrics = {
-            "inference_seconds": time.perf_counter() - started,
+            "inference_seconds": elapsed,
             "cold_model_loading_seconds": None if self.endpoint else self._load_seconds,
             "call_temperature": "remote_unobserved"
             if self.endpoint
@@ -453,16 +534,23 @@ class CuaS1Adapter(_Adapter):
             else "cold",
             "warm_inference_seconds": None
             if self.endpoint or not was_warm
-            else max(0, time.perf_counter() - started - self._load_seconds),
+            else max(0, elapsed - self._load_seconds),
             "model_id": self.model_id,
             "backend": "remote" if self.endpoint else "local",
+            "input_protocol": self.input_protocol,
+            "inference_kind": "remote_unverified"
+            if self.endpoint
+            else self._inference_kind,
+            "model_forward_seconds": getattr(self, "_forward_seconds", None)
+            if not self.endpoint and self._inference_kind == "actual_model"
+            else None,
         }
         if not isinstance(probabilities, list) or len(probabilities) != len(elements):
             raise SpecialistOutputError(
                 "CUA-S1 output must contain one distribution per element"
             )
         result = []
-        for element, scores in zip(elements, probabilities):
+        for element, context, scores in zip(elements, contexts, probabilities):
             if (
                 not isinstance(scores, list)
                 or len(scores) != len(options)
@@ -473,7 +561,7 @@ class CuaS1Adapter(_Adapter):
                     or not 0 <= v <= 1
                     for v in scores
                 )
-                or abs(sum(scores) - 1) > 0.01
+                or abs(sum(scores) - 1) > 1e-5
             ):
                 raise SpecialistOutputError("Invalid CUA-S1 probability distribution")
             best = max(range(len(scores)), key=scores.__getitem__)
@@ -486,8 +574,30 @@ class CuaS1Adapter(_Adapter):
                     "entity_key": entities[best][0] if is_fill else None,
                     "confidence": scores[best],
                     "distribution": scores,
+                    "selected_index": best,
+                    "candidate_count": len(entities),
+                    "input_protocol": self.input_protocol,
+                    "inference_kind": self.last_metrics["inference_kind"],
                 }
             )
+            if self.diagnostics:
+                # Exact inputs can contain personal data; never enabled implicitly.
+                limits = self.model_config
+                result[-1]["model_input"] = {
+                    "context": context,
+                    "options": list(options),
+                    "entity_keys": [key for key, _ in entities],
+                    "context_encoding": cua_byte_trace(
+                        context, limits["context_tokens"]
+                    )
+                    if "context_tokens" in limits
+                    else None,
+                    "option_encodings": [
+                        cua_byte_trace(o, limits["option_tokens"]) for o in options
+                    ]
+                    if "option_tokens" in limits
+                    else None,
+                }
         return result
 
     def _score(self, contexts, options):
@@ -503,15 +613,28 @@ class CuaS1Adapter(_Adapter):
                 raise SpecialistUnavailable(
                     "CUA-S1 requires its safetensors checkpoint and signed JSON sidecar; pickle is forbidden"
                 )
-            self.model, self.processor, _ = load_checkpoint(path, self._device())
+            self.model, self.processor, self.model_config = load_checkpoint(
+                path, self._device()
+            )
+            self.checkpoint_identity = {
+                "weights_sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+                "sidecar_sha256": hashlib.sha256(
+                    path.with_suffix(".json").read_bytes()
+                ).hexdigest(),
+                "config": self.model_config,
+            }
             self._load_seconds = time.perf_counter() - load_start
         batch = self.processor([ChoiceExample(c, tuple(options), 0) for c in contexts])
         batch = {
             key: value.to(next(self.model.parameters()).device)
             for key, value in batch.items()
         }
+        forward_start = time.perf_counter()
         with torch.inference_mode():
-            return self.model(batch).softmax(-1).cpu().tolist()
+            probabilities = self.model(batch).softmax(-1).cpu().tolist()
+        self._forward_seconds = time.perf_counter() - forward_start
+        self._inference_kind = "actual_model"
+        return probabilities
 
 
 class TinyClickAdapter(_Adapter):
