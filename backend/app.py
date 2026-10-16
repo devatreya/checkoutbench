@@ -13,6 +13,8 @@ from fastapi.responses import StreamingResponse, FileResponse, Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field, field_validator
 from scenarios.catalog import SPECS, PROFILES, scenario, task
+from scenarios.identity import resolve_id, identity
+from backend.presentation import present
 from scenarios.v2 import V2_SPECS
 from scenarios.v21 import V21_SPECS
 
@@ -100,9 +102,7 @@ class Batch(BaseModel):
     @field_validator("scenarios")
     @classmethod
     def scenarios_known(cls, v):
-        if any(x not in set(ALL_IDS) for x in v):
-            raise ValueError("Unknown scenario")
-        return list(dict.fromkeys(v))
+        return list(dict.fromkeys(resolve_id(x) for x in v))
 
     @field_validator("models")
     @classmethod
@@ -212,7 +212,7 @@ def scenarios():
         row.setdefault("platform", "legacy_unspecified")
         row.setdefault("integrity_class", "historical-controller-not-comparable")
         result.append(row)
-    return result
+    return present(result)
 
 
 @app.get("/api/profiles")
@@ -231,7 +231,9 @@ def preview(
         "agent_without_link",
     ):
         raise HTTPException(400)
-    if sid not in set(ALL_IDS):
+    try:
+        sid = resolve_id(sid)
+    except ValueError:
         raise HTTPException(404)
     s = scenario(sid, seed, profile)
     token = new_session(s, agent_mode)
@@ -239,6 +241,7 @@ def preview(
         "url": runner.origin + "/checkout/" + token,
         "task": task(s, agent_mode),
         "token": token,
+        **identity(sid),
     }
 
 
@@ -286,30 +289,30 @@ def control(action: str):
     if action not in ("pause", "resume", "stop"):
         raise HTTPException(400)
     runner.control(action)
-    return runner.snapshot()
+    return present(runner.snapshot())
 
 
 @app.get("/api/state")
 def state():
-    return runner.snapshot()
+    return present(runner.snapshot())
 
 
 @app.get("/api/results")
 def results():
     from backend.research.official import dataset
-    return dataset(runs())
+    return present(dataset(runs()))
 
 
 @app.get("/api/diagnostics/experiments")
 def experiment_history():
     # Operator diagnostics only; never used by the ordinary dashboard or exports.
-    return {"runs": runs()}
+    return present({"runs": runs()})
 
 
 @app.get("/api/diagnostics/results")
 def diagnostic_results(version: str = "all"):
     rows = [r for r in runs(diagnostic=True) if version == "all" or r.get("benchmark_version", "1.0") == version]
-    return {"runs": rows, "leaderboard": leaderboard(rows), "link_comparisons": link_comparisons(rows)}
+    return present({"runs": rows, "leaderboard": leaderboard(rows), "link_comparisons": link_comparisons(rows)})
 
 
 @app.get("/api/results/{rid}")
@@ -331,6 +334,7 @@ def export(fmt: str):
 
 
 def export_rows(fmt, rows):
+    rows = present(rows)
     if fmt == "json":
         return Response(
             json.dumps({"version": "3.0.0", "runs": rows}, indent=2),
@@ -351,6 +355,10 @@ def export_rows(fmt, rows):
         "model",
         "kind",
         "scenario",
+        "canonical_id",
+        "public_id",
+        "display_name",
+        "description",
         "seed",
         "profile_id",
         "repeat",
@@ -379,6 +387,18 @@ def export_rows(fmt, rows):
         "cost",
         "cost_kind",
         "failure_reason",
+        "outcome_category",
+        "genuine_inference_call_count",
+        "invalid_model_output_count",
+        "invalid_model_output_rate",
+        "invalid_model_output_denominator",
+        "inference_failure_rate",
+        "unsupported_action_count",
+        "inference_failure_count",
+        "observation_track",
+        "inference_configuration",
+        "runtime_source_hash",
+        "runtime_binding_hash",
         "completion_stage",
         "timestamp",
         "config",
@@ -406,7 +426,7 @@ async def events(request: Request):
     async def stream():
         previous = ""
         while not await request.is_disconnected():
-            data = json.dumps(runner.snapshot())
+            data = json.dumps(present(runner.snapshot()))
             if data != previous:
                 yield f"data: {data}\n\n"
                 previous = data

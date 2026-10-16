@@ -10,6 +10,8 @@ import {
   requiresAuth,
   seconds,
   status,
+  scenarioPublicId,
+  scenarioTitle,
   type Model,
   type Run,
   type Scenario,
@@ -103,7 +105,10 @@ export function Overview({
                 {runs.slice(0, 4).map((r) => (
                   <tr key={r.id}>
                     <td>{modelName(r.model)}</td>
-                    <td>{r.scenario}</td>
+                    <td>
+                      {scenarioPublicId(r)}
+                      <small>{scenarioTitle(r)}</small>
+                    </td>
                     <td>{status(r)}</td>
                     <td>{seconds(r.wall_seconds)}</td>
                     <td>{date(r.timestamp)}</td>
@@ -237,7 +242,7 @@ export function ScenarioPreview({
   useEffect(() => {
     let active = true;
     api(
-      `/preview/${encodeURIComponent(scenario.id)}?seed=${setup.seed}${setup.profile ? "&profile=" + encodeURIComponent(setup.profile) : ""}&agent_mode=${setup.agent_mode}`,
+      `/preview/${encodeURIComponent(scenario.public_id || scenario.id)}?seed=${setup.seed}${setup.profile ? "&profile=" + encodeURIComponent(setup.profile) : ""}&agent_mode=${setup.agent_mode}`,
       {},
     )
       .then((d) => active && setData(d))
@@ -247,7 +252,11 @@ export function ScenarioPreview({
     };
   }, [scenario.id, setup.seed, setup.profile, setup.agent_mode]);
   return (
-    <Modal title={`${scenario.id} · Preview`} onClose={onClose} wide>
+    <Modal
+      title={`${scenarioPublicId(scenario)} · Preview`}
+      onClose={onClose}
+      wide
+    >
       <Tabs
         label="Preview views"
         items={["Checkout", "Customer profile", "Task & challenges"]}
@@ -283,7 +292,7 @@ export function ScenarioPreview({
               "Follow the supplied synthetic customer request."}
           </p>
           <h3>Main challenges</h3>
-          <p>{challenge(scenario)}</p>
+          <p>{scenario.description || challenge(scenario)}</p>
           <h3>Success condition</h3>
           <p>{human(scenario.expected_outcome)}</p>
           <ul>
@@ -385,6 +394,39 @@ export function Scenarios({
           ))}
         </div>
         <details>
+          <summary>Browse scenario IDs and tasks</summary>
+          <p>
+            Presentation names identify each simulated task. The frozen suite
+            and execution order are unchanged.
+          </p>
+          <div className="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>Scenario</th>
+                  <th>Task</th>
+                  <th>Device / payment</th>
+                </tr>
+              </thead>
+              <tbody>
+                {active.map((s) => (
+                  <tr key={s.id}>
+                    <td>{scenarioPublicId(s)}</td>
+                    <td>
+                      {scenarioTitle(s)}
+                      <small>{s.description}</small>
+                    </td>
+                    <td>
+                      {human(s.platform)}
+                      <small>{human(s.method)}</small>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </details>
+        <details>
           <summary>Payment methods and authentication</summary>
           <p>
             Card · UPI QR · mobile UPI intent · legacy VPA where supported ·
@@ -481,12 +523,7 @@ export function Review({
           </p>
           <p>
             <b>Scenarios</b>
-            <span>
-              {setup.scenarios.length} · version{" "}
-              {[...new Set(selected.map((s) => s.benchmark_version))].join(
-                ", ",
-              ) || "Not selected"}
-            </span>
+            <span>{setup.scenarios.length} tasks · active frozen manifest</span>
           </p>
           <p>
             <b>Total evaluations</b>

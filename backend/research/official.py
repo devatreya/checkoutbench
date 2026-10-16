@@ -2,7 +2,7 @@
 
 import json
 from backend.storage.database import DATA
-from backend.research.protocol import release
+from backend.research.protocol import release, protocol_hash, runtime_identity
 from backend.research.statistics import eligible_attempt, analyse, summary
 from scenarios.research import digest
 
@@ -20,6 +20,11 @@ def checkpoint_identity(record):
             "loader_hash", "runtime_versions", "backend", "precision",
             "quantisation", "device",
         )
+    } | {
+        k: record[k] for k in (
+            "runtime_config", "prompt_sha256", "code_source_hashes",
+            "artifact_id", "checkpoint_revision",
+        ) if k in record
     }
 
 
@@ -38,7 +43,7 @@ def configuration(manifest):
         or c.get("research_release") != manifest["release"]
     ):
         return None, "The official protocol belongs to another frozen release. Its evidence is preserved; configure this release explicitly."
-    expected = digest({"settings": c.get("settings"), "release_hash": manifest["release_hash"]})
+    expected = protocol_hash(c.get("settings"), manifest["release_hash"], c.get("runtime"))
     if c.get("research_protocol_hash") != expected:
         return None, "Official protocol settings failed integrity verification."
     return c, None
@@ -66,6 +71,7 @@ def select(rows, manifest=None, config=None):
             and r.get("scenario_hash") == scenario.get("scenario_hash")
             and ex.get("scenario_manifest_hash") == m["manifest_hash"]
             and ex.get("source_hash") == m["source_hash"]
+            and (not c.get("runtime") or all(ex.get(k) == v for k, v in c["runtime"].items()))
         ):
             selected.append(r)
     return selected, reason
@@ -107,13 +113,15 @@ def configure(config):
         if k not in ("models", "scenarios", "spending_cap")
     }
     records = checkpoint_records()
+    runtime = runtime_identity(m, require_audit=True)
     identities = {k: checkpoint_identity(records.get(k)) for k in config["models"]}
     if not all(identities.values()):
         raise ValueError("Verified specialist checkpoints required")
     c = {
         "research_release": m["release"], "release_hash": m["release_hash"],
         "scoring_version": "3.0", "settings": settings,
-        "research_protocol_hash": digest({"settings": settings, "release_hash": m["release_hash"]}),
+        "research_protocol_hash": protocol_hash(settings, m["release_hash"], runtime),
+        "runtime": runtime,
         "checkpoints": identities,
     }
     path = DATA / "research/official-protocol.json"

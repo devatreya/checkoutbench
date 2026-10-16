@@ -136,6 +136,62 @@ async def test_coverage_is_frozen_and_no_scenario_selection(server,page):
     assert not mock['posted']
 
 
+async def test_scenario_identity_is_public_across_coverage_and_results(server, page):
+    await install_ui_data(page, server)
+    await page.goto(server + "/#/scenarios")
+    await page.get_by_text("Browse scenario IDs and tasks", exact=True).click()
+    await expect(page.get_by_role("cell", name="GENERIC-01", exact=True)).to_be_visible()
+    await expect(page.get_by_role("cell", name="STRIPE-03", exact=True)).to_be_visible()
+    await expect(page.locator("body")).not_to_contain_text("V3-G01")
+    await expect(page.get_by_text("No real transaction occurs.", exact=False).first).to_be_visible()
+    await nav(page, "results")
+    await page.get_by_role("tab", name="Run Explorer", exact=True).click()
+    await page.get_by_label("Search run records").fill("GENERIC-02")
+    await expect(page.get_by_role("button", name="Open run ui-cua-s1-1", exact=True)).to_be_visible()
+    await expect(page.get_by_role("button", name="Open run ui-cua-s1-0", exact=True)).to_have_count(0)
+    await expect(page.locator("body")).not_to_contain_text("V3-G02")
+    await page.get_by_role("button", name="Open run ui-cua-s1-1", exact=True).click()
+    await expect(page.locator(".facts").first).to_contain_text("GENERIC-02")
+    await expect(page.locator(".facts").first).not_to_contain_text("V3-G02")
+
+
+async def test_real_scenario_api_and_browser_preview_use_public_identity(server, page):
+    # No API route mocks: verify the actual registry overlay reaches the app.
+    response = httpx.get(server + "/api/scenarios")
+    response.raise_for_status()
+    rows = response.json()
+    stripe = next(row for row in rows if row["id"] == "V3-ST03")
+    assert stripe["canonical_id"] == "V3-ST03"
+    assert stripe["public_id"] == "STRIPE-03"
+    assert "inspired" in stripe["display_name"]
+    await page.goto(server + "/#/coverage")
+    await expect(page.get_by_text("SHOPIFY-01", exact=True)).to_be_visible()
+    await expect(page.locator("body")).not_to_contain_text("V3-S01")
+    await page.get_by_role("button", name="Preview checkout", exact=True).click()
+    await expect(page.get_by_role("dialog", name="SHOPIFY-01 · Preview")).to_be_visible()
+    await expect(page.locator(".checkout-frame")).to_be_visible()
+
+
+async def test_run_details_distinguish_track_quantization_and_failure_type(server, page):
+    fixture = await install_ui_data(page, server)
+    fixture["runs"][0].update(
+        model="ui-venus", observation_track="screenshot_gui",
+        outcome_category="infrastructure_failure",
+        inference_configuration={
+            "backend": "mlx-vlm-local-worker", "precision": "affine-6bit-group64-mixed-bf16",
+            "quantization": {"bits": 6, "mode": "affine", "group_size": 64},
+            "artifact_id": "synthetic-ui-fixture", "checkpoint_revision": "test-revision",
+        },
+    )
+    await page.goto(server + "/#/results/ui-cua-s1-0")
+    await expect(page.locator(".facts").first).to_contain_text("Screenshot-only GUI actions")
+    await expect(page.locator(".facts").first).to_contain_text("infrastructure failure")
+    await page.get_by_role("tab", name="Performance", exact=True).click()
+    await expect(page.get_by_text("6-bit quantized weights", exact=False)).to_be_visible()
+    await expect(page.get_by_text("mlx-vlm-local-worker", exact=True)).to_be_visible()
+    await expect(page.get_by_text("affine-6bit-group64-mixed-bf16", exact=True)).to_be_visible()
+
+
 async def test_results_scoping_comparison_and_scenario_analysis(server, page):
     fixture = await install_ui_data(page, server)
     await page.goto(server + "/#/results")
@@ -155,7 +211,7 @@ async def test_results_scoping_comparison_and_scenario_analysis(server, page):
     await page.get_by_role("tab", name="Providers", exact=True).click()
     await expect(page.get_by_role("cell", name="Shopify", exact=False).first).to_be_visible()
     await page.get_by_role("tab", name="Scenario Analysis", exact=True).click()
-    await expect(page.get_by_role("cell", name="V3-G02", exact=False).first).to_be_visible()
+    await expect(page.get_by_role("cell", name="GENERIC-02", exact=False).first).to_be_visible()
     fixture["runs"].append({**fixture["runs"][0],"id":"ui-blocked-cost","status":"blocked","success":False,"calls":[],"cost":0.005})
     await page.reload()
     await page.get_by_role("tab", name="Run Explorer", exact=True).click()

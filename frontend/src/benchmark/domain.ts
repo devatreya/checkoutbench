@@ -12,6 +12,10 @@ export type Model = {
 };
 export type Scenario = {
   id: string;
+  canonical_id?: string;
+  public_id?: string;
+  display_name?: string;
+  description?: string;
   title: string;
   family: string;
   benchmark_version: string;
@@ -36,6 +40,10 @@ export type Run = {
   id: string;
   model: string;
   scenario: string;
+  canonical_id?: string;
+  public_id?: string;
+  display_name?: string;
+  description?: string;
   status: string;
   success?: boolean;
   timestamp?: string;
@@ -122,6 +130,14 @@ export const human = (v: unknown) =>
     : v === undefined || v === null
       ? "Not reported"
       : String(v);
+// The API owns the registry. Never guess aliases by stripping release prefixes.
+export const scenarioPublicId = (row?: Record<string, any>) =>
+  row?.public_id || row?.scenario_public_id || "Unmapped scenario";
+export const scenarioTitle = (row?: Record<string, any>) =>
+  row?.display_name ||
+  row?.title ||
+  row?.scenario_title ||
+  "Scenario details unavailable";
 export const num = (v: unknown): v is number =>
   typeof v === "number" && Number.isFinite(v);
 export const pct = (v: unknown) =>
@@ -185,11 +201,23 @@ export function csv(rows: Record<string, unknown>[]) {
   ].join("\r\n");
 }
 export const environments = [
-  ["stripe", "Stripe", "Card entry, embedded components, authentication"],
-  ["razor", "Razorpay", "UPI, cards and payment modals"],
-  ["cashfree", "Cashfree", "Hosted checkout, popups and redirects"],
+  [
+    "stripe",
+    "Stripe-inspired",
+    "Simulated card entry, embedded components, authentication",
+  ],
+  ["razor", "Razorpay-inspired", "Simulated UPI, cards and payment modals"],
+  [
+    "cashfree",
+    "Cashfree-inspired",
+    "Simulated hosted checkout, popups and redirects",
+  ],
   ["generic", "Indian E-commerce", "Addresses, PIN codes and saved details"],
-  ["shopify", "Shopify", "Merchants, layouts and extensions"],
+  [
+    "shopify",
+    "Shopify-inspired",
+    "Simulated merchants, layouts and extensions",
+  ],
   ["railway", "IRCTC-inspired", "Dense passenger forms and payment navigation"],
   [
     "passport",
@@ -201,7 +229,11 @@ export const environments = [
     "eChallan-inspired",
     "Verification, handoff and transaction status",
   ],
-  ["link", "Stripe Link", "Native autofill and returning customers"],
+  [
+    "link",
+    "Stripe Link-inspired",
+    "Simulated autofill and returning customers",
+  ],
 ] as const;
 export const familyName = (f?: string) =>
   environments.find((e) => e[0] === f)?.[1] || human(f);

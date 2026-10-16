@@ -5,7 +5,7 @@ from pathlib import Path
 from threading import Lock
 
 PLOT_LOCK = Lock()
-from backend.research.protocol import release, readiness
+from backend.research.protocol import release, readiness, source_hashes, runtime_identity
 from backend.research.statistics import analyse, genuine, eligible_attempt
 from backend.research.schema import StageEvent
 from scenarios.research import ROOT, scenario_research
@@ -25,7 +25,7 @@ CATEGORIES = {
     "components": "components",
 }
 # Deliberate allowlist: arbitrary endpoint payloads, task URLs, config/env, auth tokens never enter public exports.
-RUN_FIELDS = "id model scenario environment benchmark_version research_release release_hash scenario_hash research_protocol_hash implementation_family independence_cluster research_track research_split seed profile_id repeat status timestamp scoring_version task_resolved_correctly checkout_prepared authorisation_handoff_correct simulated_payment_completed safe_abort_correct payment_method_correct payment_detail_accuracy authentication_handoff_accuracy final_simulated_payment_state_accuracy required_fields_correct required_field_accuracy requested_payment_method authentication_method primary_failure_category secondary_failure_categories failed_stage successful_preparation_seconds successful_resolution_seconds failed_run_seconds wall_seconds inference_seconds cold_model_loading_seconds warm_inference_seconds latency_breakdown action_attribution fallback_policy field_classification_accuracy grounding_accuracy qr_research qr_recovery_accuracy checkout_stages stage_events events field_results optional_results workflow_events cost cost_kind execution_manifest".split()
+RUN_FIELDS = "canonical_id public_id display_name description observation_track outcome_category genuine_inference_call_count invalid_model_output_count invalid_model_output_rate invalid_model_output_denominator inference_failure_rate unsupported_action_count inference_failure_count runtime_source_hash runtime_binding_hash id model scenario environment benchmark_version research_release release_hash scenario_hash research_protocol_hash implementation_family independence_cluster research_track research_split seed profile_id repeat status timestamp scoring_version task_resolved_correctly checkout_prepared authorisation_handoff_correct simulated_payment_completed safe_abort_correct payment_method_correct payment_detail_accuracy authentication_handoff_accuracy final_simulated_payment_state_accuracy required_fields_correct required_field_accuracy requested_payment_method authentication_method primary_failure_category secondary_failure_categories failed_stage successful_preparation_seconds successful_resolution_seconds failed_run_seconds wall_seconds inference_seconds cold_model_loading_seconds warm_inference_seconds latency_breakdown action_attribution fallback_policy field_classification_accuracy grounding_accuracy qr_research qr_recovery_accuracy checkout_stages stage_events events field_results optional_results workflow_events cost cost_kind execution_manifest".split()
 
 
 def dump(obj):
@@ -141,7 +141,7 @@ def bundle(rows):
     selected = a["runs"]
     files = {
         "manifest.json": dump(m),
-        "analysis.json": dump(a),
+        "analysis.json": dump({**a, "runs": [{k: r[k] for k in RUN_FIELDS if k in r} for r in selected]}),
         "readiness.json": dump(ready),
         "stage-event.schema.json": dump(StageEvent.model_json_schema()),
         "runs.json": dump([{k: r[k] for k in RUN_FIELDS if k in r} for r in selected]),
@@ -263,7 +263,15 @@ Verify bundle SHA256SUMS.json. Follow REPRODUCING.md with pinned dependencies, e
         for p in (ROOT / folder).rglob("*"):
             if p.is_file() and p.suffix in (".md", ".json", ".py"):
                 files[str(p.relative_to(ROOT))] = p.read_text()
-    for name in m["source_hashes"]:
+    # Source payload describes the actual audited runtime, while manifest.json
+    # retains its immutable historical source identity.
+    files["runtime-identity.json"] = dump(runtime_identity(m))
+    files["runtime-source-hashes.json"] = dump(source_hashes())
+    for name in ("runtime-binding.json", "scenario-integrity-baseline.json"):
+        path = ROOT / "research" / name
+        if path.exists():
+            files[name] = path.read_text()
+    for name in source_hashes():
         files["source/" + name] = (ROOT / name).read_text()
     for name in ("pyproject.toml", "uv.lock", "frontend/package-lock.json"):
         if (ROOT / name).exists():

@@ -1,4 +1,7 @@
 import asyncio, json, time, os, tempfile, socket, platform, hashlib
+import subprocess
+from functools import lru_cache
+from copy import deepcopy
 from datetime import datetime, timezone
 from pathlib import Path
 from uuid import uuid4
@@ -10,6 +13,7 @@ from playwright.async_api import (
     Error as BrowserError,
 )
 from scenarios.catalog import scenario, task
+from scenarios.identity import identity, resolve_id
 from backend.fixtures import new_session, SESSIONS
 from backend.evaluator.scoring import evaluate
 from backend.storage.database import DATA, save, experiment_attempt
@@ -17,12 +21,92 @@ from backend.adapters.base import Usage, Ledger, Unavailable, Stopped, BudgetExc
 from backend.adapters.specialists import (
     SpecialistUnavailable,
     SpecialistOutputError,
+    SpecialistInferenceError,
+    UnsupportedCapability,
     detect_hardware,
 )
 from backend.browser.execution import reference, visual_agent, VIEWPORT
 from backend.browser.security import allowed_url
 from backend.adapters.openrouter import run_openrouter
 from backend.browser.v21 import NoProgress
+
+
+@lru_cache(maxsize=1)
+def source_commit():
+    """Repository revision is context; the complete source hash binds execution."""
+    try:
+        return subprocess.check_output(
+            ["git", "rev-parse", "HEAD"], cwd=Path(__file__).resolve().parents[2],
+            text=True, stderr=subprocess.DEVNULL, timeout=2,
+        ).strip()
+    except (OSError, subprocess.SubprocessError):
+        return None
+
+
+def canonical_config(config):
+    """Resolve public aliases before validation without changing the caller's data."""
+    result = deepcopy(config)
+    result["scenarios"] = [resolve_id(sid) for sid in config.get("scenarios", [])]
+    if len(result["scenarios"]) != len(set(result["scenarios"])):
+        raise ValueError("Select each canonical scenario only once, including its aliases")
+    return result
+
+
+def outcome_evidence(run):
+    """Classify execution evidence without using a model's completion assertion."""
+    calls = run.get("calls", [])
+    actual = []
+    for call in calls:
+        backend = str(call.get("backend", "")).lower()
+        if any(marker in backend for marker in ("test", "mock", "script")):
+            continue
+        outputs = call.get("outputs") or []
+        if (
+            call.get("actual_model") is True
+            or call.get("inference_kind") == "actual_model"
+            or (isinstance(outputs, list) and outputs and all(
+                isinstance(o, dict) and o.get("inference_kind") == "actual_model" for o in outputs
+            ))
+        ):
+            actual.append(call)
+    reason, status = run.get("failure_reason"), run.get("status")
+    if run.get("kind") == "reference":
+        category = "reference_validation"
+    elif status == "stopped" or reason == "user_stopped":
+        category = "user_stopped"
+    elif status == "unavailable":
+        category = "unavailable"
+    elif reason == "unsupported_capability":
+        category = "unsupported_capability"
+    elif reason == "invalid_model_action":
+        category = "invalid_model_action"
+    elif reason in ("inference_error", "infrastructure_error"):
+        category = "infrastructure_failure"
+    elif reason in ("invalid_browser_action", "browser_action_timeout"):
+        category = "browser_execution_failure"
+    elif reason == "spending_cap":
+        category = "budget_blocked"
+    elif reason == "timeout":
+        category = "evaluation_timeout"
+    elif run.get("success") and status == "completed":
+        category = "successful_completion" if actual else "unverified_model_outcome"
+    elif status == "failed":
+        category = "model_failure" if actual else "unverified_model_outcome"
+    else:
+        category = "not_evaluated"
+    invalid = sum(c.get("error_type") == "SpecialistOutputError" for c in calls)
+    failures = sum(c.get("error_type") == "SpecialistInferenceError" for c in calls)
+    return {
+        "outcome_category": category,
+        "genuine_inference_call_count": len(actual),
+        "model_reasoning_failure": category == "model_failure",
+        "invalid_model_output_count": invalid,
+        "invalid_model_output_rate": invalid / len(actual) if actual else None,
+        "invalid_model_output_denominator": len(actual),
+        "unsupported_action_count": sum(c.get("error_type") == "UnsupportedCapability" for c in calls),
+        "inference_failure_count": failures,
+        "inference_failure_rate": failures / len(calls) if calls else None,
+    }
 
 
 class Controls:
@@ -145,6 +229,7 @@ class Runner:
         }
 
     async def start(self, config):
+        config = canonical_config(config)
         if any(s.startswith("V3-") for s in config.get("scenarios", [])):
             from backend.research.protocol import validate_checkpoints
 
@@ -243,6 +328,8 @@ class Runner:
             self.active_task = None
 
     async def one(self, model, sid, c, repeat, ledger, infra_attempt=0):
+        sid = resolve_id(sid)
+        c = canonical_config(c)
         s = scenario(sid, c["seed"], c.get("profile"))
         is_v21 = s.get("benchmark_version") == "2.1"
         is_v2 = s.get("benchmark_version") in ("2.0", "2.1")
@@ -299,16 +386,50 @@ class Runner:
             success=False,
             cost=0,
         )
+        run.update(identity(sid))
+        run["observation_track"] = (
+            "screenshot_gui" if model in ("mai-ui", "ui-venus") else
+            "dom_field_classification_visual_grounding" if model == "hybrid" else
+            "semantic_fields_controller" if model == "cua-s1" else
+            "visual_grounding_with_deterministic_semantics" if model == "tinyclick" else
+            "deterministic_reference" if model == "reference" else "provider_browser_agent"
+        )
         run["cohort"] = hashlib.sha256(
             json.dumps(
                 {k: v for k, v in c.items() if k not in ("models", "spending_cap")},
                 sort_keys=True,
             ).encode()
         ).hexdigest()[:12]
-        if s.get("research_release"):
-            from backend.research.protocol import execution_manifest
+        from backend.research.protocol import execution_manifest, source_hashes
+        from scenarios.research import digest
 
-            run.update(execution_manifest(c, s, model))
+        run.update(execution_manifest(c, s, model))
+        if not s.get("research_release"):
+            # Diagnostics retain the frozen benchmark/runtime lineage without
+            # pretending that a historical scenario belongs to the active suite.
+            run["benchmark_version"] = s.get("benchmark_version", "1.0")
+            run["execution_manifest"]["standard_run_all"] = False
+        run["manifest_membership"] = "active" if s.get("research_release") else "historical_diagnostic"
+        run["execution_manifest"].update(
+            canonical_id=sid, public_id=run["public_id"],
+            viewport=deepcopy(run["viewport"]), device_scale_factor=1,
+            public_task_hash=digest(public), observation_track=run["observation_track"],
+            action_budget=c["max_steps"], timeout_seconds=c["timeout"],
+            source_commit=source_commit(),
+        )
+        source_map = source_hashes()
+        adapter_paths = ["backend/adapters/specialists.py"]
+        if model == "ui-venus":
+            adapter_paths += ["backend/adapters/venus.py", "scripts/diagnostics/venus_worker.py"]
+        run["execution_manifest"]["adapter_source_hashes"] = {
+            path: source_map[path] for path in adapter_paths if path in source_map
+        }
+        run["cohort"] = digest({
+            "configuration": {k: v for k, v in c.items() if k not in ("models", "spending_cap")},
+            "runtime_source_hash": run["runtime_source_hash"],
+            "runtime_binding_hash": run["runtime_binding_hash"],
+            "observation_track": run["observation_track"],
+        })[:12]
         run["result_store"] = "experiments" if experiment_attempt(run) else "validation"
         if s.get("research_release"):
             run["scoring_version"] = "3.0"
@@ -451,7 +572,17 @@ class Runner:
                             await context.close()
             run["status"] = "completed"
         except (Unavailable, SpecialistUnavailable) as e:
-            run.update(status="unavailable", failure_reason=str(e))
+            run.update(status="unavailable", failure_reason=str(e), error_type=type(e).__name__)
+        except UnsupportedCapability as e:
+            run.update(status="blocked", failure_reason="unsupported_capability", error=str(e), error_type=type(e).__name__)
+            if getattr(e, "raw_text", None) is not None:
+                run["raw_model_output"] = e.raw_text
+        except SpecialistInferenceError as e:
+            # Worker/library messages can contain process paths or request data.
+            run.update(status="blocked", failure_reason="inference_error", error_type=type(e).__name__)
+            if model == "ui-venus":
+                # Local MLX worker diagnostics have no provider credential transport.
+                run["inference_error_detail"] = str(e)
         except NoProgress as e:
             run.update(status="failed", failure_reason="no_progress", no_progress=e.diagnostics)
         except BudgetExceeded as e:
@@ -479,8 +610,10 @@ class Runner:
             )
         except SpecialistOutputError as e:
             run.update(
-                status="failed", failure_reason="invalid_model_action", error=str(e)
+                status="failed", failure_reason="invalid_model_action", error=str(e), error_type=type(e).__name__
             )
+            if getattr(e, "raw_text", None) is not None:
+                run["raw_model_output"] = e.raw_text
         except Exception as e:
             # Do not log exception text from provider libraries: it can contain request headers.
             run.update(
@@ -498,13 +631,14 @@ class Runner:
             if ctl:
                 usage = ctl.usage
             score = evaluate(s, SESSIONS[token])
+            run["verifier_success"] = bool(score.get("success"))
             previous = run.get("failure_reason")
             run.update(score)
             if previous:
                 run["failure_reason"] = previous
             if run["status"] == "completed" and not run["success"]:
                 run["status"] = "failed"
-            if run["status"] not in ("completed", "failed"):
+            if run["status"] != "completed":
                 run["success"] = False
             run.update(asdict(usage))
             run["model_call_count"] = len(usage.calls)
@@ -522,7 +656,10 @@ class Runner:
                 )
             }
             run["fallback_policy"] = (
-                "No semantic or coordinate correction after inference; unsupported selections/errors affect execution. Lifecycle navigation is deterministic for specialists."
+                "No semantic or coordinate correction after inference; unsupported selections/errors affect execution. "
+                + ("All GUI actions and navigation are model-selected; completion is independently verified."
+                   if run["observation_track"] == "screenshot_gui" else
+                   "Lifecycle navigation is deterministic for field/grounding specialists.")
             )
             run["wall_seconds"] = time.perf_counter() - started
             if is_v21 and ctl:
@@ -534,8 +671,15 @@ class Runner:
                 ctl.classifications = grade_decisions(s, decisions)
                 run["semantic_decisions"] = decisions
                 run["semantic_report"] = decision_report(s, decisions)
-                run["model_decision_count"] = len(decisions)
-                run["model_execution_count"] = sum(d.get("execution_status") == "executed" for d in decisions)
+                screenshot_agent = run["observation_track"] == "screenshot_gui"
+                run["model_decision_count"] = (
+                    sum(c.get("status") == "generated" for c in usage.calls)
+                    if screenshot_agent else len(decisions)
+                )
+                run["model_execution_count"] = (
+                    sum(e["action"] == "visual_action" and e["detail"].get("execution_status") == "executed" for e in run["events"])
+                    if screenshot_agent else sum(d.get("execution_status") == "executed" for d in decisions)
+                )
                 run["harness_diagnostics"] = getattr(ctl, "harness_diagnostics", [])
                 form_validation = bool(
                     SESSIONS[token].get("validation_errors") or any(
@@ -546,13 +690,15 @@ class Runner:
                 run["failure_attribution"] = {
                     "model_field_decision": bool(decisions and not all(ctl.classifications)),
                     "browser_execution": any(e["action"] == "invalid_action" for e in run["events"]) or run.get("failure_reason") in ("invalid_browser_action", "browser_action_timeout"),
-                    "navigation_controller": run.get("failure_reason") in ("max_steps", "timeout") or (
+                    "navigation_controller": not screenshot_agent and (run.get("failure_reason") in ("max_steps", "timeout") or (
                         run.get("failure_reason") == "no_progress"
                         and not form_validation
                         and not run.get("no_progress", {}).get("execution_error")
-                    ),
+                    )),
                     "controller_stop": run.get("failure_reason") if run.get("failure_reason") in ("no_progress", "max_steps", "timeout") else None,
-                    "infrastructure": run.get("failure_reason") == "infrastructure_error",
+                    "infrastructure": run.get("failure_reason") in ("infrastructure_error", "inference_error"),
+                    "unsupported_capability": run.get("failure_reason") == "unsupported_capability",
+                    "invalid_model_output": run.get("failure_reason") == "invalid_model_action",
                     "validation": form_validation,
                     "note": "Independent dimensions; validation attempts are not additional field decisions. A bounded controller stop can be caused by model-selected invalid fields.",
                 }
@@ -633,6 +779,17 @@ class Runner:
                 from backend.research.measurement import finish as research_finish
 
                 run.update(research_finish(run, s, SESSIONS[token]))
+            run.update(outcome_evidence(run))
+            run.setdefault("failure_attribution", {}).update(
+                model_reasoning=run["model_reasoning_failure"],
+                inference=run.get("failure_reason") == "inference_error",
+                infrastructure=run["outcome_category"] == "infrastructure_failure",
+                unsupported_capability=run["outcome_category"] == "unsupported_capability",
+                invalid_model_output=run["outcome_category"] == "invalid_model_action",
+            )
+            if run.get("inference_configuration"):
+                run["execution_manifest"]["inference_configuration"] = deepcopy(run["inference_configuration"])
+            run["completed_at"] = datetime.now(timezone.utc).isoformat()
             (directory / "actions.json").write_text(json.dumps(run, indent=2))
             save(run)
             self.current = run

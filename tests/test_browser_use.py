@@ -100,7 +100,7 @@ async def test_native_openrouter_browser_action(server, tmp_path, monkeypatch):
     monkeypatch.setattr(ChatOpenRouter, "get_client", get_client)
 
     class Control:
-        origin = "http://127.0.0.1:8766"
+        origin = info["url"].split("/checkout/", 1)[0]
         directory = tmp_path
         stopped = False
 

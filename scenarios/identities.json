@@ -1,0 +1,1934 @@
+[
+  {
+    "canonical_id": "T01",
+    "public_id": "LEGACY-TASK-01",
+    "display_name": "Razorpay-inspired checkout — A familiar delivery",
+    "description": "Simulated task: A familiar delivery. Prepare upi app using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "T02",
+    "public_id": "LEGACY-TASK-02",
+    "display_name": "Generic simulated checkout — Words you have not seen",
+    "description": "Simulated task: Words you have not seen. Prepare upi app using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "T03",
+    "public_id": "LEGACY-TASK-03",
+    "display_name": "Stripe-inspired checkout — Optional means optional",
+    "description": "Simulated task: Optional means optional. Prepare upi app using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "T04",
+    "public_id": "LEGACY-TASK-04",
+    "display_name": "Generic simulated checkout — A city follows its state",
+    "description": "Simulated task: A city follows its state. Prepare upi app using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "T05",
+    "public_id": "LEGACY-TASK-05",
+    "display_name": "Generic simulated checkout — Find the delivery address",
+    "description": "Simulated task: Find the delivery address. Prepare upi app using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "T06",
+    "public_id": "LEGACY-TASK-06",
+    "display_name": "Stripe-inspired checkout — Two different addresses",
+    "description": "Simulated task: Two different addresses. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "T07",
+    "public_id": "LEGACY-TASK-07",
+    "display_name": "Generic simulated checkout — Correct the saved details",
+    "description": "Simulated task: Correct the saved details. Prepare upi app using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "T08",
+    "public_id": "LEGACY-TASK-08",
+    "display_name": "Razorpay-inspired checkout — Switch away from card",
+    "description": "Simulated task: Switch away from card. Prepare upi app using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "T09",
+    "public_id": "LEGACY-TASK-09",
+    "display_name": "Razorpay-inspired checkout — Choose Google Pay",
+    "description": "Simulated task: Choose Google Pay. Prepare upi app using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "T10",
+    "public_id": "LEGACY-TASK-10",
+    "display_name": "Razorpay-inspired checkout — Prepare the QR handoff",
+    "description": "Simulated task: Prepare the QR handoff. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "T11",
+    "public_id": "LEGACY-TASK-11",
+    "display_name": "Razorpay-inspired checkout — Legacy UPI identifier",
+    "description": "Simulated task: Legacy UPI identifier. Prepare upi vpa using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "T12",
+    "public_id": "LEGACY-TASK-12",
+    "display_name": "Stripe-inspired checkout — The embedded card form",
+    "description": "Simulated task: The embedded card form. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "T13",
+    "public_id": "LEGACY-TASK-13",
+    "display_name": "Stripe-inspired checkout — Recover from a card error",
+    "description": "Simulated task: Recover from a card error. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "T14",
+    "public_id": "LEGACY-TASK-14",
+    "display_name": "Cashfree-inspired checkout — A failed gateway, then retry",
+    "description": "Simulated task: A failed gateway, then retry. Prepare upi app using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "T15",
+    "public_id": "LEGACY-TASK-15",
+    "display_name": "Generic simulated checkout — The complicated delivery",
+    "description": "Simulated task: The complicated delivery. Prepare upi app using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "H01",
+    "public_id": "LEGACY-HOLDOUT-01",
+    "display_name": "Stripe-inspired checkout — Holdout: invoice and delivery",
+    "description": "Simulated task: Holdout: invoice and delivery. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "H02",
+    "public_id": "LEGACY-HOLDOUT-02",
+    "display_name": "Cashfree-inspired checkout — Holdout: a redirected retry",
+    "description": "Simulated task: Holdout: a redirected retry. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "H03",
+    "public_id": "LEGACY-HOLDOUT-03",
+    "display_name": "Generic simulated checkout — Holdout: unfamiliar delivery",
+    "description": "Simulated task: Holdout: unfamiliar delivery. Prepare upi app using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "S01",
+    "public_id": "SHOPIFY-01-FOUNDATION",
+    "display_name": "Shopify-inspired checkout — THREAD / FIELD · three page desktop",
+    "description": "Simulated task: THREAD / FIELD · three page desktop. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "S02",
+    "public_id": "SHOPIFY-02-FOUNDATION",
+    "display_name": "Shopify-inspired checkout — THREAD / FIELD · express mobile",
+    "description": "Simulated task: THREAD / FIELD · express mobile. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "S03",
+    "public_id": "SHOPIFY-03-FOUNDATION",
+    "display_name": "Shopify-inspired checkout — moss & mineral · one page desktop",
+    "description": "Simulated task: moss & mineral · one page desktop. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "S04",
+    "public_id": "SHOPIFY-04-FOUNDATION",
+    "display_name": "Shopify-inspired checkout — moss & mineral · one page mobile",
+    "description": "Simulated task: moss & mineral · one page mobile. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "S05",
+    "public_id": "SHOPIFY-05-FOUNDATION",
+    "display_name": "Shopify-inspired checkout — VOLT WORKS · three page desktop",
+    "description": "Simulated task: VOLT WORKS · three page desktop. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "S06",
+    "public_id": "SHOPIFY-06-FOUNDATION",
+    "display_name": "Shopify-inspired checkout — VOLT WORKS · three page mobile",
+    "description": "Simulated task: VOLT WORKS · three page mobile. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "S07",
+    "public_id": "SHOPIFY-07-FOUNDATION",
+    "display_name": "Shopify-inspired checkout — Basket & Stem · one page desktop",
+    "description": "Simulated task: Basket & Stem · one page desktop. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "S08",
+    "public_id": "SHOPIFY-08-FOUNDATION",
+    "display_name": "Shopify-inspired checkout — Basket & Stem · one page mobile",
+    "description": "Simulated task: Basket & Stem · one page mobile. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "S09",
+    "public_id": "SHOPIFY-09-FOUNDATION",
+    "display_name": "Shopify-inspired checkout — FORM / ROOM · three page desktop",
+    "description": "Simulated task: FORM / ROOM · three page desktop. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "S10",
+    "public_id": "SHOPIFY-10-FOUNDATION",
+    "display_name": "Shopify-inspired checkout — FORM / ROOM · three page mobile",
+    "description": "Simulated task: FORM / ROOM · three page mobile. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "S11",
+    "public_id": "SHOPIFY-11-FOUNDATION",
+    "display_name": "Shopify-inspired checkout — Orbit Coffee Club · express desktop",
+    "description": "Simulated task: Orbit Coffee Club · express desktop. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "S12",
+    "public_id": "SHOPIFY-12-FOUNDATION",
+    "display_name": "Shopify-inspired checkout — Orbit Coffee Club · one page mobile",
+    "description": "Simulated task: Orbit Coffee Club · one page mobile. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "R01",
+    "public_id": "IRCTC-01-FOUNDATION",
+    "display_name": "IRCTC-inspired railway portal — Three travellers, independent details",
+    "description": "Simulated task: Three travellers, independent details. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "R02",
+    "public_id": "IRCTC-02-FOUNDATION",
+    "display_name": "IRCTC-inspired railway portal — Boarding is not destination",
+    "description": "Simulated task: Boarding is not destination. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "R03",
+    "public_id": "IRCTC-03-FOUNDATION",
+    "display_name": "IRCTC-inspired railway portal — Berth and infant preferences",
+    "description": "Simulated task: Berth and infant preferences. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "R04",
+    "public_id": "IRCTC-04-FOUNDATION",
+    "display_name": "IRCTC-inspired railway portal — Review a changed fare",
+    "description": "Simulated task: Review a changed fare. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "R05",
+    "public_id": "IRCTC-05-FOUNDATION",
+    "display_name": "IRCTC-inspired railway portal — Legacy payment categories",
+    "description": "Simulated task: Legacy payment categories. Prepare upi app using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "R06",
+    "public_id": "IRCTC-06-FOUNDATION",
+    "display_name": "IRCTC-inspired railway portal — Expired booking recovery",
+    "description": "Simulated task: Expired booking recovery. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "P01",
+    "public_id": "PASSPORT-01-FOUNDATION",
+    "display_name": "Passport Seva-inspired portal — Choose an appointment centre",
+    "description": "Simulated task: Choose an appointment centre. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "P02",
+    "public_id": "PASSPORT-02-FOUNDATION",
+    "display_name": "Passport Seva-inspired portal — The appointment slot changed",
+    "description": "Simulated task: The appointment slot changed. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "P03",
+    "public_id": "PASSPORT-03-FOUNDATION",
+    "display_name": "Passport Seva-inspired portal — Interrupted gateway redirect",
+    "description": "Simulated task: Interrupted gateway redirect. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "P04",
+    "public_id": "PASSPORT-04-FOUNDATION",
+    "display_name": "Passport Seva-inspired portal — Declarations with unfamiliar labels",
+    "description": "Simulated task: Declarations with unfamiliar labels. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "E01",
+    "public_id": "ECHALLAN-01-FOUNDATION",
+    "display_name": "eChallan-inspired portal — Find the outstanding challan",
+    "description": "Simulated task: Find the outstanding challan. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "E02",
+    "public_id": "ECHALLAN-02-FOUNDATION",
+    "display_name": "eChallan-inspired portal — Identity verification handoff",
+    "description": "Simulated task: Identity verification handoff. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "E03",
+    "public_id": "ECHALLAN-03-FOUNDATION",
+    "display_name": "eChallan-inspired portal — Already settled — do not pay",
+    "description": "Simulated task: Already settled — do not pay. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "E04",
+    "public_id": "ECHALLAN-04-FOUNDATION",
+    "display_name": "eChallan-inspired portal — Resolve a pending transaction",
+    "description": "Simulated task: Resolve a pending transaction. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "L01",
+    "public_id": "LINK-01-FOUNDATION",
+    "display_name": "Stripe Link-inspired checkout — Returning customer, saved card",
+    "description": "Simulated task: Returning customer, saved card. Prepare link using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "L02",
+    "public_id": "LINK-02-FOUNDATION",
+    "display_name": "Stripe Link-inspired checkout — New customer, no registration consent",
+    "description": "Simulated task: New customer, no registration consent. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "L03",
+    "public_id": "LINK-03-FOUNDATION",
+    "display_name": "Stripe Link-inspired checkout — Correct stale saved billing",
+    "description": "Simulated task: Correct stale saved billing. Prepare link using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "L04",
+    "public_id": "LINK-04-FOUNDATION",
+    "display_name": "Stripe Link-inspired checkout — Expired preferred saved card",
+    "description": "Simulated task: Expired preferred saved card. Prepare link using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "L05",
+    "public_id": "LINK-05-FOUNDATION",
+    "display_name": "Stripe Link-inspired checkout — Link authentication recovery",
+    "description": "Simulated task: Link authentication recovery. Prepare link using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "L06",
+    "public_id": "LINK-06-FOUNDATION",
+    "display_name": "Stripe Link-inspired checkout — Paired profile · embedded Link",
+    "description": "Simulated task: Paired profile · embedded Link. Prepare link using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "L06H",
+    "public_id": "LINK-06H-FOUNDATION",
+    "display_name": "Stripe Link-inspired checkout — Paired profile · hosted Link",
+    "description": "Simulated task: Paired profile · hosted Link. Prepare link using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "L07",
+    "public_id": "LINK-07-FOUNDATION",
+    "display_name": "Stripe Link-inspired checkout — Wrong remembered identity",
+    "description": "Simulated task: Wrong remembered identity. Prepare link using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "L08",
+    "public_id": "LINK-08-FOUNDATION",
+    "display_name": "Stripe Link-inspired checkout — Respect an ordinary card preference",
+    "description": "Simulated task: Respect an ordinary card preference. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "L09",
+    "public_id": "LINK-09-FOUNDATION",
+    "display_name": "Stripe Link-inspired checkout — New customer explicitly authorises registration",
+    "description": "Simulated task: New customer explicitly authorises registration. Prepare link using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "Q00",
+    "public_id": "RAZORPAY-QR-REGRESSION-00-FOUNDATION",
+    "display_name": "Razorpay-inspired checkout — QR Q0 · clean",
+    "description": "Simulated task: QR Q0 · clean. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "Q01",
+    "public_id": "CASHFREE-QR-REGRESSION-01-FOUNDATION",
+    "display_name": "Cashfree-inspired checkout — QR Q1 · small",
+    "description": "Simulated task: QR Q1 · small. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "Q02",
+    "public_id": "SHOPIFY-QR-REGRESSION-02-FOUNDATION",
+    "display_name": "Shopify-inspired checkout — QR Q2 · blurred",
+    "description": "Simulated task: QR Q2 · blurred. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "Q03",
+    "public_id": "IRCTC-QR-REGRESSION-03-FOUNDATION",
+    "display_name": "IRCTC-inspired railway portal — QR Q3 · compressed",
+    "description": "Simulated task: QR Q3 · compressed. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "Q04",
+    "public_id": "ECHALLAN-QR-REGRESSION-04-FOUNDATION",
+    "display_name": "eChallan-inspired portal — QR Q4 · obscured",
+    "description": "Simulated task: QR Q4 · obscured. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "Q05",
+    "public_id": "GENERIC-QR-REGRESSION-05-FOUNDATION",
+    "display_name": "Generic simulated checkout — QR Q5 · expired",
+    "description": "Simulated task: QR Q5 · expired. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "A01",
+    "public_id": "STRIPE-AUTH-REGRESSION-01-FOUNDATION",
+    "display_name": "Stripe-inspired checkout — Authentication · modal · handoff",
+    "description": "Simulated task: Authentication · modal · handoff. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "A02",
+    "public_id": "STRIPE-AUTH-REGRESSION-02-FOUNDATION",
+    "display_name": "Stripe-inspired checkout — Authentication · iframe · otp expired",
+    "description": "Simulated task: Authentication · iframe · otp expired. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "A03",
+    "public_id": "STRIPE-AUTH-REGRESSION-03-FOUNDATION",
+    "display_name": "Stripe-inspired checkout — Authentication · popup · otp invalid",
+    "description": "Simulated task: Authentication · popup · otp invalid. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "A04",
+    "public_id": "STRIPE-AUTH-REGRESSION-04-FOUNDATION",
+    "display_name": "Stripe-inspired checkout — Authentication · redirect · otp delayed",
+    "description": "Simulated task: Authentication · redirect · otp delayed. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "A05",
+    "public_id": "STRIPE-AUTH-REGRESSION-05-FOUNDATION",
+    "display_name": "Stripe-inspired checkout — Authentication · modal · otp locked",
+    "description": "Simulated task: Authentication · modal · otp locked. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "A06",
+    "public_id": "STRIPE-AUTH-REGRESSION-06-FOUNDATION",
+    "display_name": "Stripe-inspired checkout — Authentication · modal · captcha",
+    "description": "Simulated task: Authentication · modal · captcha. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V2H01",
+    "public_id": "HOLDOUT-REGRESSION-01-FOUNDATION",
+    "display_name": "Shopify-inspired checkout — Holdout 1 · moss & mineral · one page mobile",
+    "description": "Simulated task: Holdout 1 · moss & mineral · one page mobile. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V2H02",
+    "public_id": "HOLDOUT-REGRESSION-02-FOUNDATION",
+    "display_name": "Shopify-inspired checkout — Holdout 2 · FORM / ROOM · three page mobile",
+    "description": "Simulated task: Holdout 2 · FORM / ROOM · three page mobile. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V2H03",
+    "public_id": "HOLDOUT-REGRESSION-03-FOUNDATION",
+    "display_name": "IRCTC-inspired railway portal — Holdout 3 · Berth and infant preferences",
+    "description": "Simulated task: Holdout 3 · Berth and infant preferences. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V2H04",
+    "public_id": "HOLDOUT-REGRESSION-04-FOUNDATION",
+    "display_name": "Passport Seva-inspired portal — Holdout 4 · Declarations with unfamiliar labels",
+    "description": "Simulated task: Holdout 4 · Declarations with unfamiliar labels. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V2H05",
+    "public_id": "HOLDOUT-REGRESSION-05-FOUNDATION",
+    "display_name": "eChallan-inspired portal — Holdout 5 · Resolve a pending transaction",
+    "description": "Simulated task: Holdout 5 · Resolve a pending transaction. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V2H06",
+    "public_id": "HOLDOUT-REGRESSION-06-FOUNDATION",
+    "display_name": "Stripe Link-inspired checkout — Holdout 6 · Correct stale saved billing",
+    "description": "Simulated task: Holdout 6 · Correct stale saved billing. Prepare link using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V2H07",
+    "public_id": "HOLDOUT-REGRESSION-07-FOUNDATION",
+    "display_name": "Stripe Link-inspired checkout — Holdout 7 · Link authentication recovery",
+    "description": "Simulated task: Holdout 7 · Link authentication recovery. Prepare link using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V2H08",
+    "public_id": "HOLDOUT-REGRESSION-08-FOUNDATION",
+    "display_name": "eChallan-inspired portal — Holdout 8 · QR Q4 · obscured",
+    "description": "Simulated task: Holdout 8 · QR Q4 · obscured. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-S01",
+    "public_id": "SHOPIFY-01-CLASSIC",
+    "display_name": "Shopify-inspired checkout — THREAD / FIELD · three page desktop",
+    "description": "Simulated task: THREAD / FIELD · three page desktop. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-S02",
+    "public_id": "SHOPIFY-02-CLASSIC",
+    "display_name": "Shopify-inspired checkout — THREAD / FIELD · express mobile",
+    "description": "Simulated task: THREAD / FIELD · express mobile. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-S03",
+    "public_id": "SHOPIFY-03-CLASSIC",
+    "display_name": "Shopify-inspired checkout — moss & mineral · one page desktop",
+    "description": "Simulated task: moss & mineral · one page desktop. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-S04",
+    "public_id": "SHOPIFY-04-CLASSIC",
+    "display_name": "Shopify-inspired checkout — moss & mineral · one page mobile",
+    "description": "Simulated task: moss & mineral · one page mobile. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-S05",
+    "public_id": "SHOPIFY-05-CLASSIC",
+    "display_name": "Shopify-inspired checkout — VOLT WORKS · three page desktop",
+    "description": "Simulated task: VOLT WORKS · three page desktop. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-S06",
+    "public_id": "SHOPIFY-06-CLASSIC",
+    "display_name": "Shopify-inspired checkout — VOLT WORKS · three page mobile",
+    "description": "Simulated task: VOLT WORKS · three page mobile. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-S07",
+    "public_id": "SHOPIFY-07-CLASSIC",
+    "display_name": "Shopify-inspired checkout — Basket & Stem · one page desktop",
+    "description": "Simulated task: Basket & Stem · one page desktop. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-S08",
+    "public_id": "SHOPIFY-08-CLASSIC",
+    "display_name": "Shopify-inspired checkout — Basket & Stem · one page mobile",
+    "description": "Simulated task: Basket & Stem · one page mobile. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-S09",
+    "public_id": "SHOPIFY-09-CLASSIC",
+    "display_name": "Shopify-inspired checkout — FORM / ROOM · three page desktop",
+    "description": "Simulated task: FORM / ROOM · three page desktop. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-S10",
+    "public_id": "SHOPIFY-10-CLASSIC",
+    "display_name": "Shopify-inspired checkout — FORM / ROOM · three page mobile",
+    "description": "Simulated task: FORM / ROOM · three page mobile. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-S11",
+    "public_id": "SHOPIFY-11-CLASSIC",
+    "display_name": "Shopify-inspired checkout — Orbit Coffee Club · express desktop",
+    "description": "Simulated task: Orbit Coffee Club · express desktop. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-S12",
+    "public_id": "SHOPIFY-12-CLASSIC",
+    "display_name": "Shopify-inspired checkout — Orbit Coffee Club · one page mobile",
+    "description": "Simulated task: Orbit Coffee Club · one page mobile. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-R01",
+    "public_id": "IRCTC-01-CLASSIC",
+    "display_name": "IRCTC-inspired railway portal — Three travellers, independent details",
+    "description": "Simulated task: Three travellers, independent details. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-R02",
+    "public_id": "IRCTC-02-CLASSIC",
+    "display_name": "IRCTC-inspired railway portal — Boarding is not destination",
+    "description": "Simulated task: Boarding is not destination. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-R03",
+    "public_id": "IRCTC-03-CLASSIC",
+    "display_name": "IRCTC-inspired railway portal — Berth and infant preferences",
+    "description": "Simulated task: Berth and infant preferences. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-R04",
+    "public_id": "IRCTC-04-CLASSIC",
+    "display_name": "IRCTC-inspired railway portal — Review a changed fare",
+    "description": "Simulated task: Review a changed fare. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-R05",
+    "public_id": "IRCTC-05-CLASSIC",
+    "display_name": "IRCTC-inspired railway portal — Legacy payment categories",
+    "description": "Simulated task: Legacy payment categories. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-R06",
+    "public_id": "IRCTC-06-CLASSIC",
+    "display_name": "IRCTC-inspired railway portal — Expired booking recovery",
+    "description": "Simulated task: Expired booking recovery. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-P01",
+    "public_id": "PASSPORT-01-CLASSIC",
+    "display_name": "Passport Seva-inspired portal — Choose an appointment centre",
+    "description": "Simulated task: Choose an appointment centre. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-P02",
+    "public_id": "PASSPORT-02-CLASSIC",
+    "display_name": "Passport Seva-inspired portal — The appointment slot changed",
+    "description": "Simulated task: The appointment slot changed. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-P03",
+    "public_id": "PASSPORT-03-CLASSIC",
+    "display_name": "Passport Seva-inspired portal — Interrupted gateway redirect",
+    "description": "Simulated task: Interrupted gateway redirect. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-P04",
+    "public_id": "PASSPORT-04-CLASSIC",
+    "display_name": "Passport Seva-inspired portal — Declarations with unfamiliar labels",
+    "description": "Simulated task: Declarations with unfamiliar labels. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-E01",
+    "public_id": "ECHALLAN-01-CLASSIC",
+    "display_name": "eChallan-inspired portal — Find the outstanding challan",
+    "description": "Simulated task: Find the outstanding challan. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-E02",
+    "public_id": "ECHALLAN-02-CLASSIC",
+    "display_name": "eChallan-inspired portal — Identity verification handoff",
+    "description": "Simulated task: Identity verification handoff. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-E03",
+    "public_id": "ECHALLAN-03-CLASSIC",
+    "display_name": "eChallan-inspired portal — Already settled — do not pay",
+    "description": "Simulated task: Already settled — do not pay. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-E04",
+    "public_id": "ECHALLAN-04-CLASSIC",
+    "display_name": "eChallan-inspired portal — Resolve a pending transaction",
+    "description": "Simulated task: Resolve a pending transaction. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-L01",
+    "public_id": "LINK-01-CLASSIC",
+    "display_name": "Stripe Link-inspired checkout — Returning customer, saved card",
+    "description": "Simulated task: Returning customer, saved card. Prepare link using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-L02",
+    "public_id": "LINK-02-CLASSIC",
+    "display_name": "Stripe Link-inspired checkout — New customer, no registration consent",
+    "description": "Simulated task: New customer, no registration consent. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-L03",
+    "public_id": "LINK-03-CLASSIC",
+    "display_name": "Stripe Link-inspired checkout — Correct stale saved billing",
+    "description": "Simulated task: Correct stale saved billing. Prepare link using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-L04",
+    "public_id": "LINK-04-CLASSIC",
+    "display_name": "Stripe Link-inspired checkout — Expired preferred saved card",
+    "description": "Simulated task: Expired preferred saved card. Prepare link using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-L05",
+    "public_id": "LINK-05-CLASSIC",
+    "display_name": "Stripe Link-inspired checkout — Link authentication recovery",
+    "description": "Simulated task: Link authentication recovery. Prepare link using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-L06",
+    "public_id": "LINK-06-CLASSIC",
+    "display_name": "Stripe Link-inspired checkout — Paired profile · embedded Link",
+    "description": "Simulated task: Paired profile · embedded Link. Prepare link using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-L06H",
+    "public_id": "LINK-06H-CLASSIC",
+    "display_name": "Stripe Link-inspired checkout — Paired profile · hosted Link",
+    "description": "Simulated task: Paired profile · hosted Link. Prepare link using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-L07",
+    "public_id": "LINK-07-CLASSIC",
+    "display_name": "Stripe Link-inspired checkout — Wrong remembered identity",
+    "description": "Simulated task: Wrong remembered identity. Prepare link using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-L08",
+    "public_id": "LINK-08-CLASSIC",
+    "display_name": "Stripe Link-inspired checkout — Respect an ordinary card preference",
+    "description": "Simulated task: Respect an ordinary card preference. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-L09",
+    "public_id": "LINK-09-CLASSIC",
+    "display_name": "Stripe Link-inspired checkout — New customer explicitly authorises registration",
+    "description": "Simulated task: New customer explicitly authorises registration. Prepare link using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-Q00",
+    "public_id": "RAZORPAY-QR-REGRESSION-00-CLASSIC",
+    "display_name": "Razorpay-inspired checkout — QR Q0 · clean",
+    "description": "Simulated task: QR Q0 · clean. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-Q01",
+    "public_id": "CASHFREE-QR-REGRESSION-01-CLASSIC",
+    "display_name": "Cashfree-inspired checkout — QR Q1 · small",
+    "description": "Simulated task: QR Q1 · small. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-Q02",
+    "public_id": "SHOPIFY-QR-REGRESSION-02-CLASSIC",
+    "display_name": "Shopify-inspired checkout — QR Q2 · blurred",
+    "description": "Simulated task: QR Q2 · blurred. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-Q03",
+    "public_id": "IRCTC-QR-REGRESSION-03-CLASSIC",
+    "display_name": "IRCTC-inspired railway portal — QR Q3 · compressed",
+    "description": "Simulated task: QR Q3 · compressed. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-Q04",
+    "public_id": "ECHALLAN-QR-REGRESSION-04-CLASSIC",
+    "display_name": "eChallan-inspired portal — QR Q4 · obscured",
+    "description": "Simulated task: QR Q4 · obscured. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-Q05",
+    "public_id": "GENERIC-QR-REGRESSION-05-CLASSIC",
+    "display_name": "Generic simulated checkout — QR Q5 · expired",
+    "description": "Simulated task: QR Q5 · expired. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-A01",
+    "public_id": "STRIPE-AUTH-REGRESSION-01-CLASSIC",
+    "display_name": "Stripe-inspired checkout — Authentication · modal · handoff",
+    "description": "Simulated task: Authentication · modal · handoff. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-A02",
+    "public_id": "STRIPE-AUTH-REGRESSION-02-CLASSIC",
+    "display_name": "Stripe-inspired checkout — Authentication · iframe · otp expired",
+    "description": "Simulated task: Authentication · iframe · otp expired. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-A03",
+    "public_id": "STRIPE-AUTH-REGRESSION-03-CLASSIC",
+    "display_name": "Stripe-inspired checkout — Authentication · popup · otp invalid",
+    "description": "Simulated task: Authentication · popup · otp invalid. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-A04",
+    "public_id": "STRIPE-AUTH-REGRESSION-04-CLASSIC",
+    "display_name": "Stripe-inspired checkout — Authentication · redirect · otp delayed",
+    "description": "Simulated task: Authentication · redirect · otp delayed. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-A05",
+    "public_id": "STRIPE-AUTH-REGRESSION-05-CLASSIC",
+    "display_name": "Stripe-inspired checkout — Authentication · modal · otp locked",
+    "description": "Simulated task: Authentication · modal · otp locked. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-A06",
+    "public_id": "STRIPE-AUTH-REGRESSION-06-CLASSIC",
+    "display_name": "Stripe-inspired checkout — Authentication · modal · captcha",
+    "description": "Simulated task: Authentication · modal · captcha. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-V2H01",
+    "public_id": "HOLDOUT-REGRESSION-01-CLASSIC",
+    "display_name": "Shopify-inspired checkout — Holdout 1 · moss & mineral · one page mobile",
+    "description": "Simulated task: Holdout 1 · moss & mineral · one page mobile. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-V2H02",
+    "public_id": "HOLDOUT-REGRESSION-02-CLASSIC",
+    "display_name": "Shopify-inspired checkout — Holdout 2 · FORM / ROOM · three page mobile",
+    "description": "Simulated task: Holdout 2 · FORM / ROOM · three page mobile. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-V2H03",
+    "public_id": "HOLDOUT-REGRESSION-03-CLASSIC",
+    "display_name": "IRCTC-inspired railway portal — Holdout 3 · Berth and infant preferences",
+    "description": "Simulated task: Holdout 3 · Berth and infant preferences. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-V2H04",
+    "public_id": "HOLDOUT-REGRESSION-04-CLASSIC",
+    "display_name": "Passport Seva-inspired portal — Holdout 4 · Declarations with unfamiliar labels",
+    "description": "Simulated task: Holdout 4 · Declarations with unfamiliar labels. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-V2H05",
+    "public_id": "HOLDOUT-REGRESSION-05-CLASSIC",
+    "display_name": "eChallan-inspired portal — Holdout 5 · Resolve a pending transaction",
+    "description": "Simulated task: Holdout 5 · Resolve a pending transaction. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-V2H06",
+    "public_id": "HOLDOUT-REGRESSION-06-CLASSIC",
+    "display_name": "Stripe Link-inspired checkout — Holdout 6 · Correct stale saved billing",
+    "description": "Simulated task: Holdout 6 · Correct stale saved billing. Prepare link using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-V2H07",
+    "public_id": "HOLDOUT-REGRESSION-07-CLASSIC",
+    "display_name": "Stripe Link-inspired checkout — Holdout 7 · Link authentication recovery",
+    "description": "Simulated task: Holdout 7 · Link authentication recovery. Prepare link using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-V2H08",
+    "public_id": "HOLDOUT-REGRESSION-08-CLASSIC",
+    "display_name": "eChallan-inspired portal — Holdout 8 · QR Q4 · obscured",
+    "description": "Simulated task: Holdout 8 · QR Q4 · obscured. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-ST01",
+    "public_id": "STRIPE-01-CLASSIC",
+    "display_name": "Stripe-inspired checkout — hosted",
+    "description": "Simulated task: hosted. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-ST02",
+    "public_id": "STRIPE-02-CLASSIC",
+    "display_name": "Stripe-inspired checkout — embedded",
+    "description": "Simulated task: embedded. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-ST03",
+    "public_id": "STRIPE-03-CLASSIC",
+    "display_name": "Stripe-inspired checkout — payment element",
+    "description": "Simulated task: payment element. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-RZ01",
+    "public_id": "RAZORPAY-01-CLASSIC",
+    "display_name": "Razorpay-inspired checkout — standard modal",
+    "description": "Simulated task: standard modal. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-RZ02",
+    "public_id": "RAZORPAY-02-CLASSIC",
+    "display_name": "Razorpay-inspired checkout — standard mobile",
+    "description": "Simulated task: standard mobile. Prepare upi app using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-RZ03",
+    "public_id": "RAZORPAY-03-CLASSIC",
+    "display_name": "Razorpay-inspired checkout — standard card",
+    "description": "Simulated task: standard card. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-CF01",
+    "public_id": "CASHFREE-01-CLASSIC",
+    "display_name": "Cashfree-inspired checkout — hosted",
+    "description": "Simulated task: hosted. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-CF02",
+    "public_id": "CASHFREE-02-CLASSIC",
+    "display_name": "Cashfree-inspired checkout — popup",
+    "description": "Simulated task: popup. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-CF03",
+    "public_id": "CASHFREE-03-CLASSIC",
+    "display_name": "Cashfree-inspired checkout — inline",
+    "description": "Simulated task: inline. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-CF04",
+    "public_id": "CASHFREE-04-CLASSIC",
+    "display_name": "Cashfree-inspired checkout — ios exception",
+    "description": "Simulated task: ios exception. Prepare upi vpa using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-G01",
+    "public_id": "GENERIC-01-CLASSIC",
+    "display_name": "Generic simulated checkout — compact",
+    "description": "Simulated task: compact. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-G02",
+    "public_id": "GENERIC-02-CLASSIC",
+    "display_name": "Generic simulated checkout — split address",
+    "description": "Simulated task: split address. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-G03",
+    "public_id": "GENERIC-03-CLASSIC",
+    "display_name": "Generic simulated checkout — address book",
+    "description": "Simulated task: address book. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-P05",
+    "public_id": "PASSPORT-05-CLASSIC",
+    "display_name": "Passport Seva-inspired portal — refreshed",
+    "description": "Simulated task: refreshed. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-E05",
+    "public_id": "ECHALLAN-05-CLASSIC",
+    "display_name": "eChallan-inspired portal — verification",
+    "description": "Simulated task: verification. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-E06",
+    "public_id": "ECHALLAN-06-CLASSIC",
+    "display_name": "eChallan-inspired portal — captcha handoff",
+    "description": "Simulated task: captcha handoff. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-X01",
+    "public_id": "GENERIC-STRESS-01-CLASSIC",
+    "display_name": "Generic simulated checkout — shadow stress",
+    "description": "Simulated task: shadow stress. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V21-X02",
+    "public_id": "GENERIC-STRESS-02-CLASSIC",
+    "display_name": "Generic simulated checkout — accessibility stress",
+    "description": "Simulated task: accessibility stress. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs. Historical fixture snapshot; separate from the active benchmark."
+  },
+  {
+    "canonical_id": "V3-S01",
+    "public_id": "SHOPIFY-01",
+    "display_name": "Shopify-inspired checkout — THREAD / FIELD · three page desktop",
+    "description": "Simulated task: THREAD / FIELD · three page desktop. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-S02",
+    "public_id": "SHOPIFY-02",
+    "display_name": "Shopify-inspired checkout — THREAD / FIELD · express mobile",
+    "description": "Simulated task: THREAD / FIELD · express mobile. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-S03",
+    "public_id": "SHOPIFY-03",
+    "display_name": "Shopify-inspired checkout — moss & mineral · one page desktop",
+    "description": "Simulated task: moss & mineral · one page desktop. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-S04",
+    "public_id": "SHOPIFY-04",
+    "display_name": "Shopify-inspired checkout — moss & mineral · one page mobile",
+    "description": "Simulated task: moss & mineral · one page mobile. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-S05",
+    "public_id": "SHOPIFY-05",
+    "display_name": "Shopify-inspired checkout — VOLT WORKS · three page desktop",
+    "description": "Simulated task: VOLT WORKS · three page desktop. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-S06",
+    "public_id": "SHOPIFY-06",
+    "display_name": "Shopify-inspired checkout — VOLT WORKS · three page mobile",
+    "description": "Simulated task: VOLT WORKS · three page mobile. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-S07",
+    "public_id": "SHOPIFY-07",
+    "display_name": "Shopify-inspired checkout — Basket & Stem · one page desktop",
+    "description": "Simulated task: Basket & Stem · one page desktop. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-S08",
+    "public_id": "SHOPIFY-08",
+    "display_name": "Shopify-inspired checkout — Basket & Stem · one page mobile",
+    "description": "Simulated task: Basket & Stem · one page mobile. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-S09",
+    "public_id": "SHOPIFY-09",
+    "display_name": "Shopify-inspired checkout — FORM / ROOM · three page desktop",
+    "description": "Simulated task: FORM / ROOM · three page desktop. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-S10",
+    "public_id": "SHOPIFY-10",
+    "display_name": "Shopify-inspired checkout — FORM / ROOM · three page mobile",
+    "description": "Simulated task: FORM / ROOM · three page mobile. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-S11",
+    "public_id": "SHOPIFY-11",
+    "display_name": "Shopify-inspired checkout — Orbit Coffee Club · express desktop",
+    "description": "Simulated task: Orbit Coffee Club · express desktop. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-S12",
+    "public_id": "SHOPIFY-12",
+    "display_name": "Shopify-inspired checkout — Orbit Coffee Club · one page mobile",
+    "description": "Simulated task: Orbit Coffee Club · one page mobile. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-R01",
+    "public_id": "IRCTC-01",
+    "display_name": "IRCTC-inspired railway portal — Three travellers, independent details",
+    "description": "Simulated task: Three travellers, independent details. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-R02",
+    "public_id": "IRCTC-02",
+    "display_name": "IRCTC-inspired railway portal — Boarding is not destination",
+    "description": "Simulated task: Boarding is not destination. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-R03",
+    "public_id": "IRCTC-03",
+    "display_name": "IRCTC-inspired railway portal — Berth and infant preferences",
+    "description": "Simulated task: Berth and infant preferences. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-R04",
+    "public_id": "IRCTC-04",
+    "display_name": "IRCTC-inspired railway portal — Review a changed fare",
+    "description": "Simulated task: Review a changed fare. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-R05",
+    "public_id": "IRCTC-05",
+    "display_name": "IRCTC-inspired railway portal — Legacy payment categories",
+    "description": "Simulated task: Legacy payment categories. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-R06",
+    "public_id": "IRCTC-06",
+    "display_name": "IRCTC-inspired railway portal — Expired booking recovery",
+    "description": "Simulated task: Expired booking recovery. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-P01",
+    "public_id": "PASSPORT-01",
+    "display_name": "Passport Seva-inspired portal — Choose an appointment centre",
+    "description": "Simulated task: Choose an appointment centre. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-P02",
+    "public_id": "PASSPORT-02",
+    "display_name": "Passport Seva-inspired portal — The appointment slot changed",
+    "description": "Simulated task: The appointment slot changed. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-P03",
+    "public_id": "PASSPORT-03",
+    "display_name": "Passport Seva-inspired portal — Interrupted gateway redirect",
+    "description": "Simulated task: Interrupted gateway redirect. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-P04",
+    "public_id": "PASSPORT-04",
+    "display_name": "Passport Seva-inspired portal — Declarations with unfamiliar labels",
+    "description": "Simulated task: Declarations with unfamiliar labels. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-E01",
+    "public_id": "ECHALLAN-01",
+    "display_name": "eChallan-inspired portal — Find the outstanding challan",
+    "description": "Simulated task: Find the outstanding challan. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-E02",
+    "public_id": "ECHALLAN-02",
+    "display_name": "eChallan-inspired portal — Identity verification handoff",
+    "description": "Simulated task: Identity verification handoff. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-E03",
+    "public_id": "ECHALLAN-03",
+    "display_name": "eChallan-inspired portal — Already settled — do not pay",
+    "description": "Simulated task: Already settled — do not pay. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-E04",
+    "public_id": "ECHALLAN-04",
+    "display_name": "eChallan-inspired portal — Resolve a pending transaction",
+    "description": "Simulated task: Resolve a pending transaction. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-L01",
+    "public_id": "LINK-01",
+    "display_name": "Stripe Link-inspired checkout — Returning customer, saved card",
+    "description": "Simulated task: Returning customer, saved card. Prepare link using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-L02",
+    "public_id": "LINK-02",
+    "display_name": "Stripe Link-inspired checkout — New customer, no registration consent",
+    "description": "Simulated task: New customer, no registration consent. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-L03",
+    "public_id": "LINK-03",
+    "display_name": "Stripe Link-inspired checkout — Correct stale saved billing",
+    "description": "Simulated task: Correct stale saved billing. Prepare link using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-L04",
+    "public_id": "LINK-04",
+    "display_name": "Stripe Link-inspired checkout — Expired preferred saved card",
+    "description": "Simulated task: Expired preferred saved card. Prepare link using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-L05",
+    "public_id": "LINK-05",
+    "display_name": "Stripe Link-inspired checkout — Link authentication recovery",
+    "description": "Simulated task: Link authentication recovery. Prepare link using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-L06",
+    "public_id": "LINK-06",
+    "display_name": "Stripe Link-inspired checkout — Paired profile · embedded Link",
+    "description": "Simulated task: Paired profile · embedded Link. Prepare link using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-L06H",
+    "public_id": "LINK-06H",
+    "display_name": "Stripe Link-inspired checkout — Paired profile · hosted Link",
+    "description": "Simulated task: Paired profile · hosted Link. Prepare link using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-L07",
+    "public_id": "LINK-07",
+    "display_name": "Stripe Link-inspired checkout — Wrong remembered identity",
+    "description": "Simulated task: Wrong remembered identity. Prepare link using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-L08",
+    "public_id": "LINK-08",
+    "display_name": "Stripe Link-inspired checkout — Respect an ordinary card preference",
+    "description": "Simulated task: Respect an ordinary card preference. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-L09",
+    "public_id": "LINK-09",
+    "display_name": "Stripe Link-inspired checkout — New customer explicitly authorises registration",
+    "description": "Simulated task: New customer explicitly authorises registration. Prepare link using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-Q00",
+    "public_id": "RAZORPAY-QR-REGRESSION-00",
+    "display_name": "Razorpay-inspired checkout — QR Q0 · clean",
+    "description": "Simulated task: QR Q0 · clean. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-Q01",
+    "public_id": "CASHFREE-QR-REGRESSION-01",
+    "display_name": "Cashfree-inspired checkout — QR Q1 · small",
+    "description": "Simulated task: QR Q1 · small. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-Q02",
+    "public_id": "SHOPIFY-QR-REGRESSION-02",
+    "display_name": "Shopify-inspired checkout — QR Q2 · blurred",
+    "description": "Simulated task: QR Q2 · blurred. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-Q03",
+    "public_id": "IRCTC-QR-REGRESSION-03",
+    "display_name": "IRCTC-inspired railway portal — QR Q3 · compressed",
+    "description": "Simulated task: QR Q3 · compressed. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-Q04",
+    "public_id": "ECHALLAN-QR-REGRESSION-04",
+    "display_name": "eChallan-inspired portal — QR Q4 · obscured",
+    "description": "Simulated task: QR Q4 · obscured. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-Q05",
+    "public_id": "GENERIC-QR-REGRESSION-05",
+    "display_name": "Generic simulated checkout — QR Q5 · expired",
+    "description": "Simulated task: QR Q5 · expired. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-A01",
+    "public_id": "STRIPE-AUTH-REGRESSION-01",
+    "display_name": "Stripe-inspired checkout — Authentication · modal · handoff",
+    "description": "Simulated task: Authentication · modal · handoff. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-A02",
+    "public_id": "STRIPE-AUTH-REGRESSION-02",
+    "display_name": "Stripe-inspired checkout — Authentication · iframe · otp expired",
+    "description": "Simulated task: Authentication · iframe · otp expired. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-A03",
+    "public_id": "STRIPE-AUTH-REGRESSION-03",
+    "display_name": "Stripe-inspired checkout — Authentication · popup · otp invalid",
+    "description": "Simulated task: Authentication · popup · otp invalid. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-A04",
+    "public_id": "STRIPE-AUTH-REGRESSION-04",
+    "display_name": "Stripe-inspired checkout — Authentication · redirect · otp delayed",
+    "description": "Simulated task: Authentication · redirect · otp delayed. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-A05",
+    "public_id": "STRIPE-AUTH-REGRESSION-05",
+    "display_name": "Stripe-inspired checkout — Authentication · modal · otp locked",
+    "description": "Simulated task: Authentication · modal · otp locked. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-A06",
+    "public_id": "STRIPE-AUTH-REGRESSION-06",
+    "display_name": "Stripe-inspired checkout — Authentication · modal · captcha",
+    "description": "Simulated task: Authentication · modal · captcha. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-V2H01",
+    "public_id": "HOLDOUT-REGRESSION-01",
+    "display_name": "Shopify-inspired checkout — Holdout 1 · moss & mineral · one page mobile",
+    "description": "Simulated task: Holdout 1 · moss & mineral · one page mobile. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-V2H02",
+    "public_id": "HOLDOUT-REGRESSION-02",
+    "display_name": "Shopify-inspired checkout — Holdout 2 · FORM / ROOM · three page mobile",
+    "description": "Simulated task: Holdout 2 · FORM / ROOM · three page mobile. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-V2H03",
+    "public_id": "HOLDOUT-REGRESSION-03",
+    "display_name": "IRCTC-inspired railway portal — Holdout 3 · Berth and infant preferences",
+    "description": "Simulated task: Holdout 3 · Berth and infant preferences. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-V2H04",
+    "public_id": "HOLDOUT-REGRESSION-04",
+    "display_name": "Passport Seva-inspired portal — Holdout 4 · Declarations with unfamiliar labels",
+    "description": "Simulated task: Holdout 4 · Declarations with unfamiliar labels. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-V2H05",
+    "public_id": "HOLDOUT-REGRESSION-05",
+    "display_name": "eChallan-inspired portal — Holdout 5 · Resolve a pending transaction",
+    "description": "Simulated task: Holdout 5 · Resolve a pending transaction. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-V2H06",
+    "public_id": "HOLDOUT-REGRESSION-06",
+    "display_name": "Stripe Link-inspired checkout — Holdout 6 · Correct stale saved billing",
+    "description": "Simulated task: Holdout 6 · Correct stale saved billing. Prepare link using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-V2H07",
+    "public_id": "HOLDOUT-REGRESSION-07",
+    "display_name": "Stripe Link-inspired checkout — Holdout 7 · Link authentication recovery",
+    "description": "Simulated task: Holdout 7 · Link authentication recovery. Prepare link using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-V2H08",
+    "public_id": "HOLDOUT-REGRESSION-08",
+    "display_name": "eChallan-inspired portal — Holdout 8 · QR Q4 · obscured",
+    "description": "Simulated task: Holdout 8 · QR Q4 · obscured. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-ST01",
+    "public_id": "STRIPE-01",
+    "display_name": "Stripe-inspired checkout — hosted",
+    "description": "Simulated task: hosted. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-ST02",
+    "public_id": "STRIPE-02",
+    "display_name": "Stripe-inspired checkout — embedded",
+    "description": "Simulated task: embedded. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-ST03",
+    "public_id": "STRIPE-03",
+    "display_name": "Stripe-inspired checkout — payment element",
+    "description": "Simulated task: payment element. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-RZ01",
+    "public_id": "RAZORPAY-01",
+    "display_name": "Razorpay-inspired checkout — standard modal",
+    "description": "Simulated task: standard modal. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-RZ02",
+    "public_id": "RAZORPAY-02",
+    "display_name": "Razorpay-inspired checkout — standard mobile",
+    "description": "Simulated task: standard mobile. Prepare upi app using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-RZ03",
+    "public_id": "RAZORPAY-03",
+    "display_name": "Razorpay-inspired checkout — standard card",
+    "description": "Simulated task: standard card. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-CF01",
+    "public_id": "CASHFREE-01",
+    "display_name": "Cashfree-inspired checkout — hosted",
+    "description": "Simulated task: hosted. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-CF02",
+    "public_id": "CASHFREE-02",
+    "display_name": "Cashfree-inspired checkout — popup",
+    "description": "Simulated task: popup. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-CF03",
+    "public_id": "CASHFREE-03",
+    "display_name": "Cashfree-inspired checkout — inline",
+    "description": "Simulated task: inline. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-CF04",
+    "public_id": "CASHFREE-04",
+    "display_name": "Cashfree-inspired checkout — ios exception",
+    "description": "Simulated task: ios exception. Prepare upi vpa using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-G01",
+    "public_id": "GENERIC-01",
+    "display_name": "Generic simulated checkout — compact",
+    "description": "Simulated task: compact. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-G02",
+    "public_id": "GENERIC-02",
+    "display_name": "Generic simulated checkout — split address",
+    "description": "Simulated task: split address. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-G03",
+    "public_id": "GENERIC-03",
+    "display_name": "Generic simulated checkout — address book",
+    "description": "Simulated task: address book. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-P05",
+    "public_id": "PASSPORT-05",
+    "display_name": "Passport Seva-inspired portal — refreshed",
+    "description": "Simulated task: refreshed. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-E05",
+    "public_id": "ECHALLAN-05",
+    "display_name": "eChallan-inspired portal — verification",
+    "description": "Simulated task: verification. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-E06",
+    "public_id": "ECHALLAN-06",
+    "display_name": "eChallan-inspired portal — captcha handoff",
+    "description": "Simulated task: captcha handoff. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-X01",
+    "public_id": "GENERIC-STRESS-01",
+    "display_name": "Generic simulated checkout — shadow stress",
+    "description": "Simulated task: shadow stress. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-X02",
+    "public_id": "GENERIC-STRESS-02",
+    "display_name": "Generic simulated checkout — accessibility stress",
+    "description": "Simulated task: accessibility stress. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-QR-razor-0",
+    "public_id": "RAZORPAY-QR-00",
+    "display_name": "Razorpay-inspired checkout — QR clean",
+    "description": "Simulated task: QR clean. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-QR-razor-1",
+    "public_id": "RAZORPAY-QR-01",
+    "display_name": "Razorpay-inspired checkout — QR small",
+    "description": "Simulated task: QR small. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-QR-razor-2",
+    "public_id": "RAZORPAY-QR-02",
+    "display_name": "Razorpay-inspired checkout — QR blurred",
+    "description": "Simulated task: QR blurred. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-QR-razor-3",
+    "public_id": "RAZORPAY-QR-03",
+    "display_name": "Razorpay-inspired checkout — QR compressed",
+    "description": "Simulated task: QR compressed. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-QR-razor-4",
+    "public_id": "RAZORPAY-QR-04",
+    "display_name": "Razorpay-inspired checkout — QR obscured",
+    "description": "Simulated task: QR obscured. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-QR-razor-5",
+    "public_id": "RAZORPAY-QR-05",
+    "display_name": "Razorpay-inspired checkout — QR expired",
+    "description": "Simulated task: QR expired. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-QR-cashfree-0",
+    "public_id": "CASHFREE-QR-00",
+    "display_name": "Cashfree-inspired checkout — QR clean",
+    "description": "Simulated task: QR clean. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-QR-cashfree-1",
+    "public_id": "CASHFREE-QR-01",
+    "display_name": "Cashfree-inspired checkout — QR small",
+    "description": "Simulated task: QR small. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-QR-cashfree-2",
+    "public_id": "CASHFREE-QR-02",
+    "display_name": "Cashfree-inspired checkout — QR blurred",
+    "description": "Simulated task: QR blurred. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-QR-cashfree-3",
+    "public_id": "CASHFREE-QR-03",
+    "display_name": "Cashfree-inspired checkout — QR compressed",
+    "description": "Simulated task: QR compressed. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-QR-cashfree-4",
+    "public_id": "CASHFREE-QR-04",
+    "display_name": "Cashfree-inspired checkout — QR obscured",
+    "description": "Simulated task: QR obscured. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-QR-cashfree-5",
+    "public_id": "CASHFREE-QR-05",
+    "display_name": "Cashfree-inspired checkout — QR expired",
+    "description": "Simulated task: QR expired. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-QR-generic-0",
+    "public_id": "GENERIC-QR-00",
+    "display_name": "Generic simulated checkout — QR clean",
+    "description": "Simulated task: QR clean. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-QR-generic-1",
+    "public_id": "GENERIC-QR-01",
+    "display_name": "Generic simulated checkout — QR small",
+    "description": "Simulated task: QR small. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-QR-generic-2",
+    "public_id": "GENERIC-QR-02",
+    "display_name": "Generic simulated checkout — QR blurred",
+    "description": "Simulated task: QR blurred. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-QR-generic-3",
+    "public_id": "GENERIC-QR-03",
+    "display_name": "Generic simulated checkout — QR compressed",
+    "description": "Simulated task: QR compressed. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-QR-generic-4",
+    "public_id": "GENERIC-QR-04",
+    "display_name": "Generic simulated checkout — QR obscured",
+    "description": "Simulated task: QR obscured. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-QR-generic-5",
+    "public_id": "GENERIC-QR-05",
+    "display_name": "Generic simulated checkout — QR expired",
+    "description": "Simulated task: QR expired. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-AUTH-modal-valid-handoff",
+    "public_id": "AUTH-MODAL-VALID-HANDOFF",
+    "display_name": "Stripe-inspired checkout — Modal authentication · valid · handoff",
+    "description": "Simulated task: Modal authentication · valid · handoff. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-AUTH-modal-valid-simulated_completion",
+    "public_id": "AUTH-MODAL-VALID-SIMULATED-COMPLETION",
+    "display_name": "Stripe-inspired checkout — Modal authentication · valid · simulated completion",
+    "description": "Simulated task: Modal authentication · valid · simulated completion. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-AUTH-modal-otp_expired-handoff",
+    "public_id": "AUTH-MODAL-EXPIRED-HANDOFF",
+    "display_name": "Stripe-inspired checkout — Modal authentication · otp expired · handoff",
+    "description": "Simulated task: Modal authentication · otp expired · handoff. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-AUTH-modal-otp_expired-simulated_completion",
+    "public_id": "AUTH-MODAL-EXPIRED-SIMULATED-COMPLETION",
+    "display_name": "Stripe-inspired checkout — Modal authentication · otp expired · simulated completion",
+    "description": "Simulated task: Modal authentication · otp expired · simulated completion. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-AUTH-modal-otp_invalid-handoff",
+    "public_id": "AUTH-MODAL-INVALID-HANDOFF",
+    "display_name": "Stripe-inspired checkout — Modal authentication · otp invalid · handoff",
+    "description": "Simulated task: Modal authentication · otp invalid · handoff. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-AUTH-modal-otp_invalid-simulated_completion",
+    "public_id": "AUTH-MODAL-INVALID-SIMULATED-COMPLETION",
+    "display_name": "Stripe-inspired checkout — Modal authentication · otp invalid · simulated completion",
+    "description": "Simulated task: Modal authentication · otp invalid · simulated completion. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-AUTH-modal-otp_delayed-handoff",
+    "public_id": "AUTH-MODAL-DELAYED-HANDOFF",
+    "display_name": "Stripe-inspired checkout — Modal authentication · otp delayed · handoff",
+    "description": "Simulated task: Modal authentication · otp delayed · handoff. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-AUTH-modal-otp_delayed-simulated_completion",
+    "public_id": "AUTH-MODAL-DELAYED-SIMULATED-COMPLETION",
+    "display_name": "Stripe-inspired checkout — Modal authentication · otp delayed · simulated completion",
+    "description": "Simulated task: Modal authentication · otp delayed · simulated completion. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-AUTH-iframe-valid-handoff",
+    "public_id": "AUTH-IFRAME-VALID-HANDOFF",
+    "display_name": "Stripe-inspired checkout — Iframe authentication · valid · handoff",
+    "description": "Simulated task: Iframe authentication · valid · handoff. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-AUTH-iframe-valid-simulated_completion",
+    "public_id": "AUTH-IFRAME-VALID-SIMULATED-COMPLETION",
+    "display_name": "Stripe-inspired checkout — Iframe authentication · valid · simulated completion",
+    "description": "Simulated task: Iframe authentication · valid · simulated completion. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-AUTH-iframe-otp_expired-handoff",
+    "public_id": "AUTH-IFRAME-EXPIRED-HANDOFF",
+    "display_name": "Stripe-inspired checkout — Iframe authentication · otp expired · handoff",
+    "description": "Simulated task: Iframe authentication · otp expired · handoff. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-AUTH-iframe-otp_expired-simulated_completion",
+    "public_id": "AUTH-IFRAME-EXPIRED-SIMULATED-COMPLETION",
+    "display_name": "Stripe-inspired checkout — Iframe authentication · otp expired · simulated completion",
+    "description": "Simulated task: Iframe authentication · otp expired · simulated completion. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-AUTH-iframe-otp_invalid-handoff",
+    "public_id": "AUTH-IFRAME-INVALID-HANDOFF",
+    "display_name": "Stripe-inspired checkout — Iframe authentication · otp invalid · handoff",
+    "description": "Simulated task: Iframe authentication · otp invalid · handoff. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-AUTH-iframe-otp_invalid-simulated_completion",
+    "public_id": "AUTH-IFRAME-INVALID-SIMULATED-COMPLETION",
+    "display_name": "Stripe-inspired checkout — Iframe authentication · otp invalid · simulated completion",
+    "description": "Simulated task: Iframe authentication · otp invalid · simulated completion. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-AUTH-iframe-otp_delayed-handoff",
+    "public_id": "AUTH-IFRAME-DELAYED-HANDOFF",
+    "display_name": "Stripe-inspired checkout — Iframe authentication · otp delayed · handoff",
+    "description": "Simulated task: Iframe authentication · otp delayed · handoff. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-AUTH-iframe-otp_delayed-simulated_completion",
+    "public_id": "AUTH-IFRAME-DELAYED-SIMULATED-COMPLETION",
+    "display_name": "Stripe-inspired checkout — Iframe authentication · otp delayed · simulated completion",
+    "description": "Simulated task: Iframe authentication · otp delayed · simulated completion. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-AUTH-popup-valid-handoff",
+    "public_id": "AUTH-POPUP-VALID-HANDOFF",
+    "display_name": "Stripe-inspired checkout — Popup authentication · valid · handoff",
+    "description": "Simulated task: Popup authentication · valid · handoff. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-AUTH-popup-valid-simulated_completion",
+    "public_id": "AUTH-POPUP-VALID-SIMULATED-COMPLETION",
+    "display_name": "Stripe-inspired checkout — Popup authentication · valid · simulated completion",
+    "description": "Simulated task: Popup authentication · valid · simulated completion. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-AUTH-popup-otp_expired-handoff",
+    "public_id": "AUTH-POPUP-EXPIRED-HANDOFF",
+    "display_name": "Stripe-inspired checkout — Popup authentication · otp expired · handoff",
+    "description": "Simulated task: Popup authentication · otp expired · handoff. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-AUTH-popup-otp_expired-simulated_completion",
+    "public_id": "AUTH-POPUP-EXPIRED-SIMULATED-COMPLETION",
+    "display_name": "Stripe-inspired checkout — Popup authentication · otp expired · simulated completion",
+    "description": "Simulated task: Popup authentication · otp expired · simulated completion. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-AUTH-popup-otp_invalid-handoff",
+    "public_id": "AUTH-POPUP-INVALID-HANDOFF",
+    "display_name": "Stripe-inspired checkout — Popup authentication · otp invalid · handoff",
+    "description": "Simulated task: Popup authentication · otp invalid · handoff. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-AUTH-popup-otp_invalid-simulated_completion",
+    "public_id": "AUTH-POPUP-INVALID-SIMULATED-COMPLETION",
+    "display_name": "Stripe-inspired checkout — Popup authentication · otp invalid · simulated completion",
+    "description": "Simulated task: Popup authentication · otp invalid · simulated completion. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-AUTH-popup-otp_delayed-handoff",
+    "public_id": "AUTH-POPUP-DELAYED-HANDOFF",
+    "display_name": "Stripe-inspired checkout — Popup authentication · otp delayed · handoff",
+    "description": "Simulated task: Popup authentication · otp delayed · handoff. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-AUTH-popup-otp_delayed-simulated_completion",
+    "public_id": "AUTH-POPUP-DELAYED-SIMULATED-COMPLETION",
+    "display_name": "Stripe-inspired checkout — Popup authentication · otp delayed · simulated completion",
+    "description": "Simulated task: Popup authentication · otp delayed · simulated completion. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-AUTH-redirect-valid-handoff",
+    "public_id": "AUTH-REDIRECT-VALID-HANDOFF",
+    "display_name": "Stripe-inspired checkout — Redirect authentication · valid · handoff",
+    "description": "Simulated task: Redirect authentication · valid · handoff. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-AUTH-redirect-valid-simulated_completion",
+    "public_id": "AUTH-REDIRECT-VALID-SIMULATED-COMPLETION",
+    "display_name": "Stripe-inspired checkout — Redirect authentication · valid · simulated completion",
+    "description": "Simulated task: Redirect authentication · valid · simulated completion. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-AUTH-redirect-otp_expired-handoff",
+    "public_id": "AUTH-REDIRECT-EXPIRED-HANDOFF",
+    "display_name": "Stripe-inspired checkout — Redirect authentication · otp expired · handoff",
+    "description": "Simulated task: Redirect authentication · otp expired · handoff. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-AUTH-redirect-otp_expired-simulated_completion",
+    "public_id": "AUTH-REDIRECT-EXPIRED-SIMULATED-COMPLETION",
+    "display_name": "Stripe-inspired checkout — Redirect authentication · otp expired · simulated completion",
+    "description": "Simulated task: Redirect authentication · otp expired · simulated completion. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-AUTH-redirect-otp_invalid-handoff",
+    "public_id": "AUTH-REDIRECT-INVALID-HANDOFF",
+    "display_name": "Stripe-inspired checkout — Redirect authentication · otp invalid · handoff",
+    "description": "Simulated task: Redirect authentication · otp invalid · handoff. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-AUTH-redirect-otp_invalid-simulated_completion",
+    "public_id": "AUTH-REDIRECT-INVALID-SIMULATED-COMPLETION",
+    "display_name": "Stripe-inspired checkout — Redirect authentication · otp invalid · simulated completion",
+    "description": "Simulated task: Redirect authentication · otp invalid · simulated completion. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-AUTH-redirect-otp_delayed-handoff",
+    "public_id": "AUTH-REDIRECT-DELAYED-HANDOFF",
+    "display_name": "Stripe-inspired checkout — Redirect authentication · otp delayed · handoff",
+    "description": "Simulated task: Redirect authentication · otp delayed · handoff. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-AUTH-redirect-otp_delayed-simulated_completion",
+    "public_id": "AUTH-REDIRECT-DELAYED-SIMULATED-COMPLETION",
+    "display_name": "Stripe-inspired checkout — Redirect authentication · otp delayed · simulated completion",
+    "description": "Simulated task: Redirect authentication · otp delayed · simulated completion. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-LAYOUT-device-desktop",
+    "public_id": "LAYOUT-DEVICE-DESKTOP",
+    "display_name": "Shopify-inspired checkout — Layout comparison · device · desktop",
+    "description": "Simulated task: Layout comparison · device · desktop. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-LAYOUT-device-mobile",
+    "public_id": "LAYOUT-DEVICE-MOBILE",
+    "display_name": "Shopify-inspired checkout — Layout comparison · device · mobile",
+    "description": "Simulated task: Layout comparison · device · mobile. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-LAYOUT-layout-one-page",
+    "public_id": "LAYOUT-LAYOUT-ONE-PAGE",
+    "display_name": "Shopify-inspired checkout — Layout comparison · layout · one page",
+    "description": "Simulated task: Layout comparison · layout · one page. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-LAYOUT-layout-three-page",
+    "public_id": "LAYOUT-LAYOUT-THREE-PAGE",
+    "display_name": "Shopify-inspired checkout — Layout comparison · layout · three page",
+    "description": "Simulated task: Layout comparison · layout · three page. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-LAYOUT-labels-standard",
+    "public_id": "LAYOUT-LABELS-STANDARD",
+    "display_name": "Shopify-inspired checkout — Layout comparison · labels · standard",
+    "description": "Simulated task: Layout comparison · labels · standard. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-LAYOUT-labels-unfamiliar",
+    "public_id": "LAYOUT-LABELS-UNFAMILIAR",
+    "display_name": "Shopify-inspired checkout — Layout comparison · labels · unfamiliar",
+    "description": "Simulated task: Layout comparison · labels · unfamiliar. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-LAYOUT-density-modern",
+    "public_id": "LAYOUT-DENSITY-MODERN",
+    "display_name": "Shopify-inspired checkout — Layout comparison · density · modern",
+    "description": "Simulated task: Layout comparison · density · modern. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-LAYOUT-density-dense",
+    "public_id": "LAYOUT-DENSITY-DENSE",
+    "display_name": "Shopify-inspired checkout — Layout comparison · density · dense",
+    "description": "Simulated task: Layout comparison · density · dense. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-LAYOUT-autofill-correct",
+    "public_id": "LAYOUT-AUTOFILL-CORRECT",
+    "display_name": "Shopify-inspired checkout — Layout comparison · autofill · correct",
+    "description": "Simulated task: Layout comparison · autofill · correct. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-LAYOUT-autofill-stale",
+    "public_id": "LAYOUT-AUTOFILL-STALE",
+    "display_name": "Shopify-inspired checkout — Layout comparison · autofill · stale",
+    "description": "Simulated task: Layout comparison · autofill · stale. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-merchant-ledger-card",
+    "public_id": "CHECKOUT-MERCHANT-LEDGER-CARD",
+    "display_name": "Generic simulated checkout — Merchant Ledger · card",
+    "description": "Simulated task: Merchant Ledger · card. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-merchant-ledger-upi_qr",
+    "public_id": "CHECKOUT-MERCHANT-LEDGER-UPI-QR",
+    "display_name": "Generic simulated checkout — Merchant Ledger · upi qr",
+    "description": "Simulated task: Merchant Ledger · upi qr. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-merchant-ledger-netbanking",
+    "public_id": "CHECKOUT-MERCHANT-LEDGER-NETBANKING",
+    "display_name": "Generic simulated checkout — Merchant Ledger · netbanking",
+    "description": "Simulated task: Merchant Ledger · netbanking. Prepare netbanking using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-merchant-ledger-cod",
+    "public_id": "CHECKOUT-MERCHANT-LEDGER-COD",
+    "display_name": "Generic simulated checkout — Merchant Ledger · cod",
+    "description": "Simulated task: Merchant Ledger · cod. Prepare cod using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-parcel-wizard-card",
+    "public_id": "CHECKOUT-PARCEL-WIZARD-CARD",
+    "display_name": "Generic simulated checkout — Parcel Wizard · card",
+    "description": "Simulated task: Parcel Wizard · card. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-parcel-wizard-upi_qr",
+    "public_id": "CHECKOUT-PARCEL-WIZARD-UPI-QR",
+    "display_name": "Generic simulated checkout — Parcel Wizard · upi qr",
+    "description": "Simulated task: Parcel Wizard · upi qr. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-parcel-wizard-netbanking",
+    "public_id": "CHECKOUT-PARCEL-WIZARD-NETBANKING",
+    "display_name": "Generic simulated checkout — Parcel Wizard · netbanking",
+    "description": "Simulated task: Parcel Wizard · netbanking. Prepare netbanking using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-parcel-wizard-cod",
+    "public_id": "CHECKOUT-PARCEL-WIZARD-COD",
+    "display_name": "Generic simulated checkout — Parcel Wizard · cod",
+    "description": "Simulated task: Parcel Wizard · cod. Prepare cod using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-market-dialog-card",
+    "public_id": "CHECKOUT-MARKET-DIALOG-CARD",
+    "display_name": "Generic simulated checkout — Market Dialog · card",
+    "description": "Simulated task: Market Dialog · card. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-market-dialog-upi_qr",
+    "public_id": "CHECKOUT-MARKET-DIALOG-UPI-QR",
+    "display_name": "Generic simulated checkout — Market Dialog · upi qr",
+    "description": "Simulated task: Market Dialog · upi qr. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-market-dialog-netbanking",
+    "public_id": "CHECKOUT-MARKET-DIALOG-NETBANKING",
+    "display_name": "Generic simulated checkout — Market Dialog · netbanking",
+    "description": "Simulated task: Market Dialog · netbanking. Prepare netbanking using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-market-dialog-cod",
+    "public_id": "CHECKOUT-MARKET-DIALOG-COD",
+    "display_name": "Generic simulated checkout — Market Dialog · cod",
+    "description": "Simulated task: Market Dialog · cod. Prepare cod using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-subscription-tabs-card",
+    "public_id": "CHECKOUT-SUBSCRIPTION-TABS-CARD",
+    "display_name": "Generic simulated checkout — Subscription Tabs · card",
+    "description": "Simulated task: Subscription Tabs · card. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-subscription-tabs-upi_qr",
+    "public_id": "CHECKOUT-SUBSCRIPTION-TABS-UPI-QR",
+    "display_name": "Generic simulated checkout — Subscription Tabs · upi qr",
+    "description": "Simulated task: Subscription Tabs · upi qr. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-subscription-tabs-netbanking",
+    "public_id": "CHECKOUT-SUBSCRIPTION-TABS-NETBANKING",
+    "display_name": "Generic simulated checkout — Subscription Tabs · netbanking",
+    "description": "Simulated task: Subscription Tabs · netbanking. Prepare netbanking using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-subscription-tabs-cod",
+    "public_id": "CHECKOUT-SUBSCRIPTION-TABS-COD",
+    "display_name": "Generic simulated checkout — Subscription Tabs · cod",
+    "description": "Simulated task: Subscription Tabs · cod. Prepare cod using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-grocery-accordion-card",
+    "public_id": "CHECKOUT-GROCERY-ACCORDION-CARD",
+    "display_name": "Generic simulated checkout — Grocery Accordion · card",
+    "description": "Simulated task: Grocery Accordion · card. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-grocery-accordion-upi_qr",
+    "public_id": "CHECKOUT-GROCERY-ACCORDION-UPI-QR",
+    "display_name": "Generic simulated checkout — Grocery Accordion · upi qr",
+    "description": "Simulated task: Grocery Accordion · upi qr. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-grocery-accordion-netbanking",
+    "public_id": "CHECKOUT-GROCERY-ACCORDION-NETBANKING",
+    "display_name": "Generic simulated checkout — Grocery Accordion · netbanking",
+    "description": "Simulated task: Grocery Accordion · netbanking. Prepare netbanking using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-grocery-accordion-cod",
+    "public_id": "CHECKOUT-GROCERY-ACCORDION-COD",
+    "display_name": "Generic simulated checkout — Grocery Accordion · cod",
+    "description": "Simulated task: Grocery Accordion · cod. Prepare cod using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-electronics-elements-card",
+    "public_id": "CHECKOUT-ELECTRONICS-ELEMENTS-CARD",
+    "display_name": "Generic simulated checkout — Electronics Elements · card",
+    "description": "Simulated task: Electronics Elements · card. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-electronics-elements-upi_qr",
+    "public_id": "CHECKOUT-ELECTRONICS-ELEMENTS-UPI-QR",
+    "display_name": "Generic simulated checkout — Electronics Elements · upi qr",
+    "description": "Simulated task: Electronics Elements · upi qr. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-electronics-elements-netbanking",
+    "public_id": "CHECKOUT-ELECTRONICS-ELEMENTS-NETBANKING",
+    "display_name": "Generic simulated checkout — Electronics Elements · netbanking",
+    "description": "Simulated task: Electronics Elements · netbanking. Prepare netbanking using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-electronics-elements-cod",
+    "public_id": "CHECKOUT-ELECTRONICS-ELEMENTS-COD",
+    "display_name": "Generic simulated checkout — Electronics Elements · cod",
+    "description": "Simulated task: Electronics Elements · cod. Prepare cod using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-furniture-drawer-card",
+    "public_id": "CHECKOUT-FURNITURE-DRAWER-CARD",
+    "display_name": "Generic simulated checkout — Furniture Drawer · card",
+    "description": "Simulated task: Furniture Drawer · card. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-furniture-drawer-upi_qr",
+    "public_id": "CHECKOUT-FURNITURE-DRAWER-UPI-QR",
+    "display_name": "Generic simulated checkout — Furniture Drawer · upi qr",
+    "description": "Simulated task: Furniture Drawer · upi qr. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-furniture-drawer-netbanking",
+    "public_id": "CHECKOUT-FURNITURE-DRAWER-NETBANKING",
+    "display_name": "Generic simulated checkout — Furniture Drawer · netbanking",
+    "description": "Simulated task: Furniture Drawer · netbanking. Prepare netbanking using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-furniture-drawer-cod",
+    "public_id": "CHECKOUT-FURNITURE-DRAWER-COD",
+    "display_name": "Generic simulated checkout — Furniture Drawer · cod",
+    "description": "Simulated task: Furniture Drawer · cod. Prepare cod using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-books-inline-card",
+    "public_id": "CHECKOUT-BOOKS-INLINE-CARD",
+    "display_name": "Generic simulated checkout — Books Inline · card",
+    "description": "Simulated task: Books Inline · card. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-books-inline-upi_qr",
+    "public_id": "CHECKOUT-BOOKS-INLINE-UPI-QR",
+    "display_name": "Generic simulated checkout — Books Inline · upi qr",
+    "description": "Simulated task: Books Inline · upi qr. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-books-inline-netbanking",
+    "public_id": "CHECKOUT-BOOKS-INLINE-NETBANKING",
+    "display_name": "Generic simulated checkout — Books Inline · netbanking",
+    "description": "Simulated task: Books Inline · netbanking. Prepare netbanking using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-books-inline-cod",
+    "public_id": "CHECKOUT-BOOKS-INLINE-COD",
+    "display_name": "Generic simulated checkout — Books Inline · cod",
+    "description": "Simulated task: Books Inline · cod. Prepare cod using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-donation-stack-card",
+    "public_id": "CHECKOUT-DONATION-STACK-CARD",
+    "display_name": "Generic simulated checkout — Donation Stack · card",
+    "description": "Simulated task: Donation Stack · card. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-donation-stack-upi_qr",
+    "public_id": "CHECKOUT-DONATION-STACK-UPI-QR",
+    "display_name": "Generic simulated checkout — Donation Stack · upi qr",
+    "description": "Simulated task: Donation Stack · upi qr. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-donation-stack-netbanking",
+    "public_id": "CHECKOUT-DONATION-STACK-NETBANKING",
+    "display_name": "Generic simulated checkout — Donation Stack · netbanking",
+    "description": "Simulated task: Donation Stack · netbanking. Prepare netbanking using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-donation-stack-cod",
+    "public_id": "CHECKOUT-DONATION-STACK-COD",
+    "display_name": "Generic simulated checkout — Donation Stack · cod",
+    "description": "Simulated task: Donation Stack · cod. Prepare cod using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-travel-columns-card",
+    "public_id": "CHECKOUT-TRAVEL-COLUMNS-CARD",
+    "display_name": "Generic simulated checkout — Travel Columns · card",
+    "description": "Simulated task: Travel Columns · card. Prepare card using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-travel-columns-upi_qr",
+    "public_id": "CHECKOUT-TRAVEL-COLUMNS-UPI-QR",
+    "display_name": "Generic simulated checkout — Travel Columns · upi qr",
+    "description": "Simulated task: Travel Columns · upi qr. Prepare upi qr using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-travel-columns-netbanking",
+    "public_id": "CHECKOUT-TRAVEL-COLUMNS-NETBANKING",
+    "display_name": "Generic simulated checkout — Travel Columns · netbanking",
+    "description": "Simulated task: Travel Columns · netbanking. Prepare netbanking using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  },
+  {
+    "canonical_id": "V3-I-travel-columns-cod",
+    "public_id": "CHECKOUT-TRAVEL-COLUMNS-COD",
+    "display_name": "Generic simulated checkout — Travel Columns · cod",
+    "description": "Simulated task: Travel Columns · cod. Prepare cod using the supplied synthetic customer data and follow the task’s verification or handoff requirements. No real transaction occurs."
+  }
+]

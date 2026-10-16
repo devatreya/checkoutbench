@@ -11,13 +11,13 @@ FROZEN = ROOT / "research/release.json"
 def source_hashes():
     paths = [
         p
-        for folder in ("backend", "scenarios", "checkout_fixtures", "scripts/research")
+        for folder in ("backend", "scenarios", "checkout_fixtures", "scripts/research", "scripts/diagnostics")
         for p in (ROOT / folder).rglob("*")
         if p.is_file() and p.suffix in (".py", ".js", ".css", ".html")
     ]
     paths += [
         ROOT / p
-        for p in ("pyproject.toml", "uv.lock", "research/model-provenance.json")
+        for p in ("pyproject.toml", "uv.lock", "research/model-provenance.json", "scenarios/identities.json", "scripts/diagnostics/venus_requirements.txt", "scripts/diagnostics/venus_requirements.lock.txt", "scripts/diagnostics/venus_artifact_manifest.json")
     ]
     return {
         str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
@@ -38,14 +38,40 @@ def release(verify=False):
     if not FROZEN.exists():
         raise ValueError("Research release has not been frozen")
     m = json.loads(FROZEN.read_text())
-    if verify and (
-        build_manifest()["manifest_hash"] != m["manifest_hash"]
-        or source_hashes() != m["source_hashes"]
-    ):
-        raise ValueError(
-            "Frozen research release differs from source; audit and freeze a new release before execution"
-        )
+    if verify:
+        if build_manifest()["manifest_hash"] != m["manifest_hash"]:
+            raise ValueError("Frozen scenario manifest differs from canonical tasks")
+        from backend.research.runtime_binding import audited_runtime
+
+        audited_runtime(m, source_hashes())
     return m
+
+
+def runtime_identity(manifest=None, *, require_audit=False):
+    """Keep immutable task release identity separate from executable runtime."""
+    from backend.research.runtime_binding import audited_runtime
+
+    m = manifest or release()
+    sources = source_hashes()
+    try:
+        binding = audited_runtime(m, sources)
+        approved = True
+    except ValueError:
+        if require_audit:
+            raise
+        binding, approved = None, False
+    return {
+        "runtime_source_hash": digest(sources),
+        "runtime_binding_hash": binding["binding_hash"] if binding else None,
+        "runtime_audited": approved,
+    }
+
+
+def protocol_hash(settings, release_hash, runtime=None):
+    identity = {"settings": settings, "release_hash": release_hash}
+    if runtime:
+        identity["runtime"] = runtime
+    return digest(identity)
 
 
 def review_status(manifest):
@@ -93,7 +119,7 @@ def readiness():
     reviews = review_status(m)
     verified = checkpoint_records()
     checks = {
-        "frozen_sources_match": m["source_hashes"] == source_hashes(),
+        "execution_sources_verified": runtime_identity(m)["runtime_audited"],
         "ground_truth_independently_reviewed": reviews[
             "independent_human_review_complete"
         ],
@@ -145,7 +171,7 @@ def readiness():
     pilot = all(
         checks[k]
         for k in (
-            "frozen_sources_match",
+            "execution_sources_verified",
             "ground_truth_independently_reviewed",
             "all_four_checkpoints_verified",
             "genuine_hybrid_smoke",
@@ -221,6 +247,7 @@ def execution_manifest(config, s, model, browser_version=None):
         if k not in ("models", "scenarios", "spending_cap")
     }
     m = release()
+    runtime = runtime_identity(m)
     return {
         "benchmark_version": "3.0",
         "fixture_engine_version": "2.1",
@@ -231,20 +258,20 @@ def execution_manifest(config, s, model, browser_version=None):
         "implementation_family": s.get("implementation_family", "shared-v21-client"),
         "research_track": s.get("research_track"),
         "research_split": s.get("research_split"),
-        "research_protocol_hash": digest(
-            {"settings": settings, "release_hash": m["release_hash"]}
-        ),
+        "research_protocol_hash": protocol_hash(settings, m["release_hash"], runtime),
+        **runtime,
         "execution_manifest": {
             "standard_run_all": config.get("research_release") == m["release"]
             and config.get("scenarios") == m["scenario_ids"],
             "settings": settings,
             "scenario_manifest_hash": m["manifest_hash"],
             "source_hash": m["source_hash"],
+            **runtime,
             "checkpoint": checkpoint_records().get(model),
             "os": platform.platform(),
             "python": sys.version.split()[0],
             "browser_version": browser_version,
-            "adapter_hash": m["source_hashes"].get("backend/adapters/specialists.py"),
+            "adapter_hash": source_hashes().get("backend/adapters/venus.py" if model == "ui-venus" else "backend/adapters/specialists.py"),
             "warmup": "none; new adapter per trial",
             "precision": "recorded by inference backend; missing values are not inferred",
             "quantisation": None,
@@ -272,6 +299,10 @@ def validate_checkpoints(models):
                     f"{key}: exact checkpoint and real inference verification required"
                 )
             if key == "hybrid":
+                continue
+            if key == "ui-venus":
+                from backend.adapters.venus_verification import verify_record
+                verify_record(r)
                 continue
             prefix = SPECS[key][0]
             device = os.getenv(prefix + "_DEVICE", "auto")

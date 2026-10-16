@@ -1,0 +1,231 @@
+{
+  "schema": "checkoutbench-runtime-binding-1",
+  "frozen_release_hash": "ca8a3a4d939fce39986e723d33203d9c76fb40bf5954e707204e252ab62332ee",
+  "scenario_manifest_hash": "0f08c4d2c46d05e57484ec67f6b194af012488841355ce7451e1620d3fa93d97",
+  "frozen_source_hash": "7cc7f97b0149964165609a1c08b75e43a612359013a2e313c9c48f6abf3edb0a",
+  "source_hash": "2a508b5aa668fec3083fe1d8cc1397391bbd8701d7d549f744e60550a277a91f",
+  "source_hashes": {
+    "backend/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "backend/adapters/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "backend/adapters/base.py": "ec545da6e3a2b83bcf2f0c4c0ae52f18d78d23aae4057d51337ca0e037a58be7",
+    "backend/adapters/catalog.py": "5e4a933a3d0912e6797671b81a4afad9b120cba06e633c6a40cfba065085b870",
+    "backend/adapters/openrouter.py": "50d2a1dafe3ff39a8597015638285055fc9b20568d0bc3d9148df5210f7e3d1f",
+    "backend/adapters/specialists.py": "7731a9ba7bf07184ef0196565b0fbe3d0cb17a8030f8e82c6bdd53a9313ebb27",
+    "backend/adapters/venus.py": "2bfe377f78684b6aea2d9b682acbf2ea5c915abc4571748ba4751e722e39cda7",
+    "backend/adapters/venus_verification.py": "0ccc0ad63b867c51d88fe8684349f134c1973e55103e96bad4793f19667a69d4",
+    "backend/app.py": "1ae7357334d0744605407bfbb3cfe7b8539514f1c461fa2c146894bc19c939a8",
+    "backend/authentication.py": "e8e1e20a65ec10346c2cb40d96d74f20165a3cbf45f2f7497d6906de18e0987f",
+    "backend/browser/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "backend/browser/execution.py": "44e9366bf5f014879120534d293ae992f226962d7305a5f63cc27d7bf906ac74",
+    "backend/browser/security.py": "97b48b847c4ec956e7700a6cc0a6122e79d039d284fb8882f89f42b6b95b1f5d",
+    "backend/browser/v2.py": "6d1018286f0e6d2cb3d12d5cb3acba07214d8c9bd5eda8bf17994a5a02e4c1ac",
+    "backend/browser/v21.py": "b7243fd5326d146830ad7e6c855f9d408c3ac3379b93a0655764182235cababc",
+    "backend/browser/visual.py": "23114977511b9edbcc648f826729df143012dd77a4ee82007d43458fc55ebb2b",
+    "backend/evaluator/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "backend/evaluator/scoring.py": "be3aa7f9e9fae576c6ed7c626699c305812d66b22b9ec9626928e9c49d76c95b",
+    "backend/evaluator/semantic.py": "bf79849b038d43932bad97d62fbc903642856040898ba85fb2dcb6ab773007b4",
+    "backend/evaluator/v2.py": "0838faff37d2f3120330000268d938f024728185a7c91fd63f14a8a09de55da5",
+    "backend/fixtures.py": "126db908bc004fe5491d7f59ed7b8dbe18f97247275a3dafe988951cc697f099",
+    "backend/main.py": "fc5b0489b81607180af81b592597b63abb718c84bc16308bbd35cd44fbcfe069",
+    "backend/presentation.py": "a22a66ce6154ce3dab6fa43e141e71c7adb83329400ee76d3108ced1aae8076a",
+    "backend/qr.py": "eccbd06a99d84415698bdca7ae373cd346163ca32b4921b2083a07a7a542d465",
+    "backend/research/__init__.py": "8044b52e1c3e222d94523eb1f0eb55b4eef11dca05ab6de8011203b8ddd9a855",
+    "backend/research/api.py": "e8423ba8636e99b9634994c5a2874ace1eb6a0367585544c070f3c8a7770c5fd",
+    "backend/research/export.py": "f41b32a7c8b87d452704b6493cc07a2e55600f9e537531f0e19c6c44e3a62698",
+    "backend/research/holdout.py": "44250d9012940195f96b6c3baa4968c2f65e20ac54cad0d18ec195e37d218e8c",
+    "backend/research/measurement.py": "90c0198a0df9124d62d39e2b66e3846746f553e2c5a91f7128c53909f10b2b35",
+    "backend/research/official.py": "274b62005c78fd8f36ec8d77f56282d79c585371075af076690ce30f653b2cdc",
+    "backend/research/protocol.py": "91dac96bd7651132679e5a7e075d31845548b80601176021f0a36d0bf44c59ff",
+    "backend/research/runtime_binding.py": "b695be0a0e5958cb688b9a6f46777bc25f20934f568dd080a72122f854c7cee7",
+    "backend/research/schema.py": "87a8d16ffac9bebf2cc910f5bd3a9caed836093d1926518372746045feb5c218",
+    "backend/research/statistics.py": "aeec4b12384b5d713c8df4f11c1f358b36712b06663bc724d934ba2f48fd91f6",
+    "backend/runner/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "backend/runner/engine.py": "b378af0b981295967c591e46f525d4e5f5b689a1573d3144a6588d5c7a26cc4e",
+    "backend/sandboxes.py": "4ba6d13f7c790e9f15824f42ee8d674de6aaf69dc7908939f9792a541a285984",
+    "backend/storage/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "backend/storage/database.py": "4aec16e73d814118ec63f67bf3c0ca5fa1d83d9d480d738359277624b179d5d5",
+    "backend/workflows.py": "9c5a7077c65df8f2cc71658ab0f362b368f4529cce67b12a69b1a0629421c0c7",
+    "backend/workflows_v21.py": "06e51c2d960e13befe0770e6bac2dc973a1b0627c7c35fd9eaf8f9e3fb9c5525",
+    "checkout_fixtures/card.html": "d762e91292864eeb1207c5399010ffdc359a410f6bae61f99a4a08ee85fa0801",
+    "checkout_fixtures/card.js": "c1b229babfb56d350c8eb48da74d8a0c0699405b340d7659d0ff5c3b817c7aa6",
+    "checkout_fixtures/checkout.css": "e867848799e4b041e84694039cc5f8213c3e90ac7858a63c597c71b1c8a279ff",
+    "checkout_fixtures/checkout.js": "7d19ff8321ad4b80b8679b581ae1a9a469bbbfd2036e9a5c574bd427961fb7c0",
+    "checkout_fixtures/index.html": "2f42648e7ca5791c362a1b539a985a9a6d2ea48ba78100712735c539cc3fb8e0",
+    "checkout_fixtures/research/base.css": "13b131c98ff337329c73cc24b623adc6dbd9756b79a0d7bb0eb09b37faa1145b",
+    "checkout_fixtures/research/books-inline.html": "04938e1bab0fb5316f4db97798862bf0533051646e7306dc61f477ce858778b6",
+    "checkout_fixtures/research/books-inline.js": "79ed802bd5e76f388f9c54b7e23261d0d750a4e39b821daadb0c84edbda41f4b",
+    "checkout_fixtures/research/bridge.js": "9e54ff6748c1c87ddce60f1c5fa9d4b53cb16232a2b0497c70bb61c23d4dd1a6",
+    "checkout_fixtures/research/donation-stack.html": "6d6b218edf5bacacff202ec7c3b05b28d8ccf897f8e37ba708521ba8574af166",
+    "checkout_fixtures/research/donation-stack.js": "0fa559a967c43cef27ff39f20798085610f1443d66a5ab2fe5246c3614c88738",
+    "checkout_fixtures/research/electronics-elements.html": "0637c78ebb669481a8eb6dbc198bd8f35794da2fd654b4cc8cf0f1279fc99c4e",
+    "checkout_fixtures/research/electronics-elements.js": "874ba633a7c5c9b384746ac753c82e3077951ac79465b00506e21f21f33b0e8b",
+    "checkout_fixtures/research/furniture-drawer.html": "9d380f8287522f1c4ba4546577c3791327e1110349b41a367e2aa3b9ae9e488c",
+    "checkout_fixtures/research/furniture-drawer.js": "710ca0d15d8865de6e4b3e5a70e6a2f4978e7170906aebf98feff7acc36dacd2",
+    "checkout_fixtures/research/grocery-accordion.html": "d72e1d677de85112a64adeb28cac4547fa8b412f840e130a78666266dba1c6aa",
+    "checkout_fixtures/research/grocery-accordion.js": "949c40b33c6078b3abb11d11994b63a46bcc4450c387ba6fc050f41bb63cd08d",
+    "checkout_fixtures/research/market-dialog.html": "2198debe102ff14874b8290f4106301aa2a124aa8ae60442fbf9be361af05a36",
+    "checkout_fixtures/research/market-dialog.js": "73577384df1bc54178f7a6417228f0da372a3b3c0f560a54876547d498da55cc",
+    "checkout_fixtures/research/merchant-ledger.html": "89dbeee98b1595968b2fe08427e951c35546aad5ce4dc51d1c4dfd9cba337e34",
+    "checkout_fixtures/research/merchant-ledger.js": "c159a30edce5d2162ec26983cd30c1d0c51968f35bc761b8133a6e1fcf261bfd",
+    "checkout_fixtures/research/parcel-wizard.html": "08f6e1e8888f763253189ca5cf394744f0a4d56a0b2f063cfc4d4ee92b9fae0a",
+    "checkout_fixtures/research/parcel-wizard.js": "37543d17d6e39bc065e38174aceb4bcaf04849614ce6b20d2d01f66e9c8fdb07",
+    "checkout_fixtures/research/subscription-tabs.html": "16155a86c9a6a21edb3455e58caa7cbf0c26ff797415a36ed897a8b564801a0e",
+    "checkout_fixtures/research/subscription-tabs.js": "64a3a4354f8c3a5fa64651c890b5feb2d7957f2f92ce7c941de350e93e95b65e",
+    "checkout_fixtures/research/travel-columns.html": "61897b2e8165c49ef31800029aba3cb154057f63ccfb267c725c75b8e35af7b3",
+    "checkout_fixtures/research/travel-columns.js": "5aba15adf7dd2075b2f00369d25fde7104fbddfb30f113af6ffb201f9e80af89",
+    "checkout_fixtures/v2-base.css": "bb80ae2af4a5500162fe0de9187eadce05ef1e2fb3bbd2c804a044eb367ad6a3",
+    "checkout_fixtures/v2.css": "251a5585536ac2534884f347a525a521d6f0837f862c8c401cbe152103e8a0f4",
+    "checkout_fixtures/v2.html": "e048a89a04cb42d3efaca4bbf8f35ad912b30cfb65d7b7aac8fcc4b3e2fb433a",
+    "checkout_fixtures/v2.js": "4345d73b080deae9afa981881a1cf9fc9adfa7afb2646c063ac24f8242ff211a",
+    "checkout_fixtures/v21-extension.js": "aeba3c7e654ecec4cd19352c992ebe6b0d88f3f4630dcf7d03b8bbe8f68cd858",
+    "checkout_fixtures/v21.css": "0e06b40e9ef2465b0ac57cf1c4565ff35b33decef30081fbd2e140e525d9198c",
+    "checkout_fixtures/v21.html": "69e8a8912b18ef3975129610682ec8cdde6ca058037c5107aff2a54a5c7a5ff9",
+    "checkout_fixtures/v21.js": "e4b793a307b9bb5cadeed9ce775a5c8a5e4691a8b4c09cc7ee55d42bb5f3df48",
+    "pyproject.toml": "df1c31e775cb982cf2b71dc6b38996d9f14980f4b710c572afdf34b4121074a1",
+    "research/model-provenance.json": "4dcf6d37d4cf42de0412222568836859f4e16c93af55e3e592a6b2c5e3f5187e",
+    "scenarios/catalog.py": "9d0810ff005e2e6c89df60a787a48f8237989e46f8c78c66acd0f20a58b287ae",
+    "scenarios/customer.py": "16ceab10cc56f9eb491085aea376d71104371bd81bd7c79f3b4d4b4eb2eb1470",
+    "scenarios/identities.json": "f07da068c8bff5dc6f624d23e6ab88e08f9fa5a6a57a2a72920636087f25eecc",
+    "scenarios/identity.py": "fd6f8874714acdb68a205b14e0c52eae03e5d14ab23fb1526a0f6f6c8b696c1d",
+    "scenarios/provenance.py": "dc02e7e72a092b21c3f26ad03060f5665af9cfe4ff33e411449ae6c2dfd21ec0",
+    "scenarios/research.py": "d2d8a2f1d26f80b744418cc932a7f974e611973f940e84f65b22119b8e4d217e",
+    "scenarios/v2.py": "a2cb5dfda2ecb2a07efabb35e2034581390a1164abc0d0959d8b130e4966d943",
+    "scenarios/v21.py": "8b14876f260c3ff160a1d1a40c0ea9420af4bea8b36a4a3a4b97de71048b8211",
+    "scripts/diagnostics/cua_generalization.py": "e4839f678237c201804dc24c8370a637ac6e2a838266a602cf440c699f81e771",
+    "scripts/diagnostics/venus_artifact_manifest.json": "4ca11e3a68fdd1e8ffe153c7f522bccec66041a2b0f4c4b55c11994a34a5769b",
+    "scripts/diagnostics/venus_capture.py": "c1eed8339242d540f2cb38effc2fb3d70e65c9e9b9ef423c5dce595075a05cbf",
+    "scripts/diagnostics/venus_evaluate.py": "83650c25acb1abbf714c429e59b298be935a003404e6e5f93be4e326c4d22ae0",
+    "scripts/diagnostics/venus_probe.py": "06770eafd9ed7f07b3750d92027a12b48e255a002e279d4680a931b237b32beb",
+    "scripts/diagnostics/venus_requirements.lock.txt": "e981a6010c57e039041e634a0317cc24f9233750e2326338890137173d685414",
+    "scripts/diagnostics/venus_requirements.txt": "ceaa3b609df8399142f11eb2c69c100dd96ff3c234813d7cc3e3abe8401c77f4",
+    "scripts/diagnostics/venus_setup.py": "913e1125d8c1382802681c0b0cd6bbe464a51ec7bfa4fd36f8dc78c7951d591b",
+    "scripts/diagnostics/venus_verify.py": "1445c81334c96449d235d2d0cf4712b3a6dfed3d975397a97c4b7ed41583b9c6",
+    "scripts/diagnostics/venus_worker.py": "a72dda444c0d9772e5b1ec937c207bcab19cb41ba9e2c50573db674a932614b0",
+    "scripts/research/cleanup_validation.py": "1fd15b4f79ac341ac2ac47e326c2d7ccb02fb33dd2d838ea7327102822bbdac0",
+    "scripts/research/cua_diagnostics.py": "43320efbe87a28198cf61e312ab7b97fd741ad98f848f728e2c2d18ae7b42d02",
+    "scripts/research/manage.py": "3587ecfc5174930159677951515653cecf6a29ac8bb645ca82ca9a7394ae2eca",
+    "scripts/research/official_browser.py": "00faf40f7cbc1c0c1af1354b7519cdeac63687e7f7660ad5434c342d4f96dc0f",
+    "scripts/research/provenance.py": "318fafe8d943f55227ca38d0a44474484dc703f730c61a5b2bff357e44adbea3",
+    "scripts/research/verify_models.py": "9d487d25055dce4d241f857683a0b70e05d03daa9c5594830dee529a75ab85ca",
+    "scripts/research/visual.py": "ac6ea9f86ccf3e28eb3f48f271d5f4bfdc022e93f7c6a9f47f33c5feac748d21",
+    "uv.lock": "76377a15cae9e62dcf7bb09464346219a3c1d8e130b25bba59a2764b333d2117"
+  },
+  "changes": {
+    "backend/adapters/specialists.py": {
+      "before": "731bf8f478402e974c8b5f517d1ce789c363dd07a6747286518d9dd25ab330f8",
+      "after": "7731a9ba7bf07184ef0196565b0fbe3d0cb17a8030f8e82c6bdd53a9313ebb27"
+    },
+    "backend/adapters/venus.py": {
+      "before": null,
+      "after": "2bfe377f78684b6aea2d9b682acbf2ea5c915abc4571748ba4751e722e39cda7"
+    },
+    "backend/adapters/venus_verification.py": {
+      "before": null,
+      "after": "0ccc0ad63b867c51d88fe8684349f134c1973e55103e96bad4793f19667a69d4"
+    },
+    "backend/app.py": {
+      "before": "242901a092cef4b5dc7a52c7a7507f6d8be70a48d77320a8bee38d717bde9cb7",
+      "after": "1ae7357334d0744605407bfbb3cfe7b8539514f1c461fa2c146894bc19c939a8"
+    },
+    "backend/browser/execution.py": {
+      "before": "b94c95eab196d71cbd38874a5bfdda2e08e7610ced9f46bcb133d5b326ddf467",
+      "after": "44e9366bf5f014879120534d293ae992f226962d7305a5f63cc27d7bf906ac74"
+    },
+    "backend/browser/visual.py": {
+      "before": null,
+      "after": "23114977511b9edbcc648f826729df143012dd77a4ee82007d43458fc55ebb2b"
+    },
+    "backend/presentation.py": {
+      "before": null,
+      "after": "a22a66ce6154ce3dab6fa43e141e71c7adb83329400ee76d3108ced1aae8076a"
+    },
+    "backend/research/api.py": {
+      "before": "856000f45c17051541ae815cb42434cdf88abff77f0a842dbd9dd092c36efcf0",
+      "after": "e8423ba8636e99b9634994c5a2874ace1eb6a0367585544c070f3c8a7770c5fd"
+    },
+    "backend/research/export.py": {
+      "before": "f03d9468777921af5e7b18c38543a6319c8148c70d1dc8bec494346140a19f27",
+      "after": "f41b32a7c8b87d452704b6493cc07a2e55600f9e537531f0e19c6c44e3a62698"
+    },
+    "backend/research/official.py": {
+      "before": "01e1cb24e64f4892c8b1270e231aa6cedf1c768932f34a5679e100256036b8b5",
+      "after": "274b62005c78fd8f36ec8d77f56282d79c585371075af076690ce30f653b2cdc"
+    },
+    "backend/research/protocol.py": {
+      "before": "fc2c0eaae657d9808ea08757e69590e55d90e5bd838903f66f9c366cd5c8ffdf",
+      "after": "91dac96bd7651132679e5a7e075d31845548b80601176021f0a36d0bf44c59ff"
+    },
+    "backend/research/runtime_binding.py": {
+      "before": null,
+      "after": "b695be0a0e5958cb688b9a6f46777bc25f20934f568dd080a72122f854c7cee7"
+    },
+    "backend/runner/engine.py": {
+      "before": "3743add3d7884d1439b177fdf4161d1c4464e0c433589e15368b9c268df653da",
+      "after": "b378af0b981295967c591e46f525d4e5f5b689a1573d3144a6588d5c7a26cc4e"
+    },
+    "scenarios/catalog.py": {
+      "before": "991d7565766ff089e6ae491132c02cab7b43dea1823669aac21c9defa6f27f02",
+      "after": "9d0810ff005e2e6c89df60a787a48f8237989e46f8c78c66acd0f20a58b287ae"
+    },
+    "scenarios/identities.json": {
+      "before": null,
+      "after": "f07da068c8bff5dc6f624d23e6ab88e08f9fa5a6a57a2a72920636087f25eecc"
+    },
+    "scenarios/identity.py": {
+      "before": null,
+      "after": "fd6f8874714acdb68a205b14e0c52eae03e5d14ab23fb1526a0f6f6c8b696c1d"
+    },
+    "scripts/diagnostics/cua_generalization.py": {
+      "before": null,
+      "after": "e4839f678237c201804dc24c8370a637ac6e2a838266a602cf440c699f81e771"
+    },
+    "scripts/diagnostics/venus_artifact_manifest.json": {
+      "before": null,
+      "after": "4ca11e3a68fdd1e8ffe153c7f522bccec66041a2b0f4c4b55c11994a34a5769b"
+    },
+    "scripts/diagnostics/venus_capture.py": {
+      "before": null,
+      "after": "c1eed8339242d540f2cb38effc2fb3d70e65c9e9b9ef423c5dce595075a05cbf"
+    },
+    "scripts/diagnostics/venus_evaluate.py": {
+      "before": null,
+      "after": "83650c25acb1abbf714c429e59b298be935a003404e6e5f93be4e326c4d22ae0"
+    },
+    "scripts/diagnostics/venus_probe.py": {
+      "before": null,
+      "after": "06770eafd9ed7f07b3750d92027a12b48e255a002e279d4680a931b237b32beb"
+    },
+    "scripts/diagnostics/venus_requirements.lock.txt": {
+      "before": null,
+      "after": "e981a6010c57e039041e634a0317cc24f9233750e2326338890137173d685414"
+    },
+    "scripts/diagnostics/venus_requirements.txt": {
+      "before": null,
+      "after": "ceaa3b609df8399142f11eb2c69c100dd96ff3c234813d7cc3e3abe8401c77f4"
+    },
+    "scripts/diagnostics/venus_setup.py": {
+      "before": null,
+      "after": "913e1125d8c1382802681c0b0cd6bbe464a51ec7bfa4fd36f8dc78c7951d591b"
+    },
+    "scripts/diagnostics/venus_verify.py": {
+      "before": null,
+      "after": "1445c81334c96449d235d2d0cf4712b3a6dfed3d975397a97c4b7ed41583b9c6"
+    },
+    "scripts/diagnostics/venus_worker.py": {
+      "before": null,
+      "after": "a72dda444c0d9772e5b1ec937c207bcab19cb41ba9e2c50573db674a932614b0"
+    }
+  },
+  "scenario_integrity": {
+    "baseline_sha256": "034ae15879f1f314ba98624dd5cfb0b99ab2d040f9068052aca2d074dcfe81e3",
+    "frozen_release_file_sha256": "ed48a3a2d7c921d822395e4a7690246167dfa9669845cb47b46942895a64a914",
+    "canonical_scenario_count": 322,
+    "canonical_scenario_hashes_sha256": "15d6f67a67ef1720c47e0265ee60900d946929ced9bd528cf720ffd7d66c26d1"
+  },
+  "review": {
+    "status": "approved",
+    "reviewer": "CheckoutBench implementation review (Codex, not independent human scientific review)",
+    "summary": "Reviewed canonical alias wrapper, native Venus adapter and pinned isolated runtime, screenshot-only execution, runner error/lineage handling and official protocol separation. All322 canonical objects and41 protected files remain identical. Targeted unit/browser tests pass; model smoke independently attested. This approves runtime integrity, not benchmark publication readiness or model capability. Reviewed full checkpoint runtime configuration separation and export allowlist enforcement. Final review includes blank-environment defaults, preserved legacy checkpoint identity shape, explicit output-rate denominators and registered exact local inference attestation. No canonical fixture, task or objective scoring edits. Corrected UI-Venus1.5 coordinates to normalized0..1000 based on official report section3.1.1 and model-specific implementation, superseding inconsistent generic navigation example. Initial pixel-adapter pilot excluded from model-performance claims; original evidence retained. Reviewed native range/boundary/resize-invariance tests. No scenario-specific adjustment. Final metric review preserves shared inference exception classification alongside adapter transport causes and excludes cold model calls from warm-only timing; no inference actions or fixtures changed."
+  },
+  "binding_hash": "0eb881e5edd6b7b12245a8d421f4263d87a595cf8c49ccc6978db2a7ff028412"
+}

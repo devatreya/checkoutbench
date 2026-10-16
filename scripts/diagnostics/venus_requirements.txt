@@ -1,0 +1,10 @@
+# Isolated runtime; do not install into the CUA/application environment.
+mlx-vlm==0.3.12
+mlx==0.31.0
+mlx-lm==0.30.7
+transformers==5.2.0
+huggingface-hub==1.4.1
+# Transformers 5.2 Qwen3 processor validates its optional video processor.
+# These are processor dependencies; all model inference still runs on MLX.
+torch==2.10.0
+torchvision==0.25.0

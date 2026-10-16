@@ -10,6 +10,8 @@ import {
   seconds,
   shown,
   status,
+  scenarioPublicId,
+  scenarioTitle,
   type Run,
   type Scenario,
 } from "./domain";
@@ -36,6 +38,21 @@ export default function RunDetails({
 }) {
   const [tab, setTab] = useState("Outcome"),
     [step, setStep] = useState(0);
+  const inference = run.inference_configuration;
+  const quantization = inference?.quantization || inference?.quantisation;
+  const trackNames: Record<string, string> = {
+    screenshot_gui: "Screenshot-only GUI actions",
+    semantic_fields_controller:
+      "Public field semantics with deterministic navigation",
+    dom_field_classification_visual_grounding:
+      "Public field semantics with visual targeting",
+    visual_grounding_with_deterministic_semantics:
+      "Visual targeting with deterministic field decisions",
+    deterministic_reference: "Deterministic software reference",
+    provider_browser_agent: "Provider browser agent",
+  };
+  const observationTrack =
+    trackNames[run.observation_track] || human(run.observation_track);
   const events = run.events || [],
     event = events[step],
     shot = artifact(event?.screenshot || run.screenshot);
@@ -119,9 +136,14 @@ export default function RunDetails({
                 ["Model", modelName(run.model)],
                 [
                   "Scenario",
-                  `${run.scenario} · ${run.scenario_title || scenario?.title || "Not reported"}`,
+                  `${scenarioPublicId(run.public_id ? run : scenario)} · ${scenarioTitle(run.display_name ? run : scenario || run)}`,
                 ],
                 ["Result", status(run)],
+                [
+                  "Evaluation classification",
+                  human(run.outcome_category || run.evaluation_outcome),
+                ],
+                ["Model observation track", observationTrack],
                 ["Final checkout stage", run.completion_stage],
                 [
                   "Scenario objective",
@@ -133,7 +155,6 @@ export default function RunDetails({
                   "Failure reason",
                   run.failure_reason ?? (run.success ? "None" : "Not reported"),
                 ],
-                ["Version", run.benchmark_version],
                 ["Conditions cohort", run.cohort],
                 ["Evaluation mode", run.evaluation_mode],
                 ["Device", run.platform],
@@ -147,7 +168,17 @@ export default function RunDetails({
             </p>
             <details>
               <summary>Recorded configuration</summary>
-              <pre>{JSON.stringify(run.config ?? "Not reported", null, 2)}</pre>
+              <pre>
+                {JSON.stringify(
+                  {
+                    canonical_id: run.canonical_id || run.scenario,
+                    benchmark_version: run.benchmark_version,
+                    config: run.config ?? "Not reported",
+                  },
+                  null,
+                  2,
+                )}
+              </pre>
             </details>
           </>
         )}
@@ -423,6 +454,34 @@ export default function RunDetails({
         )}
         {tab === "Performance" && (
           <>
+            <h2>Model execution configuration</h2>
+            <Facts
+              rows={[
+                ["Model observation track", observationTrack],
+                ["Inference backend", inference?.backend],
+                ["Weight precision", inference?.precision],
+                [
+                  "Quantization",
+                  num(quantization?.bits)
+                    ? `${quantization.bits}-bit quantized weights · ${quantization.mode || "method not reported"} · group size ${quantization.group_size ?? "not reported"}`
+                    : (quantization ?? "Not reported"),
+                ],
+                [
+                  "Checkpoint artifact",
+                  inference?.artifact_id || inference?.model_id,
+                ],
+                [
+                  "Checkpoint revision",
+                  inference?.checkpoint_revision || inference?.model_revision,
+                ],
+              ]}
+            />
+            <p className="notice">
+              Screenshot-only GUI runs and form-field specialists use different
+              observation and navigation capabilities. Compare results within
+              matching tracks and execution settings. Quantized weights are a
+              separate model configuration from original-precision weights.
+            </p>
             <h2>Performance breakdown</h2>
             <Facts
               rows={[

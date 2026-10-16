@@ -273,7 +273,7 @@ async def prepared_page(server, page, sid):
     from backend.browser.v21 import semantic_value
 
     preview = await preview_page(server, page, sid)
-    base = "http://127.0.0.1:8766/v21/" + preview["token"]
+    base = preview["url"].split("/checkout/", 1)[0] + "/v21/" + preview["token"]
     async with httpx.AsyncClient() as client:
         d = (await client.get(base + "/state")).json()
         vals = {
@@ -358,7 +358,7 @@ async def test_payment_element_and_refreshed_passport_are_distinct(server, page)
     from backend.browser.v21 import semantic_value
 
     preview = await preview_page(server, page, "V21-ST03")
-    base = "http://127.0.0.1:8766/v21/" + preview["token"]
+    base = preview["url"].split("/checkout/", 1)[0] + "/v21/" + preview["token"]
     async with httpx.AsyncClient() as client:
         d = (await client.get(base + "/state")).json()
         vals = {
@@ -384,7 +384,7 @@ async def test_payment_element_and_refreshed_passport_are_distinct(server, page)
 
 async def test_legacy_data_routes_reject_new_sessions(server, page):
     preview = await preview_page(server, page, "V21-S01")
-    origin = "http://127.0.0.1:8766"
+    origin = preview["url"].split("/checkout/", 1)[0]
     token = preview["token"]
     async with httpx.AsyncClient() as client:
         for path in ("/session/" + token, "/v2/" + token + "/state"):

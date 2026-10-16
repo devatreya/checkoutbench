@@ -32,6 +32,14 @@ class SpecialistOutputError(ValueError):
     """Invalid model output; this is a genuine failed model decision."""
 
 
+class SpecialistInferenceError(RuntimeError):
+    """The inference runtime failed; no reasoning outcome can be inferred."""
+
+
+class UnsupportedCapability(RuntimeError):
+    """A recognized action cannot be executed by this benchmark track."""
+
+
 SPECS = {
     "cua-s1": ("CUA_S1", "cua-ai/cua-s1-forms", 706048, "field_classification"),
     "tinyclick": ("TINYCLICK", "kzawistowsk/TinyClick", 270000000, "visual_grounding"),
@@ -81,6 +89,13 @@ def specialist_catalog() -> list[dict]:
             os.getenv(prefix + "_MODEL_PATH", ""),
             os.getenv(prefix + "_ENDPOINT", ""),
         )
+        if key == "ui-venus":
+            from backend.adapters.venus import availability
+            info = availability()
+            rows.append({"id": key, "name": "UI-Venus-1.5-2B · local 6-bit", "parameters": count,
+                         "capability": capability, "kind": "specialist", "reasoning_levels": ["default"],
+                         "hardware": hardware, **info})
+            continue
         issues = []
         if not endpoint:
             if not path or not Path(path).exists():
@@ -873,5 +888,9 @@ class MaiUIAdapter(_VisualAdapter):
     key = "mai-ui"
 
 
-class VenusAdapter(_VisualAdapter):
-    key = "ui-venus"
+# Lazy construction keeps MLX isolated from the existing PyTorch runtime and
+# avoids circular imports when the dedicated adapter is imported directly.
+class VenusAdapter:
+    def __new__(cls, *args, **kwargs):
+        from backend.adapters.venus import VenusAdapter as LocalVenusAdapter
+        return LocalVenusAdapter(*args, **kwargs)

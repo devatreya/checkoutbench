@@ -209,6 +209,9 @@ SPECS = [
 
 
 def scenario(sid, seed=None, profile_id=None):
+    from scenarios.identity import resolve_id
+
+    sid = resolve_id(sid)
     if sid.startswith("V3-"):
         from scenarios.research import scenario_research
         return scenario_research(sid, seed, profile_id)

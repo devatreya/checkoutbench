@@ -48,7 +48,7 @@ Reference/debug runs and test doubles use separate validation storage. Genuine v
 | MAI-UI-2B | 2B | Screenshot-based actions executed by the browser |
 | UI-Venus-1.5-2B | 2B | Native visual action grammar executed by the browser |
 
-Playwright is browser infrastructure, not an AI model. CUA has passed exact-weight cold/warm inference smoke on the implementation machine; this is not an accuracy result. TinyClick is blocked by missing exact original weights, which also blocks hybrid verification. MAI/UI-Venus provenance is recorded; local inference remains unverified. No model is substituted. Frontier/OpenRouter/direct-provider backends remain available through developer APIs and hidden from normal UI.
+Playwright is browser infrastructure, not an AI model. CUA has passed exact-weight cold/warm inference smoke on the implementation machine; this is not an accuracy result. TinyClick is blocked by missing exact original weights, which also blocks hybrid verification. MAI provenance is recorded; its local inference remains unverified. UI-Venus now has genuine local screenshot inference on the M1 MacBook Air using a pinned **6-bit MLX conversion**, with native action parsing and an isolated runtime. This is a distinct quantized configuration, not original-precision evidence. See the [local UI-Venus setup](docs/operations/UI_VENUS_LOCAL.md) and [engineering report](docs/research/UI_VENUS_ENGINEERING_REPORT.md) for measured outcomes and limits. No model is substituted. Frontier/OpenRouter/direct-provider backends remain available through developer APIs and hidden from normal UI.
 
 See [model cards](docs/research/MODEL_CARDS.md), [specialist setup](docs/SPECIALISTS.md) and [reproduction](docs/research/REPRODUCING.md). Install optional specialist dependencies separately, then configure exact paths and run:
 
@@ -56,6 +56,12 @@ See [model cards](docs/research/MODEL_CARDS.md), [specialist setup](docs/SPECIAL
 .venv/bin/python -m scripts.research.verify_models --model cua-s1
 .venv/bin/python -m scripts.research.manage readiness
 ```
+
+## Scenario names and unchanged tasks
+
+The dashboard uses stable public names such as **GENERIC-01**, **STRIPE-03**, and **IRCTC-02**. All 322 current and historical scenarios have explicit mappings; older families use distinct `CLASSIC`, `FOUNDATION`, or `LEGACY` names to prevent collisions. Original canonical IDs still work in APIs and historical records. Provider names denote simulated, inspired checkouts.
+
+Renaming does not change fixture content, scoring, or the frozen release. A separate reviewed runtime binding records adapter and runner changes and prevents pooling new runtime results with older experiments. See [scenario identities](docs/SCENARIO_IDENTITIES.md) and the [integrity audit](docs/research/SCENARIO_VENUS_INTEGRITY_AUDIT.md).
 
 ## What is measured
 

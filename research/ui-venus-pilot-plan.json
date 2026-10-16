@@ -1,0 +1,48 @@
+{
+  "experiment": "ui-venus-local-representative-pilot",
+  "defined_before_first_pilot_inference": true,
+  "official_leaderboard": false,
+  "purpose": "Coverage of generic forms, merchant checkout, government booking, Stripe-style billing, Razorpay modal, Cashfree redirect, and QR handoff; never selected by observed model success.",
+  "config": {
+    "models": [
+      "ui-venus"
+    ],
+    "scenarios": [
+      "V3-G01",
+      "V3-S01",
+      "V3-R02",
+      "V3-ST03",
+      "V3-RZ01",
+      "V3-CF01",
+      "V3-Q00"
+    ],
+    "profile": null,
+    "repeats": 1,
+    "seed": 2026,
+    "max_steps": 80,
+    "timeout": 180,
+    "max_tokens": 256,
+    "reasoning": "default",
+    "video": false,
+    "infrastructure_retries": 0,
+    "agent_mode": "standard",
+    "research_release": null,
+    "release_hash": null,
+    "spending_cap": null
+  },
+  "scenario_hashes": {
+    "V3-G01": "983282bf14aa843c88f671220738c4110541c39ae73397a53542f20ce35e2e22",
+    "V3-S01": "ec9fcc7310424c45a6df28d5cb97a55ae3d8af3ffa15a1db4dce0bdac445d029",
+    "V3-R02": "26fb3bc5736f21993d96218702d43feaea2324217edf1b557a7dfc35f468d23e",
+    "V3-ST03": "8f354f0ebb354daa9daf5952435be4e3280330f3deb1276d4355407f31f643d3",
+    "V3-RZ01": "4cc32c924499d3fe8ec485e48e9ded875159b06bcf64dde12b57f2c33a2524fd",
+    "V3-CF01": "be269f15cad1f41422d72c531b219418a9598db962df51fbda4d37473fa5323d",
+    "V3-Q00": "86db2cfbe704609795edc84758799ff1050745ac985b85a1c10876519c4e9813"
+  },
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "decoding_note": "Native prompt and greedy generation; 256 output-token cap is a diagnostic resource constraint, distinct from the default8192-token standard protocol. Token truncation must be reported separately.",
+  "full_benchmark_gate": "Proceed only after validated adapter/browser loop and assessment of runtime/resource feasibility. All174 active tasks required for a full-coverage claim."
+}

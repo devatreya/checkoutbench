@@ -8,6 +8,8 @@ import {
   money,
   familyName,
   download,
+  scenarioPublicId,
+  scenarioTitle,
 } from "./domain";
 import { modelName, systems } from "./policy";
 import { Empty, Select, Tabs } from "./shared";
@@ -56,7 +58,7 @@ export default function ResearchResults({
       (outcome === "all" || r.status === outcome) &&
       (stage === "all" || r.failed_stage === stage) &&
       (!search ||
-        [r.id, r.model, r.scenario, r.failure_reason]
+        [r.id, r.model, scenarioPublicId(r), scenarioTitle(r), r.failure_reason]
           .join(" ")
           .toLowerCase()
           .includes(search.toLowerCase())),
@@ -359,7 +361,7 @@ export default function ResearchResults({
                       )
                     : rows("scenarios").map((r: any) => ({
                         ...r,
-                        label: r.scenario,
+                        label: `${scenarioPublicId(r)} · ${scenarioTitle(r)}`,
                       })),
             )}
             <h3>Failures by category</h3>
@@ -439,7 +441,9 @@ export default function ResearchResults({
                       attempts.map((r: any) => ({
                         id: r.id,
                         model: r.model,
-                        scenario: r.scenario,
+                        scenario: scenarioPublicId(r),
+                        canonical_id: r.canonical_id || r.scenario,
+                        display_name: scenarioTitle(r),
                         status: r.status,
                         task_resolved_correctly: r.task_resolved_correctly,
                         checkout_prepared: r.checkout_prepared,
@@ -475,7 +479,8 @@ export default function ResearchResults({
                       </td>
                       <td>
                         {modelName(r.model)}
-                        <small>{r.scenario}</small>
+                        <small>{scenarioPublicId(r)}</small>
+                        <small>{scenarioTitle(r)}</small>
                       </td>
                       <td>
                         {familyName(r.environment)}

@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from backend.storage.database import runs
 from backend.research.protocol import release, readiness
+from backend.presentation import present
 
 router = APIRouter(prefix="/api/research", tags=["research"])
 
@@ -8,7 +9,7 @@ router = APIRouter(prefix="/api/research", tags=["research"])
 @router.get("/release")
 def current_release():
     try:
-        return release()
+        return present(release())
     except ValueError as e:
         raise HTTPException(409, str(e))
 
@@ -21,7 +22,7 @@ def report():
 @router.get("/analysis")
 def analysis():
     from backend.research.official import dataset
-    return dataset(runs())
+    return present(dataset(runs()))
 
 
 @router.get("/export")

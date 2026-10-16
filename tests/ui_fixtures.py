@@ -4,6 +4,7 @@ import copy
 import json
 from pathlib import Path
 import httpx
+from scenarios.identity import enrich
 
 IDS = ["cua-s1", "tinyclick", "hybrid", "mai-ui", "ui-venus"]
 
@@ -126,7 +127,7 @@ def sample_runs():
         action_attribution={"deterministic_reference": 1},
     )
     rows.append(reference_assisted)
-    return rows
+    return [enrich(row, "scenario") for row in rows]
 
 
 def official_ui_data(rows):
@@ -138,14 +139,18 @@ def official_ui_data(rows):
         if not r['id'].startswith('ui-'): continue
         x=copy.deepcopy(r)
         x.update(research_release=m['release'],release_hash=m['release_hash'],research_protocol_hash='ui-only',scoring_version='3.0',scenario=r['scenario'].replace('V21-','V3-'),research_track='A',implementation_family='ui-only',task_resolved_correctly=r['success'],checkout_prepared=r['success'],payment_method_correct=True,requested_payment_method='card',successful_resolution_seconds=r['wall_seconds'] if r['success'] else None,execution_manifest={'standard_run_all':True,'checkpoint':{'verified':True}})
-        selected.append(x)
+        selected.append(enrich(x, "scenario"))
     a=analyse(selected,m,'ui-only')
+    a['scenarios'] = [enrich(row, 'scenario') for row in a.get('scenarios', [])]
     a.update(runs=selected,summary=summary(selected),difficulties=[],official_protocol_configured=bool(selected),empty_reason=None if selected else 'No official evaluation protocol is configured.')
     return a
 
 
 async def install_ui_data(page, server, populated=True):
     metadata = httpx.get(server + "/api/models").json()
+    # Exercise the presentation contract independently of backend integration;
+    # server/API identity behavior is covered by separate integration tests.
+    scenarios = [enrich(row) for row in httpx.get(server + "/api/scenarios").json()]
     for m in metadata["models"]:
         if m["id"] in IDS:
             m.update(
@@ -171,6 +176,7 @@ async def install_ui_data(page, server, populated=True):
     runs = sample_runs() if populated else []
     await page.route("**/api/research/readiness", lambda r: r.fulfill(json={"status":"NOT READY","blockers":["test-data-only"],"checkpoints":{k:{"verified":True} for k in IDS if k!="ui-venus"}}))
     await page.route("**/api/models", lambda r: r.fulfill(json=metadata))
+    await page.route("**/api/scenarios", lambda r: r.fulfill(json=scenarios))
     await page.route("**/api/research/analysis", lambda r: r.fulfill(json=official_ui_data(runs)))
     await page.route(
         "**/api/results",

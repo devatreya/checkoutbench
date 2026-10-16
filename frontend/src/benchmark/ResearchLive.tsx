@@ -10,6 +10,8 @@ import {
   seconds,
   shown,
   status,
+  scenarioPublicId,
+  scenarioTitle,
   type Run,
   type RunnerState,
   type Scenario,
@@ -82,7 +84,8 @@ export function Live({
           {state.paused ? "Paused" : status(run)}
         </Badge>
         <span>
-          {modelName(run.model)} · {run.scenario}
+          {modelName(run.model)} · {scenarioPublicId(run)} ·{" "}
+          {scenarioTitle(run)}
         </span>
         <span className="push">
           {state.batch?.finished ?? 0} / {state.batch?.total ?? 1} evaluations
@@ -195,14 +198,15 @@ export function Coverage({
   setup: Setup;
 }) {
   const [family, setFamily] = useState("shopify"),
-    [selected, setSelected] = useState("V21-S01"),
+    [selected, setSelected] = useState(""),
     [search, setSearch] = useState(""),
     [preview, setPreview] = useState(false);
   const rows = scenarios.filter(
     (s) =>
-      s.benchmark_version === "2.1" &&
       s.family === family &&
-      `${s.id} ${s.title}`.toLowerCase().includes(search.toLowerCase()),
+      `${scenarioPublicId(s)} ${scenarioTitle(s)} ${s.description || ""}`
+        .toLowerCase()
+        .includes(search.toLowerCase()),
   );
   const row = rows.find((s) => s.id === selected) || rows[0];
   return (
@@ -220,7 +224,7 @@ export function Coverage({
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <Badge>{rows.length} scenarios · v2.1</Badge>
+        <Badge>{rows.length} simulated scenarios</Badge>
       </div>
       <div className="coverage-layout grow">
         <div className="panel scroll research-list">
@@ -230,8 +234,8 @@ export function Coverage({
               aria-pressed={s.id === row?.id}
               onClick={() => setSelected(s.id)}
             >
-              <b>{s.id}</b>
-              <span>{s.title}</span>
+              <b>{scenarioPublicId(s)}</b>
+              <span>{scenarioTitle(s)}</span>
             </button>
           ))}
           {!rows.length && <Empty title="No matching scenarios" />}
@@ -240,12 +244,14 @@ export function Coverage({
           {row ? (
             <>
               <div className="panel-title">
-                <h2>{row.title}</h2>
+                <h2>
+                  {scenarioPublicId(row)} · {scenarioTitle(row)}
+                </h2>
                 <button onClick={() => setPreview(true)}>
                   Preview checkout
                 </button>
               </div>
-              <p>{challenge(row)}</p>
+              <p>{row.description || challenge(row)}</p>
               <div className="facts">
                 <div>
                   <dt>Supported payment methods</dt>
