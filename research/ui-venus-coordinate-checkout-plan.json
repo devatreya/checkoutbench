@@ -1,0 +1,30 @@
+{
+  "experiment": "ui-venus-css-geometry-generic01-checkout-diagnostic",
+  "official_leaderboard": false,
+  "config": {
+    "models": [
+      "ui-venus"
+    ],
+    "scenarios": [
+      "V3-G01"
+    ],
+    "repeats": 1,
+    "seed": 2026,
+    "profile": null,
+    "agent_mode": "standard",
+    "max_steps": 30,
+    "timeout": 900,
+    "max_tokens": 2048,
+    "infrastructure_retries": 0,
+    "video": false
+  },
+  "inference_timeout_seconds": 180,
+  "note": "One original GENERIC-01 checkout, screenshot-only native adapter; three-action no-progress safeguard retained. No coordinate mapping chosen from target-hit scores. Per-inference180seconds and overall900seconds are both finite; no zero/unlimited timeout.",
+  "adapter_version": "ui-venus-1.5-web-mlx-v3-css-geometry",
+  "observation_track": "screenshot_gui",
+  "checkpoint": {
+    "artifact_id": "mlx-community/UI-Venus-1.5-2B-6bit",
+    "revision": "95e3994ac9d74fe047cf44c072f6569db62856e7",
+    "precision": "affine-6bit-group64-mixed-bf16"
+  }
+}

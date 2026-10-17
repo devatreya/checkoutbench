@@ -1,0 +1,3328 @@
+{
+  "experiment": "ui-venus-coordinate-audit-18-targets",
+  "official_leaderboard": false,
+  "autonomous_checkout_evaluation": false,
+  "targets": 18,
+  "case_attempts": 18,
+  "genuine_inference_calls": 18,
+  "finite_native_click_predictions": 18,
+  "plan_sha256": "084bebccc2c7fa004ac76c21b4f26aa107b60eb6d96e3eb8e8259aede8996867",
+  "evaluation_amendment_sha256": "f02bfa4c3f5b53517015c7fa759eb9b05ff598846ffeb68111f574b418763747",
+  "source_predictions_sha256": "010c9492c3ad519dbb54e1770fb8b99581992371ac179a82bf67bd708a7a9a10",
+  "results_sha256": "bc614f72dead925c6b753a71e0c2efc904a0db03543bf68c9e63b6afae16c80f",
+  "new_model_calls_in_this_replay": 0,
+  "evaluator_source_sha256": "0c5986c0cf938c7f05c9c4eb5ff968ef8de0ba3344a56ca1ae891fafb7fa049a",
+  "source_hashes_sha256": "c8587ee3f4be8d74d1e1aae5f4404a66449f1676ce8429ccc0b9859c6676d840",
+  "candidates": {
+    "normalized_1000": {
+      "valid_coordinate_predictions": 18,
+      "target_hits": 0,
+      "interaction_successes": 1,
+      "physical_pointer_verified": 18,
+      "statuses": {
+        "executed": 18,
+        "invalid_coordinates": 0,
+        "frame_changed": 0,
+        "missing_target": 0,
+        "browser_execution_failure": 0
+      }
+    },
+    "prepared_image_pixels": {
+      "valid_coordinate_predictions": 11,
+      "target_hits": 2,
+      "interaction_successes": 2,
+      "physical_pointer_verified": 11,
+      "statuses": {
+        "executed": 11,
+        "invalid_coordinates": 7,
+        "frame_changed": 0,
+        "missing_target": 0,
+        "browser_execution_failure": 0
+      }
+    },
+    "original_image_pixels": {
+      "valid_coordinate_predictions": 12,
+      "target_hits": 1,
+      "interaction_successes": 4,
+      "physical_pointer_verified": 12,
+      "statuses": {
+        "executed": 12,
+        "invalid_coordinates": 6,
+        "frame_changed": 0,
+        "missing_target": 0,
+        "browser_execution_failure": 0
+      }
+    },
+    "upstream_example_factor28": {
+      "valid_coordinate_predictions": 12,
+      "target_hits": 1,
+      "interaction_successes": 4,
+      "physical_pointer_verified": 12,
+      "statuses": {
+        "executed": 12,
+        "invalid_coordinates": 6,
+        "frame_changed": 0,
+        "missing_target": 0,
+        "browser_execution_failure": 0
+      }
+    }
+  },
+  "audit_date": "2026-10-17",
+  "checkpoint": {
+    "artifact_id": "mlx-community/UI-Venus-1.5-2B-6bit",
+    "revision": "95e3994ac9d74fe047cf44c072f6569db62856e7",
+    "precision": "affine-6bit-group64-mixed-bf16"
+  },
+  "baseline_adapter": "ui-venus-1.5-web-mlx-v2-normalized1000",
+  "validated_adapter": "ui-venus-1.5-web-mlx-v3-css-geometry",
+  "coordinate_policy": "normalized_1000",
+  "policy_selection": "Pinned official1.5 report and released navigation policy; not selected from target scores.",
+  "native_normalized_validity": 18,
+  "normalized_geometric_grounding_misses": 18,
+  "normalized_interaction_failures": 17,
+  "normalized_adapter_conversion_failures": 0,
+  "normalized_browser_execution_failures": 0,
+  "target_motion_or_obscuration_detected": 0,
+  "inference_seconds_total": 187.09501275001094,
+  "inference_seconds_median": 10.919816062989412,
+  "inference_resampling_for_evaluator_amendments": 0,
+  "evaluator_amendments": [
+    "research/ui-venus-coordinate-evaluation-amendment.json",
+    "research/ui-venus-coordinate-evaluation-amendment-2.json",
+    "research/ui-venus-coordinate-evaluation-amendment-3.json"
+  ],
+  "evaluator_note": "Opaque ID locators, iframe/shadow scope, trustedpointer delivery and savedsource/image provenance corrected in separate replays; initial annotation scores excluded, all18 original predictions retained.",
+  "same_output_comparison": {
+    "v2_v3_same_points": 18,
+    "v2_v3_same_prepared_images": 18,
+    "evidence": "data/research/venus/coordinate-audit/same-prediction-adapter-comparison.json"
+  },
+  "original_prediction_browser_replay": {
+    "evidence": "data/research/venus/coordinate-audit/original-replay-trusted/results.json",
+    "same_source_pixels_all_four": true,
+    "physical_pointer_verified_all_four": true,
+    "focus_or_interaction_successes": 0,
+    "new_model_calls": 0
+  },
+  "v3_attestation": {
+    "evidence": "data/research/venus/coordinate-audit/v3-attestation/checkpoint-verification.json",
+    "evidence_sha256": "a5e34638b0d4713c70a5390d1194b46695f4b72a787621a6556ff9eff141e222",
+    "genuine_calls": 2,
+    "max_tokens": 256,
+    "inference_timeout_seconds": 180,
+    "native_predictions": [
+      [
+        496,
+        233
+      ],
+      [
+        496,
+        233
+      ]
+    ],
+    "seconds": [
+      21.879626749956515,
+      12.615096291992813
+    ],
+    "meaning": "loading,inference,parsing contract; not grounding certification"
+  },
+  "cases": [
+    {
+      "id": "G01",
+      "scenario": "V21-G01",
+      "group": "classic",
+      "target": "Receipt email input",
+      "kind": "input",
+      "instruction": "Click the visible Receipt email input once. Do not type, submit a payment, or take any other action.",
+      "original_size": [
+        1280,
+        900
+      ],
+      "prepared_size": [
+        1184,
+        832
+      ],
+      "native_point": [
+        496,
+        906
+      ],
+      "native_action": "Click(box=(496, 906))",
+      "actual_model": true,
+      "original_image": "research/venus/coordinate-evidence/classic/original.png",
+      "prepared_image": "research/venus/coordinate-evidence/classic/prepared.png",
+      "original_sha256": "c058d3d5df83579f64a2edf221dd217a47b48474588d8236ebb1b0147429e503",
+      "prepared_sha256": "0283a568bb0a540e6ee60f4eae22c56ef2a89fa2f7f91cef82d56d9e09be722d",
+      "raw_text_sha256": "974066b621b51080337552f9df19ec64bbcb3250f7efd7596fe2049d015b7cca",
+      "inference_seconds": 20.42288562504109,
+      "generated_token_limit_reached": false,
+      "inference_evidence": "data/research/venus/coordinate-audit/grounding-v2/G01/inference.json",
+      "browser_evidence": "data/research/venus/coordinate-audit/grounding-v2-replay-trusted/G01/evaluation.json",
+      "candidates": {
+        "normalized_1000": {
+          "point": [
+            634,
+            815
+          ],
+          "valid": true,
+          "source_size": [
+            1000,
+            1000
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 119,
+            "y": 309.875,
+            "width": 550,
+            "height": 49.25
+          },
+          "target_bbox_after": {
+            "x": 119.0,
+            "y": 309.875,
+            "width": 550.0,
+            "height": 49.25
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": false,
+          "target_frame": "main"
+        },
+        "prepared_image_pixels": {
+          "point": null,
+          "valid": false,
+          "source_size": [
+            1184,
+            832
+          ],
+          "status": "invalid_coordinates",
+          "target_hit": false,
+          "physical_pointer_verified": null,
+          "pointer_verification_source": null,
+          "associated_physical_delivery": null,
+          "target_received_click": null,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 119,
+            "y": 309.875,
+            "width": 550,
+            "height": 49.25
+          },
+          "target_bbox_after": null,
+          "focus_correct": null,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": null,
+          "target_frame": "main"
+        },
+        "original_image_pixels": {
+          "point": null,
+          "valid": false,
+          "source_size": [
+            1280,
+            900
+          ],
+          "status": "invalid_coordinates",
+          "target_hit": false,
+          "physical_pointer_verified": null,
+          "pointer_verification_source": null,
+          "associated_physical_delivery": null,
+          "target_received_click": null,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 119,
+            "y": 309.875,
+            "width": 550,
+            "height": 49.25
+          },
+          "target_bbox_after": null,
+          "focus_correct": null,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": null,
+          "target_frame": "main"
+        },
+        "upstream_example_factor28": {
+          "point": [
+            492,
+            900
+          ],
+          "valid": false,
+          "source_size": [
+            1288,
+            896
+          ],
+          "status": "invalid_coordinates",
+          "target_hit": false,
+          "physical_pointer_verified": null,
+          "pointer_verification_source": null,
+          "associated_physical_delivery": null,
+          "target_received_click": null,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 119,
+            "y": 309.875,
+            "width": 550,
+            "height": 49.25
+          },
+          "target_bbox_after": null,
+          "focus_correct": null,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": null,
+          "target_frame": "main"
+        }
+      }
+    },
+    {
+      "id": "G02",
+      "scenario": "V21-G01",
+      "group": "classic",
+      "target": "Delivery PIN input",
+      "kind": "input",
+      "instruction": "Click the visible Delivery PIN input once. Do not type, submit a payment, or take any other action.",
+      "original_size": [
+        1280,
+        900
+      ],
+      "prepared_size": [
+        1184,
+        832
+      ],
+      "native_point": [
+        446,
+        744
+      ],
+      "native_action": "Click(box=(446, 744))",
+      "actual_model": true,
+      "original_image": "research/venus/coordinate-evidence/classic/original.png",
+      "prepared_image": "research/venus/coordinate-evidence/classic/prepared.png",
+      "original_sha256": "c058d3d5df83579f64a2edf221dd217a47b48474588d8236ebb1b0147429e503",
+      "prepared_sha256": "0283a568bb0a540e6ee60f4eae22c56ef2a89fa2f7f91cef82d56d9e09be722d",
+      "raw_text_sha256": "a91a0f18fc7a677b06aaab85a18f8b3dca8a9c0e9ca6ca6329d4abc5e0b6992c",
+      "inference_seconds": 11.50673491699854,
+      "generated_token_limit_reached": false,
+      "inference_evidence": "data/research/venus/coordinate-audit/grounding-v2/G02/inference.json",
+      "browser_evidence": "data/research/venus/coordinate-audit/grounding-v2-replay-trusted/G02/evaluation.json",
+      "candidates": {
+        "normalized_1000": {
+          "point": [
+            570,
+            669
+          ],
+          "valid": true,
+          "source_size": [
+            1000,
+            1000
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 119,
+            "y": 758.6875,
+            "width": 550,
+            "height": 49.25
+          },
+          "target_bbox_after": {
+            "x": 119.0,
+            "y": 758.6875,
+            "width": 550.0,
+            "height": 49.25
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": false,
+          "target_frame": "main"
+        },
+        "prepared_image_pixels": {
+          "point": [
+            482,
+            804
+          ],
+          "valid": true,
+          "source_size": [
+            1184,
+            832
+          ],
+          "status": "executed",
+          "target_hit": true,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": true,
+          "target_received_click": true,
+          "interaction_success": true,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 119,
+            "y": 758.6875,
+            "width": 550,
+            "height": 49.25
+          },
+          "target_bbox_after": {
+            "x": 119.0,
+            "y": 758.6875,
+            "width": 550.0,
+            "height": 49.25
+          },
+          "focus_correct": true,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": false,
+          "target_frame": "main"
+        },
+        "original_image_pixels": {
+          "point": [
+            446,
+            744
+          ],
+          "valid": true,
+          "source_size": [
+            1280,
+            900
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": true,
+          "target_received_click": true,
+          "interaction_success": true,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 119,
+            "y": 758.6875,
+            "width": 550,
+            "height": 49.25
+          },
+          "target_bbox_after": {
+            "x": 119.0,
+            "y": 758.6875,
+            "width": 550.0,
+            "height": 49.25
+          },
+          "focus_correct": true,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": false,
+          "target_frame": "main"
+        },
+        "upstream_example_factor28": {
+          "point": [
+            443,
+            747
+          ],
+          "valid": true,
+          "source_size": [
+            1288,
+            896
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": true,
+          "target_received_click": true,
+          "interaction_success": true,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 119,
+            "y": 758.6875,
+            "width": 550,
+            "height": 49.25
+          },
+          "target_bbox_after": {
+            "x": 119.0,
+            "y": 758.6875,
+            "width": 550.0,
+            "height": 49.25
+          },
+          "focus_correct": true,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": false,
+          "target_frame": "main"
+        }
+      }
+    },
+    {
+      "id": "G03",
+      "scenario": "V21-G01",
+      "group": "classic",
+      "target": "Landmark optional input",
+      "kind": "input",
+      "instruction": "Click the visible Landmark optional input once. Do not type, submit a payment, or take any other action.",
+      "original_size": [
+        1280,
+        900
+      ],
+      "prepared_size": [
+        1184,
+        832
+      ],
+      "native_point": [
+        496,
+        816
+      ],
+      "native_action": "Click(box=(496, 816))",
+      "actual_model": true,
+      "original_image": "research/venus/coordinate-evidence/classic/original.png",
+      "prepared_image": "research/venus/coordinate-evidence/classic/prepared.png",
+      "original_sha256": "c058d3d5df83579f64a2edf221dd217a47b48474588d8236ebb1b0147429e503",
+      "prepared_sha256": "0283a568bb0a540e6ee60f4eae22c56ef2a89fa2f7f91cef82d56d9e09be722d",
+      "raw_text_sha256": "dcfedd3306342ef1bd4e255303d05580df69767e94ee09c0e666ea6820da5a9b",
+      "inference_seconds": 11.409188165969681,
+      "generated_token_limit_reached": false,
+      "inference_evidence": "data/research/venus/coordinate-audit/grounding-v2/G03/inference.json",
+      "browser_evidence": "data/research/venus/coordinate-audit/grounding-v2-replay-trusted/G03/evaluation.json",
+      "candidates": {
+        "normalized_1000": {
+          "point": [
+            634,
+            734
+          ],
+          "valid": true,
+          "source_size": [
+            1000,
+            1000
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 119,
+            "y": 841.53125,
+            "width": 550,
+            "height": 49.25
+          },
+          "target_bbox_after": {
+            "x": 119.0,
+            "y": 841.53125,
+            "width": 550.0,
+            "height": 49.25
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": false,
+          "target_frame": "main"
+        },
+        "prepared_image_pixels": {
+          "point": [
+            536,
+            882
+          ],
+          "valid": true,
+          "source_size": [
+            1184,
+            832
+          ],
+          "status": "executed",
+          "target_hit": true,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": true,
+          "target_received_click": true,
+          "interaction_success": true,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 119,
+            "y": 841.53125,
+            "width": 550,
+            "height": 49.25
+          },
+          "target_bbox_after": {
+            "x": 119.0,
+            "y": 841.53125,
+            "width": 550.0,
+            "height": 49.25
+          },
+          "focus_correct": true,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": false,
+          "target_frame": "main"
+        },
+        "original_image_pixels": {
+          "point": [
+            496,
+            816
+          ],
+          "valid": true,
+          "source_size": [
+            1280,
+            900
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": true,
+          "target_received_click": true,
+          "interaction_success": true,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 119,
+            "y": 841.53125,
+            "width": 550,
+            "height": 49.25
+          },
+          "target_bbox_after": {
+            "x": 119.0,
+            "y": 841.53125,
+            "width": 550.0,
+            "height": 49.25
+          },
+          "focus_correct": true,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": false,
+          "target_frame": "main"
+        },
+        "upstream_example_factor28": {
+          "point": [
+            492,
+            819
+          ],
+          "valid": true,
+          "source_size": [
+            1288,
+            896
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": true,
+          "target_received_click": true,
+          "interaction_success": true,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 119,
+            "y": 841.53125,
+            "width": 550,
+            "height": 49.25
+          },
+          "target_bbox_after": {
+            "x": 119.0,
+            "y": 841.53125,
+            "width": 550.0,
+            "height": 49.25
+          },
+          "focus_correct": true,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": false,
+          "target_frame": "main"
+        }
+      }
+    },
+    {
+      "id": "G04",
+      "scenario": "V3-S01",
+      "group": "shopify-mobile",
+      "target": "Email input",
+      "kind": "input",
+      "instruction": "Click the visible Email input once. Do not type, submit a payment, or take any other action.",
+      "original_size": [
+        390,
+        844
+      ],
+      "prepared_size": [
+        384,
+        832
+      ],
+      "native_point": [
+        293,
+        768
+      ],
+      "native_action": "Click(box=(293, 768))",
+      "actual_model": true,
+      "original_image": "research/venus/coordinate-evidence/shopify-mobile/original.png",
+      "prepared_image": "research/venus/coordinate-evidence/shopify-mobile/prepared.png",
+      "original_sha256": "1d1269f61dbaddb70f70ac9a48ca3bd0c2fd232db24a441684a700155954e6d5",
+      "prepared_sha256": "59441f6d2c3b029c0f09c33fb227beda66cb3d089dddc78e035dcf27c8424afb",
+      "raw_text_sha256": "42a6d051b666603baa8f6dece95a9d9900851b2b4761f6b05129f093986baba6",
+      "inference_seconds": 6.074490666971542,
+      "generated_token_limit_reached": false,
+      "inference_evidence": "data/research/venus/coordinate-audit/grounding-v2/G04/inference.json",
+      "browser_evidence": "data/research/venus/coordinate-audit/grounding-v2-replay-trusted/G04/evaluation.json",
+      "candidates": {
+        "normalized_1000": {
+          "point": [
+            114,
+            648
+          ],
+          "valid": true,
+          "source_size": [
+            1000,
+            1000
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 51,
+            "y": 469.234375,
+            "width": 138,
+            "height": 46.796875
+          },
+          "target_bbox_after": {
+            "x": 51.0,
+            "y": 469.234375,
+            "width": 138.0,
+            "height": 46.796875
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": false,
+          "target_frame": "main"
+        },
+        "prepared_image_pixels": {
+          "point": [
+            297,
+            779
+          ],
+          "valid": true,
+          "source_size": [
+            384,
+            832
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 51,
+            "y": 469.234375,
+            "width": 138,
+            "height": 46.796875
+          },
+          "target_bbox_after": {
+            "x": 51.0,
+            "y": 469.234375,
+            "width": 138.0,
+            "height": 46.796875
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": false,
+          "target_frame": "main"
+        },
+        "original_image_pixels": {
+          "point": [
+            293,
+            768
+          ],
+          "valid": true,
+          "source_size": [
+            390,
+            844
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 51,
+            "y": 469.234375,
+            "width": 138,
+            "height": 46.796875
+          },
+          "target_bbox_after": {
+            "x": 51.0,
+            "y": 469.234375,
+            "width": 138.0,
+            "height": 46.796875
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": false,
+          "target_frame": "main"
+        },
+        "upstream_example_factor28": {
+          "point": [
+            291,
+            771
+          ],
+          "valid": true,
+          "source_size": [
+            392,
+            840
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 51,
+            "y": 469.234375,
+            "width": 138,
+            "height": 46.796875
+          },
+          "target_bbox_after": {
+            "x": 51.0,
+            "y": 469.234375,
+            "width": 138.0,
+            "height": 46.796875
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": false,
+          "target_frame": "main"
+        }
+      }
+    },
+    {
+      "id": "G05",
+      "scenario": "V3-S01",
+      "group": "shopify-mobile",
+      "target": "Discount code input",
+      "kind": "input",
+      "instruction": "Click the visible Discount code input once. Do not type, submit a payment, or take any other action.",
+      "original_size": [
+        390,
+        844
+      ],
+      "prepared_size": [
+        384,
+        832
+      ],
+      "native_point": [
+        605,
+        749
+      ],
+      "native_action": "Click(box=(605, 749))",
+      "actual_model": true,
+      "original_image": "research/venus/coordinate-evidence/shopify-mobile/original.png",
+      "prepared_image": "research/venus/coordinate-evidence/shopify-mobile/prepared.png",
+      "original_sha256": "1d1269f61dbaddb70f70ac9a48ca3bd0c2fd232db24a441684a700155954e6d5",
+      "prepared_sha256": "59441f6d2c3b029c0f09c33fb227beda66cb3d089dddc78e035dcf27c8424afb",
+      "raw_text_sha256": "6fdb41efa125444efb68efa14fdd7e4ace73cd38616202b3313976f1c6088e0a",
+      "inference_seconds": 6.659456958004739,
+      "generated_token_limit_reached": false,
+      "inference_evidence": "data/research/venus/coordinate-audit/grounding-v2/G05/inference.json",
+      "browser_evidence": "data/research/venus/coordinate-audit/grounding-v2-replay-trusted/G05/evaluation.json",
+      "candidates": {
+        "normalized_1000": {
+          "point": [
+            235,
+            632
+          ],
+          "valid": true,
+          "source_size": [
+            1000,
+            1000
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 201,
+            "y": 469.234375,
+            "width": 138,
+            "height": 46.796875
+          },
+          "target_bbox_after": {
+            "x": 201.0,
+            "y": 469.234375,
+            "width": 138.0,
+            "height": 46.796875
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": false,
+          "target_frame": "main"
+        },
+        "prepared_image_pixels": {
+          "point": null,
+          "valid": false,
+          "source_size": [
+            384,
+            832
+          ],
+          "status": "invalid_coordinates",
+          "target_hit": false,
+          "physical_pointer_verified": null,
+          "pointer_verification_source": null,
+          "associated_physical_delivery": null,
+          "target_received_click": null,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 201,
+            "y": 469.234375,
+            "width": 138,
+            "height": 46.796875
+          },
+          "target_bbox_after": null,
+          "focus_correct": null,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": null,
+          "target_frame": "main"
+        },
+        "original_image_pixels": {
+          "point": null,
+          "valid": false,
+          "source_size": [
+            390,
+            844
+          ],
+          "status": "invalid_coordinates",
+          "target_hit": false,
+          "physical_pointer_verified": null,
+          "pointer_verification_source": null,
+          "associated_physical_delivery": null,
+          "target_received_click": null,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 201,
+            "y": 469.234375,
+            "width": 138,
+            "height": 46.796875
+          },
+          "target_bbox_after": null,
+          "focus_correct": null,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": null,
+          "target_frame": "main"
+        },
+        "upstream_example_factor28": {
+          "point": [
+            390,
+            752
+          ],
+          "valid": false,
+          "source_size": [
+            392,
+            840
+          ],
+          "status": "invalid_coordinates",
+          "target_hit": false,
+          "physical_pointer_verified": null,
+          "pointer_verification_source": null,
+          "associated_physical_delivery": null,
+          "target_received_click": null,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 201,
+            "y": 469.234375,
+            "width": 138,
+            "height": 46.796875
+          },
+          "target_bbox_after": null,
+          "focus_correct": null,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": null,
+          "target_frame": "main"
+        }
+      }
+    },
+    {
+      "id": "G06",
+      "scenario": "V3-S01",
+      "group": "shopify-mobile",
+      "target": "City input",
+      "kind": "input",
+      "instruction": "Click the visible City input once. Do not type, submit a payment, or take any other action.",
+      "original_size": [
+        390,
+        844
+      ],
+      "prepared_size": [
+        384,
+        832
+      ],
+      "native_point": [
+        645,
+        844
+      ],
+      "native_action": "Click(box=(645, 844))",
+      "actual_model": true,
+      "original_image": "research/venus/coordinate-evidence/shopify-mobile/original.png",
+      "prepared_image": "research/venus/coordinate-evidence/shopify-mobile/prepared.png",
+      "original_sha256": "1d1269f61dbaddb70f70ac9a48ca3bd0c2fd232db24a441684a700155954e6d5",
+      "prepared_sha256": "59441f6d2c3b029c0f09c33fb227beda66cb3d089dddc78e035dcf27c8424afb",
+      "raw_text_sha256": "ce626b9f8788f5748110fd4f8e729a9f1637a94a333536e8d5192b87741b9897",
+      "inference_seconds": 6.38722512498498,
+      "generated_token_limit_reached": false,
+      "inference_evidence": "data/research/venus/coordinate-audit/grounding-v2/G06/inference.json",
+      "browser_evidence": "data/research/venus/coordinate-audit/grounding-v2-replay-trusted/G06/evaluation.json",
+      "candidates": {
+        "normalized_1000": {
+          "point": [
+            251,
+            712
+          ],
+          "valid": true,
+          "source_size": [
+            1000,
+            1000
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 201,
+            "y": 755.453125,
+            "width": 138,
+            "height": 46.796875
+          },
+          "target_bbox_after": {
+            "x": 201.0,
+            "y": 755.453125,
+            "width": 138.0,
+            "height": 46.796875
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": false,
+          "target_frame": "main"
+        },
+        "prepared_image_pixels": {
+          "point": null,
+          "valid": false,
+          "source_size": [
+            384,
+            832
+          ],
+          "status": "invalid_coordinates",
+          "target_hit": false,
+          "physical_pointer_verified": null,
+          "pointer_verification_source": null,
+          "associated_physical_delivery": null,
+          "target_received_click": null,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 201,
+            "y": 755.453125,
+            "width": 138,
+            "height": 46.796875
+          },
+          "target_bbox_after": null,
+          "focus_correct": null,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": null,
+          "target_frame": "main"
+        },
+        "original_image_pixels": {
+          "point": null,
+          "valid": false,
+          "source_size": [
+            390,
+            844
+          ],
+          "status": "invalid_coordinates",
+          "target_hit": false,
+          "physical_pointer_verified": null,
+          "pointer_verification_source": null,
+          "associated_physical_delivery": null,
+          "target_received_click": null,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 201,
+            "y": 755.453125,
+            "width": 138,
+            "height": 46.796875
+          },
+          "target_bbox_after": null,
+          "focus_correct": null,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": null,
+          "target_frame": "main"
+        },
+        "upstream_example_factor28": {
+          "point": [
+            390,
+            844
+          ],
+          "valid": false,
+          "source_size": [
+            392,
+            840
+          ],
+          "status": "invalid_coordinates",
+          "target_hit": false,
+          "physical_pointer_verified": null,
+          "pointer_verification_source": null,
+          "associated_physical_delivery": null,
+          "target_received_click": null,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 201,
+            "y": 755.453125,
+            "width": 138,
+            "height": 46.796875
+          },
+          "target_bbox_after": null,
+          "focus_correct": null,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": null,
+          "target_frame": "main"
+        }
+      }
+    },
+    {
+      "id": "G07",
+      "scenario": "V3-R02",
+      "group": "railway",
+      "target": "Passenger 1 gender dropdown",
+      "kind": "dropdown",
+      "instruction": "Click the visible Passenger 1 gender dropdown once. Do not type, submit a payment, or take any other action.",
+      "original_size": [
+        1440,
+        900
+      ],
+      "prepared_size": [
+        1248,
+        768
+      ],
+      "native_point": [
+        706,
+        304
+      ],
+      "native_action": "Click(box=(706, 304))",
+      "actual_model": true,
+      "original_image": "research/venus/coordinate-evidence/railway/original.png",
+      "prepared_image": "research/venus/coordinate-evidence/railway/prepared.png",
+      "original_sha256": "d6f30ac017102a1c3eb76d015887543db9f85d765aa22aeeae928e6965464ec4",
+      "prepared_sha256": "34c92a0951fbfd23a63a63473b6a96b49a5211d516f8eba1278259ffc345b840",
+      "raw_text_sha256": "4a8df993e68f7679f56881397b593d0d7945d6dfa4acec60361416a7d0430053",
+      "inference_seconds": 10.889240916993003,
+      "generated_token_limit_reached": false,
+      "inference_evidence": "data/research/venus/coordinate-audit/grounding-v2/G07/inference.json",
+      "browser_evidence": "data/research/venus/coordinate-audit/grounding-v2-replay-trusted/G07/evaluation.json",
+      "candidates": {
+        "normalized_1000": {
+          "point": [
+            1016,
+            273
+          ],
+          "valid": true,
+          "source_size": [
+            1000,
+            1000
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 739.796875,
+            "y": 517.96875,
+            "width": 177,
+            "height": 31
+          },
+          "target_bbox_after": {
+            "x": 739.796875,
+            "y": 517.96875,
+            "width": 177.0,
+            "height": 31.0
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": null,
+          "checked_after": null,
+          "target_frame": "main"
+        },
+        "prepared_image_pixels": {
+          "point": [
+            814,
+            356
+          ],
+          "valid": true,
+          "source_size": [
+            1248,
+            768
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 739.796875,
+            "y": 517.96875,
+            "width": 177,
+            "height": 31
+          },
+          "target_bbox_after": {
+            "x": 739.796875,
+            "y": 517.96875,
+            "width": 177.0,
+            "height": 31.0
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": null,
+          "checked_after": null,
+          "target_frame": "main"
+        },
+        "original_image_pixels": {
+          "point": [
+            706,
+            304
+          ],
+          "valid": true,
+          "source_size": [
+            1440,
+            900
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 739.796875,
+            "y": 517.96875,
+            "width": 177,
+            "height": 31
+          },
+          "target_bbox_after": {
+            "x": 739.796875,
+            "y": 517.96875,
+            "width": 177.0,
+            "height": 31.0
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": null,
+          "checked_after": null,
+          "target_frame": "main"
+        },
+        "upstream_example_factor28": {
+          "point": [
+            711,
+            305
+          ],
+          "valid": true,
+          "source_size": [
+            1428,
+            896
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 739.796875,
+            "y": 517.96875,
+            "width": 177,
+            "height": 31
+          },
+          "target_bbox_after": {
+            "x": 739.796875,
+            "y": 517.96875,
+            "width": 177.0,
+            "height": 31.0
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": null,
+          "checked_after": null,
+          "target_frame": "main"
+        }
+      }
+    },
+    {
+      "id": "G08",
+      "scenario": "V3-R02",
+      "group": "railway",
+      "target": "Passenger 3 nationality dropdown",
+      "kind": "dropdown",
+      "instruction": "Click the visible Passenger 3 nationality dropdown once. Do not type, submit a payment, or take any other action.",
+      "original_size": [
+        1440,
+        900
+      ],
+      "prepared_size": [
+        1248,
+        768
+      ],
+      "native_point": [
+        706,
+        382
+      ],
+      "native_action": "Click(box=(706, 382))",
+      "actual_model": true,
+      "original_image": "research/venus/coordinate-evidence/railway/original.png",
+      "prepared_image": "research/venus/coordinate-evidence/railway/prepared.png",
+      "original_sha256": "d6f30ac017102a1c3eb76d015887543db9f85d765aa22aeeae928e6965464ec4",
+      "prepared_sha256": "34c92a0951fbfd23a63a63473b6a96b49a5211d516f8eba1278259ffc345b840",
+      "raw_text_sha256": "4e5edb740295a0baaef84f329abd156f20f55d5bf77f06bc68fc6d5c4d563890",
+      "inference_seconds": 11.37296329200035,
+      "generated_token_limit_reached": false,
+      "inference_evidence": "data/research/venus/coordinate-audit/grounding-v2/G08/inference.json",
+      "browser_evidence": "data/research/venus/coordinate-audit/grounding-v2-replay-trusted/G08/evaluation.json",
+      "candidates": {
+        "normalized_1000": {
+          "point": [
+            1016,
+            343
+          ],
+          "valid": true,
+          "source_size": [
+            1000,
+            1000
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 935.796875,
+            "y": 727.34375,
+            "width": 206.203125,
+            "height": 31
+          },
+          "target_bbox_after": {
+            "x": 935.796875,
+            "y": 727.34375,
+            "width": 206.203125,
+            "height": 31.0
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": null,
+          "checked_after": null,
+          "target_frame": "main"
+        },
+        "prepared_image_pixels": {
+          "point": [
+            814,
+            447
+          ],
+          "valid": true,
+          "source_size": [
+            1248,
+            768
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 935.796875,
+            "y": 727.34375,
+            "width": 206.203125,
+            "height": 31
+          },
+          "target_bbox_after": {
+            "x": 935.796875,
+            "y": 727.34375,
+            "width": 206.203125,
+            "height": 31.0
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": null,
+          "checked_after": null,
+          "target_frame": "main"
+        },
+        "original_image_pixels": {
+          "point": [
+            706,
+            382
+          ],
+          "valid": true,
+          "source_size": [
+            1440,
+            900
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 935.796875,
+            "y": 727.34375,
+            "width": 206.203125,
+            "height": 31
+          },
+          "target_bbox_after": {
+            "x": 935.796875,
+            "y": 727.34375,
+            "width": 206.203125,
+            "height": 31.0
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": null,
+          "checked_after": null,
+          "target_frame": "main"
+        },
+        "upstream_example_factor28": {
+          "point": [
+            711,
+            383
+          ],
+          "valid": true,
+          "source_size": [
+            1428,
+            896
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 935.796875,
+            "y": 727.34375,
+            "width": 206.203125,
+            "height": 31
+          },
+          "target_bbox_after": {
+            "x": 935.796875,
+            "y": 727.34375,
+            "width": 206.203125,
+            "height": 31.0
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": null,
+          "checked_after": null,
+          "target_frame": "main"
+        }
+      }
+    },
+    {
+      "id": "G09",
+      "scenario": "V3-R02",
+      "group": "railway",
+      "target": "Use saved first passenger button",
+      "kind": "button",
+      "instruction": "Click the visible Use saved first passenger button once. Do not type, submit a payment, or take any other action.",
+      "original_size": [
+        1440,
+        900
+      ],
+      "prepared_size": [
+        1248,
+        768
+      ],
+      "native_point": [
+        496,
+        316
+      ],
+      "native_action": "Click(box=(496, 316))",
+      "actual_model": true,
+      "original_image": "research/venus/coordinate-evidence/railway/original.png",
+      "prepared_image": "research/venus/coordinate-evidence/railway/prepared.png",
+      "original_sha256": "d6f30ac017102a1c3eb76d015887543db9f85d765aa22aeeae928e6965464ec4",
+      "prepared_sha256": "34c92a0951fbfd23a63a63473b6a96b49a5211d516f8eba1278259ffc345b840",
+      "raw_text_sha256": "74f85b045f95e1bdc28b629c02f0ad8f5eb07a7872b6dc93f32ba69c1f4eb4ae",
+      "inference_seconds": 10.974385874986183,
+      "generated_token_limit_reached": false,
+      "inference_evidence": "data/research/venus/coordinate-audit/grounding-v2/G09/inference.json",
+      "browser_evidence": "data/research/venus/coordinate-audit/grounding-v2-replay-trusted/G09/evaluation.json",
+      "candidates": {
+        "normalized_1000": {
+          "point": [
+            714,
+            284
+          ],
+          "valid": true,
+          "source_size": [
+            1000,
+            1000
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 24,
+            "y": 332.28125,
+            "width": 203.875,
+            "height": 48.140625
+          },
+          "target_bbox_after": {
+            "x": 24.0,
+            "y": 332.28125,
+            "width": 203.875,
+            "height": 48.140625
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": null,
+          "checked_after": null,
+          "target_frame": "main"
+        },
+        "prepared_image_pixels": {
+          "point": [
+            572,
+            370
+          ],
+          "valid": true,
+          "source_size": [
+            1248,
+            768
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 24,
+            "y": 332.28125,
+            "width": 203.875,
+            "height": 48.140625
+          },
+          "target_bbox_after": {
+            "x": 24.0,
+            "y": 332.28125,
+            "width": 203.875,
+            "height": 48.140625
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": null,
+          "checked_after": null,
+          "target_frame": "main"
+        },
+        "original_image_pixels": {
+          "point": [
+            496,
+            316
+          ],
+          "valid": true,
+          "source_size": [
+            1440,
+            900
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 24,
+            "y": 332.28125,
+            "width": 203.875,
+            "height": 48.140625
+          },
+          "target_bbox_after": {
+            "x": 24.0,
+            "y": 332.28125,
+            "width": 203.875,
+            "height": 48.140625
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": null,
+          "checked_after": null,
+          "target_frame": "main"
+        },
+        "upstream_example_factor28": {
+          "point": [
+            500,
+            317
+          ],
+          "valid": true,
+          "source_size": [
+            1428,
+            896
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 24,
+            "y": 332.28125,
+            "width": 203.875,
+            "height": 48.140625
+          },
+          "target_bbox_after": {
+            "x": 24.0,
+            "y": 332.28125,
+            "width": 203.875,
+            "height": 48.140625
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": null,
+          "checked_after": null,
+          "target_frame": "main"
+        }
+      }
+    },
+    {
+      "id": "G10",
+      "scenario": "V3-ST03",
+      "group": "stripe",
+      "target": "Email address input",
+      "kind": "input",
+      "instruction": "Click the visible Email address input once. Do not type, submit a payment, or take any other action.",
+      "original_size": [
+        1024,
+        768
+      ],
+      "prepared_size": [
+        1024,
+        768
+      ],
+      "native_point": [
+        496,
+        803
+      ],
+      "native_action": "Click(box=(496, 803))",
+      "actual_model": true,
+      "original_image": "research/venus/coordinate-evidence/stripe/original.png",
+      "prepared_image": "research/venus/coordinate-evidence/stripe/prepared.png",
+      "original_sha256": "375c986f7650e16cd85f3b38704552b244bab19447b9eea0e9c464a280c5678b",
+      "prepared_sha256": "9ba4b9b9a2fec719ca2f2f182ba91617ef9e57c6a229e063dd79e4947a4070a5",
+      "raw_text_sha256": "9e20c48452997b116dee6ed0f713dacca909c4745771d69756e3077515706cba",
+      "inference_seconds": 10.687474083038978,
+      "generated_token_limit_reached": false,
+      "inference_evidence": "data/research/venus/coordinate-audit/grounding-v2/G10/inference.json",
+      "browser_evidence": "data/research/venus/coordinate-audit/grounding-v2-replay-trusted/G10/evaluation.json",
+      "candidates": {
+        "normalized_1000": {
+          "point": [
+            507,
+            616
+          ],
+          "valid": true,
+          "source_size": [
+            1000,
+            1000
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 49,
+            "y": 309.875,
+            "width": 247,
+            "height": 49.25
+          },
+          "target_bbox_after": {
+            "x": 49.0,
+            "y": 309.875,
+            "width": 247.0,
+            "height": 49.25
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": false,
+          "target_frame": "main"
+        },
+        "prepared_image_pixels": {
+          "point": null,
+          "valid": false,
+          "source_size": [
+            1024,
+            768
+          ],
+          "status": "invalid_coordinates",
+          "target_hit": false,
+          "physical_pointer_verified": null,
+          "pointer_verification_source": null,
+          "associated_physical_delivery": null,
+          "target_received_click": null,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 49,
+            "y": 309.875,
+            "width": 247,
+            "height": 49.25
+          },
+          "target_bbox_after": null,
+          "focus_correct": null,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": null,
+          "target_frame": "main"
+        },
+        "original_image_pixels": {
+          "point": null,
+          "valid": false,
+          "source_size": [
+            1024,
+            768
+          ],
+          "status": "invalid_coordinates",
+          "target_hit": false,
+          "physical_pointer_verified": null,
+          "pointer_verification_source": null,
+          "associated_physical_delivery": null,
+          "target_received_click": null,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 49,
+            "y": 309.875,
+            "width": 247,
+            "height": 49.25
+          },
+          "target_bbox_after": null,
+          "focus_correct": null,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": null,
+          "target_frame": "main"
+        },
+        "upstream_example_factor28": {
+          "point": [
+            490,
+            768
+          ],
+          "valid": false,
+          "source_size": [
+            1036,
+            756
+          ],
+          "status": "invalid_coordinates",
+          "target_hit": false,
+          "physical_pointer_verified": null,
+          "pointer_verification_source": null,
+          "associated_physical_delivery": null,
+          "target_received_click": null,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 49,
+            "y": 309.875,
+            "width": 247,
+            "height": 49.25
+          },
+          "target_bbox_after": null,
+          "focus_correct": null,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": null,
+          "target_frame": "main"
+        }
+      }
+    },
+    {
+      "id": "G11",
+      "scenario": "V3-ST03",
+      "group": "stripe",
+      "target": "ZIP code input",
+      "kind": "input",
+      "instruction": "Click the visible ZIP code input once. Do not type, submit a payment, or take any other action.",
+      "original_size": [
+        1024,
+        768
+      ],
+      "prepared_size": [
+        1024,
+        768
+      ],
+      "native_point": [
+        633,
+        708
+      ],
+      "native_action": "Click(box=(633, 708))",
+      "actual_model": true,
+      "original_image": "research/venus/coordinate-evidence/stripe/original.png",
+      "prepared_image": "research/venus/coordinate-evidence/stripe/prepared.png",
+      "original_sha256": "375c986f7650e16cd85f3b38704552b244bab19447b9eea0e9c464a280c5678b",
+      "prepared_sha256": "9ba4b9b9a2fec719ca2f2f182ba91617ef9e57c6a229e063dd79e4947a4070a5",
+      "raw_text_sha256": "9ce16fcf2283b099df3007ca01b2807f7b2f949a41252c2a02b3433d06af1bfc",
+      "inference_seconds": 9.361138249980286,
+      "generated_token_limit_reached": false,
+      "inference_evidence": "data/research/venus/coordinate-audit/grounding-v2/G11/inference.json",
+      "browser_evidence": "data/research/venus/coordinate-audit/grounding-v2-replay-trusted/G11/evaluation.json",
+      "candidates": {
+        "normalized_1000": {
+          "point": [
+            648,
+            543
+          ],
+          "valid": true,
+          "source_size": [
+            1000,
+            1000
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 312,
+            "y": 617,
+            "width": 247,
+            "height": 49.25
+          },
+          "target_bbox_after": {
+            "x": 312.0,
+            "y": 617.0,
+            "width": 247.0,
+            "height": 49.25
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": false,
+          "target_frame": "main"
+        },
+        "prepared_image_pixels": {
+          "point": [
+            633,
+            708
+          ],
+          "valid": true,
+          "source_size": [
+            1024,
+            768
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 312,
+            "y": 617,
+            "width": 247,
+            "height": 49.25
+          },
+          "target_bbox_after": {
+            "x": 312.0,
+            "y": 617.0,
+            "width": 247.0,
+            "height": 49.25
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": false,
+          "target_frame": "main"
+        },
+        "original_image_pixels": {
+          "point": [
+            633,
+            708
+          ],
+          "valid": true,
+          "source_size": [
+            1024,
+            768
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 312,
+            "y": 617,
+            "width": 247,
+            "height": 49.25
+          },
+          "target_bbox_after": {
+            "x": 312.0,
+            "y": 617.0,
+            "width": 247.0,
+            "height": 49.25
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": false,
+          "target_frame": "main"
+        },
+        "upstream_example_factor28": {
+          "point": [
+            625,
+            719
+          ],
+          "valid": true,
+          "source_size": [
+            1036,
+            756
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 312,
+            "y": 617,
+            "width": 247,
+            "height": 49.25
+          },
+          "target_bbox_after": {
+            "x": 312.0,
+            "y": 617.0,
+            "width": 247.0,
+            "height": 49.25
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": false,
+          "target_frame": "main"
+        }
+      }
+    },
+    {
+      "id": "G12",
+      "scenario": "V3-I-donation-stack-card",
+      "group": "donation",
+      "target": "Receipt email input",
+      "kind": "input",
+      "instruction": "Click the visible Receipt email input once. Do not type, submit a payment, or take any other action.",
+      "original_size": [
+        1600,
+        1000
+      ],
+      "prepared_size": [
+        1248,
+        768
+      ],
+      "native_point": [
+        505,
+        296
+      ],
+      "native_action": "Click(box=(505, 296))",
+      "actual_model": true,
+      "original_image": "research/venus/coordinate-evidence/donation/original.png",
+      "prepared_image": "research/venus/coordinate-evidence/donation/prepared.png",
+      "original_sha256": "6ec91399764e2c63ff76dbfb7dfd03860c04fb752c7a43eacad0b1ccaf366b2a",
+      "prepared_sha256": "82646165fd44a6f30885af29696076be25df23463f80347b79cf1e9338c799c6",
+      "raw_text_sha256": "17502f43fd708708c03078060e069beb5cdbd00fdffe255632429f25a6ef9183",
+      "inference_seconds": 11.387568041973282,
+      "generated_token_limit_reached": false,
+      "inference_evidence": "data/research/venus/coordinate-audit/grounding-v2/G12/inference.json",
+      "browser_evidence": "data/research/venus/coordinate-audit/grounding-v2-replay-trusted/G12/evaluation.json",
+      "candidates": {
+        "normalized_1000": {
+          "point": [
+            808,
+            296
+          ],
+          "valid": true,
+          "source_size": [
+            1000,
+            1000
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": true,
+          "target_received_click": true,
+          "interaction_success": true,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 292,
+            "y": 323.65625,
+            "width": 1016,
+            "height": 42
+          },
+          "target_bbox_after": {
+            "x": 292.0,
+            "y": 323.65625,
+            "width": 1016.0,
+            "height": 42.0
+          },
+          "focus_correct": true,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": false,
+          "target_frame": "main"
+        },
+        "prepared_image_pixels": {
+          "point": [
+            647,
+            385
+          ],
+          "valid": true,
+          "source_size": [
+            1248,
+            768
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 292,
+            "y": 323.65625,
+            "width": 1016,
+            "height": 42
+          },
+          "target_bbox_after": {
+            "x": 292.0,
+            "y": 323.65625,
+            "width": 1016.0,
+            "height": 42.0
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": false,
+          "target_frame": "main"
+        },
+        "original_image_pixels": {
+          "point": [
+            505,
+            296
+          ],
+          "valid": true,
+          "source_size": [
+            1600,
+            1000
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": true,
+          "target_received_click": true,
+          "interaction_success": true,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 292,
+            "y": 323.65625,
+            "width": 1016,
+            "height": 42
+          },
+          "target_bbox_after": {
+            "x": 292.0,
+            "y": 323.65625,
+            "width": 1016.0,
+            "height": 42.0
+          },
+          "focus_correct": true,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": false,
+          "target_frame": "main"
+        },
+        "upstream_example_factor28": {
+          "point": [
+            506,
+            293
+          ],
+          "valid": true,
+          "source_size": [
+            1596,
+            1008
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": true,
+          "target_received_click": true,
+          "interaction_success": true,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 292,
+            "y": 323.65625,
+            "width": 1016,
+            "height": 42
+          },
+          "target_bbox_after": {
+            "x": 292.0,
+            "y": 323.65625,
+            "width": 1016.0,
+            "height": 42.0
+          },
+          "focus_correct": true,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": false,
+          "target_frame": "main"
+        }
+      }
+    },
+    {
+      "id": "G13",
+      "scenario": "V3-I-donation-stack-card",
+      "group": "donation",
+      "target": "Continue to shipping button",
+      "kind": "button",
+      "instruction": "Click the visible Continue to shipping button once. Do not type, submit a payment, or take any other action.",
+      "original_size": [
+        1600,
+        1000
+      ],
+      "prepared_size": [
+        1248,
+        768
+      ],
+      "native_point": [
+        704,
+        816
+      ],
+      "native_action": "Click(box=(704, 816))",
+      "actual_model": true,
+      "original_image": "research/venus/coordinate-evidence/donation/original.png",
+      "prepared_image": "research/venus/coordinate-evidence/donation/prepared.png",
+      "original_sha256": "6ec91399764e2c63ff76dbfb7dfd03860c04fb752c7a43eacad0b1ccaf366b2a",
+      "prepared_sha256": "82646165fd44a6f30885af29696076be25df23463f80347b79cf1e9338c799c6",
+      "raw_text_sha256": "1d94b5b220f59ed4a2135c23f861e560eab0bfdd5f05bdbef87678e7b64aae4b",
+      "inference_seconds": 10.957598333014175,
+      "generated_token_limit_reached": false,
+      "inference_evidence": "data/research/venus/coordinate-audit/grounding-v2/G13/inference.json",
+      "browser_evidence": "data/research/venus/coordinate-audit/grounding-v2-replay-trusted/G13/evaluation.json",
+      "candidates": {
+        "normalized_1000": {
+          "point": [
+            1126,
+            816
+          ],
+          "valid": true,
+          "source_size": [
+            1000,
+            1000
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 275,
+            "y": 528.65625,
+            "width": 168.03125,
+            "height": 42
+          },
+          "target_bbox_after": {
+            "x": 275.0,
+            "y": 528.65625,
+            "width": 168.03125,
+            "height": 42.0
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": null,
+          "checked_after": null,
+          "target_frame": "main"
+        },
+        "prepared_image_pixels": {
+          "point": null,
+          "valid": false,
+          "source_size": [
+            1248,
+            768
+          ],
+          "status": "invalid_coordinates",
+          "target_hit": false,
+          "physical_pointer_verified": null,
+          "pointer_verification_source": null,
+          "associated_physical_delivery": null,
+          "target_received_click": null,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 275,
+            "y": 528.65625,
+            "width": 168.03125,
+            "height": 42
+          },
+          "target_bbox_after": null,
+          "focus_correct": null,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": null,
+          "checked_after": null,
+          "target_frame": "main"
+        },
+        "original_image_pixels": {
+          "point": [
+            704,
+            816
+          ],
+          "valid": true,
+          "source_size": [
+            1600,
+            1000
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 275,
+            "y": 528.65625,
+            "width": 168.03125,
+            "height": 42
+          },
+          "target_bbox_after": {
+            "x": 275.0,
+            "y": 528.65625,
+            "width": 168.03125,
+            "height": 42.0
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": null,
+          "checked_after": null,
+          "target_frame": "main"
+        },
+        "upstream_example_factor28": {
+          "point": [
+            705,
+            809
+          ],
+          "valid": true,
+          "source_size": [
+            1596,
+            1008
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 275,
+            "y": 528.65625,
+            "width": 168.03125,
+            "height": 42
+          },
+          "target_bbox_after": {
+            "x": 275.0,
+            "y": 528.65625,
+            "width": 168.03125,
+            "height": 42.0
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": null,
+          "checked_after": null,
+          "target_frame": "main"
+        }
+      }
+    },
+    {
+      "id": "G14",
+      "scenario": "V3-S03",
+      "group": "shopify-onepage",
+      "target": "Delivery method dropdown",
+      "kind": "dropdown",
+      "instruction": "Click the visible Delivery method dropdown once. Do not type, submit a payment, or take any other action.",
+      "original_size": [
+        1280,
+        900
+      ],
+      "prepared_size": [
+        1184,
+        832
+      ],
+      "native_point": [
+        496,
+        798
+      ],
+      "native_action": "Click(box=(496, 798))",
+      "actual_model": true,
+      "original_image": "research/venus/coordinate-evidence/shopify-onepage/original.png",
+      "prepared_image": "research/venus/coordinate-evidence/shopify-onepage/prepared.png",
+      "original_sha256": "f770d3fde70428d4ba966ed8e6b69015a03c883b79bc9f910c150a0ac3b6f56f",
+      "prepared_sha256": "bea92a23ffeb91c4be0ef89712e67b55a44857e47f3a2bf1c0f87c7ca729d06e",
+      "raw_text_sha256": "31dcb85deecb15d92f3d9ab90ccc4d6f4b655b5ead322b41ca3d0cbd5c5dfa09",
+      "inference_seconds": 11.158653624996077,
+      "generated_token_limit_reached": false,
+      "inference_evidence": "data/research/venus/coordinate-audit/grounding-v2/G14/inference.json",
+      "browser_evidence": "data/research/venus/coordinate-audit/grounding-v2-replay-trusted/G14/evaluation.json",
+      "candidates": {
+        "normalized_1000": {
+          "point": [
+            634,
+            718
+          ],
+          "valid": true,
+          "source_size": [
+            1000,
+            1000
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "main_document",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 131,
+            "y": 396.171875,
+            "width": 602,
+            "height": 42
+          },
+          "target_bbox_after": {
+            "x": 131.0,
+            "y": 396.171875,
+            "width": 602.0,
+            "height": 42.0
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": null,
+          "checked_after": null,
+          "target_frame": "child"
+        },
+        "prepared_image_pixels": {
+          "point": [
+            536,
+            863
+          ],
+          "valid": true,
+          "source_size": [
+            1184,
+            832
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "main_document",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 131,
+            "y": 396.171875,
+            "width": 602,
+            "height": 42
+          },
+          "target_bbox_after": {
+            "x": 131.0,
+            "y": 396.171875,
+            "width": 602.0,
+            "height": 42.0
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": null,
+          "checked_after": null,
+          "target_frame": "child"
+        },
+        "original_image_pixels": {
+          "point": [
+            496,
+            798
+          ],
+          "valid": true,
+          "source_size": [
+            1280,
+            900
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "main_document",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 131,
+            "y": 396.171875,
+            "width": 602,
+            "height": 42
+          },
+          "target_bbox_after": {
+            "x": 131.0,
+            "y": 396.171875,
+            "width": 602.0,
+            "height": 42.0
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": null,
+          "checked_after": null,
+          "target_frame": "child"
+        },
+        "upstream_example_factor28": {
+          "point": [
+            492,
+            801
+          ],
+          "valid": true,
+          "source_size": [
+            1288,
+            896
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "main_document",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 131,
+            "y": 396.171875,
+            "width": 602,
+            "height": 42
+          },
+          "target_bbox_after": {
+            "x": 131.0,
+            "y": 396.171875,
+            "width": 602.0,
+            "height": 42.0
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": null,
+          "checked_after": null,
+          "target_frame": "child"
+        }
+      }
+    },
+    {
+      "id": "G15",
+      "scenario": "V3-S03",
+      "group": "shopify-onepage",
+      "target": "Gift wrapping checkbox square control",
+      "kind": "checkbox",
+      "instruction": "Click the visible Gift wrapping checkbox square control once. Do not type, submit a payment, or take any other action.",
+      "original_size": [
+        1280,
+        900
+      ],
+      "prepared_size": [
+        1184,
+        832
+      ],
+      "native_point": [
+        206,
+        395
+      ],
+      "native_action": "Click(box=(206, 395))",
+      "actual_model": true,
+      "original_image": "research/venus/coordinate-evidence/shopify-onepage/original.png",
+      "prepared_image": "research/venus/coordinate-evidence/shopify-onepage/prepared.png",
+      "original_sha256": "f770d3fde70428d4ba966ed8e6b69015a03c883b79bc9f910c150a0ac3b6f56f",
+      "prepared_sha256": "bea92a23ffeb91c4be0ef89712e67b55a44857e47f3a2bf1c0f87c7ca729d06e",
+      "raw_text_sha256": "61940cb8f1489dbd68fa20fbc30b55f3d384b09ef9e3247d17267b196b2bce88",
+      "inference_seconds": 10.95039120898582,
+      "generated_token_limit_reached": false,
+      "inference_evidence": "data/research/venus/coordinate-audit/grounding-v2/G15/inference.json",
+      "browser_evidence": "data/research/venus/coordinate-audit/grounding-v2-replay-trusted/G15/evaluation.json",
+      "candidates": {
+        "normalized_1000": {
+          "point": [
+            263,
+            355
+          ],
+          "valid": true,
+          "source_size": [
+            1000,
+            1000
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 135,
+            "y": 478.765625,
+            "width": 18,
+            "height": 18
+          },
+          "target_bbox_after": {
+            "x": 135.0,
+            "y": 478.765625,
+            "width": 18.0,
+            "height": 18.0
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": false,
+          "target_frame": "child"
+        },
+        "prepared_image_pixels": {
+          "point": [
+            222,
+            427
+          ],
+          "valid": true,
+          "source_size": [
+            1184,
+            832
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 135,
+            "y": 478.765625,
+            "width": 18,
+            "height": 18
+          },
+          "target_bbox_after": {
+            "x": 135.0,
+            "y": 478.765625,
+            "width": 18.0,
+            "height": 18.0
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": false,
+          "target_frame": "child"
+        },
+        "original_image_pixels": {
+          "point": [
+            206,
+            395
+          ],
+          "valid": true,
+          "source_size": [
+            1280,
+            900
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 135,
+            "y": 478.765625,
+            "width": 18,
+            "height": 18
+          },
+          "target_bbox_after": {
+            "x": 135.0,
+            "y": 478.765625,
+            "width": 18.0,
+            "height": 18.0
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": false,
+          "target_frame": "child"
+        },
+        "upstream_example_factor28": {
+          "point": [
+            204,
+            396
+          ],
+          "valid": true,
+          "source_size": [
+            1288,
+            896
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 135,
+            "y": 478.765625,
+            "width": 18,
+            "height": 18
+          },
+          "target_bbox_after": {
+            "x": 135.0,
+            "y": 478.765625,
+            "width": 18.0,
+            "height": 18.0
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": false,
+          "checked_after": false,
+          "target_frame": "child"
+        }
+      }
+    },
+    {
+      "id": "G16",
+      "scenario": "V3-S03",
+      "group": "shopify-onepage",
+      "target": "Payment method dropdown",
+      "kind": "dropdown",
+      "instruction": "Click the visible Payment method dropdown once. Do not type, submit a payment, or take any other action.",
+      "original_size": [
+        1280,
+        900
+      ],
+      "prepared_size": [
+        1184,
+        832
+      ],
+      "native_point": [
+        496,
+        794
+      ],
+      "native_action": "Click(box=(496, 794))",
+      "actual_model": true,
+      "original_image": "research/venus/coordinate-evidence/shopify-onepage/original.png",
+      "prepared_image": "research/venus/coordinate-evidence/shopify-onepage/prepared.png",
+      "original_sha256": "f770d3fde70428d4ba966ed8e6b69015a03c883b79bc9f910c150a0ac3b6f56f",
+      "prepared_sha256": "bea92a23ffeb91c4be0ef89712e67b55a44857e47f3a2bf1c0f87c7ca729d06e",
+      "raw_text_sha256": "39cc7b34bde60e3281d509908a0a2d65fb2d5d2931fe49fc4e16e7009b28cbf2",
+      "inference_seconds": 10.882770417025313,
+      "generated_token_limit_reached": false,
+      "inference_evidence": "data/research/venus/coordinate-audit/grounding-v2/G16/inference.json",
+      "browser_evidence": "data/research/venus/coordinate-audit/grounding-v2-replay-trusted/G16/evaluation.json",
+      "candidates": {
+        "normalized_1000": {
+          "point": [
+            634,
+            714
+          ],
+          "valid": true,
+          "source_size": [
+            1000,
+            1000
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 119,
+            "y": 784.8125,
+            "width": 626,
+            "height": 46
+          },
+          "target_bbox_after": {
+            "x": 119.0,
+            "y": 784.8125,
+            "width": 626.0,
+            "height": 46.0
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": null,
+          "checked_after": null,
+          "target_frame": "main"
+        },
+        "prepared_image_pixels": {
+          "point": [
+            536,
+            858
+          ],
+          "valid": true,
+          "source_size": [
+            1184,
+            832
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 119,
+            "y": 784.8125,
+            "width": 626,
+            "height": 46
+          },
+          "target_bbox_after": {
+            "x": 119.0,
+            "y": 784.8125,
+            "width": 626.0,
+            "height": 46.0
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": null,
+          "checked_after": null,
+          "target_frame": "main"
+        },
+        "original_image_pixels": {
+          "point": [
+            496,
+            794
+          ],
+          "valid": true,
+          "source_size": [
+            1280,
+            900
+          ],
+          "status": "executed",
+          "target_hit": true,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": true,
+          "target_received_click": true,
+          "interaction_success": true,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 119,
+            "y": 784.8125,
+            "width": 626,
+            "height": 46
+          },
+          "target_bbox_after": {
+            "x": 119.0,
+            "y": 784.8125,
+            "width": 626.0,
+            "height": 46.0
+          },
+          "focus_correct": true,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": null,
+          "checked_after": null,
+          "target_frame": "main"
+        },
+        "upstream_example_factor28": {
+          "point": [
+            492,
+            797
+          ],
+          "valid": true,
+          "source_size": [
+            1288,
+            896
+          ],
+          "status": "executed",
+          "target_hit": true,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": true,
+          "target_received_click": true,
+          "interaction_success": true,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 119,
+            "y": 784.8125,
+            "width": 626,
+            "height": 46
+          },
+          "target_bbox_after": {
+            "x": 119.0,
+            "y": 784.8125,
+            "width": 626.0,
+            "height": 46.0
+          },
+          "focus_correct": true,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": null,
+          "checked_after": null,
+          "target_frame": "main"
+        }
+      }
+    },
+    {
+      "id": "G17",
+      "scenario": "T01",
+      "group": "legacy-payment",
+      "target": "Scan and pay payment method radio button",
+      "kind": "radio",
+      "instruction": "Click the visible Scan and pay payment method radio button once. Do not type, submit a payment, or take any other action.",
+      "original_size": [
+        800,
+        600
+      ],
+      "prepared_size": [
+        800,
+        608
+      ],
+      "native_point": [
+        615,
+        619
+      ],
+      "native_action": "Click(box=(615, 619))",
+      "actual_model": true,
+      "original_image": "research/venus/coordinate-evidence/legacy-payment/original.png",
+      "prepared_image": "research/venus/coordinate-evidence/legacy-payment/prepared.png",
+      "original_sha256": "2618b70b3b0a67a117c485910029224bbd11e688262019658b474bad86e107d5",
+      "prepared_sha256": "d8cd1409d15fff0fe564deadb9607c9686c3632ef39175bd725bb1d8bca8d2f3",
+      "raw_text_sha256": "6bc93ec84544308b733cd2c6078e7229df74555a6c9ba83e05c7a412d31a43ee",
+      "inference_seconds": 7.517195166030433,
+      "generated_token_limit_reached": false,
+      "inference_evidence": "data/research/venus/coordinate-audit/grounding-v2/G17/inference.json",
+      "browser_evidence": "data/research/venus/coordinate-audit/grounding-v2-replay-trusted/G17/evaluation.json",
+      "candidates": {
+        "normalized_1000": {
+          "point": [
+            492,
+            371
+          ],
+          "valid": true,
+          "source_size": [
+            1000,
+            1000
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 156.328125,
+            "y": 305.09375,
+            "width": 122.453125,
+            "height": 44
+          },
+          "target_bbox_after": {
+            "x": 156.328125,
+            "y": 305.09375,
+            "width": 122.453125,
+            "height": 44.0
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": null,
+          "checked_after": null,
+          "target_frame": "main"
+        },
+        "prepared_image_pixels": {
+          "point": null,
+          "valid": false,
+          "source_size": [
+            800,
+            608
+          ],
+          "status": "invalid_coordinates",
+          "target_hit": false,
+          "physical_pointer_verified": null,
+          "pointer_verification_source": null,
+          "associated_physical_delivery": null,
+          "target_received_click": null,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 156.328125,
+            "y": 305.09375,
+            "width": 122.453125,
+            "height": 44
+          },
+          "target_bbox_after": null,
+          "focus_correct": null,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": null,
+          "checked_after": null,
+          "target_frame": "main"
+        },
+        "original_image_pixels": {
+          "point": null,
+          "valid": false,
+          "source_size": [
+            800,
+            600
+          ],
+          "status": "invalid_coordinates",
+          "target_hit": false,
+          "physical_pointer_verified": null,
+          "pointer_verification_source": null,
+          "associated_physical_delivery": null,
+          "target_received_click": null,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 156.328125,
+            "y": 305.09375,
+            "width": 122.453125,
+            "height": 44
+          },
+          "target_bbox_after": null,
+          "focus_correct": null,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": null,
+          "checked_after": null,
+          "target_frame": "main"
+        },
+        "upstream_example_factor28": {
+          "point": [
+            605,
+            600
+          ],
+          "valid": false,
+          "source_size": [
+            812,
+            588
+          ],
+          "status": "invalid_coordinates",
+          "target_hit": false,
+          "physical_pointer_verified": null,
+          "pointer_verification_source": null,
+          "associated_physical_delivery": null,
+          "target_received_click": null,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 156.328125,
+            "y": 305.09375,
+            "width": 122.453125,
+            "height": 44
+          },
+          "target_bbox_after": null,
+          "focus_correct": null,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": null,
+          "checked_after": null,
+          "target_frame": "main"
+        }
+      }
+    },
+    {
+      "id": "G18",
+      "scenario": "T01",
+      "group": "legacy-payment",
+      "target": "Google Pay preferred UPI app radio button",
+      "kind": "radio",
+      "instruction": "Click the visible Google Pay preferred UPI app radio button once. Do not type, submit a payment, or take any other action.",
+      "original_size": [
+        800,
+        600
+      ],
+      "prepared_size": [
+        800,
+        608
+      ],
+      "native_point": [
+        646,
+        803
+      ],
+      "native_action": "Click(box=(646, 803))",
+      "actual_model": true,
+      "original_image": "research/venus/coordinate-evidence/legacy-payment/original.png",
+      "prepared_image": "research/venus/coordinate-evidence/legacy-payment/prepared.png",
+      "original_sha256": "2618b70b3b0a67a117c485910029224bbd11e688262019658b474bad86e107d5",
+      "prepared_sha256": "d8cd1409d15fff0fe564deadb9607c9686c3632ef39175bd725bb1d8bca8d2f3",
+      "raw_text_sha256": "3a69f778dbb6441886510cbb7f4f3e72df366a57fb84c2590bf55489c327a2fd",
+      "inference_seconds": 8.495652083016466,
+      "generated_token_limit_reached": false,
+      "inference_evidence": "data/research/venus/coordinate-audit/grounding-v2/G18/inference.json",
+      "browser_evidence": "data/research/venus/coordinate-audit/grounding-v2-replay-trusted/G18/evaluation.json",
+      "candidates": {
+        "normalized_1000": {
+          "point": [
+            516,
+            481
+          ],
+          "valid": true,
+          "source_size": [
+            1000,
+            1000
+          ],
+          "status": "executed",
+          "target_hit": false,
+          "physical_pointer_verified": true,
+          "pointer_verification_source": "owner_frame",
+          "associated_physical_delivery": false,
+          "target_received_click": false,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 230,
+            "y": 457.1875,
+            "width": 165,
+            "height": 56
+          },
+          "target_bbox_after": {
+            "x": 230.0,
+            "y": 457.1875,
+            "width": 165.0,
+            "height": 56.0
+          },
+          "focus_correct": false,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": null,
+          "checked_after": null,
+          "target_frame": "main"
+        },
+        "prepared_image_pixels": {
+          "point": null,
+          "valid": false,
+          "source_size": [
+            800,
+            608
+          ],
+          "status": "invalid_coordinates",
+          "target_hit": false,
+          "physical_pointer_verified": null,
+          "pointer_verification_source": null,
+          "associated_physical_delivery": null,
+          "target_received_click": null,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 230,
+            "y": 457.1875,
+            "width": 165,
+            "height": 56
+          },
+          "target_bbox_after": null,
+          "focus_correct": null,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": null,
+          "checked_after": null,
+          "target_frame": "main"
+        },
+        "original_image_pixels": {
+          "point": null,
+          "valid": false,
+          "source_size": [
+            800,
+            600
+          ],
+          "status": "invalid_coordinates",
+          "target_hit": false,
+          "physical_pointer_verified": null,
+          "pointer_verification_source": null,
+          "associated_physical_delivery": null,
+          "target_received_click": null,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 230,
+            "y": 457.1875,
+            "width": 165,
+            "height": 56
+          },
+          "target_bbox_after": null,
+          "focus_correct": null,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": null,
+          "checked_after": null,
+          "target_frame": "main"
+        },
+        "upstream_example_factor28": {
+          "point": [
+            636,
+            600
+          ],
+          "valid": false,
+          "source_size": [
+            812,
+            588
+          ],
+          "status": "invalid_coordinates",
+          "target_hit": false,
+          "physical_pointer_verified": null,
+          "pointer_verification_source": null,
+          "associated_physical_delivery": null,
+          "target_received_click": null,
+          "interaction_success": false,
+          "frame_pixels_equal": true,
+          "target_bbox": {
+            "x": 230,
+            "y": 457.1875,
+            "width": 165,
+            "height": 56
+          },
+          "target_bbox_after": null,
+          "focus_correct": null,
+          "target_visible": true,
+          "target_disabled": false,
+          "target_center_unobscured": true,
+          "checked_before": null,
+          "checked_after": null,
+          "target_frame": "main"
+        }
+      }
+    }
+  ],
+  "obscuration_check_scope": "Owner-document target-center elementFromPoint; not a full cross-document occlusion proof. Every normalized point lies outside its intended target rectangle."
+}

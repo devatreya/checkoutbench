@@ -1,0 +1,32 @@
+{
+  "audit_date": "2026-10-17",
+  "backend": {
+    "command": "RUN_CUA_REAL=1 RUN_CUA_GENERALIZATION_REAL=1 CUA_S1_MODEL_PATH=<repo>/data/research/checkpoints/cua-s1/cua-s1-forms.safetensors .venv/bin/pytest -q",
+    "exit_code": 0,
+    "passed": 449,
+    "warnings": 4,
+    "warning_kind": "existing Transformer nested-tensor warnings",
+    "seconds": 1317.39,
+    "stdout_sha256": "141ebe50c17caea2ead771bdcc65b8f7e3e078dd46fe5f5dfffe46d92e395091",
+    "genuine_cua_checks_enabled": true
+  },
+  "frontend": {
+    "command": "npm run build",
+    "working_directory": "frontend",
+    "exit_code": 0,
+    "stdout_sha256": "87af6e701d07e1ac4fcc67da3f93ae274b9ee09da62454600a2360d84c658fc7"
+  },
+  "coordinate_modules_test_count": 114,
+  "pre_fix_regressions_failed": 4,
+  "post_fix_regressions_pass": true,
+  "ui_venus_genuine_inference_calls": {
+    "predeclared_grounding": 18,
+    "fresh_v3_smoke": 2,
+    "single_checkout": 3,
+    "saved_prediction_or_action_replays": 0
+  },
+  "ui_venus_autonomous_checkout_trials": 1,
+  "new_full_174_ui_venus_run": false,
+  "cloud_infrastructure_added": false,
+  "runtime_binding_hash": "e579660d8827719ead39b1ac1ee9edfec09558c0364e8db7607cd6840b37d6dd"
+}

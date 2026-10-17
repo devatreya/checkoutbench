@@ -3,7 +3,7 @@
   "frozen_release_hash": "ca8a3a4d939fce39986e723d33203d9c76fb40bf5954e707204e252ab62332ee",
   "scenario_manifest_hash": "0f08c4d2c46d05e57484ec67f6b194af012488841355ce7451e1620d3fa93d97",
   "frozen_source_hash": "7cc7f97b0149964165609a1c08b75e43a612359013a2e313c9c48f6abf3edb0a",
-  "source_hash": "2a508b5aa668fec3083fe1d8cc1397391bbd8701d7d549f744e60550a277a91f",
+  "source_hash": "542b8d180354b60f2716d4a893b25f27df89fb5f5cbbe1c84f83c6807fa5401c",
   "source_hashes": {
     "backend/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "backend/adapters/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -11,7 +11,7 @@
     "backend/adapters/catalog.py": "5e4a933a3d0912e6797671b81a4afad9b120cba06e633c6a40cfba065085b870",
     "backend/adapters/openrouter.py": "50d2a1dafe3ff39a8597015638285055fc9b20568d0bc3d9148df5210f7e3d1f",
     "backend/adapters/specialists.py": "7731a9ba7bf07184ef0196565b0fbe3d0cb17a8030f8e82c6bdd53a9313ebb27",
-    "backend/adapters/venus.py": "2bfe377f78684b6aea2d9b682acbf2ea5c915abc4571748ba4751e722e39cda7",
+    "backend/adapters/venus.py": "4a9855ab3b6e70b646aeb58b3ff2663c2c657624ed83bc7264d8321227b72b50",
     "backend/adapters/venus_verification.py": "0ccc0ad63b867c51d88fe8684349f134c1973e55103e96bad4793f19667a69d4",
     "backend/app.py": "1ae7357334d0744605407bfbb3cfe7b8539514f1c461fa2c146894bc19c939a8",
     "backend/authentication.py": "e8e1e20a65ec10346c2cb40d96d74f20165a3cbf45f2f7497d6906de18e0987f",
@@ -20,7 +20,7 @@
     "backend/browser/security.py": "97b48b847c4ec956e7700a6cc0a6122e79d039d284fb8882f89f42b6b95b1f5d",
     "backend/browser/v2.py": "6d1018286f0e6d2cb3d12d5cb3acba07214d8c9bd5eda8bf17994a5a02e4c1ac",
     "backend/browser/v21.py": "b7243fd5326d146830ad7e6c855f9d408c3ac3379b93a0655764182235cababc",
-    "backend/browser/visual.py": "23114977511b9edbcc648f826729df143012dd77a4ee82007d43458fc55ebb2b",
+    "backend/browser/visual.py": "dff6f6df13f140fc86c568b7b8127d9a80675146e160b673cab4e068ced58b6b",
     "backend/evaluator/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "backend/evaluator/scoring.py": "be3aa7f9e9fae576c6ed7c626699c305812d66b22b9ec9626928e9c49d76c95b",
     "backend/evaluator/semantic.py": "bf79849b038d43932bad97d62fbc903642856040898ba85fb2dcb6ab773007b4",
@@ -94,6 +94,8 @@
     "scripts/diagnostics/cua_generalization.py": "e4839f678237c201804dc24c8370a637ac6e2a838266a602cf440c699f81e771",
     "scripts/diagnostics/venus_artifact_manifest.json": "4ca11e3a68fdd1e8ffe153c7f522bccec66041a2b0f4c4b55c11994a34a5769b",
     "scripts/diagnostics/venus_capture.py": "c1eed8339242d540f2cb38effc2fb3d70e65c9e9b9ef423c5dce595075a05cbf",
+    "scripts/diagnostics/venus_coordinate_audit.py": "0c5986c0cf938c7f05c9c4eb5ff968ef8de0ba3344a56ca1ae891fafb7fa049a",
+    "scripts/diagnostics/venus_coordinate_math.py": "c112dd959feb9057b99e3080f8b086748cda2d17f87668ec94440a12a1fe1065",
     "scripts/diagnostics/venus_evaluate.py": "83650c25acb1abbf714c429e59b298be935a003404e6e5f93be4e326c4d22ae0",
     "scripts/diagnostics/venus_probe.py": "06770eafd9ed7f07b3750d92027a12b48e255a002e279d4680a931b237b32beb",
     "scripts/diagnostics/venus_requirements.lock.txt": "e981a6010c57e039041e634a0317cc24f9233750e2326338890137173d685414",
@@ -117,7 +119,7 @@
     },
     "backend/adapters/venus.py": {
       "before": null,
-      "after": "2bfe377f78684b6aea2d9b682acbf2ea5c915abc4571748ba4751e722e39cda7"
+      "after": "4a9855ab3b6e70b646aeb58b3ff2663c2c657624ed83bc7264d8321227b72b50"
     },
     "backend/adapters/venus_verification.py": {
       "before": null,
@@ -133,7 +135,7 @@
     },
     "backend/browser/visual.py": {
       "before": null,
-      "after": "23114977511b9edbcc648f826729df143012dd77a4ee82007d43458fc55ebb2b"
+      "after": "dff6f6df13f140fc86c568b7b8127d9a80675146e160b673cab4e068ced58b6b"
     },
     "backend/presentation.py": {
       "before": null,
@@ -187,6 +189,14 @@
       "before": null,
       "after": "c1eed8339242d540f2cb38effc2fb3d70e65c9e9b9ef423c5dce595075a05cbf"
     },
+    "scripts/diagnostics/venus_coordinate_audit.py": {
+      "before": null,
+      "after": "0c5986c0cf938c7f05c9c4eb5ff968ef8de0ba3344a56ca1ae891fafb7fa049a"
+    },
+    "scripts/diagnostics/venus_coordinate_math.py": {
+      "before": null,
+      "after": "c112dd959feb9057b99e3080f8b086748cda2d17f87668ec94440a12a1fe1065"
+    },
     "scripts/diagnostics/venus_evaluate.py": {
       "before": null,
       "after": "83650c25acb1abbf714c429e59b298be935a003404e6e5f93be4e326c4d22ae0"
@@ -224,8 +234,8 @@
   },
   "review": {
     "status": "approved",
-    "reviewer": "CheckoutBench implementation review (Codex, not independent human scientific review)",
-    "summary": "Reviewed canonical alias wrapper, native Venus adapter and pinned isolated runtime, screenshot-only execution, runner error/lineage handling and official protocol separation. All322 canonical objects and41 protected files remain identical. Targeted unit/browser tests pass; model smoke independently attested. This approves runtime integrity, not benchmark publication readiness or model capability. Reviewed full checkpoint runtime configuration separation and export allowlist enforcement. Final review includes blank-environment defaults, preserved legacy checkpoint identity shape, explicit output-rate denominators and registered exact local inference attestation. No canonical fixture, task or objective scoring edits. Corrected UI-Venus1.5 coordinates to normalized0..1000 based on official report section3.1.1 and model-specific implementation, superseding inconsistent generic navigation example. Initial pixel-adapter pilot excluded from model-performance claims; original evidence retained. Reviewed native range/boundary/resize-invariance tests. No scenario-specific adjustment. Final metric review preserves shared inference exception classification alongside adapter transport causes and excludes cold model calls from warm-only timing; no inference actions or fixtures changed."
+    "reviewer": "CheckoutBench coordinate-audit implementation review (Codex lead and independent agent; not independent human scientific review)",
+    "summary": "Retains prior reviewed runtime changes under archived binding0eb881e5. Independently reviewed native normalized0..1000 mapping against pinned official1.5 report, navigation policy, grounding implementation and conflicting lightweight helper; no mapping change. Reviewed v3 CSS-scale screenshot capture for DPR consistency, actual popup geometry metadata and explicit rejection of unsatisfied32-grid pixel caps. Prompts, weights, decoding, scoring, canonical tasks and fixtures unchanged. Pre-fix realChromium regressions demonstrated defects;260 focused backend/browser tests passed with2 genuine-CUA flags omitted, separate45 genuine CUA compatibility tests passed, frontendbuild passed. Diagnostic replay corrections handle opaqueIDs, iframe/shadow scope, trusted physical delivery and savedsource/image provenance;10 realChromium evaluator tests passed. Fresh2call genuine v3 smoke separately verified/registered. All322 canonical objects and protected files match baseline. This binding approves source integrity, not model grounding capability or publication readiness."
   },
-  "binding_hash": "0eb881e5edd6b7b12245a8d421f4263d87a595cf8c49ccc6978db2a7ff028412"
+  "binding_hash": "e579660d8827719ead39b1ac1ee9edfec09558c0364e8db7607cd6840b37d6dd"
 }

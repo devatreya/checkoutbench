@@ -52,6 +52,8 @@ Playwright is browser infrastructure, not an AI model. CUA has passed exact-weig
 
 The [local UI-Venus diagnostic](research/venus/full-summary.json) finished all 174 planned case attempts: zero verified successes, 168 timeouts, four no-progress failures, one invalid action and one Metal inference failure. Completed genuine responses were obtained in 162 cases; 12 had none. This measures the 6-bit local system under a 180-second task budget with observed memory pressure. It is separate from the official leaderboard and does not establish hardware-independent model accuracy.
 
+The [coordinate accuracy audit](docs/research/UI_VENUS_COORDINATE_AUDIT.md) retains normalized 0–1000 coordinates based on official sources. Eighteen genuine target predictions produced 0 geometric hits and one label-mediated interaction; Chromium delivered all normalized clicks correctly. V3 adds general CSS/DPR, popup metadata and resize-cap safeguards. One separate GENERIC-01 trial stopped after three repeated misses, with no completed required fields. These results describe the local 6-bit configuration and do not revise the historical 174 attempts.
+
 See [model cards](docs/research/MODEL_CARDS.md), [specialist setup](docs/SPECIALISTS.md) and [reproduction](docs/research/REPRODUCING.md). Install optional specialist dependencies separately, then configure exact paths and run:
 
 ```sh

@@ -1,0 +1,19 @@
+{
+  "canonical_scenarios_unchanged": 322,
+  "protected_files_unchanged": 41,
+  "historical_database_rows_unchanged": {
+    "data/results.sqlite3": 0,
+    "data/validation/results.sqlite3": 10,
+    "data/research/venus/full-normalized1000/validation/results.sqlite3": 174,
+    "data/research/venus/pilot-normalized1000/validation/results.sqlite3": 7
+  },
+  "historical_evidence_files_unchanged": 16,
+  "old_runtime_binding_archived_byte_exact": true,
+  "original_cua_record_unchanged": true,
+  "original_cua_artifacts_unchanged": 82,
+  "runtime_identity": {
+    "runtime_source_hash": "542b8d180354b60f2716d4a893b25f27df89fb5f5cbbe1c84f83c6807fa5401c",
+    "runtime_binding_hash": "e579660d8827719ead39b1ac1ee9edfec09558c0364e8db7607cd6840b37d6dd",
+    "runtime_audited": true
+  }
+}

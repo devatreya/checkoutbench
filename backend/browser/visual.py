@@ -106,7 +106,11 @@ async def run_visual(page, task, ctl, adapter, model):
         "dom_access_to_model": False, "semantic_repair": False,
         "completion": "model declaration followed by independent outcome verification",
         "stall_monitor": "three equivalent actions without visible public state change; DOM telemetry is not provided to model",
-        "viewport": ctl.run["viewport"], "device_scale_factor": 1,
+        "initial_viewport": copy.deepcopy(ctl.run["viewport"]),
+        "viewport": copy.deepcopy(ctl.run["viewport"]),
+        "viewport_scope": "most recent observation; every call retains its own image size",
+        "screenshot_scale": "css",
+        "device_scale_factor_policy": "benchmark runner configures 1; CSS screenshots also preserve coordinates at other DPRs",
     }
     try:
         if any(k in task for k in ("expected_values", "expected_entity_keys", "dom_ids", "fields")):
@@ -123,15 +127,18 @@ async def run_visual(page, task, ctl, adapter, model):
             before = await page_state(page)
             before_scroll = await page_state(page, include_viewport=True)
             capture = time.perf_counter()
-            png = await page.screenshot()
+            # Mouse coordinates are CSS pixels. Default device-scale PNGs would
+            # multiply both axes at DPR > 1 and silently misdirect valid actions.
+            png = await page.screenshot(scale="css")
             image = Image.open(io.BytesIO(png)).convert("RGB")
+            ctl.run["visual_protocol"]["viewport"] = {"width": image.width, "height": image.height}
             ctl.timings["model_screenshot_seconds"] += time.perf_counter() - capture
             observation = observations / f"{step:04d}.png"
             observation.write_bytes(png)
             call = {"model": model, "operation": "act", "input": {
                 "screenshot": str(observation.relative_to(ctl.directory)),
                 "screenshot_sha256": hashlib.sha256(png).hexdigest(),
-                "image_size": list(image.size), "task": copy.deepcopy(task),
+                "image_size": list(image.size), "screenshot_scale": "css", "task": copy.deepcopy(task),
                 "history": copy.deepcopy(history)}, "status": "started"}
             usage.calls.append(call)
             start = time.perf_counter()

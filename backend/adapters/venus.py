@@ -23,7 +23,7 @@ MODEL_ID = "inclusionAI/UI-Venus-1.5-2B"
 UPSTREAM_REVISION = "bc4c6e62a1c545e043761439be95646d801853a4"
 ARTIFACT_ID = "mlx-community/UI-Venus-1.5-2B-6bit"
 ARTIFACT_REVISION = "95e3994ac9d74fe047cf44c072f6569db62856e7"
-ADAPTER_VERSION = "ui-venus-1.5-web-mlx-v2-normalized1000"
+ADAPTER_VERSION = "ui-venus-1.5-web-mlx-v3-css-geometry"
 ROOT = Path(__file__).resolve().parents[2]
 PUBLIC_TASK_KEYS = frozenset({"instruction", "profile", "payment_request", "preferences",
     "registration_consent", "allowed_payment_alternatives", "maximum_fare", "slot_fallback", "delivery_fallback", "separate_billing"})
@@ -191,6 +191,8 @@ def image_size_for_model(size: tuple[int, int], max_pixels: int = 1003520) -> tu
     elif w * h < 65536:
         factor = math.sqrt(65536 / (width * height))
         w, h = math.ceil(width * factor / 32) * 32, math.ceil(height * factor / 32) * 32
+    if not 65536 <= w * h <= max_pixels:
+        raise ValueError("Image aspect ratio cannot satisfy the patch grid and pixel cap")
     return w, h
 
 
@@ -271,7 +273,7 @@ class VenusAdapter:
                 "prompt_template": WEB_USER_PROMPT, "system_prompt": SYSTEM_PROMPT,
                 "decoding": {"temperature": 0.0, "top_p": 1.0, "max_tokens": self.max_tokens, "prefill_step_size": 256, "seed": 0, "repetition_penalty": 1.0, "repetition_penalty_application": "disabled; mlx-vlm default None"},
                 "context_strategy": {"current_screenshot_only": True, "native_action_history_limit": self.config["history_limit"]},
-                "coordinate_space": "normalized [0,1000] mapped directly to original viewport; inclusive 1000 maps to last pixel",
+                "coordinate_space": "normalized [0,1000] mapped to original screenshot pixels; browser runner uses CSS-scale screenshots; inclusive 1000 maps to last pixel",
                 "coordinate_contract_source": "https://arxiv.org/html/2602.09082v1#S3.SS1.SSS1",
                 "runtime_config": {k: v for k, v in self.config.items() if k not in {"python", "model_path"}},
                 **self._runtime_metadata}

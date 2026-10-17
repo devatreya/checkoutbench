@@ -71,7 +71,7 @@ def test_coordinate_contract_is_independent_of_processor_resize(name):
 
 def test_metadata_declares_native_normalized_coordinate_contract():
     metadata = VenusAdapter().metadata()
-    assert metadata['adapter_version'] == 'ui-venus-1.5-web-mlx-v2-normalized1000'
+    assert metadata['adapter_version'] == 'ui-venus-1.5-web-mlx-v3-css-geometry'
     assert metadata['coordinate_space'].startswith('normalized [0,1000]')
     assert metadata['coordinate_contract_source'].endswith('2602.09082v1#S3.SS1.SSS1')
 

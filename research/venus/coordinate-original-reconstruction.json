@@ -1,0 +1,82 @@
+{
+  "experiment": "retained-original-click-reconstruction",
+  "native_point": [
+    496,
+    233
+  ],
+  "native_action": "Click(box=(496,233))",
+  "source_original_image": "data/research/venus/adapter-validation-normalized1000/input.png",
+  "source_original_sha256": "e02c7ea8c4df6a1c8197f73c004deea91be5e44651a08e5b1af16b4781548fc6",
+  "original_size": [
+    1280,
+    900
+  ],
+  "prepared_size": [
+    1184,
+    832
+  ],
+  "target_bbox_after_original_inference": {
+    "x": 119,
+    "y": 309.875,
+    "width": 550,
+    "height": 49.25
+  },
+  "candidates": {
+    "normalized_1000": {
+      "point": [
+        634,
+        209
+      ],
+      "valid": true,
+      "source_size": [
+        1000,
+        1000
+      ],
+      "target_hit": false,
+      "vertical_gap_above_target_pixels": 100.875
+    },
+    "prepared_image_pixels": {
+      "point": [
+        536,
+        252
+      ],
+      "valid": true,
+      "source_size": [
+        1184,
+        832
+      ],
+      "target_hit": false,
+      "vertical_gap_above_target_pixels": 57.875
+    },
+    "original_image_pixels": {
+      "point": [
+        496,
+        233
+      ],
+      "valid": true,
+      "source_size": [
+        1280,
+        900
+      ],
+      "target_hit": false,
+      "vertical_gap_above_target_pixels": 76.875
+    },
+    "upstream_example_factor28": {
+      "point": [
+        492,
+        234
+      ],
+      "valid": true,
+      "source_size": [
+        1288,
+        896
+      ],
+      "target_hit": false,
+      "vertical_gap_above_target_pixels": 75.875
+    }
+  },
+  "historically_executed_normalized_focus_correct": false,
+  "fresh_original_fixture_pixels_matched": true,
+  "inference_resampled": false,
+  "interpretation": "All four fixed interpretations miss the independently measured Receipt email input. No tested coordinate-frame interpretation rescues this specific prediction. This does not establish accuracy for other predictions."
+}

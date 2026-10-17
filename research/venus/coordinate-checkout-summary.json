@@ -1,0 +1,150 @@
+{
+  "id": "9114ca26a3d54cc8a184d09fa750c7b3",
+  "batch_id": "b378601bebe6475fa393facb3c55b12a",
+  "scenario": "V3-G01",
+  "public_id": "GENERIC-01",
+  "status": "failed",
+  "success": false,
+  "failure_reason": "no_progress",
+  "outcome_category": "model_failure",
+  "required_field_accuracy": 0.0,
+  "field_results": {
+    "email": false,
+    "name": false,
+    "address1": false,
+    "city": false,
+    "postal": false
+  },
+  "optional_correct": true,
+  "action_count": 3,
+  "model_call_count": 3,
+  "genuine_inference_call_count": 3,
+  "wall_seconds": 62.06099741702201,
+  "inference_seconds": 59.997782210004516,
+  "browser_interaction_seconds": 2.0632152070174925,
+  "cold_model_loading_seconds": 10.28276100003859,
+  "warm_inference_seconds": 32.48781349998899,
+  "no_progress": {
+    "reason": "repeated_visual_action",
+    "count": 3,
+    "limit": 3,
+    "state_fingerprint": "bba429c25e579f51efe9393266473ecd4fed37d47c0ebfbc822fced98dee4741",
+    "action": "click"
+  },
+  "runtime_source_hash": "542b8d180354b60f2716d4a893b25f27df89fb5f5cbbe1c84f83c6807fa5401c",
+  "runtime_binding_hash": "e579660d8827719ead39b1ac1ee9edfec09558c0364e8db7607cd6840b37d6dd",
+  "visual_protocol": {
+    "model_observations": "screenshot, public customer task, previous model actions",
+    "dom_access_to_model": false,
+    "semantic_repair": false,
+    "completion": "model declaration followed by independent outcome verification",
+    "stall_monitor": "three equivalent actions without visible public state change; DOM telemetry is not provided to model",
+    "initial_viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "viewport_scope": "most recent observation; every call retains its own image size",
+    "screenshot_scale": "css",
+    "device_scale_factor_policy": "benchmark runner configures 1; CSS screenshots also preserve coordinates at other DPRs"
+  },
+  "invalid_model_output_count": 0,
+  "inference_failure_count": 0,
+  "experiment": "ui-venus-css-geometry-generic01-checkout-diagnostic",
+  "official_leaderboard": false,
+  "autonomous_checkout_attempts": 1,
+  "config_plan": "research/ui-venus-coordinate-checkout-plan.json",
+  "model": "ui-venus",
+  "adapter_version": "ui-venus-1.5-web-mlx-v3-css-geometry",
+  "raw_run_evidence": "data/research/venus/coordinate-audit/checkout-v3/validation/9114ca26a3d54cc8a184d09fa750c7b3/actions.json",
+  "raw_run_sha256": "6c575853e6a53d79fcff631701157b2a28754fb263fc96c9b57cf06924bb08ce",
+  "private_replay_evidence": "data/research/venus/coordinate-audit/checkout-action-replay/results.json",
+  "additional_model_calls_for_action_replay": 0,
+  "actions": [
+    {
+      "step": 0,
+      "actual_model": true,
+      "native_action": "Click(box=(446, 303))",
+      "browser_point": [
+        570,
+        272
+      ],
+      "target": "Receipt email",
+      "target_bbox": {
+        "x": 119,
+        "y": 309.875,
+        "width": 550,
+        "height": 49.25
+      },
+      "source_frame_pixels_equal": true,
+      "physical_pointer_verified": true,
+      "target_hit": false,
+      "focus_correct": false,
+      "target_value_empty": true,
+      "focused_tag": "BODY",
+      "public_state_unchanged": true,
+      "image_pixels_unchanged": true,
+      "inference_seconds": 27.145465415960643,
+      "source_observation": "data/research/venus/coordinate-audit/checkout-v3/validation/9114ca26a3d54cc8a184d09fa750c7b3/observations/0000.png",
+      "source_observation_sha256": "c058d3d5df83579f64a2edf221dd217a47b48474588d8236ebb1b0147429e503"
+    },
+    {
+      "step": 1,
+      "actual_model": true,
+      "native_action": "Click(box=(446, 303))",
+      "browser_point": [
+        570,
+        272
+      ],
+      "target": "Receipt email",
+      "target_bbox": {
+        "x": 119,
+        "y": 309.875,
+        "width": 550,
+        "height": 49.25
+      },
+      "source_frame_pixels_equal": true,
+      "physical_pointer_verified": true,
+      "target_hit": false,
+      "focus_correct": false,
+      "target_value_empty": true,
+      "focused_tag": "BODY",
+      "public_state_unchanged": true,
+      "image_pixels_unchanged": true,
+      "inference_seconds": 15.507774416997563,
+      "source_observation": "data/research/venus/coordinate-audit/checkout-v3/validation/9114ca26a3d54cc8a184d09fa750c7b3/observations/0001.png",
+      "source_observation_sha256": "c058d3d5df83579f64a2edf221dd217a47b48474588d8236ebb1b0147429e503"
+    },
+    {
+      "step": 2,
+      "actual_model": true,
+      "native_action": "Click(box=(446, 303))",
+      "browser_point": [
+        570,
+        272
+      ],
+      "target": "Receipt email",
+      "target_bbox": {
+        "x": 119,
+        "y": 309.875,
+        "width": 550,
+        "height": 49.25
+      },
+      "source_frame_pixels_equal": true,
+      "physical_pointer_verified": true,
+      "target_hit": false,
+      "focus_correct": false,
+      "target_value_empty": true,
+      "focused_tag": "BODY",
+      "public_state_unchanged": true,
+      "image_pixels_unchanged": true,
+      "inference_seconds": 17.328365500026848,
+      "source_observation": "data/research/venus/coordinate-audit/checkout-v3/validation/9114ca26a3d54cc8a184d09fa750c7b3/observations/0002.png",
+      "source_observation_sha256": "c058d3d5df83579f64a2edf221dd217a47b48474588d8236ebb1b0147429e503"
+    }
+  ],
+  "timing_limitations": "Software browser regressions also ran on the machine; observed diagnostic timings, not a controlled throughput comparison. No concurrent UI-Venus model worker."
+}

@@ -1,0 +1,66 @@
+{
+  "experiment": "ui-venus-coordinate-audit-18-targets",
+  "original_plan_sha256": "084bebccc2c7fa004ac76c21b4f26aa107b60eb6d96e3eb8e8259aede8996867",
+  "created_at": "2026-10-17T11:51:39.607332+00:00",
+  "type": "private_evaluator_locator_correction",
+  "reason": "Canonical fixtures intentionally replace semantic field IDs with opaque IDs; predeclared #email/#postal etc selectors did not identify the visible targets. Use exact existing aria-labels for the same predeclared targets.",
+  "model_inputs_changed": false,
+  "native_predictions_resampled": false,
+  "target_definitions_changed": false,
+  "coordinate_formulas_changed": false,
+  "selector_overrides": {
+    "G01": {
+      "before": "#email",
+      "after": "[aria-label=\"Receipt email\"]"
+    },
+    "G02": {
+      "before": "#postal",
+      "after": "[aria-label=\"Delivery PIN\"]"
+    },
+    "G03": {
+      "before": "#address2",
+      "after": "[aria-label=\"Landmark\"]"
+    },
+    "G04": {
+      "before": "#email",
+      "after": "[aria-label=\"Email\"]"
+    },
+    "G05": {
+      "before": "#discount",
+      "after": "[aria-label=\"Discount code\"]"
+    },
+    "G06": {
+      "before": "#city",
+      "after": "[aria-label=\"City\"]"
+    },
+    "G07": {
+      "before": "#p1_gender",
+      "after": "[aria-label=\"Passenger 1 gender\"]"
+    },
+    "G08": {
+      "before": "#p3_nationality",
+      "after": "[aria-label=\"Passenger 3 nationality\"]"
+    },
+    "G10": {
+      "before": "#email",
+      "after": "[aria-label=\"Email address\"]"
+    },
+    "G11": {
+      "before": "#postal",
+      "after": "[aria-label=\"ZIP code\"]"
+    },
+    "G12": {
+      "before": "input[name=\"email\"]",
+      "after": "[aria-label=\"Receipt email\"]"
+    },
+    "G14": {
+      "before": "#delivery_method",
+      "after": "[aria-label=\"Delivery method\"]"
+    },
+    "G15": {
+      "before": "#gift_wrap",
+      "after": "[aria-label=\"Gift wrapping\"]"
+    }
+  },
+  "retention": "Original plan, first replay annotations and inference predictions remain unchanged. Corrected annotations are written to a separate saved-prediction replay directory."
+}

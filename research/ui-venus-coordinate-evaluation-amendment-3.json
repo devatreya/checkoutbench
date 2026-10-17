@@ -1,0 +1,68 @@
+{
+  "experiment": "ui-venus-coordinate-audit-18-targets",
+  "original_plan_sha256": "084bebccc2c7fa004ac76c21b4f26aa107b60eb6d96e3eb8e8259aede8996867",
+  "created_at": "2026-10-17T12:04:32.941937+00:00",
+  "type": "private_evaluator_trusted_delivery_and_provenance_correction",
+  "reason": "Retain amendments1and2 for opaqueIDs and iframe/shadow target scope. Require trusted physical pointer delivery to intendedtarget/associatedlabel before accepting click/focus/stateeffects, preventing programmatic target.click falsepositives. Snapshot active evaluator/math/visual sources and verify frozenoriginal/preparedimagehashes during savedreplay. No changes to model inputs, predictions, target definitions or coordinate formulas.",
+  "model_inputs_changed": false,
+  "native_predictions_resampled": false,
+  "target_definitions_changed": false,
+  "coordinate_formulas_changed": false,
+  "selector_overrides": {
+    "G01": {
+      "before": "#email",
+      "after": "[aria-label=\"Receipt email\"]"
+    },
+    "G02": {
+      "before": "#postal",
+      "after": "[aria-label=\"Delivery PIN\"]"
+    },
+    "G03": {
+      "before": "#address2",
+      "after": "[aria-label=\"Landmark\"]"
+    },
+    "G04": {
+      "before": "#email",
+      "after": "[aria-label=\"Email\"]"
+    },
+    "G05": {
+      "before": "#discount",
+      "after": "[aria-label=\"Discount code\"]"
+    },
+    "G06": {
+      "before": "#city",
+      "after": "[aria-label=\"City\"]"
+    },
+    "G07": {
+      "before": "#p1_gender",
+      "after": "[aria-label=\"Passenger 1 gender\"]"
+    },
+    "G08": {
+      "before": "#p3_nationality",
+      "after": "[aria-label=\"Passenger 3 nationality\"]"
+    },
+    "G10": {
+      "before": "#email",
+      "after": "[aria-label=\"Email address\"]"
+    },
+    "G11": {
+      "before": "#postal",
+      "after": "[aria-label=\"ZIP code\"]"
+    },
+    "G12": {
+      "before": "input[name=\"email\"]",
+      "after": "[aria-label=\"Receipt email\"]"
+    },
+    "G14": {
+      "before": "#delivery_method",
+      "after": "[aria-label=\"Delivery method\"]"
+    },
+    "G15": {
+      "before": "#gift_wrap",
+      "after": "[aria-label=\"Gift wrapping\"]"
+    }
+  },
+  "retention": "Original plan, first replay annotations and inference predictions remain unchanged. Corrected annotations are written to a separate saved-prediction replay directory.",
+  "predecessor_amendment_sha256": "df7883829f34efc6e5d6eb73728699cd614f44582bd93a74558e46a922c05588",
+  "evaluator_source_sha256": "0c5986c0cf938c7f05c9c4eb5ff968ef8de0ba3344a56ca1ae891fafb7fa049a"
+}

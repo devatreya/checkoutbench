@@ -2,6 +2,8 @@
 
 This implementation preserves the canonical benchmark and adds a genuine local UI-Venus execution path. Software validation, adapter smoke, representative pilot and full coverage are separate evidence classes. None certifies publication readiness or independent external validity.
 
+A subsequent [coordinate accuracy audit (2026-10-17)](UI_VENUS_COORDINATE_AUDIT.md) investigates the native contract and genuine target accuracy, adds general CSS/DPR and geometry safeguards under a new adapter identity, and records one separate checkout diagnostic. The pilot and full-run counts below remain historical measurements under their original runtime binding.
+
 ## Implemented changes
 
 - `scenarios/identity.py` and `identities.json` provide explicit, collision-checked mappings for all 322 current and historical tasks. Public aliases resolve to original canonical IDs before fixture generation. API/display overlays never rewrite stored historical rows or canonical task objects.
