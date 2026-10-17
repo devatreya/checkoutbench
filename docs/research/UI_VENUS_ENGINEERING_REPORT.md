@@ -104,21 +104,40 @@ The sanitized summary is `research/venus/pilot-summary.json`; complete private t
 
 ## Phase C: full coverage
 
-Plan: `research/ui-venus-full-plan.json`, all 174 active scenarios, one trial each, 8,192 output tokens, 80 actions, 180 seconds, no retries. Results will remain a separate diagnostic study and will not silently replace the official dataset. The user confirmed that the machine can remain powered and awake; AC power was subsequently observed.
+Plan: `research/ui-venus-full-plan.json`, all 174 active scenarios, one trial each, 8,192 output tokens, 80 actions, 180 seconds, no retries. The user confirmed that the machine could remain powered and awake; AC power was subsequently observed. This remained a separate diagnostic study throughout execution and did not replace the official dataset.
 
-The corrected pilot and software checks are complete. The full run has started in isolated storage at `data/research/venus/full-normalized1000/`, with report output at `data/research/venus/full-normalized1000-report/`. No full-coverage result is claimed until all 174 intended records finish.
+Batch `fd3f7e5e664d4bafa9f94c29d4ead6ab` finished on 17 October 2026. All 174 unique planned case attempts reached terminal records. Every record matches its frozen canonical scenario hash and viewport, the declared execution settings, the same checkpoint attestation, and the reviewed runtime binding. All execution manifests identify implementation commit `3d03a06a7ca41a71869f08a70765a0bfb17365dc`; documentation commits during execution did not change runtime sources.
+
+| Terminal outcome | Cases |
+|---|---:|
+| Independently verified successful completion | 0 |
+| Evaluation timeout | 168 |
+| No-progress model failure | 4 |
+| Invalid native model action | 1 |
+| Infrastructure/inference failure | 1 |
+| Unsupported capability | 0 |
+
+There were 492 attempted model calls: 325 completed genuine responses, 166 cancelled calls, and one inference failure. Of the 174 cases, 162 had at least one completed genuine response and 12 had none. The latter retain declared configuration and execution bindings but no completed worker-reported runtime measurements. **Complete coverage of case attempts does not mean every case produced a model response or completed its checkout.**
+
+The runner recorded 322 executed actions. The invalid-output rate was 1/325 completed genuine responses (0.31%); the inference-failure rate was 1/492 attempted calls (0.20%). No completed response reported token-budget truncation; partial-token and truncation information is unavailable for cancelled calls. Final required-field checks were correct in 13/1,252 checks, with mean per-case accuracy 1.20%. These are final-state checks and can include supplied autofill; they are not counts of fields correctly entered by the model. Optional-field checks passed in 174/174 cases because optional inputs were left untouched, which does not establish checkout competence.
+
+Total recorded trial time was 32,220.5 seconds (8.95 hours). Median completed call time was 57.69 seconds. The 162 completed cold calls had median loading time 23.68 seconds; the 163 completed warm calls had median model-forward time 37.78 seconds. Cancelled calls cannot supply complete stage timings. The largest reported MLX allocation among completed responses was 3,392,391,229 bytes (3.392 GB); peaks during cancelled or crashed generations are unknown. The 180-second task budget excludes some setup/teardown accounting, so recorded wall time can exceed it; the maximum recorded trial time was 207.77 seconds.
+
+The infrastructure failure occurred in `LAYOUT-AUTOFILL-STALE`: the native worker exited with a Metal command-buffer GPU timeout before returning a response. The full error remains in the private run record and `infrastructure-failure-review.json`. Its cause is unresolved; it is not counted as a model reasoning failure. Later trials continued with fresh workers. The evaluation client exited successfully after saving all records, and no Venus worker remained after completion.
+
+The [sanitized full summary](../../research/venus/full-summary.json) includes every case's outcome, response coverage, exact configuration and evidence hashes. Complete private traces remain under `data/research/venus/full-normalized1000/validation/`, and reports under `data/research/venus/full-normalized1000-report/`. The runtime source hash is `2a508b5aa668fec3083fe1d8cc1397391bbd8701d7d549f744e60550a277a91f`, with binding `0eb881e5edd6b7b12245a8d421f4263d87a595cf8c49ccc6978db2a7ff028412`. No official leaderboard result or original-precision performance claim is made.
 
 Resource observations during the run show active paging and compression, with sampled kernel pressure alternating between normal and warning. No critical flag was sampled; sparse sampling cannot rule out intervening spikes. A five-second sample recorded approximately 204 MiB of swap-in and 88 MiB of swap-out. Later observations included much lower prefill throughput: an early 2,470-token prompt processed at about 179 tokens/s, versus about 25 tokens/s for another prompt of the same token count. These are system-wide resource observations and individual call measurements, not a controlled causal comparison. Memory contention plausibly contributes to the slowdown; thermal throttling and App Nap have not been established.
 
 Read-only process reviews found one active model worker and browser tree, with earlier workers disappearing between trials. No accumulating task-owned workers, browser trees, or concurrent diagnostic inference were identified. Peak MLX allocation around 3.392 GB on completed responses is not total system memory or a measured peak for cancelled generations. The local evidence directory retains `runtime-memory-review.json`, `runtime-latency-review.json`, and periodic `runtime-resources.jsonl` snapshots.
 
-The full study measures completion by this quantized local system within a fixed 180-second task budget. A timeout before any completed response is not evidence of a model reasoning error. Final reporting must distinguish attempted cases, cases with completed genuine responses, cancelled calls, and independently verified successes. It cannot establish hardware-independent model accuracy.
+The full study measures completion by this quantized local system within a fixed 180-second task budget. A timeout before any completed response is not evidence of a model reasoning error. The summary distinguishes attempted cases, cases with completed genuine responses, cancelled calls, and independently verified successes. It cannot establish hardware-independent model accuracy or attribute the timeout distribution solely to the model.
 
 ## Validation and remaining limits
 
 Before edits: 123 relevant tests passed, including explicitly enabled genuine CUA checks, and the frontend production build passed. The complete software run exercised 325 tests: 322 passed initially and three failed because legacy browser tests hardcoded the default port. Those test URLs now derive from the actual preview origin, and all three passed on rerun. The final coordinate/metrics/protocol regression suite passed 138 tests (including three added metrics cases). The final frontend production build passed. The existing four CUA Transformer warnings remain. Browser reference sweeps validate benchmark software and are not UI-Venus performance evidence.
 
-Historical database rows, the original CUA failure record and all 82 associated artifacts remain unchanged. A pre-commit scan of 545 candidate files found no known secret values or credential-pattern matches. Full-coverage outcomes will be recorded after execution.
+Final preservation checks confirmed all 322 canonical scenario hashes, 41 protected files, both historical databases, the original CUA failure record and all 82 associated artifacts remained unchanged. The completed run retained its exact reviewed runtime identity. Secret scans found no known secret values or credential-pattern matches in the files selected for publication; model weights, environments, secrets and raw traces remain ignored.
 
 The integration adds no cloud service and makes no external payment. Local API charges are zero; energy cost is not measured. Peak MLX allocation is not total system RAM. Quantization, community conversion provenance, synthetic environments, shared implementation ancestry and one trial per case limit generalization claims.
 

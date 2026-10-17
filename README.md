@@ -50,6 +50,8 @@ Reference/debug runs and test doubles use separate validation storage. Genuine v
 
 Playwright is browser infrastructure, not an AI model. CUA has passed exact-weight cold/warm inference smoke on the implementation machine; this is not an accuracy result. TinyClick is blocked by missing exact original weights, which also blocks hybrid verification. MAI provenance is recorded; its local inference remains unverified. UI-Venus now has genuine local screenshot inference on the M1 MacBook Air using a pinned **6-bit MLX conversion**, with native action parsing and an isolated runtime. This is a distinct quantized configuration, not original-precision evidence. See the [local UI-Venus setup](docs/operations/UI_VENUS_LOCAL.md) and [engineering report](docs/research/UI_VENUS_ENGINEERING_REPORT.md) for measured outcomes and limits. No model is substituted. Frontier/OpenRouter/direct-provider backends remain available through developer APIs and hidden from normal UI.
 
+The [local UI-Venus diagnostic](research/venus/full-summary.json) finished all 174 planned case attempts: zero verified successes, 168 timeouts, four no-progress failures, one invalid action and one Metal inference failure. Completed genuine responses were obtained in 162 cases; 12 had none. This measures the 6-bit local system under a 180-second task budget with observed memory pressure. It is separate from the official leaderboard and does not establish hardware-independent model accuracy.
+
 See [model cards](docs/research/MODEL_CARDS.md), [specialist setup](docs/SPECIALISTS.md) and [reproduction](docs/research/REPRODUCING.md). Install optional specialist dependencies separately, then configure exact paths and run:
 
 ```sh
